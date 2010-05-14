@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="dist" name="TP 2010 Técnicas de diseño">
+	
+	<property name="jar_file" value="tp.jar"></property>	
+	<property name="build_dir" value="bin"></property>
+	<property name="src_dir" value="src"></property>
+	<property name="juint_lib" value="./lib/junit.jar"></property>
+	<property name="main_class" value="main.GameApp"></property>
+	
+	<!-- classpath -->
+	<path id="class_path">
+		<pathelement path="${build}"/>
+		<!-- <pathelement path="${juint_lib}"/> -->
+	</path>
+	
+	
+	<!-- Compilation -->
+ 	<target name="compile" description="Compile the project">
+ 		<echo message="Compiling..."></echo>
+ 		<mkdir dir="${build_dir}"/>
+        <javac srcdir="${src_dir}" destdir="${build_dir}" 
+        	compiler="javac1.6" encoding="UTF-8" >
+        	<classpath refid="class_path"></classpath>
+        </javac>
+    </target>
+	
+	<!-- JAR Creation -->
+	<target name="jar" depends="compile" description="Create project JAR">
+		<echo message="Creating ${jar_file}..."></echo>
+        <jar destfile="${jar_file}" filesetmanifest="mergewithoutmain" update="true">
+            <manifest>
+                <attribute name="Built-By" value="${user.name}"/>
+                <attribute name="Main-Class" value="${main_class}"/>
+                <attribute name="Class-Path" value="."/>
+            </manifest>
+            <fileset dir="${build_dir}"/>
+            <!-- <zipfileset excludes="META-INF/*.SF" src="${juint_lib}"/> -->
+        </jar>
+	</target>
+	
+	<!-- Hole project -->
+    <target name="dist" depends="jar" description="Build the hole project">
+    </target>
+	
+	<!-- <target name="runtests" depends="jar" description="Run unit tests">
+		<java fork="yes" classname="org.junit.runner.JUnitCore" taskname="junit" failonerror="true">
+			<arg value="test.AllTests"/>
+			<classpath>
+				<pathelement path="${jar_file}"/>
+			</classpath>
+		</java>
+	</target> -->
+	
+	<target name="clean" description="Clean the project">
+		<delete dir="${build_dir}"></delete>
+		<delete file="${jar_file}"></delete>
+	</target>
+</project>
