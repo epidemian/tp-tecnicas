@@ -1,12 +1,11 @@
 package tests;
 
-/**
- * A dummy test case to check out the new JUnit 4 syntax ;)
- */
-
 import org.junit.*;
 import static org.junit.Assert.*;
 
+/**
+ * A dummy test case to check out the new JUnit 4 syntax ;)
+ */
 public class DummyTest {
 
 	Object testedObject;
