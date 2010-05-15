@@ -1,4 +1,6 @@
-package tests;
+
+
+import model.lab.TechnologyTest;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -9,5 +11,6 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
         DummyTest.class,
+        TechnologyTest.class,
         })
 public class AllTests { }

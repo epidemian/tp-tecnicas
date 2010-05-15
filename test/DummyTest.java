@@ -1,4 +1,4 @@
-package tests;
+
 
 import org.junit.*;
 import static org.junit.Assert.*;
@@ -11,12 +11,12 @@ public class DummyTest {
 	Object testedObject;
 	
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		testedObject = new Object();
 	}
 
 	@After
-	public void tearDown() throws Exception {
+	public void tearDown() {
 		// Do some cleaning up.
 	}
 	
