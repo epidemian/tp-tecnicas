@@ -1,16 +1,20 @@
 
 
+import model.lab.ResearchLabTest;
 import model.lab.TechnologyTest;
+import model.lab.TechnologyTreeTest;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 
 /**
  * Test suite to run all test cases at once.
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({
-        DummyTest.class,
+@SuiteClasses({
         TechnologyTest.class,
+        TechnologyTreeTest.class,
+        ResearchLabTest.class,
         })
 public class AllTests { }

@@ -9,19 +9,41 @@ import model.lab.Technology;
 public class TechnologyTest {
 
 	
+	@Test(expected = BusinessLogicException.class)
+	public void createTechnologyWithNullName() {
+		new TechnologyMock(null, "", 0, false);
+	}
+	
+	@Test(expected = BusinessLogicException.class)
+	public void createTechnologyWithNullDescription() {
+		new TechnologyMock("", null, 0, false);
+	}
+	
+	@Test(expected = BusinessLogicException.class)
+	public void createTechnologyWithNegativeCost() {
+		new TechnologyMock("", "", -1, false);
+	}
+	
 	@Test
 	public void researchNotResearchedTechnology() {
-		createTecnology(false).research();
+		createUnresearchedTecnology().research();
 	}
 	
 	@Test(expected = BusinessLogicException.class)
 	public void researchAlreadyResearchedTechnology() {
-		createTecnology(true).research();
+		createResearchedTecnology().research();
+	}
+	
+	@Test
+	public void researchNotResearchedTechnologyAndTestIsResearched() {
+		Technology t = createUnresearchedTecnology();
+		t.research();
+		assertTrue(t.isResearched());
 	}
 	
 	@Test(expected = BusinessLogicException.class)
 	public void researchTechnologyTwice() {
-		Technology t = createTecnology(false);
+		Technology t = createUnresearchedTecnology();
 		t.research();
 		t.research();
 	}
@@ -34,22 +56,12 @@ public class TechnologyTest {
 		assertEquals(HelloWorldTechnology.MESSAGE, message.toString());
 	}
 
-	private Technology createTecnology(boolean researched) {
-		return new TechnologyMock(researched);
+	private Technology createResearchedTecnology() {
+		return new TechnologyMock("Name", "Desc", 0, true);
 	}
 	
-}
-
-
-class TechnologyMock extends Technology {
-
-	public TechnologyMock(boolean researched) {
-		super("Name", "Description", 0, researched);
-	}
-
-	@Override
-	protected void onResearch() {
-		
+	private Technology createUnresearchedTecnology() {
+		return new TechnologyMock("Name", "Desc", 0, false);
 	}
 	
 }
@@ -60,7 +72,7 @@ class HelloWorldTechnology extends TechnologyMock {
 	private StringBuffer output;
 
 	public HelloWorldTechnology(StringBuffer output) {
-		super(false);
+		super("Hello World Tec.", "Says hello", 0, false);
 		this.output = output;
 	}
 	
