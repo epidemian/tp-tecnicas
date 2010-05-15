@@ -81,14 +81,29 @@ public class TechnologyTreeTest {
 	
 	@Test(expected = BusinessLogicException.class)
 	public void addLongCircularDependency() {
-		final int COUNT = 5;
-		List<Technology> techs = new ArrayList<Technology>(COUNT); 
-		for (int i = 0; i < COUNT; i++)
-			techs.add(createAndAddTechnology("Tech " + i));
-		for (int i = 1; i < COUNT; i++)
-			tree.addDependency(techs.get(i), techs.get(i - 1));
+		Technology techs[] = createAndAddTechnologyArray(5);
+		for (int i = 1; i < techs.length; i++)
+			tree.addDependency(techs[i], techs[i - 1]);
 		assertTrue(true); // Up to here nothing should have exploded...
-		tree.addDependency(techs.get(0), techs.get(COUNT - 1));
+		tree.addDependency(techs[0], techs[techs.length - 1]);
+	}
+	
+	@Test
+	public void addDiamondShapeDependencies() {
+		Technology techs[] = createAndAddTechnologyArray(4);
+		tree.addDependency(techs[1], techs[0]);
+		tree.addDependency(techs[2], techs[0]);
+		tree.addDependency(techs[3], techs[1]);
+		tree.addDependency(techs[3], techs[2]);
+	}
+	
+	@Test(expected = BusinessLogicException.class)
+	public void addRedundantDependency() {
+		Technology techs[] = createAndAddTechnologyArray(3);
+		tree.addDependency(techs[0], techs[1]);
+		tree.addDependency(techs[1], techs[2]);
+		assertTrue(true);
+		tree.addDependency(techs[0], techs[2]);
 	}
 	
 //	@Test(expected = BusinessLogicException.class)
@@ -97,6 +112,14 @@ public class TechnologyTreeTest {
 //		Technology terminator2 = createAndAddTechnology("T-1000", false);
 //		tree.addDependency(terminator1, terminator2);
 //	}
+	
+	private Technology[] createAndAddTechnologyArray(int size)
+	{
+		Technology techs[] = new Technology[size]; 
+		for (int i = 0; i < techs.length; i++)
+			techs[i] = createAndAddTechnology("Tech " + i);
+		return techs;
+	}
 	
 	private Technology createTechnology(String name, boolean researched) {
 		return new TechnologyMock(name, "Desc.", 0, researched);

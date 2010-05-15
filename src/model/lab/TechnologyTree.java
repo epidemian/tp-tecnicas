@@ -7,7 +7,16 @@ import model.core.BusinessLogicException;
 
 /**
  * A collection of {@link Technology}'s with dependencies between them.
- * 
+ * Notice that the Age-of-Empires-inspired name 'technology tree' might not be
+ * strictly accurate, as the nodes in the dependency structure might have more
+ * than one parent (i.e. dependency).
+ * e.g: A has no dependencies, B and C depends on A, and D depends on both B 
+ * and C; are valid dependencies. 
+ *     A
+ *    / \
+ *   B   C
+ *    \ /
+ *     D  
  */
 public class TechnologyTree {
 
@@ -18,6 +27,12 @@ public class TechnologyTree {
 		this.technologyTree = new ArrayList<TechnologyTreeEntry>();
 	}
 
+	/**
+	 * Adds a dependency between two technologies in the technology tree.
+	 * 
+	 * @param technology
+	 * @param dependency
+	 */
 	public void addDependency(Technology technology, Technology dependency) {
 		if (!contains(technology) || !contains(dependency))
 			throw new BusinessLogicException("Invalid parameters: technology "
@@ -25,6 +40,10 @@ public class TechnologyTree {
 		// TODO Auto-generated method stub
 	}
 
+	/**
+	 * Adds a new technology to the technology tree.
+	 * @param technology
+	 */
 	public void addTechnology(Technology technology) {
 		if (technology == null)
 			throw new BusinessLogicException("Invalid parameter");

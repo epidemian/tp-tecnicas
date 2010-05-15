@@ -8,20 +8,18 @@ import model.core.BusinessLogicException;
  */
 public abstract class Technology {
 	
-	final private String name;
-	final private String description;
-	final private int cost;
+	private String name;
+	private String description;
+	private int researchCost;
 	private boolean researched;
 	
-	public Technology(String name, String description, int cost,
+	public Technology(String name, String description, int researchCost,
 			boolean researched) {
 		super();
-		if (name == null || description == null || cost < 0)
-			throw new BusinessLogicException("Invalid parameters");
-		this.name = name;
-		this.description = description;
-		this.cost = cost;
-		this.researched = researched;
+		setName(name);
+		setDescription(description);
+		setResearchCost(researchCost);
+		setResearched(researched);
 	}
 
 	public String getName() {
@@ -32,8 +30,8 @@ public abstract class Technology {
 		return description;
 	}
 
-	public int getCost() {
-		return cost;
+	public int getResearchCost() {
+		return researchCost;
 	}
 
 	public boolean isResearched() {
@@ -46,12 +44,34 @@ public abstract class Technology {
 	 */
 	// Note: package visibility and final modifier are on purpose.
 	final void research() {
-		if (this.researched)
+		if (isResearched())
 			throw new BusinessLogicException("Tecnology already researched");
 		onResearch();
-		this.researched = true;
+		setResearched(true);
 	}
 
 	protected abstract void onResearch();
+
+	private void setName(String name) {
+		if (name == null)
+			throw new BusinessLogicException("Invalid name");
+		this.name = name;
+	}
+
+	private void setDescription(String description) {
+		if (description == null)
+			throw new BusinessLogicException("Invalid description");
+		this.description = description;
+	}
+
+	private void setResearchCost(int researchCost) {
+		if (researchCost < 0)
+			throw new BusinessLogicException("Invalid research cost");
+		this.researchCost = researchCost;
+	}
+
+	private void setResearched(boolean researched) {
+		this.researched = researched;
+	}
 	
 }
