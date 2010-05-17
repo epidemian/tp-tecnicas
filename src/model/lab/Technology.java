@@ -50,6 +50,11 @@ public abstract class Technology {
 		setResearched(true);
 	}
 
+	/**
+	 * Called by {@link Technology#research()}.
+	 * Should be implemented by {@link Technology} subclasses.  
+	 */
+	// TODO Maybe a better name would be apply() ?
 	protected abstract void onResearch();
 
 	private void setName(String name) {
@@ -73,5 +78,4 @@ public abstract class Technology {
 	private void setResearched(boolean researched) {
 		this.researched = researched;
 	}
-	
 }

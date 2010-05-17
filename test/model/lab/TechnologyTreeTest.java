@@ -1,7 +1,7 @@
 package model.lab;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
+import java.util.Collection;
 
 import model.core.BusinessLogicException;
 
@@ -43,6 +43,43 @@ public class TechnologyTreeTest {
 		createAndAddTechnology("Laser");
 	}
 
+	// Tests to getTechnologies()
+	
+	@Test
+	public void isEmptyAfterCreation() {
+		assertTrue(tree.getTechnologies().isEmpty());
+	}
+	
+	@Test
+	public void addOneTechnologyAndTestGetTechnologies() {
+		Technology t = createAndAddTechnology();
+		assertEquals(1, tree.getTechnologies().size());
+		assertTrue(tree.getTechnologies().contains(t));
+	}
+	
+	@Test
+	public void addManyTechnologiesAndTestGetTechnologies() {
+		final int SIZE = 5;
+		Technology techs[] = createAndAddTechnologyArray(SIZE);
+		assertEquals(SIZE, tree.getTechnologies().size());
+		assertTrue(tree.getTechnologies().containsAll(Arrays.asList(techs)));
+	}
+	
+	@Test
+	public void addTechnologyToCollectionReturnedByGetTechnologies() {
+		createAndAddTechnology("Added");
+		try {
+			Collection<Technology> techs = tree.getTechnologies();
+			techs.add(createTechnology("Should not be added"));
+		}
+		catch (Exception e) {
+			// Nothing. Adding to that collection might not be valid.
+		}
+		finally {
+			assertEquals(1, tree.getTechnologies().size());
+		}
+	}
+	
 	// Tests to addDependency()
 	
 	@Test
@@ -57,7 +94,7 @@ public class TechnologyTreeTest {
 		tree.addDependency(createTechnology("one"), createTechnology("two"));
 	}
 	
-	@Test(expected = BusinessLogicException.class)
+	@Test(expected = RedundantDependencyException.class)
 	public void addSameDependencyTwice() {
 		Technology son = createAndAddTechnology("Son");
 		Technology mom = createAndAddTechnology("Mom");
@@ -71,7 +108,7 @@ public class TechnologyTreeTest {
 		tree.addDependency(selfDependant, selfDependant);
 	}
 	
-	@Test(expected = BusinessLogicException.class)
+	@Test(expected = CircularDependencyException.class)
 	public void addSimpleCircularDependency() {
 		Technology egg = createAndAddTechnology("Egg");
 		Technology chicken = createAndAddTechnology("Chicken");
@@ -79,7 +116,7 @@ public class TechnologyTreeTest {
 		tree.addDependency(chicken, egg);
 	}
 	
-	@Test(expected = BusinessLogicException.class)
+	@Test(expected = CircularDependencyException.class)
 	public void addLongCircularDependency() {
 		Technology techs[] = createAndAddTechnologyArray(5);
 		for (int i = 1; i < techs.length; i++)
@@ -97,7 +134,7 @@ public class TechnologyTreeTest {
 		tree.addDependency(techs[3], techs[2]);
 	}
 	
-	@Test(expected = BusinessLogicException.class)
+	@Test(expected = RedundantDependencyException.class)
 	public void addRedundantDependency() {
 		Technology techs[] = createAndAddTechnologyArray(3);
 		tree.addDependency(techs[0], techs[1]);
@@ -106,12 +143,14 @@ public class TechnologyTreeTest {
 		tree.addDependency(techs[0], techs[2]);
 	}
 	
-//	@Test(expected = BusinessLogicException.class)
-//	public void addDependencyFromUnresearchedTechToResearchedTech() {
-//		Technology terminator1 = createAndAddTechnology("T-800", true);
-//		Technology terminator2 = createAndAddTechnology("T-1000", false);
-//		tree.addDependency(terminator1, terminator2);
-//	}
+	@Ignore
+	@Test(expected = BusinessLogicException.class)
+	// TODO Remove. Put this logic into ResearchLab or forget about it.
+	public void addDependencyFromUnresearchedTechToResearchedTech() {
+		Technology terminator1 = createAndAddTechnology("T-800", true);
+		Technology terminator2 = createAndAddTechnology("T-1000", false);
+		tree.addDependency(terminator1, terminator2);
+	}
 	
 	private Technology[] createAndAddTechnologyArray(int size)
 	{
