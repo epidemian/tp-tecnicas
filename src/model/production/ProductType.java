@@ -15,7 +15,7 @@ public class ProductType {
 	 * Every sequenceProduct which does not produce a known product produces 
 	 * ProductType waste 
 	 */
-	public static ProductType waste; 
+	private static ProductType waste;
 	
 	private ArrayList<RawMaterial> rawMaterialsNeeded;
 	private String name;
@@ -37,6 +37,10 @@ public class ProductType {
 		return this.name.hashCode();
 	}	
 
+	public static void setWasteProductType(ProductType waste){
+		ProductType.waste = waste;
+	}
+	
 	private void setRawMaterialsNeeded(ArrayList<RawMaterial> rawMaterialsNeeded) {
 		if (rawMaterialsNeeded == null)
 			throw new BusinessLogicException("Invalid rawMaterialsNeeded");
@@ -48,5 +52,4 @@ public class ProductType {
 			throw new BusinessLogicException("Invalid name");
 		this.name = name;
 	}
-	
 }

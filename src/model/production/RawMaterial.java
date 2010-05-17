@@ -44,6 +44,10 @@ public class RawMaterial {
 		this.validateQuantity(quantity);
 		this.setQuantity(this.quantity + quantity);
 	}
+
+	public boolean equals(Object other){
+		return this.name.equals(((RawMaterial)other).name);
+	}
 	
 	private void setName(String name) {
 		this.validateName(name);
@@ -54,7 +58,7 @@ public class RawMaterial {
 		this.validateQuantity(quantity);
 		this.quantity = quantity;
 	}
-	
+
 	private void validateQuantity(int quantity){
 		if (quantity < 0)
 			throw new BusinessLogicException("Invalid quantity");

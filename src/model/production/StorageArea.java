@@ -31,8 +31,7 @@ public class StorageArea {
 		ArrayList<RawMaterial> rawMaterialsNeededToProduce 
 			= new ArrayList<RawMaterial>();
 		/*
-		 * We get the raw materials needed and analyze if there is enough
-		 * of each one to produce.
+		 * We get the raw materials needed and store them into a vector.
 		 */
 		for (RawMaterial entry : productType.getRawMaterialsNeeded()){
 			int index = this.rawMaterials.indexOf(entry);
@@ -46,12 +45,23 @@ public class StorageArea {
 					break;
 			}			
 		}
+
+		Product product = null;
 		
-		/*
-		 * Not finished yet! Coming soon!
-		 * Do not touch this code! =)
-		 */		
-		return null;
+		if (rawMaterialsNeededToProduce.size() == productType
+			.getRawMaterialsNeeded().size())
+		{
+			/*
+			 * We can produce =), so we extract the raw material needed.
+			 */
+			for (int i = 0; i < rawMaterialsNeededToProduce.size(); i++){
+				this.rawMaterials.get(i).extract
+				(productType.getRawMaterialsNeeded().get(i).getQuantity());
+			}
+			product = new Product(productType);
+		}
+		
+		return product;
 	}
 	
 	public void storeRawMaterial(RawMaterial rawMaterial){
