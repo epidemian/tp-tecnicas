@@ -1,6 +1,6 @@
 package model.lab;
 
-import model.core.BusinessLogicException;
+import static model.core.ArgumentUtils.*;
 
 public class ResearchLab {
 
@@ -17,16 +17,17 @@ public class ResearchLab {
 		setMaxFunding(maxFunding);
 		setFunding(0);
 	}
-	
+
 	public void startResearching(Technology technology) {
-		if (technology.isResearched())
-			throw new BusinessLogicException("Technology already researched");
-		if (getTechnologyTree().getTechnologies().contains(technology))
-			throw new BusinessLogicException("Invalid parameter");
+		checkArgCondition(technology, !technology.isResearched(),
+				"already researched");
+		checkArgCondition(technology,
+				!getTechnologyTree().getTechnologies().contains(technology),
+				"not contained on technology tree");
 	}
-	
+
 	public void update() {
-		
+
 	}
 
 	public int getMaxFunding() {
@@ -36,11 +37,9 @@ public class ResearchLab {
 	public int getFunding() {
 		return funding;
 	}
-	
+
 	public void setFunding(int funding) {
-		if (funding < 0 || maxFunding < funding)
-			throw new BusinessLogicException("Daily funding must be in the "
-					+ "range [0, getMaxDailyFunding()]");
+		checkInRange(funding, 0, getMaxFunding(), "funding");
 		this.funding = funding;
 	}
 
@@ -49,15 +48,12 @@ public class ResearchLab {
 	}
 
 	private void setTechnologyTree(TechnologyTree technologyTree) {
-		if (technologyTree == null)
-			throw new BusinessLogicException();
+		checkNotNull(technologyTree, "technology tree");
 		this.technologyTree = technologyTree;
 	}
 
 	private void setMaxFunding(int maxFunding) {
-		if (maxFunding <= 0)
-			throw new BusinessLogicException("Max daily funding must be "
-					+ "greater than zero");
+		checkGreaterThan(maxFunding, 0, "max funding");
 		this.maxFunding = maxFunding;
 	}
 

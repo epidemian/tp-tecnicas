@@ -8,13 +8,14 @@ import java.util.Map;
 import java.util.Set;
 
 import model.core.BusinessLogicException;
+import static model.core.ArgumentUtils.*;
 
 /**
  * A collection of {@link Technology}'s with dependencies between them. Notice
  * that the Age-of-Empires-inspired name 'technology tree' might not be strictly
  * accurate, as the nodes in the dependency structure might have more than one
  * parent (i.e. dependency). e.g: A has no dependencies, B and C depends on A,
- * and D depends on both B and C; are valid dependencies. A / \ B C \ / D
+ * and D depends on both B and C, is a valid dependency structure.
  */
 public class TechnologyTree {
 
@@ -66,12 +67,12 @@ public class TechnologyTree {
 		testAddDependency(technology, dependency);
 		doAddDependency(technology, dependency);
 	}
-	
+
 	/**
-	 * Retrieves all dependencies for a given technology.
-	 * e.g: If A depends on B, and B depends on C and D; getAllDependencies(A)
-	 * will return B, C and D.
-	 *  
+	 * Retrieves all dependencies for a given technology. e.g: If A depends on
+	 * B, and B depends on C and D; getAllDependencies(A) will return B, C and
+	 * D.
+	 * 
 	 * @param technology
 	 * @return
 	 */
@@ -83,19 +84,18 @@ public class TechnologyTree {
 		}
 		return deps;
 	}
-	
-	private Set<Technology> getImmediateDependencies(
-			Technology technology) {
+
+	private Set<Technology> getImmediateDependencies(Technology technology) {
 		return this.technologies.get(technology);
 	}
 
 	private void testAddDependency(Technology technology, Technology dependency) {
-		if (!contains(technology) || !contains(dependency))
-			throw new BusinessLogicException("Invalid parameters: technology "
-					+ "and dependency must be contained in technology tree");
-		if (technology.equals(dependency))
-			throw new BusinessLogicException("technology cannot depend on "
-					+ "itself");
+		checkArgCondition(technology, contains(technology),
+				"technology must be contained in technology tree");
+		checkArgCondition(dependency, contains(dependency),
+				"dependency must be contained in technology tree");
+		checkArgCondition(technology, !technology.equals(dependency),
+				"technology cannot depend on itself");
 		checkCircualDependencies(technology, dependency);
 		checkRedundantDependencies(technology, dependency);
 	}
@@ -103,13 +103,13 @@ public class TechnologyTree {
 	private void checkCircualDependencies(Technology technology,
 			Technology dependency) {
 		if (technologyDependsOn(dependency, technology))
-			throw new CircularDependencyException();
+			throw new CircularDependencyException(technology, dependency);
 	}
 
 	private void checkRedundantDependencies(Technology technology,
 			Technology dependency) {
 		if (technologyDependsOn(technology, dependency))
-			throw new RedundantDependencyException();
+			throw new RedundantDependencyException(technology, dependency);
 
 	}
 
@@ -118,20 +118,17 @@ public class TechnologyTree {
 	}
 
 	private void testAddTechnology(Technology technology) {
-		if (technology == null)
-			throw new BusinessLogicException("Invalid parameter");
-		if (contains(technology))
-			throw new BusinessLogicException("Technology " + technology
-					+ " already exists in technology tree");
-		if (containsTechnologyWithName(technology.getName()))
-			throw new BusinessLogicException("Technology with same name as "
-					+ technology + " already exists in technoloy tree");
+		checkNotNull(technology, "technology");
+		checkArgCondition(technology, !contains(technology),
+				"already exists in technology tree");
+		checkArgCondition(technology, !containsTechnologyWithName(technology
+				.getName()), "technology with same name already exists");
 	}
 
 	private void doAddTechnology(Technology technology) {
 		this.technologies.put(technology, new HashSet<Technology>());
 	}
-
+	
 	private boolean contains(Technology technology) {
 		return this.technologies.containsKey(technology);
 	}
@@ -153,15 +150,19 @@ public class TechnologyTree {
 class CircularDependencyException extends BusinessLogicException {
 	private static final long serialVersionUID = 1055933768429983181L;
 
-	public CircularDependencyException() {
-		super("Circular dependency");
+	public CircularDependencyException(Technology technology,
+			Technology dependency) {
+		super("Circular dependency: " + technology + " cannot depend on "
+				+ dependency);
 	}
 }
 
 class RedundantDependencyException extends BusinessLogicException {
 	private static final long serialVersionUID = -4565594124803529862L;
 
-	public RedundantDependencyException() {
-		super("Redundant dependency");
+	public RedundantDependencyException(Technology technology,
+			Technology dependency) {
+		super("Redundant dependency: " + technology + " already depends on "
+				+ dependency);
 	}
 }

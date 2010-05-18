@@ -1,6 +1,7 @@
 package model.lab;
 
 import model.core.BusinessLogicException;
+import static model.core.ArgumentUtils.*;
 
 /**
  * An abstract representation of a technology that can be researched.
@@ -58,24 +59,28 @@ public abstract class Technology {
 	protected abstract void onResearch();
 
 	private void setName(String name) {
-		if (name == null)
-			throw new BusinessLogicException("Invalid name");
+		checkNotNull(name, "name");
 		this.name = name;
 	}
 
 	private void setDescription(String description) {
-		if (description == null)
-			throw new BusinessLogicException("Invalid description");
+		checkNotNull(description, "description");
 		this.description = description;
 	}
 
 	private void setResearchCost(int researchCost) {
-		if (researchCost < 0)
-			throw new BusinessLogicException("Invalid research cost");
+		checkGreaterEqual(researchCost, 0, "research cost");
 		this.researchCost = researchCost;
 	}
 
 	private void setResearched(boolean researched) {
 		this.researched = researched;
+	}
+
+	@Override
+	public String toString() {
+		return "Technology [name=" + name + ", description=" + description
+				+ ", researchCost=" + researchCost + ", researched="
+				+ researched + "]";
 	}
 }

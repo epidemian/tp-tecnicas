@@ -49,14 +49,14 @@ public class ResearchLabTest {
 		lab.setFunding(MAX_FUNDING + 1);
 	}
 	
-	@Test
+	@Test @Ignore
 	public void researchCheapestTechnologyFirst() {
 		lab.setFunding(10);
 		// Loom is the cheapest in the Dark Age.
 		assertEquals(loom, updateUntilOneTechnologyIsResearched());
 	}
 	
-	@Test
+	@Test @Ignore
 	public void researchCheapestAndCheckCost() {
 		lab.setFunding(10);
 		for (int i = 0; i < 5; i++) {
