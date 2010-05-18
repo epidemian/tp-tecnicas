@@ -2,6 +2,8 @@ package model.lab;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Set;
 
 import model.core.BusinessLogicException;
 
@@ -118,9 +120,7 @@ public class TechnologyTreeTest {
 	
 	@Test(expected = CircularDependencyException.class)
 	public void addLongCircularDependency() {
-		Technology techs[] = createAndAddTechnologyArray(5);
-		for (int i = 1; i < techs.length; i++)
-			tree.addDependency(techs[i], techs[i - 1]);
+		Technology[] techs = createAndAddDependencyChain(5);
 		assertTrue(true); // Up to here nothing should have exploded...
 		tree.addDependency(techs[0], techs[techs.length - 1]);
 	}
@@ -143,13 +143,26 @@ public class TechnologyTreeTest {
 		tree.addDependency(techs[0], techs[2]);
 	}
 	
-	@Ignore
-	@Test(expected = BusinessLogicException.class)
-	// TODO Remove. Put this logic into ResearchLab or forget about it.
-	public void addDependencyFromUnresearchedTechToResearchedTech() {
-		Technology terminator1 = createAndAddTechnology("T-800", true);
-		Technology terminator2 = createAndAddTechnology("T-1000", false);
-		tree.addDependency(terminator1, terminator2);
+	// Tests to getAllDependencies()
+	
+	@Test
+	public void getAllDependenciesOnLongDependencyChain() {
+		Technology[] techs = createAndAddDependencyChain(5);
+		for (int i = 0; i < techs.length; i++) {
+			Technology tec = techs[i];
+			Set<Technology> deps = tree.getAllDependencies(tec);
+			assertEquals(i, deps.size());
+			Technology[] expectedDeps = Arrays.copyOfRange(techs, 0, i);
+			assertTrue(deps.containsAll(Arrays.asList(expectedDeps)));
+		}
+			
+	}
+	
+	private Technology[] createAndAddDependencyChain(int size) {
+		Technology techs[] = createAndAddTechnologyArray(size);
+		for (int i = 1; i < techs.length; i++)
+			tree.addDependency(techs[i], techs[i - 1]);
+		return techs;
 	}
 	
 	private Technology[] createAndAddTechnologyArray(int size)

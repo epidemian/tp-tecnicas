@@ -5,29 +5,43 @@ import model.core.BusinessLogicException;
 public class ResearchLab {
 
 	TechnologyTree technologyTree;
-	int maxDailyFunding;
-	int dailyFunding;
+	int maxFunding;
+	int funding;
+	int accumulatedFunds;
+	Technology onResearch;
+	Technology researchTarget;
 
-	public ResearchLab(TechnologyTree technologyTree, int maxDailyFunding) {
+	public ResearchLab(TechnologyTree technologyTree, int maxFunding) {
 		super();
 		setTechnologyTree(technologyTree);
-		setMaxDailyFunding(maxDailyFunding);
-		setDailyFunding(0);
-	}
-
-	public int getMaxDailyFunding() {
-		return maxDailyFunding;
-	}
-
-	public int getDailyFunding() {
-		return dailyFunding;
+		setMaxFunding(maxFunding);
+		setFunding(0);
 	}
 	
-	public void setDailyFunding(int dailyFunding) {
-		if (dailyFunding < 0 || maxDailyFunding < dailyFunding)
+	public void startResearching(Technology technology) {
+		if (technology.isResearched())
+			throw new BusinessLogicException("Technology already researched");
+		if (getTechnologyTree().getTechnologies().contains(technology))
+			throw new BusinessLogicException("Invalid parameter");
+	}
+	
+	public void update() {
+		
+	}
+
+	public int getMaxFunding() {
+		return maxFunding;
+	}
+
+	public int getFunding() {
+		return funding;
+	}
+	
+	public void setFunding(int funding) {
+		if (funding < 0 || maxFunding < funding)
 			throw new BusinessLogicException("Daily funding must be in the "
 					+ "range [0, getMaxDailyFunding()]");
-		this.dailyFunding = dailyFunding;
+		this.funding = funding;
 	}
 
 	private TechnologyTree getTechnologyTree() {
@@ -40,11 +54,11 @@ public class ResearchLab {
 		this.technologyTree = technologyTree;
 	}
 
-	private void setMaxDailyFunding(int maxDailyFunding) {
-		if (maxDailyFunding <= 0)
+	private void setMaxFunding(int maxFunding) {
+		if (maxFunding <= 0)
 			throw new BusinessLogicException("Max daily funding must be "
 					+ "greater than zero");
-		this.maxDailyFunding = maxDailyFunding;
+		this.maxFunding = maxFunding;
 	}
 
 }

@@ -1,12 +1,9 @@
 package model.lab;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Hashtable;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -69,6 +66,28 @@ public class TechnologyTree {
 		testAddDependency(technology, dependency);
 		doAddDependency(technology, dependency);
 	}
+	
+	/**
+	 * Retrieves all dependencies for a given technology.
+	 * e.g: If A depends on B, and B depends on C and D; getAllDependencies(A)
+	 * will return B, C and D.
+	 *  
+	 * @param technology
+	 * @return
+	 */
+	Set<Technology> getAllDependencies(Technology technology) {
+		Set<Technology> deps = new HashSet<Technology>();
+		for (Technology tec : getImmediateDependencies(technology)) {
+			deps.add(tec);
+			deps.addAll(getAllDependencies(tec));
+		}
+		return deps;
+	}
+	
+	private Set<Technology> getImmediateDependencies(
+			Technology technology) {
+		return this.technologies.get(technology);
+	}
 
 	private void testAddDependency(Technology technology, Technology dependency) {
 		if (!contains(technology) || !contains(dependency))
@@ -127,20 +146,6 @@ public class TechnologyTree {
 	private boolean technologyDependsOn(Technology technology,
 			Technology dependency) {
 		return getAllDependencies(technology).contains(dependency);
-	}
-	
-	private Set<Technology> getAllDependencies( Technology technology) {
-		Set<Technology> deps = new HashSet<Technology>();
-		for (Technology tec : getImmediateDependencies(technology)) {
-			deps.add(tec);
-			deps.addAll(getAllDependencies(tec));
-		}
-		return deps;
-	}
-	
-	private Set<Technology> getImmediateDependencies(
-			Technology technology) {
-		return this.technologies.get(technology);
 	}
 
 }
