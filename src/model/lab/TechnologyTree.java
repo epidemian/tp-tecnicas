@@ -15,7 +15,15 @@ import static model.core.ArgumentUtils.*;
  * that the Age-of-Empires-inspired name 'technology tree' might not be strictly
  * accurate, as the nodes in the dependency structure might have more than one
  * parent (i.e. dependency). e.g: A has no dependencies, B and C depends on A,
- * and D depends on both B and C, is a valid dependency structure.
+ * and D depends on both B and C; are valid dependencies:
+ * 
+ * <pre>
+ *    A
+ *   / \
+ *  B   C
+ *   \ /
+ *    D
+ * </pre>
  */
 public class TechnologyTree {
 
@@ -128,7 +136,7 @@ public class TechnologyTree {
 	private void doAddTechnology(Technology technology) {
 		this.technologies.put(technology, new HashSet<Technology>());
 	}
-	
+
 	private boolean contains(Technology technology) {
 		return this.technologies.containsKey(technology);
 	}
