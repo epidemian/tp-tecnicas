@@ -20,9 +20,7 @@ public class Player {
 	}
 	
 	private boolean LostGame(){
-		//TODO: 
-		float factoryBalanceForDay = 0;
-		return (GetBalance() <= 0) || (factoryBalanceForDay < 0);
+		return (GetBalance() <= 0) || (factory.GetDailyBalance() < 0);
 	}
 	
 	private boolean WinGame(){
