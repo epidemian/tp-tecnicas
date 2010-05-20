@@ -29,7 +29,8 @@ public class RawMaterial {
 		if (isEnough)
 			this.setQuantity(this.quantity - quantity);
 		else
-			throw new NotEnoughRawMaterialException("Extract " + quantity  + " from " + this.name);
+			throw new NotEnoughRawMaterialException("Extract " + quantity  
+					+ " from " + this.name);
 	}
 	
 	public boolean canExtract(int quantity){

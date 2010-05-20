@@ -1,6 +1,6 @@
 package model.production;
 
-import model.core.BusinessLogicException;
+import static model.core.ArgumentUtils.*;
 
 /**
  * Representation of a product that can be created in the assembly plant.
@@ -9,32 +9,31 @@ import model.core.BusinessLogicException;
 public class Product {
 
 	private ProductType productType;
-	private boolean damaged;
+	private boolean defective;
 
 	public Product(ProductType productType){
-		this.setDamaged(false);
+		this.setDefective(false);
 		this.setProductType(productType);
-	}	
+	}
 	
-	public void setDamaged(boolean damage) {
-		this.damaged = damage;
-	}
-
 	public boolean isDamaged() {
-		return damaged;
+		return defective;
 	}
 
-	public void breakUp(){
-		this.damaged = true;
+	public void setDefective(){
+		this.defective = true;
 	}
 	
 	public ProductType getProductType() {
 		return productType;
 	}	
 
+	private void setDefective(boolean defective) {
+		this.defective = defective;
+	}
+
 	private void setProductType(ProductType productType) {
-		if (productType == null)
-			throw new BusinessLogicException("Invalid productType");
+		checkNotNull(productType, "productType");
 		this.productType = productType;
 	}
 }
