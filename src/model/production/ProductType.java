@@ -1,8 +1,8 @@
 package model.production;
 
-import java.util.ArrayList;
+import static model.core.ArgumentUtils.*;
 
-import model.core.BusinessLogicException;
+import java.util.ArrayList;
 
 /**
  * Specifies a product type.
@@ -10,12 +10,6 @@ import model.core.BusinessLogicException;
  * 
  */
 public class ProductType {
-	
-	/**
-	 * Every sequenceProduct which does not produce a known product produces 
-	 * ProductType waste 
-	 */
-	private static ProductType waste;
 	
 	private ArrayList<RawMaterial> rawMaterialsNeeded;
 	private String name;
@@ -33,23 +27,12 @@ public class ProductType {
 		return name;
 	}
 	
-	public int hashCode(){
-		return this.name.hashCode();
-	}	
-
-	public static void setWasteProductType(ProductType waste){
-		ProductType.waste = waste;
-	}
-	
 	private void setRawMaterialsNeeded(ArrayList<RawMaterial> rawMaterialsNeeded) {
-		if (rawMaterialsNeeded == null)
-			throw new BusinessLogicException("Invalid rawMaterialsNeeded");
+		checkNotNull(rawMaterialsNeeded, "rawMaterialsNeeded");
 		this.rawMaterialsNeeded = rawMaterialsNeeded;
 	}
 
 	private void setName(String name) {
-		if (name == null)
-			throw new BusinessLogicException("Invalid name");
-		this.name = name;
+		checkNotNull(name, "name");
 	}
 }
