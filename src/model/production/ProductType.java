@@ -9,13 +9,12 @@ import java.util.ArrayList;
  * A product type has a name and the raw materials needed to create a product. 
  * 
  */
-public class ProductType {
+public class ProductType extends AbstractType {
 	
 	private ArrayList<RawMaterial> rawMaterialsNeeded;
-	private String name;
 	
 	public ProductType(String name, ArrayList<RawMaterial> rawMaterialsNeeded){
-		this.setName(name);		
+		super(name);		
 		this.setRawMaterialsNeeded(rawMaterialsNeeded);
 	}
 	
@@ -23,16 +22,9 @@ public class ProductType {
 		return rawMaterialsNeeded;
 	}
 	
-	public String getName() {
-		return name;
-	}
-	
-	private void setRawMaterialsNeeded(ArrayList<RawMaterial> rawMaterialsNeeded) {
+	private void setRawMaterialsNeeded(ArrayList<RawMaterial>
+		rawMaterialsNeeded) {
 		checkNotNull(rawMaterialsNeeded, "rawMaterialsNeeded");
 		this.rawMaterialsNeeded = rawMaterialsNeeded;
-	}
-
-	private void setName(String name) {
-		checkNotNull(name, "name");
 	}
 }
