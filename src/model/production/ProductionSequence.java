@@ -28,5 +28,13 @@ public class ProductionSequence {
 	public ProductType identifyProduct(){
 		throw new NotImplementedException();
 	}
+
+	public void setLineElements(ArrayList<ProductionLineElement> lineElements) {
+		this.lineElements = lineElements;
+	}
+
+	public ArrayList<ProductionLineElement> getLineElements() {
+		return lineElements;
+	}
 }
 

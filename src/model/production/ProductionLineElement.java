@@ -8,4 +8,7 @@ public class ProductionLineElement extends Container{
 		throw new NotImplementedException();
 	}
 	
+	public boolean isProductionMachine(){
+		return false;
+	}
 }
