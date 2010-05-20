@@ -5,11 +5,11 @@ import model.warehouse.Warehouse;
 
 public class Player {
 	private Warehouse warehouse;
-	private float initialMoney;
-	private float moneyEarned;
-	private float moneySpent;
-	private float valueToWin;
-	private int dayForPurchaseRent;
+	private float initialMoney = 0;
+	private float moneyEarned = 0;
+	private float moneySpent = 0;
+	private float valueToWin = 0;
+	private int dayForPurchaseRent = 0;
 	
 	public void Player(float initialMoney, float valueToWin){
 		this.initialMoney = initialMoney;
@@ -17,7 +17,7 @@ public class Player {
 	}
 	
 	private float getBalance(){
-		return moneyEarned - moneySpent;	
+		return (initialMoney + moneyEarned) - moneySpent;	
 	}
 	
 	private boolean lostGame(){
@@ -29,7 +29,7 @@ public class Player {
 	}
 	
 	private void payOfRent(){		
-		moneyEarned -= warehouse.getPriceOfRent();	
+		moneySpent += warehouse.getPriceOfRent();	
 	}
 	
 	public boolean purchaseGround(Ground ground){
@@ -37,9 +37,11 @@ public class Player {
 			return false;
 		}
 		
-		warehouse = new Warehouse();
+		warehouse = new Warehouse(ground);
 		
-		//TODO: Implement
+		moneySpent += ground.getPrice();
+		
+		//TODO: How to Set state of purchase?
 		
 		return true;	
 	}
@@ -47,9 +49,9 @@ public class Player {
 	public void rentGround(Ground ground, int dayForPurchaseRent){
 		this.dayForPurchaseRent = dayForPurchaseRent;
 		
-		warehouse = new Warehouse();
+		warehouse = new Warehouse(ground);
 		
-		//TODO: Implement
+		//TODO: How to Set state of rent?
 	}
 	
 	public void executeDay(){

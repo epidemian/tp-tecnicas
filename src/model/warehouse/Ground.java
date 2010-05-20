@@ -5,14 +5,10 @@ public class Ground {
 	//private tiles;
 	private float price;
 	
-	public Ground(){
+	public Ground(float price){
 		//tiles = new ();
 	}
-	
-	public void setPrice(float price) {
-		this.price = price;
-	}
-	
+		
 	public float getPrice() {
 		return price;
 	}

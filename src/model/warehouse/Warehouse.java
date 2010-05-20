@@ -6,10 +6,8 @@ import model.production.StorageArea;
 import model.warehouse.Ground;
 
 public class Warehouse {
-	//TODO: How to use ProductionLines?
-	//protected  ProductionLines;
-	protected Ground ground;
-	
+	private Ground ground;
+		
 	/**
 	 * Contains the raw material and the products already finished
 	 */
@@ -17,6 +15,14 @@ public class Warehouse {
 	
 	private ArrayList<ProductionLine> productionLines;
 	
+	public Warehouse(Ground ground){
+		this.ground = ground;
+	}
+	
+	public void setPrice(Ground ground) {
+		this.ground = ground;
+	}
+		
 	public float sell(){
 		float valueOfSell = 0;
 		
