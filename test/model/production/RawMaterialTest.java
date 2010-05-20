@@ -47,6 +47,4 @@ public class RawMaterialTest {
 		boolean isEquals = this.rawMaterial.equals(rawMaterial);
 		assertTrue(isEquals);
 	}
-	
-	
 }

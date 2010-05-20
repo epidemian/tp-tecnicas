@@ -1,6 +1,6 @@
 package model.production;
 
-import model.core.BusinessLogicException;
+import static model.core.ArgumentUtils.*;
 
 /**
  * Representation of a raw material that can be used to create products.
@@ -29,7 +29,7 @@ public class RawMaterial {
 		if (isEnough)
 			this.setQuantity(this.quantity - quantity);
 		else
-			throw new NotEnoughRawMaterialException("You try to extract " + quantity  + " from " + this.name);
+			throw new NotEnoughRawMaterialException("Extract " + quantity  + " from " + this.name);
 	}
 	
 	public boolean canExtract(int quantity){
@@ -61,12 +61,10 @@ public class RawMaterial {
 	}
 
 	private void validateQuantity(int quantity){
-		if (quantity < 0)
-			throw new BusinessLogicException("Invalid quantity");
+		checkGreaterEqual(quantity,0,"quantity");
 	}
 	
 	private void validateName(String name){
-		if (name == null)
-			throw new BusinessLogicException("Invalid name");
+		checkNotNull(name, "name");
 	}
 }

@@ -1,8 +1,12 @@
 package model.production;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-
 public class ProductionSequenceTree {
 
+	public boolean isValid(ProductionSequence sequence){
+		return true;
+	}
+	
+	public void addValidProductionSequence(ProductionSequence sequence){
+		
+	}	
 }
