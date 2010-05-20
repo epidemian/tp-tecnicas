@@ -5,7 +5,7 @@ public abstract class Warehouse {
 	//protected  ProductionLines;
 	protected Ground ground;
 	
-	abstract float sell();
+	public abstract float sell();
 		
 	public void executeTurn(){
 		//TODO: Implement Method
