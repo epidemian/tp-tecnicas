@@ -1,9 +1,20 @@
 package model.warehouse;
 
+import java.util.ArrayList;
+import model.production.ProductionLine;
+import model.production.StorageArea;
+
 public abstract class Warehouse {
 	//TODO: How to use ProductionLines?
 	//protected  ProductionLines;
 	protected Ground ground;
+	
+	/**
+	 * Contains the raw material and the products already finished
+	 */
+	private StorageArea storageArea;
+	
+	private ArrayList<ProductionLine> productionLines;
 	
 	public abstract float sell();
 		
