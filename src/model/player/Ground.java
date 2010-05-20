@@ -5,7 +5,7 @@ public class Ground {
 	//private tiles;
 	private float price;
 	
-	public void Ground(){
+	public Ground(){
 		//tiles = new ();
 	}
 	

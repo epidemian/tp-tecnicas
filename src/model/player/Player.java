@@ -1,7 +1,9 @@
 package model.player;
 
+import model.player.Warehouse;
+
 public class Player {
-	private Factory factory;
+	private Warehouse warehouse;
 	private float initialMoney;
 	private float moneyEarned;
 	private float moneySpent;
@@ -12,31 +14,30 @@ public class Player {
 		this.initialMoney = initialMoney;
 		this.valueToWin = valueToWin;
 		this.dayForPurchaseRent = dayForPurchaseRent;
-		factory = new Factory();
 	}
 	
-	private float GetBalance(){
+	private float getBalance(){
 		return moneyEarned - moneySpent;	
 	}
 	
-	private boolean LostGame(){
-		return (GetBalance() <= 0) || (factory.GetDailyBalance() < 0);
+	private boolean lostGame(){
+		return (getBalance() <= 0) || (warehouse.getDailyBalance() < 0);
 	}
 	
-	private boolean WinGame(){
-		return GetBalance() >= valueToWin;	
+	private boolean winGame(){
+		return getBalance() >= valueToWin;	
 	}
 	
-	private void PayOfRent(){
+	private void payOfRent(){
 		//TODO: Implement Method	
 	}
 	
-	public boolean PurchaseGround(){
+	public boolean purchaseGround(){
 		//TODO: Implement Method
 		return false;	
 	}
 	
-	public void ExecuteDay(){
+	public void executeDay(){
 		//TODO: Implement Method
 	}
 }
