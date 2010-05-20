@@ -3,8 +3,9 @@ package model.warehouse;
 import java.util.ArrayList;
 import model.production.ProductionLine;
 import model.production.StorageArea;
+import model.warehouse.Ground;
 
-public abstract class Warehouse {
+public class Warehouse {
 	//TODO: How to use ProductionLines?
 	//protected  ProductionLines;
 	protected Ground ground;
@@ -16,7 +17,21 @@ public abstract class Warehouse {
 	
 	private ArrayList<ProductionLine> productionLines;
 	
-	public abstract float sell();
+	public float sell(){
+		float valueOfSell = 0;
+		
+		//TODO: Implement Price of Machines not broken
+		
+		if(true){
+			valueOfSell += 0.8 * ground.getPrice();
+		}
+		
+		return valueOfSell;
+	};
+	
+	public float getPriceOfRent(){
+		return ground.getPrice();
+	}
 		
 	public void executeTurn(){
 		//TODO: Implement Method

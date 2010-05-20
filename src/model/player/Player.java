@@ -1,5 +1,6 @@
 package model.player;
 
+import model.warehouse.Ground;
 import model.warehouse.Warehouse;
 
 public class Player {
@@ -10,10 +11,9 @@ public class Player {
 	private float valueToWin;
 	private int dayForPurchaseRent;
 	
-	public void Player(float initialMoney, float valueToWin, int dayForPurchaseRent){
+	public void Player(float initialMoney, float valueToWin){
 		this.initialMoney = initialMoney;
 		this.valueToWin = valueToWin;
-		this.dayForPurchaseRent = dayForPurchaseRent;
 	}
 	
 	private float getBalance(){
@@ -28,13 +28,28 @@ public class Player {
 		return getBalance() >= valueToWin;	
 	}
 	
-	private void payOfRent(){
-		//TODO: Implement Method	
+	private void payOfRent(){		
+		moneyEarned -= warehouse.getPriceOfRent();	
 	}
 	
-	public boolean purchaseGround(){
-		//TODO: Implement Method
-		return false;	
+	public boolean purchaseGround(Ground ground){
+		if(initialMoney < ground.getPrice()) {
+			return false;
+		}
+		
+		warehouse = new Warehouse();
+		
+		//TODO: Implement
+		
+		return true;	
+	}
+	
+	public void rentGround(Ground ground, int dayForPurchaseRent){
+		this.dayForPurchaseRent = dayForPurchaseRent;
+		
+		warehouse = new Warehouse();
+		
+		//TODO: Implement
 	}
 	
 	public void executeDay(){
