@@ -11,7 +11,7 @@ public class ProductionSequence {
 	 * Contains all the known combinations which produce valid products
 	 * and also the productType related to the sequence.
 	 */
-	static private ProductionSequenceCollection validSequences;
+	//static private ProductionSequenceCollection validSequences;
 
 	/**
 	 * Contains the machines and conveyers of a specific line of production
@@ -46,7 +46,7 @@ public class ProductionSequence {
 		
 		ProductionSequence anotherSequence=(ProductionSequence) obj;
 		
-		Iterator<MachineType> itList=this.getLineMachines().iterator();
+		/*Iterator<MachineType> itList=this.getLineMachines().iterator();
 		Iterator<MachineType> itAnotherList = anotherSequence.getLineMachines().iterator();
 		
 		// compare pairs of machinetypes
@@ -59,8 +59,11 @@ public class ProductionSequence {
 		if (itList.hasNext() || itAnotherList.hasNext())
 			return false;
 		
+		*/
 		
-		return true;
+		return this.lineMachines.equals(anotherSequence.lineMachines);
+		
+		//return true;
 	}
 }
 

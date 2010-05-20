@@ -2,7 +2,7 @@ package model.production;
 
 import static model.core.ArgumentUtils.*;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Specifies a product type.
@@ -11,20 +11,31 @@ import java.util.ArrayList;
  */
 public class ProductType extends AbstractType {
 	
-	private ArrayList<RawMaterial> rawMaterialsNeeded;
+	private List<RawMaterial> rawMaterialsNeeded;
+	private static final String WASTE_NAME = "waste";
 	
-	public ProductType(String name, ArrayList<RawMaterial> rawMaterialsNeeded){
+	public static ProductType createWaste(List<RawMaterial> rawMaterialsNeeded){
+		return new ProductType(WASTE_NAME, rawMaterialsNeeded);
+	}
+	
+	public ProductType(String name, List<RawMaterial> rawMaterialsNeeded){
 		super(name);		
+		checkWasteName(name);
 		this.setRawMaterialsNeeded(rawMaterialsNeeded);
 	}
 	
-	public ArrayList<RawMaterial> getRawMaterialsNeeded() {
+	public List<RawMaterial> getRawMaterialsNeeded() {
 		return rawMaterialsNeeded;
 	}
 	
-	private void setRawMaterialsNeeded(ArrayList<RawMaterial>
+	private void setRawMaterialsNeeded(List<RawMaterial>
 		rawMaterialsNeeded) {
 		checkNotNull(rawMaterialsNeeded, "rawMaterialsNeeded");
 		this.rawMaterialsNeeded = rawMaterialsNeeded;
+	}
+	
+	private void checkWasteName(String name){
+		checkArgCondition(name, !name.equals(WASTE_NAME), "cannot be " 
+				+ this.WASTE_NAME);
 	}
 }
