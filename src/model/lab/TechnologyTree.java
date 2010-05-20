@@ -28,7 +28,7 @@ import static model.core.ArgumentUtils.*;
 public class TechnologyTree {
 
 	/**
-	 * Key: technology, Value: dependencies.
+	 * Key: technology, value: dependencies.
 	 */
 	private Map<Technology, Set<Technology>> technologies;
 
@@ -47,8 +47,8 @@ public class TechnologyTree {
 	 *         Changes to the returned collection do not affect the technology
 	 *         tree.
 	 */
-	public Collection<Technology> getTechnologies() {
-		return Collections.unmodifiableCollection(this.technologies.keySet());
+	public Set<Technology> getTechnologies() {
+		return Collections.unmodifiableSet(this.technologies.keySet());
 	}
 
 	/**
@@ -86,11 +86,19 @@ public class TechnologyTree {
 	 */
 	Set<Technology> getAllDependencies(Technology technology) {
 		Set<Technology> deps = new HashSet<Technology>();
-		for (Technology tec : getImmediateDependencies(technology)) {
-			deps.add(tec);
-			deps.addAll(getAllDependencies(tec));
+		for (Technology tech : getImmediateDependencies(technology)) {
+			deps.add(tech);
+			deps.addAll(getAllDependencies(tech));
 		}
 		return deps;
+	}
+	
+	boolean areAllDependenciesResearched(Technology technology) {
+		for (Technology dep : getAllDependencies(technology)) {
+			if (!dep.isResearched())
+				return false;
+		}
+		return true;
 	}
 
 	private Set<Technology> getImmediateDependencies(Technology technology) {

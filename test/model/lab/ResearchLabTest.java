@@ -49,17 +49,30 @@ public class ResearchLabTest {
 		lab.setFunding(MAX_FUNDING + 1);
 	}
 	
-	@Test @Ignore
+	@Test(expected = BusinessLogicException.class)
+	public void startResearchingAlreadyResearchedTechnology() {
+		setUpByAge(2); 
+		lab.startResearching(wheelbarrow);
+	}
+	
+	@Test(expected = BusinessLogicException.class)
+	public void startResearchingNonExistentTechnology() {
+		lab.startResearching(createTechnology("Fruit", 0, false));
+	}
+	
+	@Test
 	public void researchCheapestTechnologyFirst() {
 		lab.setFunding(10);
 		// Loom is the cheapest in the Dark Age.
 		assertEquals(loom, updateUntilOneTechnologyIsResearched());
 	}
 	
-	@Test @Ignore
+	@Test
 	public void researchCheapestAndCheckCost() {
-		lab.setFunding(10);
-		for (int i = 0; i < 5; i++) {
+		final int FUNDING = 10;
+		lab.setFunding(FUNDING);
+		final int ITERATIONS = loom.getResearchCost() / FUNDING;
+		for (int i = 0; i < ITERATIONS; i++) {
 			lab.update();
 			assertEquals("Iteration " + i, i == 4, loom.isResearched());
 		}
@@ -93,10 +106,16 @@ public class ResearchLabTest {
 		return t;
 	}
 	
-	private void setUpByAge(int age) {
+	private void setUpByAge(int age) {		
+		createAllTechnologies(age);
 		TechnologyTree techTree = new TechnologyTree();
+		addAllTechnologies(techTree);
+		addAllDependencies(techTree);
+		lab = new ResearchLab(techTree, MAX_FUNDING);
+	}
+
+	private void createAllTechnologies(int age) {
 		allTechnologies = new ArrayList<Technology>();
-		
 		loom                 = createTechnology("Loom",         50,   age > 0);
 		advanceToFeudalAge   = createTechnology("Feudal Age",   500,  age > 0);
 		wheelbarrow          = createTechnology("Wheelbarrow",  225,  age > 1);
@@ -105,7 +124,9 @@ public class ResearchLabTest {
 		handCart             = createTechnology("Hand Cart",    500,  age > 2);
 		TownPatrol           = createTechnology("Town Patrol",  500,  age > 2);
 		advanceToImperialAge = createTechnology("Imperial Age", 1800, age > 2);
-		
+	}
+	
+	private void addAllTechnologies(TechnologyTree techTree) {
 		techTree.addTechnology(loom);
 		techTree.addTechnology(advanceToFeudalAge);
 		techTree.addTechnology(wheelbarrow);
@@ -114,7 +135,9 @@ public class ResearchLabTest {
 		techTree.addTechnology(handCart);
 		techTree.addTechnology(TownPatrol);
 		techTree.addTechnology(advanceToImperialAge);
-		
+	}
+	
+	private void addAllDependencies(TechnologyTree techTree) {
 		techTree.addDependency(wheelbarrow, advanceToFeudalAge);
 		techTree.addDependency(townWatch, advanceToFeudalAge);
 		techTree.addDependency(advanceToCastleAge, advanceToFeudalAge);
@@ -123,7 +146,5 @@ public class ResearchLabTest {
 		techTree.addDependency(TownPatrol, advanceToCastleAge);
 		techTree.addDependency(TownPatrol, townWatch);
 		techTree.addDependency(advanceToImperialAge, advanceToCastleAge);
-		
-		lab = new ResearchLab(techTree, MAX_FUNDING);
 	}
 }

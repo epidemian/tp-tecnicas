@@ -157,6 +157,23 @@ public class TechnologyTreeTest {
 			
 	}
 	
+	// Tests to areAllDependenciesResearched()
+	
+	@Test @Ignore
+	public void allDependenciesResearchedOnTechnologyWithNoDependencies() {
+		throw new RuntimeException("Not implemented");
+	}
+	
+	@Test @Ignore
+	public void allDependenciesResearchedOnTechnologyWithOneDependency() {
+		throw new RuntimeException("Not implemented");
+	}
+	
+	@Test @Ignore
+	public void allDependenciesResearchedOnTechnologyWithManyDependencies() {
+		throw new RuntimeException("Not implemented");
+	}
+	
 	private Technology[] createAndAddDependencyChain(int size) {
 		Technology techs[] = createAndAddTechnologyArray(size);
 		for (int i = 1; i < techs.length; i++)
