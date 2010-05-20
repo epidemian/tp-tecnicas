@@ -1,6 +1,6 @@
 package model.player;
 
-import model.player.Warehouse;
+import model.warehouse.Warehouse;
 
 public class Player {
 	private Warehouse warehouse;
