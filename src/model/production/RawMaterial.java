@@ -24,14 +24,15 @@ public class RawMaterial {
 		return quantity;
 	}
 
-	public boolean extract(int quantity){
-		boolean isEnough = isEnoughRawMaterial(quantity);
+	public void extract(int quantity) throws NotEnoughRawMaterialException{
+		boolean isEnough = canExtract(quantity);
 		if (isEnough)
 			this.setQuantity(this.quantity - quantity);
-		return isEnough;
+		else
+			throw new NotEnoughRawMaterialException("You try to extract " + quantity  + " from " + this.name);
 	}
 	
-	public boolean isEnoughRawMaterial(int quantity){
+	public boolean canExtract(int quantity){
 		this.validateQuantity(quantity);
 		return (this.quantity - quantity >= 0);
 	}

@@ -37,7 +37,7 @@ public class StorageArea {
 			int index = this.rawMaterials.indexOf(entry);
 			if (index >= 0){
 				if (!this.rawMaterials.get(index)
-						.isEnoughRawMaterial(entry.getQuantity())){
+						.canExtract(entry.getQuantity())){
 					rawMaterialsNeededToProduce
 					.add(this.rawMaterials.get(index));
 				}
@@ -55,8 +55,13 @@ public class StorageArea {
 			 * We can produce =), so we extract the raw material needed.
 			 */
 			for (int i = 0; i < rawMaterialsNeededToProduce.size(); i++){
-				this.rawMaterials.get(i).extract
-				(productType.getRawMaterialsNeeded().get(i).getQuantity());
+				try {
+					this.rawMaterials.get(i).extract
+					(productType.getRawMaterialsNeeded().get(i).getQuantity());
+				} catch (NotEnoughRawMaterialException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			product = new Product(productType);
 		}
