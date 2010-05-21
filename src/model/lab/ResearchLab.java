@@ -1,6 +1,6 @@
 package model.lab;
 
-import static model.core.ArgumentUtils.*;
+import static model.utils.ArgumentUtils.*;
 
 import java.util.Collection;
 import java.util.HashSet;

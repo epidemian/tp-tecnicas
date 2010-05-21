@@ -2,7 +2,7 @@ package model.lab;
 
 import org.junit.*;
 import static org.junit.Assert.*;
-import model.core.BusinessLogicException;
+import model.exception.BusinessLogicException;
 import model.lab.Technology;
 
 

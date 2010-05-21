@@ -1,6 +1,6 @@
 package model.production;
 
-import static model.core.ArgumentUtils.checkNotNull;
+import static model.utils.ArgumentUtils.checkNotNull;
 
 abstract public class AbstractType {
 

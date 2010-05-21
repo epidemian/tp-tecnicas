@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Set;
 
-import model.core.BusinessLogicException;
+import model.exception.BusinessLogicException;
 
 import org.junit.*;
 import static org.junit.Assert.*;
@@ -159,61 +159,106 @@ public class TechnologyTreeTest {
 	
 	// Tests to areAllDependenciesResearched()
 	
-	@Test @Ignore
-	public void allDependenciesResearchedOnTechnologyWithNoDependencies() {
-		throw new RuntimeException("Not implemented");
+	@Test
+	public void areAllDependenciesResearchedWithNoDependencies() {
+		Technology t = createAndAddTechnology();
+		assertTrue(tree.areAllDependenciesResearched(t));
 	}
 	
-	@Test @Ignore
-	public void allDependenciesResearchedOnTechnologyWithOneDependency() {
-		throw new RuntimeException("Not implemented");
+	@Test
+	public void areAllDependenciesResearchedWithSoleDependencyResearched() {
+		Technology t1 = createAndAddTechnology("Tech 1");
+		Technology t2 = createAndAddTechnology("Tech 2", true);
+		tree.addDependency(t1, t2);
+		assertTrue(tree.areAllDependenciesResearched(t1));
 	}
 	
-	@Test @Ignore
-	public void allDependenciesResearchedOnTechnologyWithManyDependencies() {
-		throw new RuntimeException("Not implemented");
+	@Test
+	public void areAllDependenciesResearchedWithSoleDependencyUnresearched() {
+		Technology t1 = createAndAddTechnology("Tech 1");
+		Technology t2 = createAndAddTechnology("Tech 2", false);
+		tree.addDependency(t1, t2);
+		assertFalse(tree.areAllDependenciesResearched(t1));
+	}
+	
+	@Test
+	public void areAllDependenciesResearchedWithAllDeepDependenciesResearched() {
+		Technology[] techs = createAndAddDependencyChain(5, true);
+		for (Technology tech : techs) 
+			assertTrue(tree.areAllDependenciesResearched(tech));
+	}
+	
+	@Test
+	public void areAllDependenciesResearchedWithAllDeepDependenciesUnresearched() {
+		Technology[] techs = createAndAddDependencyChain(5, false);
+		assertTrue(tree.areAllDependenciesResearched(techs[0]));
+		for (int i = 1; i < techs.length; i++)
+			assertFalse(tree.areAllDependenciesResearched(techs[i]));
+		
 	}
 	
 	private Technology[] createAndAddDependencyChain(int size) {
-		Technology techs[] = createAndAddTechnologyArray(size);
+		return createAndAddDependencyChain(size, true);
+	}
+
+	/**
+	 * Creates and retrieves a sequence of technologies of a given size, N,
+	 * where:
+	 * 
+	 * <pre>
+	 * t1 <- t2 <- ... <- tN-1 <- tN
+	 * </pre>
+	 * 
+	 * Where "<tt>X <- Y</tt>" means that Y depends on X. 
+	 * 
+	 * @param size
+	 * @param researched
+	 * @return
+	 */
+	private Technology[] createAndAddDependencyChain(int size,
+			boolean researched) {
+		Technology techs[] = createAndAddTechnologyArray(size, researched);
 		for (int i = 1; i < techs.length; i++)
 			tree.addDependency(techs[i], techs[i - 1]);
 		return techs;
 	}
-	
-	private Technology[] createAndAddTechnologyArray(int size)
-	{
-		Technology techs[] = new Technology[size]; 
-		for (int i = 0; i < techs.length; i++)
-			techs[i] = createAndAddTechnology("Tech " + i);
-		return techs;
+
+	private Technology[] createAndAddTechnologyArray(int size) {
+		return createAndAddTechnologyArray(size, true);
 	}
 	
+	private Technology[] createAndAddTechnologyArray(int size,
+			boolean researched) {
+		Technology techs[] = new Technology[size];
+		for (int i = 0; i < techs.length; i++)
+			techs[i] = createAndAddTechnology("Tech " + i, researched);
+		return techs;
+	}
+
 	private Technology createTechnology(String name, boolean researched) {
 		return new TechnologyMock(name, "Desc.", 0, researched);
 	}
-	
+
 	private Technology createTechnology(String name) {
 		return createTechnology(name, true);
 	}
-	
+
 	private Technology createTechnology() {
 		return createTechnology("Name");
 	}
-	
+
 	private Technology createAndAddTechnology(String name, boolean researched) {
 		Technology t = createTechnology(name, researched);
 		tree.addTechnology(t);
 		return t;
 	}
-	
+
 	private Technology createAndAddTechnology(String name) {
 		return createAndAddTechnology(name, true);
 	}
-	
+
 	private Technology createAndAddTechnology() {
 		return createAndAddTechnology("Name");
 	}
 
 }
-

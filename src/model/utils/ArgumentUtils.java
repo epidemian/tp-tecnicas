@@ -1,4 +1,6 @@
-package model.core;
+package model.utils;
+
+import model.exception.BusinessLogicException;
 
 public final class ArgumentUtils {
 

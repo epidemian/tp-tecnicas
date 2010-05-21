@@ -1,6 +1,6 @@
 package model.production;
 
-import model.core.BusinessLogicException;
+import model.exception.BusinessLogicException;
 
 import static org.junit.Assert.*;
 import org.junit.Before;

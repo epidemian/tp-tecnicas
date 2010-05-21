@@ -1,6 +1,6 @@
 package model.production;
 
-import static model.core.ArgumentUtils.*;
+import static model.utils.ArgumentUtils.*;
 
 import java.util.List;
 

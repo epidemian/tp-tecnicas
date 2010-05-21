@@ -7,8 +7,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import model.core.BusinessLogicException;
-import static model.core.ArgumentUtils.*;
+import model.exception.BusinessLogicException;
+import static model.utils.ArgumentUtils.*;
 
 /**
  * A collection of {@link Technology}'s with dependencies between them. Notice

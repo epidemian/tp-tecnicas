@@ -2,7 +2,7 @@ package model.production;
 
 import java.util.ArrayList;
 
-import model.core.BusinessLogicException;
+import model.exception.BusinessLogicException;
 
 public class StorageArea {
 

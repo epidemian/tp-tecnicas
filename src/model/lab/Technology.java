@@ -1,7 +1,7 @@
 package model.lab;
 
-import model.core.BusinessLogicException;
-import static model.core.ArgumentUtils.*;
+import model.exception.BusinessLogicException;
+import static model.utils.ArgumentUtils.*;
 
 /**
  * An abstract representation of a technology that can be researched.

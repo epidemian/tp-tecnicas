@@ -1,6 +1,6 @@
 package model.production;
 
-import static model.core.ArgumentUtils.*;
+import static model.utils.ArgumentUtils.*;
 
 /**
  * Representation of a product that can be created in the assembly plant.
