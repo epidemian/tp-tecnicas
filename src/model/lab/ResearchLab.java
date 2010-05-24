@@ -1,10 +1,9 @@
 package model.lab;
 
+import static model.utils.ArgumentUtils.checkArgCondition;
 import static model.utils.ArgumentUtils.*;
 
-import java.util.Collection;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 public class ResearchLab {
@@ -24,6 +23,10 @@ public class ResearchLab {
 		startResearching(null);
 	}
 
+	public Set<Technology> getTechnologies() {
+		return technologyTree.getTechnologies();
+	}
+
 	public void startResearching(Technology technology) {
 		if (technology != null) {
 			checkArgCondition(technology, !technology.isResearched(),
@@ -33,29 +36,28 @@ public class ResearchLab {
 		}
 		this.objectiveTech = technology;
 		this.accumulatedFunds = 0;
-		resolveOnResearchTechnology();
+		resolveCurrentResearchTechnology();
 	}
 
 	public void update() {
-		if (this.currentResearchTech != null) {
-			incrementFunds();
-			if (hasEnoughFundsForCurrentResearch())
-				doCurrentResearch();
+		incrementFunds();
+		while (canResearchCurrentTechnology()) {
+			researchCurrentTechnology();
+			resolveCurrentResearchTechnology();
 		}
 	}
 	
-	private boolean hasEnoughFundsForCurrentResearch() {
-		return this.accumulatedFunds >= this.currentResearchTech.getResearchCost();
+	private boolean canResearchCurrentTechnology() {
+		return this.currentResearchTech != null
+				&& this.accumulatedFunds >= this.currentResearchTech
+						.getResearchCost();
 	}
 
-	private void doCurrentResearch() {
+	private void researchCurrentTechnology() {
 		this.accumulatedFunds -= this.currentResearchTech.getResearchCost();
 		this.currentResearchTech.research();
 		if (this.currentResearchTech == this.objectiveTech)
 			this.objectiveTech = null;
-		resolveOnResearchTechnology();
-		if (this.currentResearchTech == null)
-			this.accumulatedFunds = 0;
 	}
 
 	private void incrementFunds() {
@@ -75,10 +77,11 @@ public class ResearchLab {
 		this.funding = funding;
 	}
 
-	private void resolveOnResearchTechnology() {
-		boolean haveObjective = this.objectiveTech != null;
-		this.currentResearchTech = haveObjective ? getTechnologyToResearchObjective()
-				: getCheapestResearchableTechnology();
+	private void resolveCurrentResearchTechnology() {
+		if (this.objectiveTech != null)
+			this.currentResearchTech = getTechnologyToResearchObjective();
+		else
+			this.currentResearchTech = getCheapestResearchableTechnology();
 	}
 
 	private Technology getCheapestResearchableTechnology() {

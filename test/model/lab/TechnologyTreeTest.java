@@ -236,7 +236,7 @@ public class TechnologyTreeTest {
 	}
 
 	private Technology createTechnology(String name, boolean researched) {
-		return new TechnologyMock(name, "Desc.", 0, researched);
+		return new ConcreteTechnology(name, "Desc.", 0, researched);
 	}
 
 	private Technology createTechnology(String name) {

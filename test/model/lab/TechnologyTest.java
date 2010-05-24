@@ -4,6 +4,7 @@ import org.junit.*;
 import static org.junit.Assert.*;
 import model.exception.BusinessLogicException;
 import model.lab.Technology;
+import static model.lab.ConcreteTechnology.*;
 
 
 public class TechnologyTest {
@@ -11,17 +12,17 @@ public class TechnologyTest {
 	
 	@Test(expected = BusinessLogicException.class)
 	public void createTechnologyWithNullName() {
-		new TechnologyMock(null, "", 0, false);
+		new ConcreteTechnology(null, "", 0, false);
 	}
 	
 	@Test(expected = BusinessLogicException.class)
 	public void createTechnologyWithNullDescription() {
-		new TechnologyMock("", null, 0, false);
+		new ConcreteTechnology("", null, 0, false);
 	}
 	
 	@Test(expected = BusinessLogicException.class)
 	public void createTechnologyWithNegativeCost() {
-		new TechnologyMock("", "", -1, false);
+		new ConcreteTechnology("", "", -1, false);
 	}
 	
 	@Test
@@ -55,18 +56,10 @@ public class TechnologyTest {
 		helloWorldTec.research();
 		assertEquals(HelloWorldTechnology.MESSAGE, message.toString());
 	}
-
-	private Technology createResearchedTecnology() {
-		return new TechnologyMock("Name", "Desc", 0, true);
-	}
-	
-	private Technology createUnresearchedTecnology() {
-		return new TechnologyMock("Name", "Desc", 0, false);
-	}
 	
 }
 
-class HelloWorldTechnology extends TechnologyMock {
+class HelloWorldTechnology extends Technology {
 
 	static final Object MESSAGE = "Hello World!";
 	private StringBuffer output;

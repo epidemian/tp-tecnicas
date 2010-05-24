@@ -1,31 +1,26 @@
 package model.lab;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import model.exception.BusinessLogicException;
+import static model.lab.ConcreteTechnology.*;
 
 import org.junit.*;
+
 import static org.junit.Assert.*;
 
 public class ResearchLabTest {
 
 	private static final int MAX_FUNDING = 100;
 	private ResearchLab lab;
-	private Technology loom;
-	private Technology advanceToFeudalAge;
-	private Technology     wheelbarrow;
-	private Technology     townWatch;
-	private Technology     advanceToCastleAge;
-	private Technology         handCart;
-	private Technology         TownPatrol;
-	private Technology         advanceToImperialAge;
-	private Collection<Technology> allTechnologies;
 	
 
 	@Before
 	public void setUp() {
-		setUpByAge(0);
+		lab = new ResearchLab(new TechnologyTree(), MAX_FUNDING);
 	}
 
 	@Test
@@ -51,79 +46,175 @@ public class ResearchLabTest {
 	
 	@Test(expected = BusinessLogicException.class)
 	public void startResearchingAlreadyResearchedTechnology() {
-		setUpByAge(2); 
-		lab.startResearching(wheelbarrow);
+		Technology tech = setUpWithOneUnresearchedTechnology();
+		lab.startResearching(tech);
 	}
 	
 	@Test(expected = BusinessLogicException.class)
 	public void startResearchingNonExistentTechnology() {
-		lab.startResearching(createTechnology("Fruit", 0, false));
+		lab.startResearching(createUnresearchedTecnology());
 	}
 	
 	@Test
 	public void researchCheapestTechnologyFirst() {
+		Technology[] techs = setUpWithTechnologiesByCosts(100, 50);
+		Technology expensive = techs[0];
+		Technology cheapest = techs[1];
 		lab.setFunding(10);
-		// Loom is the cheapest in the Dark Age.
-		assertEquals(loom, updateUntilOneTechnologyIsResearched());
+		Technology firstResearched = updateUntilOneTechnologyIsResearched();
+		assertEquals(cheapest, firstResearched);
+		assertTrue(cheapest.isResearched());
+		assertFalse(expensive.isResearched());
 	}
 	
 	@Test
 	public void researchCheapestAndCheckCost() {
-		final int FUNDING = 10;
-		lab.setFunding(FUNDING);
-		final int ITERATIONS = loom.getResearchCost() / FUNDING;
-		for (int i = 0; i < ITERATIONS; i++) {
+		Technology[] techs = setUpWithTechnologiesByCosts(100, 50);
+		Technology cheapest = techs[1];
+		lab.setFunding(10);
+		for (int i = 1; i <= 5; i++) {
 			lab.update();
-			assertEquals("Iteration " + i, i == 4, loom.isResearched());
+			assertEquals("Iteration " + i, i == 5, cheapest.isResearched());
 		}
 	}
 	
-	private Object updateUntilOneTechnologyIsResearched() {
+	@Test
+	public void notResearchCheapestIfStartedResearchingSomethingElse() {
+		Technology[] techs = setUpWithTechnologiesByCosts(100, 50);
+		Technology expensive = techs[0];
+		Technology cheapest = techs[1];
+		lab.setFunding(10);
+		lab.startResearching(expensive);
+		Technology firstResearched = updateUntilOneTechnologyIsResearched();
+		assertEquals(expensive, firstResearched);
+		assertTrue(expensive.isResearched());
+		assertFalse(cheapest.isResearched());
+	}
+	
+	@Test
+	public void researchMoreThanOneTechnologyOnSameUpdate() {
+		Technology[] techs = setUpWithTechnologiesByCosts(75, 25);
+		Technology expensive = techs[0];
+		Technology cheapest = techs[1];
+		lab.setFunding(50);
+		lab.startResearching(expensive);
+		
+		lab.update();
+		assertFalse(expensive.isResearched());
+		assertFalse(cheapest.isResearched());
+		lab.update();
+		assertTrue(expensive.isResearched());
+		assertTrue(cheapest.isResearched());
+	}
+	
+	@Test
+	public void researchAllAoeTechnologiesAndCheckOrder() {
+		AoeTownCenterTechnologies techs = setUpWithAoeTechnologies();
+		Technology[] expectedTechs = techs.getExpectedResearchSequence();
+		lab.setFunding(50);
+		for (int i = 0; i < expectedTechs.length; i++) {
+			Technology tech = updateUntilOneTechnologyIsResearched();
+			assertEquals(expectedTechs[i], tech);
+		}
+		assertTrue(getUnresearchedTechnologies().isEmpty());
+	}
+	
+	@Test
+	public void startResearchingImperialAgeAndUpdateUntilItIsResearched() {
+		AoeTownCenterTechnologies techs = setUpWithAoeTechnologies();
+		lab.setFunding(50);
+		lab.startResearching(techs.advanceToImperialAge);
+		while (!techs.advanceToImperialAge.isResearched())
+			lab.update();
+		
+		List<Technology> agesTechs = Arrays.asList(new Technology[] {
+				techs.advanceToFeudalAge, techs.advanceToCastleAge,
+				techs.advanceToImperialAge });
+		for (Technology tech : lab.getTechnologies()) 
+			assertEquals(
+					"Only advance-to-age technologies should be researched",
+					agesTechs.contains(tech), tech.isResearched());
+	}
+	
+	private Technology updateUntilOneTechnologyIsResearched() {
 		final int MAX_UPDATES = 100;
 		int i = 0;
-		Collection<Technology> techs = getUnresearchedTechnologies();
+		Collection<Technology> unresearchedTechs = getUnresearchedTechnologies();
 		while (i++ < MAX_UPDATES) {
 			lab.update();
-			for (Technology tec : techs) 
-				if (tec.isResearched())
-					return tec;
+			for (Technology tech : unresearchedTechs) 
+				if (tech.isResearched())
+					return tech;
 		}
 		throw new RuntimeException("Infinite loop");
 	}
-
+	
 	private Collection<Technology> getUnresearchedTechnologies() {
 		Collection<Technology> unresearchedTechs = new ArrayList<Technology>();
-		for (Technology tec : allTechnologies)
+		for (Technology tec : lab.getTechnologies())
 			if (!tec.isResearched())
 				unresearchedTechs.add(tec);
 		return unresearchedTechs;
 	}
-
-	private Technology createTechnology(String name, int cost,
-			boolean researched) {
-		Technology t = new TechnologyMock(name, "Desc", cost, researched);
-		allTechnologies.add(t);
-		return t;
+	
+	private Technology[] setUpWithTechnologiesByCosts(int... costs) {
+		TechnologyTree techTree = new TechnologyTree();
+		Technology[] techs = new Technology[costs.length];
+		for (int i = 0; i < costs.length; i++) {
+			techs[i] = new ConcreteTechnology("Tech " + i, "", costs[i], false);
+			techTree.addTechnology(techs[i]);
+		}
+		lab = new ResearchLab(techTree, MAX_FUNDING);
+		return techs;
 	}
 	
-	private void setUpByAge(int age) {		
-		createAllTechnologies(age);
+	private Technology setUpWithOneUnresearchedTechnology() {
+		Technology tech = createResearchedTecnology();
 		TechnologyTree techTree = new TechnologyTree();
-		addAllTechnologies(techTree);
-		addAllDependencies(techTree);
+		techTree.addTechnology(tech);
 		lab = new ResearchLab(techTree, MAX_FUNDING);
+		return tech;
 	}
+	
+	private AoeTownCenterTechnologies setUpWithAoeTechnologies() {		
+		AoeTownCenterTechnologies techs = new AoeTownCenterTechnologies(0);
+		lab = new ResearchLab(techs.createTechnologyTree(), MAX_FUNDING);
+		return techs;
+	}
+}
 
-	private void createAllTechnologies(int age) {
-		allTechnologies = new ArrayList<Technology>();
+class AoeTownCenterTechnologies {
+	final Technology loom;
+	final Technology advanceToFeudalAge;
+	final Technology     wheelbarrow;
+	final Technology     townWatch;
+	final Technology     advanceToCastleAge;
+	final Technology         handCart;
+	final Technology         TownPatrol;
+	final Technology         advanceToImperialAge;
+	
+	public AoeTownCenterTechnologies(int age) {
 		loom                 = createTechnology("Loom",         50,   age > 0);
 		advanceToFeudalAge   = createTechnology("Feudal Age",   500,  age > 0);
 		wheelbarrow          = createTechnology("Wheelbarrow",  225,  age > 1);
 		townWatch            = createTechnology("Town Watch",   75,   age > 1);
 		advanceToCastleAge   = createTechnology("Castle Age",   1000, age > 1);
-		handCart             = createTechnology("Hand Cart",    500,  age > 2);
+		handCart             = createTechnology("Hand Cart",    550,  age > 2);
 		TownPatrol           = createTechnology("Town Patrol",  500,  age > 2);
 		advanceToImperialAge = createTechnology("Imperial Age", 1800, age > 2);
+	}
+	
+	public Technology[] getExpectedResearchSequence() {
+		return new Technology[] { loom, advanceToFeudalAge, townWatch,
+				wheelbarrow, advanceToCastleAge, TownPatrol, handCart,
+				advanceToImperialAge };
+	}
+
+	public TechnologyTree createTechnologyTree() {
+		TechnologyTree techTree = new TechnologyTree();
+		addAllTechnologies(techTree);
+		addAllDependencies(techTree);
+		return techTree;
 	}
 	
 	private void addAllTechnologies(TechnologyTree techTree) {
@@ -146,5 +237,11 @@ public class ResearchLabTest {
 		techTree.addDependency(TownPatrol, advanceToCastleAge);
 		techTree.addDependency(TownPatrol, townWatch);
 		techTree.addDependency(advanceToImperialAge, advanceToCastleAge);
+	}
+	
+	private Technology createTechnology(String name, int cost,
+			boolean researched) {
+		Technology t = new ConcreteTechnology(name, "Desc", cost, researched);
+		return t;
 	}
 }
