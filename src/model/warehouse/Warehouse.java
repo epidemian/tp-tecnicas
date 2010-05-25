@@ -9,8 +9,9 @@ import model.production.StorageArea;
 import model.warehouse.Ground;
 
 import model.game.Budget;
+import model.game.time.DailyUpdatable;;
 
-public abstract class Warehouse {
+public abstract class Warehouse implements DailyUpdatable {
 	protected Budget budget; 
 	protected Ground ground;
 		
@@ -88,5 +89,5 @@ public abstract class Warehouse {
 							 	.createValidProductionLine(previous);
 	}
 
-	public abstract void sell();
+	public abstract void sell();	
 }

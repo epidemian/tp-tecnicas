@@ -1,56 +1,35 @@
 package model.game;
 
 import model.warehouse.Ground;
-import model.warehouse.Warehouse;
+
+import model.game.Budget;
 
 public class Player {
-	private Warehouse warehouse;
-	private float initialMoney = 0;
-	private float moneyEarned = 0;
-	private float moneySpent = 0;
-	private float valueToWin = 0;
+	private Budget budget; 
+	private float valueToWin;
 	
-	public void Player(float initialMoney, float valueToWin){
-		this.initialMoney = initialMoney;
+	public Player(Budget budget, float valueToWin){
+		this.budget = budget;
 		this.valueToWin = valueToWin;
 	}
 	
-	private float getBalance(){
-		return (initialMoney + moneyEarned) - moneySpent;	
-	}
-	
 	private boolean lostGame(){
-		//return (getBalance() <= 0) || (warehouse.getDailyBalance() < 0);
+		//TODO: FALTA SABER COMO CONTROLAR EL BALANCE DIARIO DE LA FABRICA.
+		//return (budget.getBalance() <= 0) || (warehouse.getDailyBalance() < 0);
 		return false;
 	}
 	
 	private boolean winGame(){
-		return getBalance() >= valueToWin;	
-	}
-	
-	private void payOfRent(){		
-
+		return budget.getBalance() >= valueToWin;	
 	}
 	
 	public boolean purchaseGround(Ground ground){
-		if(initialMoney < ground.getPrice()) {
+		if(budget.getBalance() < ground.getPrice()) {
 			return false;
 		}
 		
-		//warehouse = new Warehouse(ground);
-		
-		//moneySpent += ground.getPrice();
-		
-		//TODO: How to Set state of purchase?
+		budget.decrement(ground.getPrice());
 		
 		return true;	
-	}
-	
-	public void rentGround(Ground ground, int dayForPurchaseRent){
-		//this.dayForPurchaseRent = dayForPurchaseRent;
-		
-		//warehouse = new Warehouse(ground);
-		
-		//TODO: How to Set state of rent?
 	}
 }

@@ -11,4 +11,12 @@ public class RentedWarehouse extends Warehouse{
 	public void sell() {
 		//TODO: Falta sumar el 50% de las máquinas en buen estado
 	}
+	
+	private void rentGround(){
+		budget.decrement(ground.getPrice());
+	}
+	
+	public void updateDay() {
+		rentGround();
+	}
 }
