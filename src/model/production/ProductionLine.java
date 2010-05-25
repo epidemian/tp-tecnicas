@@ -1,12 +1,15 @@
 package model.production;
 
+import java.util.List;
+
 public class ProductionLine {
 
+	
 	
 	/**
 	 * 
 	 */
-	private ProductionSequence line;
+	private List<Container> line;
 	
 	
 	/**

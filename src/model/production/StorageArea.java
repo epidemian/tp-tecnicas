@@ -1,9 +1,14 @@
 package model.production;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import model.exception.BusinessLogicException;
 
 public class StorageArea {
 
+	private List<Product> productsProduced;
+	
 	/**
 	 * Contains all the raw materials of the AssemblyPlant 
 	 */
@@ -11,12 +16,29 @@ public class StorageArea {
 	
 	public StorageArea(RawMaterials rawMaterials){
 		this.setRawMaterials(rawMaterials);
+		this.productsProduced = new LinkedList<Product>();
 	}
 
 	public RawMaterials getRawMaterials() {
 		return rawMaterials;
 	}
 
+	public void addProduct(Product product){
+		this.productsProduced.add(product);
+	}
+	
+	public int countDefectiveProducts(){
+		
+		int defectiveProducts = 0;
+		
+		for (Product entry : this.productsProduced){
+			if(entry.isDamaged())
+				defectiveProducts++;
+		}
+		
+		return defectiveProducts;
+	}
+	
 	/**
 	 * Creation of the product which will enter the inputStorage.
 	 */
