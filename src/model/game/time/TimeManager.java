@@ -45,21 +45,22 @@ public class TimeManager implements TickUpdatable {
 	}
 
 	public void subscribeTickUpdatable(TickUpdatable updatable) {
-		checkArgCondition(updatable, !this.tickUpdatables.contains(updatable),
-				"already suscribed");
-		this.tickUpdatables.add(updatable);
+		subscribeUpdatableTo(updatable, this.tickUpdatables);
 	}
 
 	public void subscribeDailyUpdatable(DailyUpdatable updatable) {
-		checkArgCondition(updatable, !this.dailyUpdatables.contains(updatable),
-				"already suscribed");
-		this.dailyUpdatables.add(updatable);
+		subscribeUpdatableTo(updatable, this.dailyUpdatables);
 	}
 
 	public void subscribeMonthlyUpdatable(MonthlyUpdatable updatable) {
-		checkArgCondition(updatable, !this.monthlyUpdatables
-				.contains(updatable), "already suscribed");
-		this.monthlyUpdatables.add(updatable);
+		subscribeUpdatableTo(updatable, this.monthlyUpdatables);
+	}
+
+	private <T> void subscribeUpdatableTo(T updatable, Collection<T> where) {
+		checkNotNull(updatable);
+		checkArgCondition(updatable, !where.contains(updatable),
+				"already suscribed");
+		where.add(updatable);
 	}
 
 	private void incrementTick() {
