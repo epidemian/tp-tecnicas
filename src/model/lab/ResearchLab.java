@@ -6,14 +6,16 @@ import static model.utils.ArgumentUtils.*;
 import java.util.HashSet;
 import java.util.Set;
 
+import model.game.time.DailyUpdatable;
+
 /**
  * A research lab that consumes funds to research technologies.
  */
-public class ResearchLab {
+public class ResearchLab implements DailyUpdatable {
 
 	private TechnologyTree technologyTree;
-	private int maxFunding;
-	private int funding;
+	private int maxDailyFunding;
+	private int dailyFunding;
 	private int accumulatedFunds;
 	private Technology currentResearchTech;
 	private Technology objectiveTech;
@@ -23,13 +25,13 @@ public class ResearchLab {
 	 * technologies will be researched, and a maximum funding.
 	 * 
 	 * @param technologyTree
-	 * @param maxFunding
+	 * @param maxDailyFunding
 	 */
-	public ResearchLab(TechnologyTree technologyTree, int maxFunding) {
+	public ResearchLab(TechnologyTree technologyTree, int maxDailyFunding) {
 		super();
 		setTechnologyTree(technologyTree);
-		setMaxFunding(maxFunding);
-		setFunding(0);
+		setMaxDailyFunding(maxDailyFunding);
+		setDailyFunding(0);
 		startResearching(null);
 	}
 
@@ -69,14 +71,28 @@ public class ResearchLab {
 		resolveCurrentResearchTechnology();
 	}
 
-	public void update() {
+	@Override
+	public void updateDay() {
 		incrementFunds();
 		while (canResearchCurrentTechnology()) {
 			researchCurrentTechnology();
 			resolveCurrentResearchTechnology();
 		}
 	}
-	
+
+	public int getMaxDailyFunding() {
+		return maxDailyFunding;
+	}
+
+	public int getDailyFunding() {
+		return dailyFunding;
+	}
+
+	public void setDailyFunding(int dailyFunding) {
+		checkInRange(dailyFunding, 0, getMaxDailyFunding(), "daily funding");
+		this.dailyFunding = dailyFunding;
+	}
+
 	private boolean canResearchCurrentTechnology() {
 		return this.currentResearchTech != null
 				&& this.accumulatedFunds >= this.currentResearchTech
@@ -91,20 +107,7 @@ public class ResearchLab {
 	}
 
 	private void incrementFunds() {
-		this.accumulatedFunds += getFunding();
-	}
-
-	public int getMaxFunding() {
-		return maxFunding;
-	}
-
-	public int getFunding() {
-		return funding;
-	}
-
-	public void setFunding(int funding) {
-		checkInRange(funding, 0, getMaxFunding(), "funding");
-		this.funding = funding;
+		this.accumulatedFunds += getDailyFunding();
 	}
 
 	private void resolveCurrentResearchTechnology() {
@@ -164,9 +167,9 @@ public class ResearchLab {
 		this.technologyTree = technologyTree;
 	}
 
-	private void setMaxFunding(int maxFunding) {
-		checkGreaterThan(maxFunding, 0, "max funding");
-		this.maxFunding = maxFunding;
+	private void setMaxDailyFunding(int maxDailyFunding) {
+		checkGreaterThan(maxDailyFunding, 0, "max daily funding");
+		this.maxDailyFunding = maxDailyFunding;
 	}
 
 }

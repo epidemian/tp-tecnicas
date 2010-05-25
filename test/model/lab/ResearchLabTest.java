@@ -14,34 +14,34 @@ import static org.junit.Assert.*;
 
 public class ResearchLabTest {
 
-	private static final int MAX_FUNDING = 100;
+	private static final int MAX_DAILY_FUNDING = 100;
 	private ResearchLab lab;
 	
 
 	@Before
-	public void setUp() {
-		lab = new ResearchLab(new TechnologyTree(), MAX_FUNDING);
+	public void setUpDefault() {
+		lab = new ResearchLab(new TechnologyTree(), MAX_DAILY_FUNDING);
 	}
 
 	@Test
 	public void initialDailyFundigToZero() {
-		assertEquals(0, lab.getFunding());
+		assertEquals(0, lab.getDailyFunding());
 	}
 	
 	@Test
 	public void setDailyFundigToMax() {
-		lab.setFunding(MAX_FUNDING);
-		assertEquals(MAX_FUNDING, lab.getFunding());
+		lab.setDailyFunding(MAX_DAILY_FUNDING);
+		assertEquals(MAX_DAILY_FUNDING, lab.getDailyFunding());
 	}
 	
 	@Test(expected = BusinessLogicException.class)
 	public void setDailyFundingLowerThanZero() {
-		lab.setFunding(-1);
+		lab.setDailyFunding(-1);
 	}
 	
 	@Test(expected = BusinessLogicException.class)
 	public void setDailyFundingGreaterThanMax() {
-		lab.setFunding(MAX_FUNDING + 1);
+		lab.setDailyFunding(MAX_DAILY_FUNDING + 1);
 	}
 	
 	@Test(expected = BusinessLogicException.class)
@@ -60,7 +60,7 @@ public class ResearchLabTest {
 		Technology[] techs = setUpWithTechnologiesByCosts(100, 50);
 		Technology expensive = techs[0];
 		Technology cheapest = techs[1];
-		lab.setFunding(10);
+		lab.setDailyFunding(10);
 		Technology firstResearched = updateUntilOneTechnologyIsResearched();
 		assertEquals(cheapest, firstResearched);
 		assertTrue(cheapest.isResearched());
@@ -71,9 +71,9 @@ public class ResearchLabTest {
 	public void researchCheapestAndCheckCost() {
 		Technology[] techs = setUpWithTechnologiesByCosts(100, 50);
 		Technology cheapest = techs[1];
-		lab.setFunding(10);
+		lab.setDailyFunding(10);
 		for (int i = 1; i <= 5; i++) {
-			lab.update();
+			lab.updateDay();
 			assertEquals("Iteration " + i, i == 5, cheapest.isResearched());
 		}
 	}
@@ -83,7 +83,7 @@ public class ResearchLabTest {
 		Technology[] techs = setUpWithTechnologiesByCosts(100, 50);
 		Technology expensive = techs[0];
 		Technology cheapest = techs[1];
-		lab.setFunding(10);
+		lab.setDailyFunding(10);
 		lab.startResearching(expensive);
 		Technology firstResearched = updateUntilOneTechnologyIsResearched();
 		assertEquals(expensive, firstResearched);
@@ -96,13 +96,13 @@ public class ResearchLabTest {
 		Technology[] techs = setUpWithTechnologiesByCosts(75, 25);
 		Technology expensive = techs[0];
 		Technology cheapest = techs[1];
-		lab.setFunding(50);
+		lab.setDailyFunding(50);
 		lab.startResearching(expensive);
 		
-		lab.update();
+		lab.updateDay();
 		assertFalse(expensive.isResearched());
 		assertFalse(cheapest.isResearched());
-		lab.update();
+		lab.updateDay();
 		assertTrue(expensive.isResearched());
 		assertTrue(cheapest.isResearched());
 	}
@@ -111,7 +111,7 @@ public class ResearchLabTest {
 	public void researchAllAoeTechnologiesAndCheckOrder() {
 		AoeTownCenterTechnologies techs = setUpWithAoeTechnologies();
 		Technology[] expectedTechs = techs.getExpectedResearchSequence();
-		lab.setFunding(50);
+		lab.setDailyFunding(50);
 		for (int i = 0; i < expectedTechs.length; i++) {
 			Technology tech = updateUntilOneTechnologyIsResearched();
 			assertEquals(expectedTechs[i], tech);
@@ -122,10 +122,10 @@ public class ResearchLabTest {
 	@Test
 	public void startResearchingImperialAgeAndUpdateUntilItIsResearched() {
 		AoeTownCenterTechnologies techs = setUpWithAoeTechnologies();
-		lab.setFunding(50);
+		lab.setDailyFunding(50);
 		lab.startResearching(techs.advanceToImperialAge);
 		while (!techs.advanceToImperialAge.isResearched())
-			lab.update();
+			lab.updateDay();
 		
 		List<Technology> agesTechs = Arrays.asList(new Technology[] {
 				techs.advanceToFeudalAge, techs.advanceToCastleAge,
@@ -141,7 +141,7 @@ public class ResearchLabTest {
 		int i = 0;
 		Collection<Technology> unresearchedTechs = getUnresearchedTechnologies();
 		while (i++ < MAX_UPDATES) {
-			lab.update();
+			lab.updateDay();
 			for (Technology tech : unresearchedTechs) 
 				if (tech.isResearched())
 					return tech;
@@ -164,7 +164,7 @@ public class ResearchLabTest {
 			techs[i] = new ConcreteTechnology("Tech " + i, "", costs[i], false);
 			techTree.addTechnology(techs[i]);
 		}
-		lab = new ResearchLab(techTree, MAX_FUNDING);
+		lab = new ResearchLab(techTree, MAX_DAILY_FUNDING);
 		return techs;
 	}
 	
@@ -172,13 +172,13 @@ public class ResearchLabTest {
 		Technology tech = createResearchedTecnology();
 		TechnologyTree techTree = new TechnologyTree();
 		techTree.addTechnology(tech);
-		lab = new ResearchLab(techTree, MAX_FUNDING);
+		lab = new ResearchLab(techTree, MAX_DAILY_FUNDING);
 		return tech;
 	}
 	
 	private AoeTownCenterTechnologies setUpWithAoeTechnologies() {		
 		AoeTownCenterTechnologies techs = new AoeTownCenterTechnologies(0);
-		lab = new ResearchLab(techs.createTechnologyTree(), MAX_FUNDING);
+		lab = new ResearchLab(techs.createTechnologyTree(), MAX_DAILY_FUNDING);
 		return techs;
 	}
 }
