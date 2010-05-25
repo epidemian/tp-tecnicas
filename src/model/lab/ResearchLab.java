@@ -6,6 +6,7 @@ import static model.utils.ArgumentUtils.*;
 import java.util.HashSet;
 import java.util.Set;
 
+import model.game.Budget;
 import model.game.time.DailyUpdatable;
 
 /**
@@ -14,6 +15,7 @@ import model.game.time.DailyUpdatable;
 public class ResearchLab implements DailyUpdatable {
 
 	private TechnologyTree technologyTree;
+	private Budget budget;
 	private int maxDailyFunding;
 	private int dailyFunding;
 	private int accumulatedFunds;
@@ -27,10 +29,12 @@ public class ResearchLab implements DailyUpdatable {
 	 * @param technologyTree
 	 * @param maxDailyFunding
 	 */
-	public ResearchLab(TechnologyTree technologyTree, int maxDailyFunding) {
+	public ResearchLab(TechnologyTree technologyTree, int maxDailyFunding,
+			Budget budget) {
 		super();
 		setTechnologyTree(technologyTree);
 		setMaxDailyFunding(maxDailyFunding);
+		setBudget(budget);
 		setDailyFunding(0);
 		startResearching(null);
 	}
@@ -108,6 +112,8 @@ public class ResearchLab implements DailyUpdatable {
 
 	private void incrementFunds() {
 		this.accumulatedFunds += getDailyFunding();
+		//this.getBudget().decrement(getDailyFunding());
+		// TODO: que no gaste más que lo necesario.
 	}
 
 	private void resolveCurrentResearchTechnology() {
@@ -170,6 +176,15 @@ public class ResearchLab implements DailyUpdatable {
 	private void setMaxDailyFunding(int maxDailyFunding) {
 		checkGreaterThan(maxDailyFunding, 0, "max daily funding");
 		this.maxDailyFunding = maxDailyFunding;
+	}
+
+	private Budget getBudget() {
+		return budget;
+	}
+
+	private void setBudget(Budget budget) {
+		checkNotNull(budget, "budget");
+		this.budget = budget;
 	}
 
 }

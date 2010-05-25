@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.List;
 
 import model.exception.BusinessLogicException;
+import model.game.Budget;
 import static model.lab.ConcreteTechnology.*;
 
 import org.junit.*;
@@ -15,12 +16,13 @@ import static org.junit.Assert.*;
 public class ResearchLabTest {
 
 	private static final int MAX_DAILY_FUNDING = 100;
+	private static final int INITIAL_BUDGET = 1000;
 	private ResearchLab lab;
-	
+	private Budget budget;
 
 	@Before
 	public void setUpDefault() {
-		lab = new ResearchLab(new TechnologyTree(), MAX_DAILY_FUNDING);
+		setUpWithTechnologyTree(new TechnologyTree());
 	}
 
 	@Test
@@ -164,7 +166,7 @@ public class ResearchLabTest {
 			techs[i] = new ConcreteTechnology("Tech " + i, "", costs[i], false);
 			techTree.addTechnology(techs[i]);
 		}
-		lab = new ResearchLab(techTree, MAX_DAILY_FUNDING);
+		setUpWithTechnologyTree(techTree);
 		return techs;
 	}
 	
@@ -172,14 +174,19 @@ public class ResearchLabTest {
 		Technology tech = createResearchedTecnology();
 		TechnologyTree techTree = new TechnologyTree();
 		techTree.addTechnology(tech);
-		lab = new ResearchLab(techTree, MAX_DAILY_FUNDING);
+		setUpWithTechnologyTree(techTree);
 		return tech;
 	}
 	
 	private AoeTownCenterTechnologies setUpWithAoeTechnologies() {		
 		AoeTownCenterTechnologies techs = new AoeTownCenterTechnologies(0);
-		lab = new ResearchLab(techs.createTechnologyTree(), MAX_DAILY_FUNDING);
+		setUpWithTechnologyTree(techs.createTechnologyTree());
 		return techs;
+	}
+	
+	private void setUpWithTechnologyTree(TechnologyTree technologyTree) {
+		budget = new Budget(INITIAL_BUDGET);
+		lab = new ResearchLab(technologyTree, MAX_DAILY_FUNDING, budget);
 	}
 }
 
