@@ -105,18 +105,6 @@ public class Warehouse {
 		//TODO: Implement Method
 	}
 	
-	public void addProductionLine(){
-		//TODO: Implement Method
-	}
-	
-	public void removeProductionLine(){
-		//TODO: Implement Method
-	}
-	
-	public void updateProductionLine(){
-		//TODO: Implement Method
-	}
-	
 	public float getDailyBalance(){
 		//TODO: Implement Method
 		return 0;
