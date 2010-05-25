@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import model.production.ProductionLine;
+import model.production.ProductionLineElement;
 import model.production.StorageArea;
 import model.warehouse.Ground;
 import model.production.*;
@@ -12,8 +13,6 @@ public class Warehouse {
 	
 	private Ground ground;
 		
-	private List<ProductionLineElement> lineElements; 
-	
 	/**
 	 * Contains the raw material and the products already finished
 	 */
@@ -23,24 +22,32 @@ public class Warehouse {
 	
 	public Warehouse(Ground ground){
 		this.ground = ground;
-		this.lineElements = new LinkedList<ProductionLineElement>();
 		this.productionLines = new LinkedList<ProductionLine>();
-	}
-	
-	public void addProductionLineElement(ProductionLineElement 
-			aProductionLineElement){
-		this.lineElements.add(aProductionLineElement);
 	}
 	
 	public void createProductionLines(){
 		
-		while (!this.lineElements.isEmpty()){
-			ProductionLineElement firstElement = this.lineElements.get(0);
-			
-			
-		}
+		List<ProductionLineElement> touchedElements
+			= new LinkedList<ProductionLineElement>();
+		
+		for (int i = 0; i < this.ground.getRows(); i++)
+			for (int j = 0; j < this.ground.getRows(); j++){
+				
+				ProductionLineElement lineElement = this.ground.getTile(i, j)
+					.getLineElement();
+				
+				if (lineElement != null){
+					this.processLineElement(lineElement,touchedElements);
+				}
+			}
+		
 	}
 	
+	private void processLineElement(ProductionLineElement lineElement,
+			List<ProductionLineElement> touchedElements) {
+		// TODO Coming in a few hours.
+	}
+
 	public float sell(){
 		float valueOfSell = 0;
 		

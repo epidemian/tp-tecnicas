@@ -5,6 +5,9 @@ public class Ground {
 	private float price;
 	private Tile groundTiles[][];
 	
+	private int rows;
+	private int cols;
+	
 	public Ground(float price, int rows, int cols){
 		this.price = price;
 		this.groundTiles = new Tile[rows][cols];
@@ -18,7 +21,11 @@ public class Ground {
 		return this.groundTiles[row][col];
 	}
 	
-	public void setTile(Tile tile, int row, int col){
-		this.groundTiles[row][col] = tile;
-	}	
+	public int getRows(){
+		return this.rows;
+	}
+	
+	public int getCols(){
+		return this.cols;
+	}
 }
