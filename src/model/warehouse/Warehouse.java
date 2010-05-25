@@ -1,28 +1,50 @@
 package model.warehouse;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
 import model.production.ProductionLine;
 import model.production.StorageArea;
 import model.warehouse.Ground;
+import model.production.*;
 
 public class Warehouse {
 	private Ground ground;
-		
+	
+	
+	private List<ProductionLineElement> elements; 
+	
 	/**
 	 * Contains the raw material and the products already finished
 	 */
 	private StorageArea storageArea;
 	
-	private ArrayList<ProductionLine> productionLines;
+	private List<ProductionLine> productionLines;
 	
 	public Warehouse(Ground ground){
 		this.ground = ground;
+		this.elements = new LinkedList<ProductionLineElement>();
+		this.productionLines = new LinkedList<ProductionLine>();
 	}
 	
 	public void setPrice(Ground ground) {
 		this.ground = ground;
 	}
+	
+	public void addProductionLineElement(ProductionLineElement 
+			aProductionLineElement){
+		this.elements.add(aProductionLineElement);
+	}
+	
+	public void createProductionLines(){
 		
+		while (!this.elements.isEmpty()){
+			ProductionLineElement firstElement = this.elements.get(0);
+			
+			
+		}
+	}
+	
 	public float sell(){
 		float valueOfSell = 0;
 		
