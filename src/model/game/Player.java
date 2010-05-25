@@ -9,7 +9,6 @@ public class Player {
 	private float moneyEarned = 0;
 	private float moneySpent = 0;
 	private float valueToWin = 0;
-	private int dayForPurchaseRent = 0;
 	
 	public void Player(float initialMoney, float valueToWin){
 		this.initialMoney = initialMoney;
@@ -21,7 +20,8 @@ public class Player {
 	}
 	
 	private boolean lostGame(){
-		return (getBalance() <= 0) || (warehouse.getDailyBalance() < 0);
+		//return (getBalance() <= 0) || (warehouse.getDailyBalance() < 0);
+		return false;
 	}
 	
 	private boolean winGame(){
@@ -29,7 +29,7 @@ public class Player {
 	}
 	
 	private void payOfRent(){		
-		moneySpent += warehouse.getPriceOfRent();	
+
 	}
 	
 	public boolean purchaseGround(Ground ground){
@@ -37,9 +37,9 @@ public class Player {
 			return false;
 		}
 		
-		warehouse = new Warehouse(ground);
+		//warehouse = new Warehouse(ground);
 		
-		moneySpent += ground.getPrice();
+		//moneySpent += ground.getPrice();
 		
 		//TODO: How to Set state of purchase?
 		
@@ -47,14 +47,10 @@ public class Player {
 	}
 	
 	public void rentGround(Ground ground, int dayForPurchaseRent){
-		this.dayForPurchaseRent = dayForPurchaseRent;
+		//this.dayForPurchaseRent = dayForPurchaseRent;
 		
-		warehouse = new Warehouse(ground);
+		//warehouse = new Warehouse(ground);
 		
 		//TODO: How to Set state of rent?
-	}
-	
-	public void executeDay(){
-		//TODO: Implement Method
 	}
 }

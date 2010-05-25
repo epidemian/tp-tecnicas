@@ -1,22 +1,21 @@
 package model.game;
 
 public class Budget {
+	private float balance;
 
-	private int balance;
-
-	public Budget(int initialBalance) {
+	public Budget(float initialBalance) {
 		this.balance = initialBalance;
 	}
 	
-	public int getBalance() {
+	public float getBalance() {
 		return balance;
 	}
 	
-	public void increment(int amount) {
+	public void increment(float amount) {
 		this.balance += amount;
 	}
 	
-	public void decrement(int amount) {
+	public void decrement(float amount) {
 		this.balance -= amount;
 	}
 	
