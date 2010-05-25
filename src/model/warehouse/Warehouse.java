@@ -7,7 +7,6 @@ import model.production.ProductionLine;
 import model.production.ProductionLineElement;
 import model.production.StorageArea;
 import model.warehouse.Ground;
-import model.production.*;
 
 public class Warehouse {
 	
@@ -22,10 +21,11 @@ public class Warehouse {
 	
 	public Warehouse(Ground ground){
 		this.ground = ground;
-		this.productionLines = new LinkedList<ProductionLine>();
 	}
 	
 	public void createProductionLines(){
+		
+		productionLines = new LinkedList<ProductionLine>();
 		
 		List<ProductionLineElement> touchedElements
 			= new LinkedList<ProductionLineElement>();
@@ -36,16 +36,53 @@ public class Warehouse {
 				ProductionLineElement lineElement = this.ground.getTile(i, j)
 					.getLineElement();
 				
-				if (lineElement != null){
-					this.processLineElement(lineElement,touchedElements);
+				if (lineElement != null && !touchedElements
+						.contains(lineElement)){
+					this.productionLines.add(this
+							.processLineElement(lineElement,touchedElements));
 				}
 			}
-		
 	}
 	
-	private void processLineElement(ProductionLineElement lineElement,
+	private ProductionLine processLineElement(ProductionLineElement lineElement,
 			List<ProductionLineElement> touchedElements) {
-		// TODO Coming in a few hours.
+		
+		touchedElements.add(lineElement);
+		
+		boolean circularLine = false;
+		ProductionLineElement previous = lineElement.getPreviousLineElement();
+		
+		/*
+		 * Try to find the first element in the line. 
+		 */
+		while (previous != null && !circularLine){
+		
+			if (previous == lineElement)
+				circularLine = true;
+			else
+				touchedElements.add(previous);
+			
+			previous = previous.getPreviousLineElement();
+		}
+		
+		/*
+		 * Add to the touchedElements list the production elements between 
+		 * lineElement and the last one in the line. 
+		 */
+		if (!circularLine){
+			
+			ProductionLineElement next = lineElement.getNextLineElement();
+			
+			while (next != null){
+				touchedElements.add(next);
+				next = lineElement.getNextLineElement();
+			}
+		}
+				
+		return !circularLine ? ProductionLine
+								.createCircularProductionLine(previous)
+							 : ProductionLine
+							 	.createValidProductionLine(previous);
 	}
 
 	public float sell(){

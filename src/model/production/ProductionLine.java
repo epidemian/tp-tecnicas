@@ -4,14 +4,6 @@ import java.util.List;
 
 public class ProductionLine {
 
-	
-	
-	/**
-	 * 
-	 */
-	private List<Container> line;
-	
-	
 	/**
 	 * A container to store the raw material before it enters the first machine
 	 * No production can be made if the ProductionLine does not have this Container
@@ -25,7 +17,24 @@ public class ProductionLine {
 	 * No production can be made if the ProductionLine does not have this Container
 	 */
 	private Container outputStorage;
+
+	/**
+	 * First element in the production line.
+	 */
+	private ProductionLineElement line;
 	
+	private ProductionLine(ProductionLineElement line){
+		this.line = line;
+	}
 	
+	public static ProductionLine createCircularProductionLine(
+			ProductionLineElement line){
+		// TODO not implemented yet
+		return null;
+	}
 	
+	public static ProductionLine createValidProductionLine(
+			ProductionLineElement line){
+		return new ProductionLine(line);
+	}	
 }
