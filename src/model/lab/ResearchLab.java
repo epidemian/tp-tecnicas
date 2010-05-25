@@ -5,6 +5,7 @@ import static model.utils.ArgumentUtils.*;
 
 import java.util.HashSet;
 import java.util.Set;
+import static java.lang.Math.min;
 
 import model.game.Budget;
 import model.game.time.DailyUpdatable;
@@ -19,6 +20,7 @@ public class ResearchLab implements DailyUpdatable {
 	private int maxDailyFunding;
 	private int dailyFunding;
 	private int accumulatedFunds;
+	private int unresearchedTechsCost;
 	private Technology currentResearchTech;
 	private Technology objectiveTech;
 
@@ -36,6 +38,7 @@ public class ResearchLab implements DailyUpdatable {
 		setMaxDailyFunding(maxDailyFunding);
 		setBudget(budget);
 		setDailyFunding(0);
+		initializeUnresearchedTechnologiesCost();
 		startResearching(null);
 	}
 
@@ -77,7 +80,7 @@ public class ResearchLab implements DailyUpdatable {
 
 	@Override
 	public void updateDay() {
-		incrementFunds();
+		consumeBudget();
 		while (canResearchCurrentTechnology()) {
 			researchCurrentTechnology();
 			resolveCurrentResearchTechnology();
@@ -104,16 +107,20 @@ public class ResearchLab implements DailyUpdatable {
 	}
 
 	private void researchCurrentTechnology() {
-		this.accumulatedFunds -= this.currentResearchTech.getResearchCost();
+		int researchCost = this.currentResearchTech.getResearchCost();
+		this.accumulatedFunds -= researchCost;
+		this.unresearchedTechsCost -= researchCost;
 		this.currentResearchTech.research();
 		if (this.currentResearchTech == this.objectiveTech)
 			this.objectiveTech = null;
 	}
 
-	private void incrementFunds() {
-		this.accumulatedFunds += getDailyFunding();
-		//this.getBudget().decrement(getDailyFunding());
-		// TODO: que no gaste más que lo necesario.
+	private void consumeBudget() {
+		int researchEverythingCost = this.unresearchedTechsCost
+				- this.accumulatedFunds; 
+		int budgetToConsume = min(getDailyFunding(), researchEverythingCost);
+		this.getBudget().decrement(budgetToConsume);
+		this.accumulatedFunds += budgetToConsume;
 	}
 
 	private void resolveCurrentResearchTechnology() {
@@ -128,7 +135,7 @@ public class ResearchLab implements DailyUpdatable {
 	}
 
 	private Technology getTechnologyToResearchObjective() {
-		if (canResearch(this.objectiveTech))
+		if (isResearchable(this.objectiveTech))
 			return this.objectiveTech;
 		Set<Technology> dependencies = this.technologyTree
 				.getAllDependencies(this.objectiveTech);
@@ -136,21 +143,20 @@ public class ResearchLab implements DailyUpdatable {
 	}
 
 	private Set<Technology> getAllResearchableTechnologies() {
-		return getResearchableTechnologies(getTechnologyTree()
-				.getTechnologies());
+		return getResearchableTechnologies(getTechnologies());
 	}
 
 	private Set<Technology> getResearchableTechnologies(
 			Set<Technology> technologies) {
 		Set<Technology> researchableTechs = new HashSet<Technology>();
 		for (Technology tech : technologies) {
-			if (canResearch(tech))
+			if (isResearchable(tech))
 				researchableTechs.add(tech);
 		}
 		return researchableTechs;
 	}
 
-	private boolean canResearch(Technology tech) {
+	private boolean isResearchable(Technology tech) {
 		return !tech.isResearched()
 				&& this.technologyTree.areAllDependenciesResearched(tech);
 	}
@@ -162,6 +168,21 @@ public class ResearchLab implements DailyUpdatable {
 					|| tech.getResearchCost() < cheapest.getResearchCost())
 				cheapest = tech;
 		return cheapest;
+	}
+	
+	private void initializeUnresearchedTechnologiesCost() {
+		this.unresearchedTechsCost = 0;
+		for (Technology tech : getAllUnresearchedTechnologies())
+			this.unresearchedTechsCost += tech.getResearchCost();
+	}
+
+	private Set<Technology> getAllUnresearchedTechnologies() {
+		Set<Technology> unresearchedTechs = new HashSet<Technology>();
+		for (Technology tech : getTechnologies()) {
+			if (!tech.isResearched())
+				unresearchedTechs.add(tech);
+		}
+		return unresearchedTechs;
 	}
 
 	private TechnologyTree getTechnologyTree() {

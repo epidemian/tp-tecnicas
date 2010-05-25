@@ -110,6 +110,35 @@ public class ResearchLabTest {
 	}
 	
 	@Test
+	public void researchTwoTechnologiesAndCheckBudget() {
+		Technology[] techs = setUpWithTechnologiesByCosts(25, 30);
+		int expectedBalance = INITIAL_BUDGET - 30 - 25;
+		lab.setDailyFunding(30);
+		lab.updateDay();
+		lab.updateDay();
+		
+		assertEquals(2, techs.length);
+		assertTrue(techs[0].isResearched());
+		assertTrue(techs[1].isResearched());
+		assertEquals(expectedBalance, budget.getBalance());
+		
+		lab.updateDay();
+		assertEquals(expectedBalance, budget.getBalance());
+	}
+	
+	@Test
+	public void researchFreeTechnologiesAndCheckBudget() {
+		Technology[] techs = setUpWithTechnologiesByCosts(0, 0, 0);
+		lab.setDailyFunding(30);
+		lab.updateDay();
+		
+		assertEquals(3, techs.length);
+		for (int i = 0; i < techs.length; i++)
+			assertTrue(techs[i].isResearched());
+		assertEquals(INITIAL_BUDGET, budget.getBalance());
+	}
+	
+	@Test
 	public void researchAllAoeTechnologiesAndCheckOrder() {
 		AoeTownCenterTechnologies techs = setUpWithAoeTechnologies();
 		Technology[] expectedTechs = techs.getExpectedResearchSequence();
@@ -136,6 +165,19 @@ public class ResearchLabTest {
 			assertEquals(
 					"Only advance-to-age technologies should be researched",
 					agesTechs.contains(tech), tech.isResearched());
+	}
+	
+	@Test
+	public void researchAllAoeTechnologiesAndCheckCost() {
+		AoeTownCenterTechnologies techs = setUpWithAoeTechnologies();
+		int totalCost = techs.getTotalResearchCost();
+		lab.setDailyFunding(50);
+		int nUpdates = totalCost / 50 + 1;
+		for (int i = 0; i < nUpdates; i++)
+			lab.updateDay();
+		for (Technology tech : lab.getTechnologies())
+			assertTrue(tech.isResearched());
+		assertEquals(INITIAL_BUDGET - totalCost, budget.getBalance());
 	}
 	
 	private Technology updateUntilOneTechnologyIsResearched() {
@@ -215,6 +257,13 @@ class AoeTownCenterTechnologies {
 		return new Technology[] { loom, advanceToFeudalAge, townWatch,
 				wheelbarrow, advanceToCastleAge, TownPatrol, handCart,
 				advanceToImperialAge };
+	}
+	
+	public int getTotalResearchCost() {
+		int total = 0;
+		for (Technology tech : getExpectedResearchSequence())
+			total += tech.getResearchCost();
+		return total;
 	}
 
 	public TechnologyTree createTechnologyTree() {
