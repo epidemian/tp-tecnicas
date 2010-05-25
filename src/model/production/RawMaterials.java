@@ -24,15 +24,14 @@ public class RawMaterials {
 	public void extract(RawMaterials rawMaterials) 
 	   throws NotEnoughRawMaterialException{
 	
-	boolean isEnough = canExtract(rawMaterials);
-	if (isEnough){
-		for (RawMaterialType key : rawMaterials.rawMaterials.keySet()){
-			Integer value = rawMaterials.rawMaterials.get(key);
-			this.extract(key, value.intValue());
+		if (canExtract(rawMaterials)){
+			for (RawMaterialType key : rawMaterials.rawMaterials.keySet()){
+				Integer value = rawMaterials.rawMaterials.get(key);
+				this.extract(key, value.intValue());
+			}
 		}
-	}
-	else
-		throw new NotEnoughRawMaterialException();
+		else
+			throw new NotEnoughRawMaterialException();
 	}
 	
 	public void extract(RawMaterialType rawMaterialType, int quantityNeeded)
@@ -40,8 +39,7 @@ public class RawMaterials {
 		
 		validateQuantity(quantityNeeded);
 		
-		boolean isEnough = canExtract(rawMaterialType,quantityNeeded);
-		if (isEnough){
+		if (canExtract(rawMaterialType,quantityNeeded)){
 			Integer quantity = this.rawMaterials.get(rawMaterialType);
 			this.rawMaterials.put(rawMaterialType, 
 					quantity.intValue()-quantityNeeded);
