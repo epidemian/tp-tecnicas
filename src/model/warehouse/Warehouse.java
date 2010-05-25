@@ -89,17 +89,4 @@ public abstract class Warehouse {
 	}
 
 	public abstract void sell();
-	
-	public float getPriceOfRent(){
-		return ground.getPrice();
-	}
-		
-	public void executeTurn(){
-		//TODO: Implement Method
-	}
-	
-	public float getDailyBalance(){
-		//TODO: Implement Method
-		return 0;
-	}
 }
