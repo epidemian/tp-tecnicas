@@ -1,4 +1,4 @@
-package model.player;
+package model.game;
 
 import model.warehouse.Ground;
 import model.warehouse.Warehouse;

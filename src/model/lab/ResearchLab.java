@@ -6,6 +6,9 @@ import static model.utils.ArgumentUtils.*;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * A research lab that consumes funds to research technologies.
+ */
 public class ResearchLab {
 
 	private TechnologyTree technologyTree;
@@ -15,6 +18,13 @@ public class ResearchLab {
 	private Technology currentResearchTech;
 	private Technology objectiveTech;
 
+	/**
+	 * Creates a research lab with a given technology tree, from which
+	 * technologies will be researched, and a maximum funding.
+	 * 
+	 * @param technologyTree
+	 * @param maxFunding
+	 */
 	public ResearchLab(TechnologyTree technologyTree, int maxFunding) {
 		super();
 		setTechnologyTree(technologyTree);
@@ -23,10 +33,30 @@ public class ResearchLab {
 		startResearching(null);
 	}
 
+	/**
+	 * Retrieves all technologies that were or can be researched in the lab.
+	 * 
+	 * @return
+	 */
 	public Set<Technology> getTechnologies() {
 		return technologyTree.getTechnologies();
 	}
 
+	/**
+	 * Sets a given technology as the 'objective' technology for researching.
+	 * <p>
+	 * If the objective technology is null, the lab will start researching the
+	 * cheapest technology available. Otherwise, it will research the necessary
+	 * dependencies to research the objective technology, i.e: all it's
+	 * dependencies and then the objective technology itself.
+	 * <p>
+	 * When a new objective technology is set, all the funds spent on
+	 * researching previous technologies are lost.
+	 * 
+	 * @param technology
+	 *            Must be contained in {@link TechnologyTree#getTechnologies()}
+	 *            and not be researched.
+	 */
 	public void startResearching(Technology technology) {
 		if (technology != null) {
 			checkArgCondition(technology, !technology.isResearched(),
