@@ -1,7 +1,6 @@
 package model.warehouse;
 
 public class Ground {
-	
 	private float price;
 	private Tile groundTiles[][];
 	

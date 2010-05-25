@@ -8,9 +8,11 @@ import model.production.ProductionLineElement;
 import model.production.StorageArea;
 import model.warehouse.Ground;
 
-public class Warehouse {
-	
-	private Ground ground;
+import model.game.Budget;
+
+public abstract class Warehouse {
+	protected Budget budget; 
+	protected Ground ground;
 		
 	/**
 	 * Contains the raw material and the products already finished
@@ -19,8 +21,9 @@ public class Warehouse {
 	
 	private List<ProductionLine> productionLines;
 	
-	public Warehouse(Ground ground){
+	public Warehouse(Ground ground, Budget budget){
 		this.ground = ground;
+		this.budget = budget;
 	}
 	
 	public void createProductionLines(){
@@ -85,17 +88,7 @@ public class Warehouse {
 							 	.createValidProductionLine(previous);
 	}
 
-	public float sell(){
-		float valueOfSell = 0;
-		
-		//TODO: Implement Price of Machines not broken
-		
-		if(true){
-			valueOfSell += 0.8 * ground.getPrice();
-		}
-		
-		return valueOfSell;
-	};
+	public abstract void sell();
 	
 	public float getPriceOfRent(){
 		return ground.getPrice();
