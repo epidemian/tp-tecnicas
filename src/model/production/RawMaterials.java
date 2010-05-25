@@ -10,9 +10,10 @@ import java.util.Map;
  */
 public class RawMaterials {
 
-	private Map<RawMaterialType,Integer> rawMaterials;
+	public Map<RawMaterialType,Integer> rawMaterials;
 	
 	public RawMaterials(Map<RawMaterialType,Integer> rawMaterials){
+		checkNotNull(rawMaterials, "rawMaterials");
 		this.rawMaterials = rawMaterials;
 	}
 	
@@ -20,6 +21,20 @@ public class RawMaterials {
 		this.rawMaterials = new HashMap<RawMaterialType, Integer>();
 	}
 
+	public void extract(RawMaterials rawMaterials) 
+	   throws NotEnoughRawMaterialException{
+	
+	boolean isEnough = canExtract(rawMaterials);
+	if (isEnough){
+		for (RawMaterialType key : rawMaterials.rawMaterials.keySet()){
+			Integer value = rawMaterials.rawMaterials.get(key);
+			this.extract(key, value.intValue());
+		}
+	}
+	else
+		throw new NotEnoughRawMaterialException();
+	}
+	
 	public void extract(RawMaterialType rawMaterialType, int quantityNeeded)
 		   throws NotEnoughRawMaterialException{
 		
@@ -35,52 +50,42 @@ public class RawMaterials {
 			throw new NotEnoughRawMaterialException();
 	}
 	
-	public void extract(RawMaterials rawMaterials) 
-		   throws NotEnoughRawMaterialException{
+	public boolean canExtract(RawMaterials rawMaterials){
 		
 		for (RawMaterialType key : rawMaterials.rawMaterials.keySet()){
-			Integer value = this.rawMaterials.get(key);
+			int value = rawMaterials.getRawMaterialQuantity(key);
 			
 			if (!this.canExtract(key, value))
-				throw new NotEnoughRawMaterialException();
+				return false;	
 		}
 		
-		for (RawMaterialType key : rawMaterials.rawMaterials.keySet()){
-			Integer value = this.rawMaterials.get(key);
-		
-			this.extract(key, value.intValue());
-		}
+		return true;
 	}
 	
 	public boolean canExtract(RawMaterialType rawMaterialType,
 			int quantityNeeded){
 		
-		Integer quantity = this.rawMaterials.get(rawMaterialType);
-		if (quantity != null){
-			return quantity.intValue() >= quantityNeeded;
-		}
-		else
-			return false;
+		int quantity = this.getRawMaterialQuantity(rawMaterialType);
+		return quantity >= quantityNeeded;
 	}
 
 	public void store(RawMaterialType rawMaterialType, int quantityStore){
 	
 		validateQuantity(quantityStore);
 		
-		Integer quantity = this.rawMaterials.get(rawMaterialType);
-		if (quantity == null){
-			this.rawMaterials.put(rawMaterialType, quantityStore);
-		}
-		else{
-			this.rawMaterials.put(rawMaterialType, 
-					quantityStore + quantity.intValue());
-		}
-	}
-
-	public boolean equals(Object other){
-		return this.rawMaterials.equals(((RawMaterials)other).rawMaterials);
+		int quantity = this.getRawMaterialQuantity(rawMaterialType);
+		this.rawMaterials.put(rawMaterialType, quantityStore + quantity);
 	}
 	
+	public int getRawMaterialQuantity(RawMaterialType rawMaterialType){
+		
+		Integer quantity = this.rawMaterials.get(rawMaterialType);
+		if (quantity != null)
+			return quantity.intValue();
+		else
+			return 0;
+	}
+
 	private void validateQuantity(int quantity){
 		checkGreaterEqual(quantity,0,"quantity");
 	}
