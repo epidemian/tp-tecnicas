@@ -9,10 +9,10 @@ import model.warehouse.Ground;
 import model.production.*;
 
 public class Warehouse {
+	
 	private Ground ground;
-	
-	
-	private List<ProductionLineElement> elements; 
+		
+	private List<ProductionLineElement> lineElements; 
 	
 	/**
 	 * Contains the raw material and the products already finished
@@ -23,23 +23,19 @@ public class Warehouse {
 	
 	public Warehouse(Ground ground){
 		this.ground = ground;
-		this.elements = new LinkedList<ProductionLineElement>();
+		this.lineElements = new LinkedList<ProductionLineElement>();
 		this.productionLines = new LinkedList<ProductionLine>();
-	}
-	
-	public void setPrice(Ground ground) {
-		this.ground = ground;
 	}
 	
 	public void addProductionLineElement(ProductionLineElement 
 			aProductionLineElement){
-		this.elements.add(aProductionLineElement);
+		this.lineElements.add(aProductionLineElement);
 	}
 	
 	public void createProductionLines(){
 		
-		while (!this.elements.isEmpty()){
-			ProductionLineElement firstElement = this.elements.get(0);
+		while (!this.lineElements.isEmpty()){
+			ProductionLineElement firstElement = this.lineElements.get(0);
 			
 			
 		}
