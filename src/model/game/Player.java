@@ -13,11 +13,11 @@ public class Player {
 		this.valueToWin = valueToWin;
 	}
 	
-	private boolean lostGame(){
+	public boolean lostGame(){
 		return budget.getBalance() <= 0;
 	}
 	
-	private boolean winGame(){
+	public boolean winGame(){
 		return budget.getBalance() >= valueToWin;	
 	}
 	
