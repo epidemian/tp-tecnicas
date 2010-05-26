@@ -1,18 +1,18 @@
 package model.warehouse;
 
 public class Ground {
-	private float price;
+	private int price;
 	private Tile groundTiles[][];
 	
 	private int rows;
 	private int cols;
 	
-	public Ground(float price, int rows, int cols){
+	public Ground(int price, int rows, int cols){
 		this.price = price;
 		this.groundTiles = new Tile[rows][cols];
 	}
 	
-	public float getPrice() {
+	public int getPrice() {
 		return price;
 	}
 	
