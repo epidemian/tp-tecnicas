@@ -16,7 +16,7 @@ public class Player {
 	private boolean lostGame(){
 		//TODO: FALTA SABER COMO CONTROLAR EL BALANCE DIARIO DE LA FABRICA.
 		//return (budget.getBalance() <= 0) || (warehouse.getDailyBalance() < 0);
-		return false;
+		return budget.getBalance() <= 0;
 	}
 	
 	private boolean winGame(){
