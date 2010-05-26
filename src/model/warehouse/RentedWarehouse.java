@@ -1,8 +1,9 @@
 package model.warehouse;
 
 import model.game.Budget;
+import model.game.time.MonthlyUpdatable;
 
-public class RentedWarehouse extends Warehouse{
+public class RentedWarehouse extends Warehouse implements MonthlyUpdatable{
 
 	public RentedWarehouse(Ground ground, Budget budget) {
 		super(ground, budget);
@@ -16,7 +17,8 @@ public class RentedWarehouse extends Warehouse{
 		budget.decrement(ground.getPrice());
 	}
 	
-	public void updateDay() {
+	@Override
+	public void updateMonth() {
 		payRentGround();
 	}
 }
