@@ -5,8 +5,6 @@ import static org.junit.Assert.assertEquals;
 import model.game.Budget;
 import model.game.Player;
 import model.warehouse.Ground;
-import model.warehouse.PurchaseWarehouse;
-import model.warehouse.Warehouse;
 
 import org.junit.After;
 import org.junit.AfterClass;
