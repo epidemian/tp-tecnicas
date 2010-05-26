@@ -12,4 +12,8 @@ public class PurchaseWarehouse extends Warehouse{
 		//TODO: Falta sumar el 50% de las máquinas en buen estado
 		budget.increment((int)(0.8 * ground.getPrice()));
 	}
+
+	@Override
+	public void updateMonth() {		
+	}
 }

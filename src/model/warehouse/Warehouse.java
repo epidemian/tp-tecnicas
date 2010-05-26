@@ -9,8 +9,9 @@ import model.production.StorageArea;
 import model.warehouse.Ground;
 
 import model.game.Budget;
+import model.game.time.MonthlyUpdatable;
 
-public abstract class Warehouse {
+public abstract class Warehouse implements MonthlyUpdatable{
 	protected Budget budget; 
 	protected Ground ground;
 		

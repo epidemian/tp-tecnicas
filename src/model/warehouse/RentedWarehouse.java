@@ -3,7 +3,7 @@ package model.warehouse;
 import model.game.Budget;
 import model.game.time.MonthlyUpdatable;
 
-public class RentedWarehouse extends Warehouse implements MonthlyUpdatable{
+public class RentedWarehouse extends Warehouse {
 
 	public RentedWarehouse(Ground ground, Budget budget) {
 		super(ground, budget);
