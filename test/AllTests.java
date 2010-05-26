@@ -3,6 +3,7 @@ import model.lab.ResearchLabTest;
 import model.lab.TechnologyTest;
 import model.lab.TechnologyTreeTest;
 import model.production.RawMaterialsTest;
+import model.production.StorageAreaTest;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -18,5 +19,6 @@ import org.junit.runners.Suite.SuiteClasses;
         ResearchLabTest.class,
         RawMaterialsTest.class,
         TimeManagerTest.class,
+        StorageAreaTest.class,
         })
 public class AllTests { }

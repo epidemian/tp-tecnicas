@@ -17,7 +17,7 @@ public class Product {
 
 	public Product(RawMaterials rawMaterials){
 		this.setDefective(false);
-		this.setProductType(productType);
+		//this.setProductType(productType);
 		
 		this.history = new ProductionSequence(rawMaterials);
 	}
