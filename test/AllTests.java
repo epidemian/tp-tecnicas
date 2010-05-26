@@ -4,6 +4,7 @@ import model.lab.TechnologyTest;
 import model.lab.TechnologyTreeTest;
 import model.production.RawMaterialsTest;
 import model.production.StorageAreaTest;
+import model.production.ValidProductionSequencesTest;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -20,5 +21,6 @@ import org.junit.runners.Suite.SuiteClasses;
         RawMaterialsTest.class,
         TimeManagerTest.class,
         StorageAreaTest.class,
+        ValidProductionSequencesTest.class
         })
 public class AllTests { }
