@@ -1,8 +1,9 @@
 package model.production;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import java.util.Queue;
 
-public class ProductionLineElement extends Container{
+public class ProductionLineElement {
 
 	/**
 	 * Output of the production line element.
@@ -12,6 +13,8 @@ public class ProductionLineElement extends Container{
 	 * Input of the production line element.
 	 */
 	private ProductionLineElement previousLineElement;
+	
+	private Queue<Product> productsContained;
 		
 	public void process(){
 		throw new NotImplementedException();
