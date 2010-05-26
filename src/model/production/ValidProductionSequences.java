@@ -6,14 +6,14 @@ import java.util.Map;
 public class ValidProductionSequences {
 
 	private Map<ProductionSequence,ProductType> products;
-	private final static ValidProductionSequences singleton 
+	private final static ValidProductionSequences singleton
 			= new ValidProductionSequences();
 	
 	private ValidProductionSequences(){
 		this.products = new HashMap<ProductionSequence,ProductType>();
 	}
 	
-	public static ValidProductionSequences getInstance() {
+	public static synchronized ValidProductionSequences getInstance() {
 		return singleton;
 	}
 
@@ -33,5 +33,29 @@ public class ValidProductionSequences {
 		}
 			
 		return productType;
+	}
+	
+	public boolean isEmpty(){
+		return this.products.isEmpty();
+	}
+	
+	public void clear(){
+		this.products.clear();
+	}
+	
+	@Override
+	public String toString(){
+		
+		String string = new String("Valid Production Sequences: \n");
+		
+		for (ProductionSequence key : this.products.keySet()){
+			 ProductType value = this.products.get(key);
+		
+			 string += "ProductType: " + value.toString() + " - Machines: " 
+			 		+ key.toString() + "\n";
+		} 
+		
+		return string;
+		
 	}
 }

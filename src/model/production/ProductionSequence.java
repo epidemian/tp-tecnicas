@@ -51,6 +51,17 @@ public class ProductionSequence {
 	}
 
 	@Override
+	public String toString(){
+		String string = new String();
+		
+		for (MachineType entry : this.lineMachines){
+			string += entry.toString() + " ";
+		}
+		
+		return string;
+	}
+	
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
