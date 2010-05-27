@@ -5,7 +5,6 @@ import static model.utils.ArgumentUtils.*;
 
 /**
  * An abstract representation of a technology that can be researched.
- *
  */
 public abstract class Technology {
 	
