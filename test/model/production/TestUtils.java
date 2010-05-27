@@ -64,6 +64,15 @@ public class TestUtils {
 		return list;
 	}
 	
+	public static List<Product> creatProductsWithEmptyRawMaterial(int size){
+		List<Product> list = new LinkedList<Product>();
+		
+		for (int i = 0; i < size; i++)
+			list.add(new Product(new RawMaterials()));
+		
+		return list;
+	}
+	
 	public static ProductionSequence createProductionSequence(int sizeMachines
 			, int startMachinesIndex, int sizeRawMaterials
 			, int startRawMaterialTypeIndex, int quantityRawMaterial){

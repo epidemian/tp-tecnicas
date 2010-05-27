@@ -2,13 +2,23 @@ package model.production;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
+import org.junit.Before;
 import org.junit.Test;
 
 public class ProductionLineTest {
 
-	@Test
-	public void equalsTest(){
-			
+	private ProductionLine productionLine;
+	
+	@Before
+	public void setUp(){
+		this.productionLine = this
+			.createProductionLineProcesamientoDeCartones();
+	}
+	
+	private ProductionLine createProductionLineProcesamientoDeCartones(){
+	
 		ProductionLineElement prodLineElement1 =
 			new ProductionMachine(new MachineType("Licuado"),null,null);
 		
@@ -20,29 +30,42 @@ public class ProductionLineTest {
 			new MachineType("Horno"),null,prodLineElement2);
 		prodLineElement2.setNextLineElement(prodLineElement3);
 		
-		ProductionLine prodLine = ProductionLine.createValidProductionLine(
+		return ProductionLine.createValidProductionLine(
 			prodLineElement1, new StorageArea(new RawMaterials(),
 			new ValidProductionSequences()), new  RawMaterials());
-		
-		ProductionLineElement prodLineElement1Equals =
-			new ProductionMachine(new MachineType("Licuado"),null,null);
-		
-		ProductionLineElement prodLineElement2Equals =
-			new ProductionMachine(new MachineType("Haz")
-			,null,prodLineElement1Equals);
-		prodLineElement1Equals.setNextLineElement(prodLineElement2Equals);
-		
-		ProductionLineElement prodLineElement3Equals = new ProductionMachine(
-			new MachineType("Horno"),null,prodLineElement2Equals);
-		prodLineElement2Equals.setNextLineElement(prodLineElement3Equals);
-		
-		ProductionLine prodLineEquals = ProductionLine.createValidProductionLine(
-			prodLineElement1Equals, new StorageArea(new RawMaterials(),
-			new ValidProductionSequences()), new  RawMaterials());
-				
-		assertEquals(prodLineEquals, prodLine);	
 	}
 	
+	@Test
+	public void equalsTest(){
+			
+		ProductionLine prodLineEquals = this
+			.createProductionLineProcesamientoDeCartones();
+							
+		assertEquals(prodLineEquals, this.productionLine);	
+	}
 	
+	@Test
+	public void dailyProduction(){
 	
+		int ticksInADay = 500;
+		
+		for (int ticks = 0; ticks < ticksInADay; ticks++){
+			this.productionLine.updateTick();
+		}
+		
+		int dailyProduction = this.productionLine.getDailyProduction();
+		
+		assertEquals(dailyProduction,ticksInADay-
+			this.productionLine.productionLineSize());
+		
+		this.productionLine.updateDay();
+		
+		List<Integer> dailyProductionList 
+			= this.productionLine.getProductionHistory();
+		
+		assertEquals(dailyProductionList.get(dailyProductionList.size()-1)
+			.intValue(),ticksInADay - this.productionLine.productionLineSize());
+		
+		assertEquals(0,this.productionLine.getDailyProduction());
+	}	
 }

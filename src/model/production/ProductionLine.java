@@ -86,6 +86,10 @@ public class ProductionLine implements TickUpdatable, DailyUpdatable{
 		this.dailyProduction = dailyProduction;
 	}
 	
+	public List<Integer> getProductionHistory(){
+		return this.productionHistory;
+	}
+	
 	public Iterator<ProductionLineElement> iterator(){
 		return new ProductionLineIterator();
 	}
@@ -93,7 +97,7 @@ public class ProductionLine implements TickUpdatable, DailyUpdatable{
 	public StorageArea getStorageArea() {
 		return storageArea;
 	}
-	
+
 	private void setStorageArea(StorageArea storageArea) {
 		checkNotNull(storageArea, "storageArea");
 		this.storageArea = storageArea;
