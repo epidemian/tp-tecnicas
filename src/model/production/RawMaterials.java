@@ -86,5 +86,36 @@ public class RawMaterials {
 
 	private void validateQuantity(int quantity){
 		checkGreaterEqual(quantity,0,"quantity");
+	}	
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((rawMaterials == null) ? 0 : rawMaterials.hashCode());
+		return result;
+	}
+
+	@Override
+	public String toString() {
+		return "RawMaterials [rawMaterials=" + rawMaterials + "]";
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RawMaterials other = (RawMaterials) obj;
+		if (rawMaterials == null) {
+			if (other.rawMaterials != null)
+				return false;
+		} else if (!rawMaterials.equals(other.rawMaterials))
+			return false;
+		return true;
 	}
 }

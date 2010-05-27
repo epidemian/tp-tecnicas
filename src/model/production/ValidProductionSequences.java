@@ -1,25 +1,23 @@
 package model.production;
 
+import static model.utils.ArgumentUtils.checkNotNull;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class ValidProductionSequences {
 
 	private Map<ProductionSequence,ProductType> products;
-	private final static ValidProductionSequences singleton
-			= new ValidProductionSequences();
 	
-	private ValidProductionSequences(){
+	public ValidProductionSequences(){
 		this.products = new HashMap<ProductionSequence,ProductType>();
 	}
 	
-	public static synchronized ValidProductionSequences getInstance() {
-		return singleton;
-	}
-
 	public void addValidProductionSequence(ProductionSequence sequence
 			, ProductType productType){
 	
+		checkNotNull(sequence, "sequence");
+		checkNotNull(productType, "productType");
 		this.products.put(sequence, productType);
 	}	
 	
@@ -44,18 +42,7 @@ public class ValidProductionSequences {
 	}
 	
 	@Override
-	public String toString(){
-		
-		String string = new String("Valid Production Sequences: \n");
-		
-		for (ProductionSequence key : this.products.keySet()){
-			 ProductType value = this.products.get(key);
-		
-			 string += "ProductType: " + value.toString() + " - Machines: " 
-			 		+ key.toString() + "\n";
-		} 
-		
-		return string;
-		
+	public String toString() {
+		return "ValidProductionSequences [products=" + products + "]";
 	}
 }

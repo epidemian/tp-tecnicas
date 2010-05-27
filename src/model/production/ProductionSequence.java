@@ -46,21 +46,16 @@ public class ProductionSequence {
 		this.lineMachines = lineMachines;
 	}
 
-	public ProductType identifyProductType(){
-		return ValidProductionSequences.getInstance().identifyProductType(this);
+	public ProductType identifyProductType(ValidProductionSequences validSequences){
+		return validSequences.identifyProductType(this);
 	}
 
 	@Override
-	public String toString(){
-		String string = new String();
-		
-		for (MachineType entry : this.lineMachines){
-			string += entry.toString() + " ";
-		}
-		
-		return string;
+	public String toString() {
+		return "ProductionSequence [lineMachines=" + lineMachines
+				+ ", rawMaterials=" + rawMaterials + "]";
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

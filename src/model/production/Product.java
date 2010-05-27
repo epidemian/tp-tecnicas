@@ -17,8 +17,6 @@ public class Product {
 
 	public Product(RawMaterials rawMaterials){
 		this.setDefective(false);
-		//this.setProductType(productType);
-		
 		this.history = new ProductionSequence(rawMaterials);
 	}
 	
@@ -37,8 +35,13 @@ public class Product {
 		return productType;
 	}	
 	
-	public void resolveProductType(){
-		this.setProductType(this.history.identifyProductType());
+	public void resolveProductType(ValidProductionSequences validSequences){
+		this.setProductType(this.history.identifyProductType(validSequences));
+	}
+	
+	public void addMachineTypeToHistory(MachineType machineType){
+		checkNotNull(machineType, "machineType");
+		this.history.addMachineType(machineType);
 	}
 
 	private void setDefective(boolean defective) {
