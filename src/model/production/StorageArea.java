@@ -1,21 +1,24 @@
 package model.production;
 
+import static model.utils.ArgumentUtils.checkNotNull;
+
 import java.util.LinkedList;
 import java.util.List;
-
-import model.exception.BusinessLogicException;
 
 public class StorageArea {
 
 	private List<Product> productsProduced;
+	private ValidProductionSequences validProductionSequences;
 	
 	/**
 	 * Contains all the raw materials of the AssemblyPlant 
 	 */
 	private RawMaterials rawMaterials;
 	
-	public StorageArea(RawMaterials rawMaterials){
+	public StorageArea(RawMaterials rawMaterials, 
+		ValidProductionSequences validSequences){
 		this.setRawMaterials(rawMaterials);
+		this.setValidProductionSequences(validSequences);
 		this.productsProduced = new LinkedList<Product>();
 	}
 
@@ -24,6 +27,8 @@ public class StorageArea {
 	}
 
 	public void addProduct(Product product){
+		// TODO must filter waste products?
+		product.resolveProductType(this.validProductionSequences);
 		this.productsProduced.add(product);
 	}
 	
@@ -59,9 +64,14 @@ public class StorageArea {
 		this.rawMaterials.store(rawMaterialType, quantityStore);
 	}
 	
+	private void setValidProductionSequences(ValidProductionSequences
+		validProductionSequences){
+		checkNotNull(validProductionSequences, "validProductionSequences");
+		this.validProductionSequences = validProductionSequences;
+	}
+	
 	private void setRawMaterials(RawMaterials rawMaterials) {
-		if (rawMaterials == null)
-			throw new BusinessLogicException("Invalid rawMaterials");
+		checkNotNull(rawMaterials, "rawMaterials");
 		this.rawMaterials = rawMaterials;
 	}
 }

@@ -3,9 +3,9 @@ package model.warehouse;
 import java.util.LinkedList;
 import java.util.List;
 
-import model.production.Machine;
 import model.production.ProductionLine;
 import model.production.ProductionLineElement;
+import model.production.RawMaterials;
 import model.production.StorageArea;
 import model.warehouse.Ground;
 
@@ -36,7 +36,7 @@ public abstract class Warehouse implements MonthlyUpdatable{
 			= new LinkedList<ProductionLineElement>();
 		
 		for (int i = 0; i < this.ground.getRows(); i++)
-			for (int j = 0; j < this.ground.getRows(); j++){
+			for (int j = 0; j < this.ground.getCols(); j++){
 				
 				ProductionLineElement lineElement = this.ground.getTile(i, j)
 					.getLineElement();
@@ -85,13 +85,19 @@ public abstract class Warehouse implements MonthlyUpdatable{
 		}
 				
 		return !circularLine ? ProductionLine
-								.createCircularProductionLine(previous)
+					.createCircularProductionLine(previous,this.storageArea
+					, new RawMaterials())
 							 : ProductionLine
-							 	.createValidProductionLine(previous);
+					.createValidProductionLine(previous,this.storageArea
+					, new RawMaterials());
 	}
 
 	private void sellMachines(){
+		
+		/*
+		
 		int price = 0;
+		
 		
 		if(this.productionLines != null){
 			ProductionLine productionLine = null;
@@ -105,8 +111,8 @@ public abstract class Warehouse implements MonthlyUpdatable{
 					while(lineElement != null)
 					{
 						if(lineElement instanceof Machine){
-							//TODO: Verificar el estado de las máquinas...
-							//TODO: Se puede saber de otra manera si es una máquina?
+							//TODO: Verificar el estado de las mï¿½quinas...
+							//TODO: Se puede saber de otra manera si es una mï¿½quina?
 							price += ((Machine)lineElement).getPrice();
 						}
 						
@@ -117,6 +123,8 @@ public abstract class Warehouse implements MonthlyUpdatable{
 		}
 		
 		budget.increment((int)(0.5 * price));
+		
+		*/
 	}	
 	
 	protected abstract void sellGround();

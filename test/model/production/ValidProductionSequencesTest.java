@@ -137,6 +137,4 @@ public class ValidProductionSequencesTest {
 		assertTrue(true);
 		this.validSequences.addValidProductionSequence(sequence, productType2);
 	}
-	
-	
 }

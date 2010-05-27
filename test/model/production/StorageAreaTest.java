@@ -12,7 +12,8 @@ public class StorageAreaTest {
 	
 	@Before
 	public void setUp(){
-		storageArea = new StorageArea(Contexts.createRawMaterials(2,1,10));
+		storageArea = new StorageArea(Contexts.createRawMaterials(2,1,10),
+					  new ValidProductionSequences());
 	}
 	
 	private List<Product> generateNonDefectiveProducts(){
@@ -34,7 +35,7 @@ public class StorageAreaTest {
 		
 		for (Product prod : products){
 			prod.setDefective();
-			storageArea.addProduct(prod);
+			this.storageArea.addProduct(prod);
 		}
 		
 		assertEquals(products.size(),storageArea.countDefectiveProducts());
@@ -45,7 +46,7 @@ public class StorageAreaTest {
 		List<Product> products=generateNonDefectiveProducts();
 		
 		for (Product prod : products){
-			storageArea.addProduct(prod);	
+			this.storageArea.addProduct(prod);	
 		}
 		
 		assertEquals(0,storageArea.countDefectiveProducts());
