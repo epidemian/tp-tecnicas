@@ -1,6 +1,6 @@
 package model.production;
 
-import static model.utils.ArgumentUtils.checkNotNull;
+import static model.utils.ArgumentUtils.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,13 +13,15 @@ public class ValidProductionSequences {
 		this.products = new HashMap<ProductionSequence,ProductType>();
 	}
 	
-	public void addValidProductionSequence(ProductionSequence sequence
-			, ProductType productType){
-	
+	public void addValidProductionSequence(ProductionSequence sequence,
+			ProductType productType) {
+
 		checkNotNull(sequence, "sequence");
 		checkNotNull(productType, "productType");
+		checkArgCondition(sequence, !this.products.containsKey(sequence),
+				"production sequence already contained");
 		this.products.put(sequence, productType);
-	}	
+	}
 	
 	public ProductType identifyProductType(ProductionSequence
 			productionSequence) {

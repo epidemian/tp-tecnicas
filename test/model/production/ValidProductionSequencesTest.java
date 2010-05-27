@@ -100,4 +100,43 @@ public class ValidProductionSequencesTest {
 	
 		assertFalse(this.validSequences.isEmpty());
 	}
+	
+	@Test(expected = BusinessLogicException.class)
+	public void addSameProductionSequenceTwice() {
+		this.validSequences.clear();
+		ProductionSequence sequence = this.sequencesInTheValidSequences.get(0);
+		ProductType productType = this.productTypes.get(0);
+		
+		this.validSequences.addValidProductionSequence(sequence, productType);
+		assertTrue(true);
+		this.validSequences.addValidProductionSequence(sequence, productType);
+	}
+	
+	@Test(expected = BusinessLogicException.class)
+	public void addTwoEqualProductionSequences() {
+		this.validSequences.clear();
+		ProductionSequence sequence1 = Contexts.createProductionSequence(3, 0,
+				2, 0, 40);
+		ProductionSequence sequence2 = Contexts.createProductionSequence(3, 0,
+				2, 0, 40);
+		ProductType productType = this.productTypes.get(0);
+
+		this.validSequences.addValidProductionSequence(sequence1, productType);
+		assertTrue(true);
+		this.validSequences.addValidProductionSequence(sequence2, productType);
+	}
+	
+	@Test(expected = BusinessLogicException.class)
+	public void addSameProductionSequenceTwiceForTwoDifferentProductTypes() {
+		this.validSequences.clear();
+		ProductionSequence sequence = this.sequencesInTheValidSequences.get(0);
+		ProductType productType1 = this.productTypes.get(0);
+		ProductType productType2 = this.productTypes.get(1);
+		
+		this.validSequences.addValidProductionSequence(sequence, productType1);
+		assertTrue(true);
+		this.validSequences.addValidProductionSequence(sequence, productType2);
+	}
+	
+	
 }
