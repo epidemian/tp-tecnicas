@@ -12,68 +12,6 @@ import model.game.time.TickUpdatable;
 
 public class ProductionLine implements TickUpdatable, DailyUpdatable{
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((configuration == null) ? 0 : configuration.hashCode());
-		result = prime * result + dailyProduction;
-		result = prime
-				* result
-				+ ((firstLineElement == null) ? 0 : firstLineElement.hashCode());
-		result = prime
-				* result
-				+ ((productionHistory == null) ? 0 : productionHistory
-						.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		ProductionLine other = (ProductionLine) obj;
-		if (configuration == null) {
-			if (other.configuration != null)
-				return false;
-		} else if (!configuration.equals(other.configuration))
-			return false;
-		if (dailyProduction != other.dailyProduction)
-			return false;
-		if (firstLineElement == null) {
-			if (other.firstLineElement != null)
-				return false;
-		} else if (!equalsLineElements(other.firstLineElement))
-			return false;
-		if (productionHistory == null) {
-			if (other.productionHistory != null)
-				return false;
-		} else if (!productionHistory.equals(other.productionHistory))
-			return false;
-		return true;
-	}
-
-	private boolean equalsLineElements(ProductionLineElement other){
-		Iterator<ProductionLineElement> iterator=this.iterator();	
-		
-		while(iterator.hasNext()){
-			ProductionLineElement element1=iterator.next();
-			if(!element1.equals(other))
-				return false;
-			other =other.getNextLineElement();
-		}
-		
-		if (!(other==null))
-			return false;
-		
-		return true;
-	}
-	
 	/**
 	 * First element in the production line.
 	 */
@@ -188,4 +126,91 @@ public class ProductionLine implements TickUpdatable, DailyUpdatable{
 			throw new NotImplementedException();
 		}
 	}
+
+	/*	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ProductionLine other = (ProductionLine) obj;
+		if (configuration == null) {
+			if (other.configuration != null)
+				return false;
+		} else if (!configuration.equals(other.configuration))
+			return false;
+		if (dailyProduction != other.dailyProduction)
+			return false;
+		if (firstLineElement == null) {
+			if (other.firstLineElement != null)
+				return false;
+		} else if (!equalsLineElements(other.firstLineElement))
+			return false;
+		if (productionHistory == null) {
+			if (other.productionHistory != null)
+				return false;
+		} else if (!productionHistory.equals(other.productionHistory))
+			return false;
+		return true;
+	}
+*/
+	public int productionLineSize(){
+		Iterator<ProductionLineElement> iterator = this.iterator();	
+		int size = 0;
+		
+		while(iterator.hasNext()){
+			iterator.next();
+			size++;
+		}		
+		return size;
+	}
+	
+	@Override
+	public boolean equals(Object other){
+		
+		ProductionLine otherLine = (ProductionLine)other;
+		
+		if (this.productionLineSize() != otherLine.productionLineSize())
+			return false;
+		
+		Iterator<ProductionLineElement> iterator = this.iterator();	
+		Iterator<ProductionLineElement> iteratorOther = otherLine.iterator();	
+				
+		while(iterator.hasNext()){
+			ProductionLineElement element = iterator.next();
+			ProductionLineElement elementOther = iteratorOther.next();
+		
+			if (element == null && elementOther == null)
+				continue;
+
+			if (element == null || elementOther == null)
+				return false;
+			
+			if (!element.equals(elementOther))
+				return false;
+		}
+		
+		return true;
+	}
+
+	private String toStringLine(){
+	
+		Iterator<ProductionLineElement> iterator=this.iterator();	
+		String toString = new String();
+		
+		while(iterator.hasNext()){
+			ProductionLineElement element1 = iterator.next();
+			toString += element1.toString() + " ";
+		}
+		
+		return toString;
+	}
+		
+	@Override
+	public String toString() {
+		
+		return "ProductionLine [" + this.toStringLine() + "]";
+	}	
 }

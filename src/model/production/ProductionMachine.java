@@ -26,12 +26,12 @@ public class ProductionMachine extends Machine {
 			input.setDefective();
 			this.productsProcess = 0;
 		}
+		
+		input.addMachineTypeToHistory(this.getMachineType());
 	}
 	
 	@Override
 	public int getPrice() {
 		return 0;
 	}
-
-	
 }

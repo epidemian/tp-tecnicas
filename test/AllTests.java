@@ -5,6 +5,7 @@ import model.lab.TechnologyTest;
 import model.lab.TechnologyTreeTest;
 import model.production.ProductTest;
 import model.production.ProductTypeTest;
+import model.production.ProductionLineTest;
 import model.production.ProductionSequenceTest;
 import model.production.RawMaterialsTest;
 import model.production.StorageAreaTest;
@@ -31,6 +32,7 @@ import org.junit.runners.Suite.SuiteClasses;
         TypeTest.class,
         ProductTypeTest.class,
         ProductionSequenceTest.class,
-        ProductTest.class
+        ProductTest.class,
+        ProductionLineTest.class
 })
 public class AllTests { }

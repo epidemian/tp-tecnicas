@@ -35,4 +35,15 @@ public abstract class Machine extends ProductionLineElement{
 	}
 	
 	public abstract int getPrice();
+
+	@Override
+	public String toString() {
+		return "ProductionMachine [" + this.getMachineType().toString() + "]";
+	}
+	
+	@Override
+	public boolean equals(Object other){
+		Machine otherMachine = (Machine)other;
+		return (this.machineType.equals(otherMachine.machineType));
+	}
 }
