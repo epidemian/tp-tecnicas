@@ -25,7 +25,7 @@ public class ProductionLine implements TickUpdatable, DailyUpdatable{
 	
 	private ProductionLine(ProductionLineElement line, StorageArea storageArea,
 			RawMaterials rawMaterialsConfiguration){
-		this.setLine(line);
+		this.setFirstProductionElement(line);
 		this.setStorageArea(storageArea);
 		this.setRawMaterialConfiguration(rawMaterialsConfiguration);
 		this.productionHistory = new LinkedList<Integer>();
@@ -99,7 +99,7 @@ public class ProductionLine implements TickUpdatable, DailyUpdatable{
 		this.storageArea = storageArea;
 	}
 
-	private void setLine(ProductionLineElement line) {
+	private void setFirstProductionElement(ProductionLineElement line) {
 		checkNotNull(line, "line");
 		this.firstLineElement = line;
 	}
