@@ -12,7 +12,7 @@ public class StorageAreaTest {
 	
 	@Before
 	public void setUp(){
-		storageArea = new StorageArea(Contexts.createRawMaterials(2,1,10),
+		storageArea = new StorageArea(TestUtils.createRawMaterials(2,1,10),
 					  new ValidProductionSequences());
 	}
 	
@@ -20,10 +20,10 @@ public class StorageAreaTest {
 				
 		List<Product> products = new ArrayList<Product>();
 		
-		products.add(new Product(Contexts.createRawMaterials(2, 1, 10)));
-		products.add(new Product(Contexts.createRawMaterials(2, 2, 10)));
-		products.add(new Product(Contexts.createRawMaterials(3, 1, 10)));
-		products.add(new Product(Contexts.createRawMaterials(3, 2, 10)));
+		products.add(new Product(TestUtils.createRawMaterials(2, 1, 10)));
+		products.add(new Product(TestUtils.createRawMaterials(2, 2, 10)));
+		products.add(new Product(TestUtils.createRawMaterials(3, 1, 10)));
+		products.add(new Product(TestUtils.createRawMaterials(3, 2, 10)));
 		
 		return products;
 	}

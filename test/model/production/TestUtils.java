@@ -2,14 +2,14 @@ package model.production;
 
 import java.util.*;
 
-public class Contexts {
+public class TestUtils {
 
 	public static Map<RawMaterialType,Integer> createRawMaterialMap(
 			int size, int startRawMaterialIndex, int quantity){
 		
 		Map<RawMaterialType,Integer> map = new HashMap<RawMaterialType
 			, Integer>();
-		List<RawMaterialType> list = Contexts
+		List<RawMaterialType> list = TestUtils
 			.createRawMaterialTypeList(size,startRawMaterialIndex);
 		
 		for (RawMaterialType entry : list){
@@ -34,7 +34,7 @@ public class Contexts {
 	
 	public static RawMaterials createRawMaterials(int size, 
 			int startRawMaterialIndex, int quantity){
-		return new RawMaterials(Contexts.createRawMaterialMap(
+		return new RawMaterials(TestUtils.createRawMaterialMap(
 				size, startRawMaterialIndex, quantity));
 	}
 	
@@ -68,25 +68,8 @@ public class Contexts {
 			, int startMachinesIndex, int sizeRawMaterials
 			, int startRawMaterialTypeIndex, int quantityRawMaterial){
 		return  new ProductionSequence(
-				Contexts.createMachineTypeList(sizeMachines,startMachinesIndex)
-			    ,Contexts.createRawMaterials(sizeRawMaterials,
+				TestUtils.createMachineTypeList(sizeMachines,startMachinesIndex)
+			    ,TestUtils.createRawMaterials(sizeRawMaterials,
 				startRawMaterialTypeIndex, quantityRawMaterial));
-	}
-	
-	public static void main(String[] args) {
-
-		Map<RawMaterialType,Integer> cm1 = createRawMaterialMap(4,2,10);
-		List<RawMaterialType> cm2 = createRawMaterialTypeList(4,4);
-		RawMaterials cm3 = createRawMaterials(4,10,10); 
-		List<MachineType> cm4 = createMachineTypeList(4,20);
-		List<ProductType> cm5 = createProductTypeList(4,20);
-		ProductionSequence cm6 = createProductionSequence(3,3,4,2,10);		
-		
-		System.out.println(cm1);
-		System.out.println(cm2);
-		System.out.println(cm3);
-		System.out.println(cm4);
-		System.out.println(cm5);
-		System.out.println(cm6);		
 	}
 }

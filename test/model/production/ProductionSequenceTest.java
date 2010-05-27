@@ -30,10 +30,10 @@ public class ProductionSequenceTest {
 	@Test
 	public void equalsTestExpectionTrue(){
 		
-		ProductionSequence sequence1 = Contexts
+		ProductionSequence sequence1 = TestUtils
 			.createProductionSequence(50,4,20,4,10);
 	
-		ProductionSequence sequence2 = Contexts
+		ProductionSequence sequence2 = TestUtils
 			.createProductionSequence(50,4,20,4,10);
 
 		assertEquals(sequence1, sequence2);		
@@ -42,10 +42,10 @@ public class ProductionSequenceTest {
 	@Test
 	public void equalsTestExpectionFalseWithDifferentRawMaterials(){
 		
-		ProductionSequence sequence1 = Contexts
+		ProductionSequence sequence1 = TestUtils
 			.createProductionSequence(50,4,10,4,10);
 	
-		ProductionSequence sequence2 = Contexts
+		ProductionSequence sequence2 = TestUtils
 			.createProductionSequence(50,4,20,4,10);
 
 		assertNotSame(sequence1, sequence2);		
@@ -54,10 +54,10 @@ public class ProductionSequenceTest {
 	@Test
 	public void equalsTestExpectionFalseWithDifferentMachines(){
 		
-		ProductionSequence sequence1 = Contexts
+		ProductionSequence sequence1 = TestUtils
 			.createProductionSequence(50,0,20,4,10);
 	
-		ProductionSequence sequence2 = Contexts
+		ProductionSequence sequence2 = TestUtils
 			.createProductionSequence(50,4,20,4,10);
 
 		assertNotSame(sequence1, sequence2);		
@@ -66,10 +66,10 @@ public class ProductionSequenceTest {
 	@Test
 	public void equalsTestExpectionFalseWithDifferentRawMaterialQuantity(){
 		
-		ProductionSequence sequence1 = Contexts
+		ProductionSequence sequence1 = TestUtils
 			.createProductionSequence(50,4,20,4,10);
 	
-		ProductionSequence sequence2 = Contexts
+		ProductionSequence sequence2 = TestUtils
 			.createProductionSequence(50,4,20,4,90);
 
 		assertNotSame(sequence1, sequence2);		
@@ -82,12 +82,12 @@ public class ProductionSequenceTest {
 			= new ValidProductionSequences();
 		ProductType type = new ProductType("prod1");
 		
-		validSequences.addValidProductionSequence(Contexts
+		validSequences.addValidProductionSequence(TestUtils
 			.createProductionSequence(3,0,2,0,40),type);
 		
 		ProductionSequence sequence = new ProductionSequence(
-				Contexts.createMachineTypeList(3,0), 
-				Contexts.createRawMaterials(2,0,40));
+				TestUtils.createMachineTypeList(3,0), 
+				TestUtils.createRawMaterials(2,0,40));
 
 		assertEquals(type, sequence.identifyProductType(validSequences));
 	}

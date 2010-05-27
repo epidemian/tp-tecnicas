@@ -23,16 +23,16 @@ public class ValidProductionSequencesTest {
 		sequencesInTheValidSequences
 			= new LinkedList<ProductionSequence>();
 		
-		this.sequencesInTheValidSequences.add(Contexts
+		this.sequencesInTheValidSequences.add(TestUtils
 			.createProductionSequence(3,0,2,0,40));
-		this.sequencesInTheValidSequences.add(Contexts
+		this.sequencesInTheValidSequences.add(TestUtils
 			.createProductionSequence(3,0,2,4,40));
-		this.sequencesInTheValidSequences.add(Contexts
+		this.sequencesInTheValidSequences.add(TestUtils
 			.createProductionSequence(4,0,8,4,40));
-		this.sequencesInTheValidSequences.add(Contexts
+		this.sequencesInTheValidSequences.add(TestUtils
 			.createProductionSequence(5,0,8,4,40));
 	
-		productTypes = Contexts.createProductTypeList(
+		productTypes = TestUtils.createProductTypeList(
 			this.sequencesInTheValidSequences.size(), 0);
 		
 		for (int i = 0; i < this.productTypes.size(); i++){
@@ -41,7 +41,7 @@ public class ValidProductionSequencesTest {
 				this.productTypes.get(i));
 		}
 		
-		nonValidProductionSequence = Contexts
+		nonValidProductionSequence = TestUtils
 			.createProductionSequence(10,5,20,20,40);		
 	}
 
@@ -115,9 +115,9 @@ public class ValidProductionSequencesTest {
 	@Test(expected = BusinessLogicException.class)
 	public void addTwoEqualProductionSequences() {
 		this.validSequences.clear();
-		ProductionSequence sequence1 = Contexts.createProductionSequence(3, 0,
+		ProductionSequence sequence1 = TestUtils.createProductionSequence(3, 0,
 				2, 0, 40);
-		ProductionSequence sequence2 = Contexts.createProductionSequence(3, 0,
+		ProductionSequence sequence2 = TestUtils.createProductionSequence(3, 0,
 				2, 0, 40);
 		ProductType productType = this.productTypes.get(0);
 

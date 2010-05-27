@@ -21,11 +21,11 @@ public class RawMaterialsTest {
 	@Before
 	public void setUp() {
 		
-		this.rawMaterial = Contexts.createRawMaterials(
+		this.rawMaterial = TestUtils.createRawMaterials(
 				rawMaterialSize, 0, rawMaterialStandardQuantity);
-		this.rawMaterialTypesInRawMaterials = Contexts
+		this.rawMaterialTypesInRawMaterials = TestUtils
 			.createRawMaterialTypeList(rawMaterialSize, 0);
-		this.rawMaterialTypesThatAreNotInRawMaterials = Contexts
+		this.rawMaterialTypesThatAreNotInRawMaterials = TestUtils
 			.createRawMaterialTypeList(rawMaterialSize, rawMaterialSize+1);
 	}
 	
@@ -145,7 +145,7 @@ public class RawMaterialsTest {
 	public void extractRawMaterialsMoreThanAvailable() 
 		throws NotEnoughRawMaterialException {
 		
-		RawMaterials rawMaterial = Contexts.createRawMaterials(
+		RawMaterials rawMaterial = TestUtils.createRawMaterials(
 			this.rawMaterialSize, 0, this.rawMaterialStandardQuantity + 1);
 				
 		this.rawMaterial.extract(rawMaterial);
@@ -157,9 +157,9 @@ public class RawMaterialsTest {
 	
 		int quantityExtract = this.rawMaterialStandardQuantity - 1;
 		
-		List<RawMaterialType> types = Contexts.createRawMaterialTypeList(
+		List<RawMaterialType> types = TestUtils.createRawMaterialTypeList(
 			this.rawMaterialSize, 0);
-		RawMaterials rawMaterial = Contexts.createRawMaterials(
+		RawMaterials rawMaterial = TestUtils.createRawMaterials(
 			this.rawMaterialSize, 0, quantityExtract);
 		
 		List<Integer> quantityBeforeStore = new LinkedList<Integer>();
@@ -185,7 +185,7 @@ public class RawMaterialsTest {
 	@Test
 	public void equalsTest(){
 		
-		RawMaterials rawMaterial = Contexts.createRawMaterials(
+		RawMaterials rawMaterial = TestUtils.createRawMaterials(
 			this.rawMaterialSize, 0, this.rawMaterialStandardQuantity);
 			
 		assertEquals(this.rawMaterial, rawMaterial);
@@ -196,7 +196,7 @@ public class RawMaterialsTest {
 	
 		RawMaterials rawMaterial = new RawMaterials();
 		
-		List<RawMaterialType> types = Contexts.createRawMaterialTypeList(
+		List<RawMaterialType> types = TestUtils.createRawMaterialTypeList(
 			this.rawMaterialSize, 0);
 		
 		for (RawMaterialType entry : types){

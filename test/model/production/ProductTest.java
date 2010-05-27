@@ -46,12 +46,12 @@ public class ProductTest {
 			= new ValidProductionSequences();
 		ProductType type = new ProductType("prod1");
 		
-		validSequences.addValidProductionSequence(Contexts
+		validSequences.addValidProductionSequence(TestUtils
 			.createProductionSequence(3,0,2,0,40),type);
 		
-		Product product = new Product(Contexts.createRawMaterials(2,0,40));
+		Product product = new Product(TestUtils.createRawMaterials(2,0,40));
 		
-		List<MachineType> machines = Contexts.createMachineTypeList(3,0);		
+		List<MachineType> machines = TestUtils.createMachineTypeList(3,0);		
 		
 		for (MachineType entry : machines){
 			product.addMachineTypeToHistory(entry);
