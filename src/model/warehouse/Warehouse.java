@@ -90,13 +90,13 @@ public abstract class Warehouse implements MonthlyUpdatable{
 	}
 
 	private void sellMachines(){
-		
+		//TODO: Implementar
 	}	
 	
 	protected abstract void sellGround();
 	
 	public void sell() {
-		sellGround(); // definido en las clases hijas segun el tipo de warehouse
-        sellMachines(); // definido en la clase warehouse		
+		sellGround(); 
+        sellMachines(); 	
 	}
 }
