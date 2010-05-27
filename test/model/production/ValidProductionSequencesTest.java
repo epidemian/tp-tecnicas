@@ -71,7 +71,7 @@ public class ValidProductionSequencesTest {
 	
 		ProductType type = this.validSequences.identifyProductType(
 			this.nonValidProductionSequence);
-		assertEquals(ProductType.createWaste(), type);
+		assertEquals(ProductType.getWaste(), type);
 	}
 
 	@Test(expected = BusinessLogicException.class)

@@ -29,7 +29,7 @@ public class ValidProductionSequences {
 		ProductType productType = this.products.get(productionSequence);
 		
 		if (productType == null){
-			return ProductType.createWaste(); 
+			return ProductType.getWaste(); 
 		}
 			
 		return productType;

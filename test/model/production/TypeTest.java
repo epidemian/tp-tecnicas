@@ -26,10 +26,21 @@ public class TypeTest {
 	
 		AbstractType type1 = new ProductType("type");
 		AbstractType type2 = new ProductType("type");
-		AbstractType type3 = new ProductType("type");
-		
-		assertTrue(type1.equals(type2));
-		assertTrue(type1.equals(type3));
+
+		assertEquals(type1, type1);
+		assertEquals(type1, type2);
+		assertEquals(type2, type1);
 	}
+	
+	@Test
+	public void notEquals(){
+	
+		AbstractType type1 = new ProductType("type1");
+		AbstractType type2 = new ProductType("type2");
+		
+		assertFalse(type1.equals(type2));
+		assertFalse(type2.equals(type1));
+	}
+	
 	
 }
