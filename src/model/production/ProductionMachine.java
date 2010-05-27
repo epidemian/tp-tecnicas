@@ -16,4 +16,9 @@ public class ProductionMachine extends Machine {
 	public boolean isProductionMachine(){
 		return true;
 	}
+
+	@Override
+	public int getPrice() {
+		return 0;
+	}
 }

@@ -2,7 +2,7 @@ package model.production;
 
 import model.exception.BusinessLogicException;
 
-public class Machine extends ProductionLineElement{
+public abstract class Machine extends ProductionLineElement{
 
 	private MachineType machineType;
 	
@@ -19,4 +19,6 @@ public class Machine extends ProductionLineElement{
 			throw new BusinessLogicException("Invalid machineType");
 		this.machineType = machineType;
 	}
+	
+	public abstract int getPrice();
 }

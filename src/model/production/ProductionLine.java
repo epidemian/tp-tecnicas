@@ -23,4 +23,8 @@ public class ProductionLine {
 			ProductionLineElement line){
 		return new ProductionLine(line);
 	}	
+	
+	public ProductionLineElement getFirstElement(){
+		return line;		
+	}
 }

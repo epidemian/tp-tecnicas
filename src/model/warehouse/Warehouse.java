@@ -3,6 +3,7 @@ package model.warehouse;
 import java.util.LinkedList;
 import java.util.List;
 
+import model.production.Machine;
 import model.production.ProductionLine;
 import model.production.ProductionLineElement;
 import model.production.StorageArea;
@@ -90,7 +91,31 @@ public abstract class Warehouse implements MonthlyUpdatable{
 	}
 
 	private void sellMachines(){
-		//TODO: Implementar
+		int price = 0;
+		
+		if(this.productionLines != null){
+			ProductionLine productionLine = null;
+			
+			for (int i = 0; i < this.productionLines.size(); i++){
+				productionLine = this.productionLines.get(i);
+				
+				if(productionLine != null){
+					ProductionLineElement lineElement = productionLine.getFirstElement();
+					
+					while(lineElement != null)
+					{
+						if(lineElement instanceof Machine){
+							//TODO: Verificar el estado de las máquinas...
+							price += ((Machine)lineElement).getPrice();
+						}
+						
+						lineElement = lineElement.getNextLineElement();
+					}
+				}
+			}
+		}
+		
+		budget.increment((int)(0.5 * price));
 	}	
 	
 	protected abstract void sellGround();
