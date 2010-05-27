@@ -106,6 +106,7 @@ public abstract class Warehouse implements MonthlyUpdatable{
 					{
 						if(lineElement instanceof Machine){
 							//TODO: Verificar el estado de las máquinas...
+							//TODO: Se puede saber de otra manera si es una máquina?
 							price += ((Machine)lineElement).getPrice();
 						}
 						
