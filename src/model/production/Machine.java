@@ -1,6 +1,6 @@
 package model.production;
 
-import model.exception.BusinessLogicException;
+import static model.utils.ArgumentUtils.checkNotNull;
 
 public abstract class Machine extends ProductionLineElement{
 
@@ -17,7 +17,8 @@ public abstract class Machine extends ProductionLineElement{
 	}
 	
 	public Product process(Product input){
-		this.treatProduct(input);
+		if (input != null)
+			this.treatProduct(input);
 		return super.process(input);
 	}
 	
@@ -29,8 +30,7 @@ public abstract class Machine extends ProductionLineElement{
 	public abstract void treatProduct(Product input);
 	
 	private void setMachineType(MachineType machineType) {
-		if (machineType == null)
-			throw new BusinessLogicException("Invalid machineType");
+		checkNotNull(machineType, "machineType");
 		this.machineType = machineType;
 	}
 	

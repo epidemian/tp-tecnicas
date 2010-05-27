@@ -20,6 +20,10 @@ public class Product {
 		this.history = new ProductionSequence(rawMaterials);
 	}
 	
+	public ProductionSequence getHistory(){
+		return this.history;
+	}
+	
 	public boolean isDamaged() {
 		return defective;
 	}

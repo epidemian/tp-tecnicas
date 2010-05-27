@@ -127,35 +127,6 @@ public class ProductionLine implements TickUpdatable, DailyUpdatable{
 		}
 	}
 
-	/*	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		ProductionLine other = (ProductionLine) obj;
-		if (configuration == null) {
-			if (other.configuration != null)
-				return false;
-		} else if (!configuration.equals(other.configuration))
-			return false;
-		if (dailyProduction != other.dailyProduction)
-			return false;
-		if (firstLineElement == null) {
-			if (other.firstLineElement != null)
-				return false;
-		} else if (!equalsLineElements(other.firstLineElement))
-			return false;
-		if (productionHistory == null) {
-			if (other.productionHistory != null)
-				return false;
-		} else if (!productionHistory.equals(other.productionHistory))
-			return false;
-		return true;
-	}
-*/
 	public int productionLineSize(){
 		Iterator<ProductionLineElement> iterator = this.iterator();	
 		int size = 0;
