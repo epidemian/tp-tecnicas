@@ -8,12 +8,12 @@ public class PurchaseWarehouse extends Warehouse{
 		super(ground, budget);
 	}
 
-	public void sell() {
-		//TODO: Falta sumar el 50% de las máquinas en buen estado
+	public void sellGround() {
 		budget.increment((int)(0.8 * ground.getPrice()));
 	}
 
 	@Override
-	public void updateMonth() {		
+	public void updateMonth() {	
+		
 	}
 }

@@ -89,5 +89,14 @@ public abstract class Warehouse implements MonthlyUpdatable{
 							 	.createValidProductionLine(previous);
 	}
 
-	public abstract void sell();	
+	private void sellMachines(){
+		
+	}	
+	
+	protected abstract void sellGround();
+	
+	public void sell() {
+		sellGround(); // definido en las clases hijas segun el tipo de warehouse
+        sellMachines(); // definido en la clase warehouse		
+	}
 }
