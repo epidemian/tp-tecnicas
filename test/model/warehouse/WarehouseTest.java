@@ -49,4 +49,13 @@ public class WarehouseTest {
 		//TODO: Ojo que al método sell le falta la parte de la venta de las máquinas en buen estado
 		assertEquals(budget.getBalance(), (int)(INITIAL_BALANCE + 0.5 * PRICE_MACHINES));
 	}	
+	
+	@Test
+	public void updateMonthAndCheckBalance() {
+		Budget budget = new Budget(INITIAL_BALANCE);
+		Warehouse rentWarehouse = new RentedWarehouse(new Ground(PRICE_GROUND, 10, 10), budget); 
+		
+		rentWarehouse.updateMonth();
+		assertEquals(budget.getBalance(), (int)(INITIAL_BALANCE - PRICE_GROUND));
+	}		
 }
