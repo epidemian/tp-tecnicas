@@ -1,13 +1,25 @@
 package model.warehouse;
 
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
+
+import java.util.List;
+
 import model.game.Budget;
+import model.production.MachineType;
+import model.production.ProductionLine;
+import model.production.ProductionLineElement;
+import model.production.ProductionMachine;
+import model.production.RawMaterials;
+import model.production.StorageArea;
+import model.production.ValidProductionSequences;
 
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.Ignore;
 
 public class WarehouseTest {
 	private static final int INITIAL_BALANCE = 5000;
@@ -36,7 +48,7 @@ public class WarehouseTest {
 		Warehouse purchaseWarehouse = new PurchaseWarehouse(new Ground(PRICE_GROUND, 10, 10), budget); 
 		
 		purchaseWarehouse.sell();
-		//TODO: Ojo que al método sell le falta la parte de la venta de las máquinas en buen estado
+		//TODO: Ojo que al mï¿½todo sell le falta la parte de la venta de las mï¿½quinas en buen estado
 		assertEquals(budget.getBalance(), (int)(INITIAL_BALANCE + 0.8 * PRICE_GROUND + 0.5 * PRICE_MACHINES));
 	}
 	
@@ -46,7 +58,7 @@ public class WarehouseTest {
 		Warehouse rentWarehouse = new RentedWarehouse(new Ground(PRICE_GROUND, 10, 10), budget); 
 		
 		rentWarehouse.sell();
-		//TODO: Ojo que al método sell le falta la parte de la venta de las máquinas en buen estado
+		//TODO: Ojo que al mï¿½todo sell le falta la parte de la venta de las mï¿½quinas en buen estado
 		assertEquals(budget.getBalance(), (int)(INITIAL_BALANCE + 0.5 * PRICE_MACHINES));
 	}	
 	
@@ -57,5 +69,37 @@ public class WarehouseTest {
 		
 		rentWarehouse.updateMonth();
 		assertEquals(budget.getBalance(), (int)(INITIAL_BALANCE - PRICE_GROUND));
-	}		
+	}
+	
+	@Ignore
+	public void parseValidProductionLine(){
+		
+		MachineType machineType1=new MachineType("Licuado");
+		MachineType machineType2=new MachineType("Haz");
+		MachineType machineType3=new MachineType("Horno");
+		
+		ProductionLineElement prodLineElement1=
+			new ProductionMachine(machineType1,null,null);
+		
+		ProductionLineElement prodLineElement2=
+			new ProductionMachine(machineType2,null,prodLineElement1);
+		prodLineElement1.setNextLineElement(prodLineElement2);
+		
+		ProductionLineElement prodLineElement3=
+			new ProductionMachine(machineType3,null,prodLineElement2);
+		prodLineElement2.setNextLineElement(prodLineElement3);
+		
+		Ground ground=new Ground(0,10,10);
+		ground.getTile(2, 2).setLineElement(prodLineElement1);
+		ground.getTile(2, 4).setLineElement(prodLineElement2);
+		ground.getTile(2, 6).setLineElement(prodLineElement3);
+		
+		Warehouse warehouse=new PurchaseWarehouse(ground,new Budget(1000));
+		warehouse.createProductionLines();
+		
+		ProductionLine prodLine=ProductionLine.createValidProductionLine(prodLineElement1, new StorageArea(new RawMaterials(),new ValidProductionSequences()), new  RawMaterials());
+			
+		List<ProductionLine> listProdLinesCreated=warehouse.getProductionLines();
+		assertTrue(listProdLinesCreated.contains(prodLine));
+	}
 }

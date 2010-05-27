@@ -25,6 +25,10 @@ public abstract class Warehouse implements MonthlyUpdatable{
 	
 	private List<ProductionLine> productionLines;
 	
+	public List<ProductionLine> getProductionLines() {
+		return productionLines;
+	}
+
 	public Warehouse(Ground ground, Budget budget){
 		this.ground = ground;
 		this.budget = budget;

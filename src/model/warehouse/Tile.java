@@ -12,6 +12,11 @@ public class Tile {
 		
 	}
 	
+	public Tile(){
+		this.lineElement=null;
+		
+	}
+	
 	public ProductionLineElement getLineElement() {
 		return lineElement;
 	}

@@ -10,6 +10,11 @@ public class Ground {
 	public Ground(int price, int rows, int cols){
 		this.price = price;
 		this.groundTiles = new Tile[rows][cols];
+		for(int i=0;i<rows;i++){
+			for(int j=0;j<cols;j++){
+				groundTiles[i][j]=new Tile();
+			}
+		}
 	}
 	
 	public int getPrice() {
