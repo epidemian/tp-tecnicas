@@ -14,10 +14,10 @@ public class ProductionLineTest {
 	@Before
 	public void setUp(){
 		this.productionLine = this
-			.createProductionLineProcesamientoDeCartones();
+			.createProductionLineProcessingCarton();
 	}
 	
-	private ProductionLine createProductionLineProcesamientoDeCartones(){
+	private ProductionLine createProductionLineProcessingCarton(){
 	
 		ProductionLineElement prodLineElement1 =
 			new ProductionMachine(new MachineType("Licuado"),null,null);
@@ -39,7 +39,7 @@ public class ProductionLineTest {
 	public void equalsTest(){
 			
 		ProductionLine prodLineEquals = this
-			.createProductionLineProcesamientoDeCartones();
+			.createProductionLineProcessingCarton();
 							
 		assertEquals(prodLineEquals, this.productionLine);	
 	}
