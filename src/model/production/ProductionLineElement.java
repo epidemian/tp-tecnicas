@@ -14,7 +14,7 @@ abstract public class ProductionLineElement {
 	 */
 	private ProductionLineElement previousLineElement;
 	
-	private Queue<Product> productsContained;
+	protected Queue<Product> productsContained;
 	
 	public ProductionLineElement(ProductionLineElement next,
 		ProductionLineElement previous){
@@ -30,7 +30,12 @@ abstract public class ProductionLineElement {
 	 * 
 	 * @return the product after being processed.
 	 */
-	abstract public Product process(Product input);
+	public Product process(Product input){
+		Product output = this.productsContained.poll();
+		if (input != null)
+			this.productsContained.add(input);
+		return output;
+	}
 	
 	public void setNextLineElement(ProductionLineElement nextLineElement) {
 		this.nextLineElement = nextLineElement;

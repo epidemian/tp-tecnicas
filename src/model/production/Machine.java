@@ -16,16 +16,22 @@ public abstract class Machine extends ProductionLineElement{
 		return machineType;
 	}
 	
+	public Product process(Product input){
+		this.treatProduct(input);
+		return super.process(input);
+	}
+	
+	/**
+	 * Template method to treat the product. The ProductionMachine can 
+	 * setDefective a producto, and a QualityControlMachine can discard it.
+	 * @param input
+	 */
+	public abstract void treatProduct(Product input);
+	
 	private void setMachineType(MachineType machineType) {
 		if (machineType == null)
 			throw new BusinessLogicException("Invalid machineType");
 		this.machineType = machineType;
-	}
-
-	@Override
-	public Product process(Product input) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 	
 	public abstract int getPrice();

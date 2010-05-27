@@ -1,5 +1,7 @@
 package model.production;
 
+import static model.utils.ArgumentUtils.checkNotNull;
+
 public class QualityControlMachine extends Machine{
 
 	public QualityControlMachine(MachineType machineType, 
@@ -8,21 +10,24 @@ public class QualityControlMachine extends Machine{
 	}
 	
 	/**
-	 * number between 0-1 that represents the probability of discarding one product
-	 * from the line of production. 
+	 * Represents the number of defective products until one product become
+	 * non-defective. 
 	 */
-	private float discardDamagedFrequency;
-	
+	private int discardDamagedFrequency;
+	private int defectiveProducts;
+
 	@Override
-	public Product process(Product input) {
-		super.process(input);
-		
-		// TODO Auto-generated method stub
-		return null;
+	public void treatProduct(Product input) {
+		checkNotNull(input, "input product");
+		if (input.isDamaged()){
+			this.defectiveProducts++;
+			if (this.discardDamagedFrequency == this.defectiveProducts)
+				input = null;
+		}
 	} 
 	
 	@Override
 	public int getPrice() {
 		return 0;
-	} 
+	}
 }

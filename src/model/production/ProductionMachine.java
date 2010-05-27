@@ -1,32 +1,37 @@
 package model.production;
 
+import static model.utils.ArgumentUtils.checkNotNull;
+
 public class ProductionMachine extends Machine {
 
 	public ProductionMachine(MachineType machineType, 
 			ProductionLineElement next, ProductionLineElement previous) {
 		super(machineType, next, previous);
+	
+		this.productsProcess = 0;
 	}
 	
 	/**
-	 * number between 0-1 that represents the probability of damaging 
-	 * one product
+	 * Represents the number of products until one product become defective.
+	 * If the product is defective is remains defective. 
 	 */
-	private float damagedProductFrequency;
-	
-	public boolean isProductionMachine(){
-		return true;
-	}
+	private int damagedProductFrequency;
+	private int productsProcess;
 	
 	@Override
-	public Product process(Product input) {
-		super.process(input);
-		
-		// TODO Auto-generated method stub
-		return null;
+	public void treatProduct(Product input) {
+		checkNotNull(input, "input product");
+		this.productsProcess++;
+		if (this.damagedProductFrequency == this.productsProcess){
+			input.setDefective();
+			this.productsProcess = 0;
+		}
 	}
 	
 	@Override
 	public int getPrice() {
 		return 0;
 	}
+
+	
 }
