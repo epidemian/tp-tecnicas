@@ -1,8 +1,10 @@
 package model.warehouse;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import model.production.Machine;
 import model.production.ProductionLine;
 import model.production.ProductionLineElement;
 import model.production.RawMaterials;
@@ -92,39 +94,27 @@ public abstract class Warehouse implements MonthlyUpdatable{
 					, new RawMaterials());
 	}
 
-	private void sellMachines(){
-		
-		/*
-		
+	private void sellMachines(){		
 		int price = 0;
 		
-		
 		if(this.productionLines != null){
-			ProductionLine productionLine = null;
+			Iterator elementsProductionLine = null;
 			
 			for (int i = 0; i < this.productionLines.size(); i++){
-				productionLine = this.productionLines.get(i);
-				
-				if(productionLine != null){
-					ProductionLineElement lineElement = productionLine.getFirstElement();
-					
-					while(lineElement != null)
-					{
-						if(lineElement instanceof Machine){
-							//TODO: Verificar el estado de las m�quinas...
-							//TODO: Se puede saber de otra manera si es una m�quina?
-							price += ((Machine)lineElement).getPrice();
-						}
-						
-						lineElement = lineElement.getNextLineElement();
+				elementsProductionLine = this.productionLines.get(i).iterator();
+								
+				while(elementsProductionLine.hasNext()){
+					ProductionLineElement element = (ProductionLineElement)elementsProductionLine.next();
+									
+					if(element instanceof Machine){
+						//TODO: Verificar el estado de las m�quinas...
+						price += ((Machine)element).getPrice();
 					}
-				}
+				}				
 			}
 		}
 		
 		budget.increment((int)(0.5 * price));
-		
-		*/
 	}	
 	
 	protected abstract void sellGround();
