@@ -25,6 +25,7 @@ public class ProductionSequence {
 	}
 	
 	public void addMachineType(MachineType machineType){
+		checkNotNull(machineType, "machineType");
 		this.lineMachines.add(machineType);
 	}
 	
