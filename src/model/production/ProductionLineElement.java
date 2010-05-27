@@ -1,8 +1,5 @@
 package model.production;
 
-import java.util.LinkedList;
-import java.util.Queue;
-
 abstract public class ProductionLineElement {
 	
 	/**
@@ -14,13 +11,13 @@ abstract public class ProductionLineElement {
 	 */
 	private ProductionLineElement previousLineElement;
 	
-	protected Queue<Product> productsContained;
+	protected Product productContained;
 	
 	public ProductionLineElement(ProductionLineElement next,
 		ProductionLineElement previous){
 		this.nextLineElement = next;
 		this.previousLineElement = previous;
-		this.productsContained = new LinkedList<Product>();
+		this.productContained = null;
 	}
 	
 	/**
@@ -31,9 +28,8 @@ abstract public class ProductionLineElement {
 	 * @return the product after being processed.
 	 */
 	public Product process(Product input){
-		Product output = this.productsContained.poll();
-		if (input != null)
-			this.productsContained.add(input);
+		Product output = this.productContained;
+		this.productContained = input;
 		return output;
 	}
 	

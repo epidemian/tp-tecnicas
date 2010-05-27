@@ -21,8 +21,8 @@ public class ProductionLineTest {
 		prodLineElement2.setNextLineElement(prodLineElement3);
 		
 		ProductionLine prodLine = ProductionLine.createValidProductionLine(
-				prodLineElement1, new StorageArea(new RawMaterials(),
-					new ValidProductionSequences()), new  RawMaterials());
+			prodLineElement1, new StorageArea(new RawMaterials(),
+			new ValidProductionSequences()), new  RawMaterials());
 		
 		ProductionLineElement prodLineElement1Equals =
 			new ProductionMachine(new MachineType("Licuado"),null,null);
@@ -37,8 +37,8 @@ public class ProductionLineTest {
 		prodLineElement2Equals.setNextLineElement(prodLineElement3Equals);
 		
 		ProductionLine prodLineEquals = ProductionLine.createValidProductionLine(
-				prodLineElement1Equals, new StorageArea(new RawMaterials(),
-					new ValidProductionSequences()), new  RawMaterials());
+			prodLineElement1Equals, new StorageArea(new RawMaterials(),
+			new ValidProductionSequences()), new  RawMaterials());
 				
 		assertEquals(prodLineEquals, prodLine);	
 	}
