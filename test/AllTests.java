@@ -2,6 +2,7 @@ import model.game.time.TimeManagerTest;
 import model.lab.ResearchLabTest;
 import model.lab.TechnologyTest;
 import model.lab.TechnologyTreeTest;
+import model.production.ProductTest;
 import model.production.ProductionSequenceTest;
 import model.production.RawMaterialsTest;
 import model.production.StorageAreaTest;
@@ -25,6 +26,7 @@ import org.junit.runners.Suite.SuiteClasses;
         StorageAreaTest.class,
         ValidProductionSequencesTest.class,
         TypeTest.class,
-        ProductionSequenceTest.class
+        ProductionSequenceTest.class,
+        ProductTest.class
 })
 public class AllTests { }
