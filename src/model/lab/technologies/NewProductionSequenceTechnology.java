@@ -15,18 +15,22 @@ public class NewProductionSequenceTechnology extends Technology {
 	private ProductType productType;
 	private ValidProductionSequences validSequences;
 
-	// TODO: 7 parameters, Haaaaaa!... creational method??
-	// Demian
 	public NewProductionSequenceTechnology(ProductionSequence sequence,
 			ProductType productType, ValidProductionSequences validSequences,
-			String name, String description, int researchCost) {
-		super(name, description, researchCost, false);
-		checkNotNull(sequence, "production sequence");
-		checkNotNull(productType, "product type");
+			int researchCost) {
+		super(checkNotNull(productType, "product type").getName(),
+				createDescription(productType, checkNotNull(sequence,
+						"production sequence")), researchCost, false);
 		checkNotNull(validSequences, "valid production sequences");
 		this.sequence = sequence;
 		this.productType = productType;
 		this.validSequences = validSequences;
+	}
+
+	private static String createDescription(ProductType productType,
+			ProductionSequence sequence) {
+		return "Develop " + productType.getName() + " with "
+				+ sequence.toPrettyString();
 	}
 
 	@Override

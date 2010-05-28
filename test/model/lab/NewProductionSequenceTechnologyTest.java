@@ -1,10 +1,11 @@
 package model.lab;
 
+import static org.junit.Assert.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import model.exception.BusinessLogicException;
-import model.lab.Technology;
 import model.lab.technologies.NewProductionSequenceTechnology;
 import model.production.MachineType;
 import model.production.ProductType;
@@ -14,8 +15,6 @@ import model.production.RawMaterials;
 import model.production.ValidProductionSequences;
 
 import org.junit.*;
-
-import static org.junit.Assert.*;
 
 public class NewProductionSequenceTechnologyTest {
 
@@ -39,9 +38,7 @@ public class NewProductionSequenceTechnologyTest {
 		this.validProductionSequences = new ValidProductionSequences();
 		this.technology = new NewProductionSequenceTechnology(
 				this.productionSequence, this.productType,
-				this.validProductionSequences,
-				"Waterfall software development",
-				"The ultimate software development process", 100);
+				this.validProductionSequences, 100);
 	}
 
 	private List<MachineType> getMachineTypeList(String... names) {
@@ -68,16 +65,20 @@ public class NewProductionSequenceTechnologyTest {
 	}
 
 	@Test
-	public void researchAndCheckProductionSequenceIdentifyProductType() {
-		ProductType productTypeBeforeResearch = this.productionSequence
+	public void checkIdentifyProductTypeReturnsWasteIfTechnologyIsUnresearched() {
+		ProductType productType = this.productionSequence
 				.identifyProductType(this.validProductionSequences);
-		assertEquals(ProductType.getWaste(), productTypeBeforeResearch);
+		assertFalse(this.technology.isResearched());
+		assertEquals(ProductType.getWaste(), productType);
+	}
 
+	@Test
+	public void researchAndCheckProductionSequenceIdentifyProductType() {
 		technology.research();
 
-		ProductType productTypeAfterResearch = this.productionSequence
+		ProductType productType = this.productionSequence
 				.identifyProductType(this.validProductionSequences);
-		assertEquals(this.productType, productTypeAfterResearch);
+		assertEquals(this.productType, productType);
 	}
 
 	private NewProductionSequenceTechnology createWithNullValues(
@@ -89,6 +90,6 @@ public class NewProductionSequenceTechnologyTest {
 		ValidProductionSequences validSequences = nullValidSequences ? null
 				: this.validProductionSequences;
 		return new NewProductionSequenceTechnology(sequence, productType,
-				validSequences, "Name", "Desc", 0);
+				validSequences, 0);
 	}
 }

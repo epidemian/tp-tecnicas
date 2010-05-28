@@ -89,4 +89,9 @@ public class ProductionSequence {
 			return false;
 		return true;
 	}
+
+	public String toPrettyString() {
+		
+		return null;
+	}
 }
