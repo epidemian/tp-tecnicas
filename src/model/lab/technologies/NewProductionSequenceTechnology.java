@@ -19,9 +19,8 @@ public class NewProductionSequenceTechnology extends Technology {
 	// Demian
 	public NewProductionSequenceTechnology(ProductionSequence sequence,
 			ProductType productType, ValidProductionSequences validSequences,
-			String name, String description, int researchCost,
-			boolean researched) {
-		super(name, description, researchCost, researched);
+			String name, String description, int researchCost) {
+		super(name, description, researchCost, false);
 		checkNotNull(sequence, "production sequence");
 		checkNotNull(productType, "product type");
 		checkNotNull(validSequences, "valid production sequences");

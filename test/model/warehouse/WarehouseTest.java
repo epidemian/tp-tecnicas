@@ -70,7 +70,7 @@ public class WarehouseTest {
 		assertEquals(budget.getBalance(), (int)(INITIAL_BALANCE - PRICE_GROUND));
 	}
 	
-	@Ignore
+	@Test @Ignore
 	public void parseValidProductionLine(){
 		
 		MachineType machineType1 = new MachineType("Licuado");

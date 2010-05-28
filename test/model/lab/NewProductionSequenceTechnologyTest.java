@@ -41,7 +41,7 @@ public class NewProductionSequenceTechnologyTest {
 				this.productionSequence, this.productType,
 				this.validProductionSequences,
 				"Waterfall software development",
-				"The ultimate software development process", 100, false);
+				"The ultimate software development process", 100);
 	}
 
 	private List<MachineType> getMachineTypeList(String... names) {
@@ -89,6 +89,6 @@ public class NewProductionSequenceTechnologyTest {
 		ValidProductionSequences validSequences = nullValidSequences ? null
 				: this.validProductionSequences;
 		return new NewProductionSequenceTechnology(sequence, productType,
-				validSequences, "Name", "Desc", 0, false);
+				validSequences, "Name", "Desc", 0);
 	}
 }
