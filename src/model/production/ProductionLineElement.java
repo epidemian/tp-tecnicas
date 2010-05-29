@@ -1,6 +1,8 @@
 package model.production;
 
-abstract public class ProductionLineElement {
+import model.warehouse.TileElement;
+
+abstract public class ProductionLineElement implements TileElement {
 	
 	/**
 	 * Output line element of the production line element.

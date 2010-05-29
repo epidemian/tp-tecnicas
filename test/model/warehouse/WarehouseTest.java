@@ -2,6 +2,7 @@ package model.warehouse;
 
 import static org.junit.Assert.*;
 
+import java.util.Collection;
 import java.util.List;
 
 import model.game.Budget;
@@ -89,9 +90,9 @@ public class WarehouseTest {
 		prodLineElement2.setNextLineElement(prodLineElement3);
 		
 		Ground ground = new Ground(0,10,10);
-		ground.getTile(2, 2).setLineElement(prodLineElement1);
-		ground.getTile(2, 4).setLineElement(prodLineElement2);
-		ground.getTile(2, 6).setLineElement(prodLineElement3);
+		ground.getTile(2, 2).setTileElement(prodLineElement1);
+		ground.getTile(2, 4).setTileElement(prodLineElement2);
+		ground.getTile(2, 6).setTileElement(prodLineElement3);
 		
 		Warehouse warehouse = new PurchaseWarehouse(ground,new Budget(1000));
 		warehouse.createProductionLines();
@@ -99,8 +100,9 @@ public class WarehouseTest {
 		ProductionLine prodLine=ProductionLine.createValidProductionLine(
 			prodLineElement1, new StorageArea(new RawMaterials(),
 			new ValidProductionSequences()), new  RawMaterials());
-			
-		List<ProductionLine> listProdLinesCreated=warehouse.getProductionLines();
-		assertTrue(listProdLinesCreated.contains(prodLine));
+
+		Collection<ProductionLine> prodLinesCreated = warehouse
+				.getProductionLines();
+		assertTrue(prodLinesCreated.contains(prodLine));
 	}
 }

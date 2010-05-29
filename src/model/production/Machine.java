@@ -1,6 +1,7 @@
 package model.production;
 
 import static model.utils.ArgumentUtils.checkNotNull;
+import model.warehouse.TileElementVisitor;
 
 public abstract class Machine extends ProductionLineElement{
 
@@ -28,6 +29,11 @@ public abstract class Machine extends ProductionLineElement{
 	 * @param input
 	 */
 	public abstract void treatProduct(Product input);
+	
+	@Override
+	public void accept(TileElementVisitor visitor) {
+		visitor.visitMachine(this);
+	}
 	
 	private void setMachineType(MachineType machineType) {
 		checkNotNull(machineType, "machineType");

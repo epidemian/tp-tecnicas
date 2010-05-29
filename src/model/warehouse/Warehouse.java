@@ -1,17 +1,13 @@
 package model.warehouse;
 
-import java.util.LinkedList;
-import java.util.List;
-
-import model.production.Machine;
-import model.production.ProductionLine;
-import model.production.ProductionLineElement;
-import model.production.RawMaterials;
-import model.production.StorageArea;
-import model.warehouse.Ground;
+import java.util.Collection;
 
 import model.game.Budget;
 import model.game.time.MonthlyUpdatable;
+import model.production.Machine;
+import model.production.ProductionLine;
+import model.production.ProductionLineElement;
+import model.production.StorageArea;
 
 public abstract class Warehouse implements MonthlyUpdatable{
 	protected Budget budget; 
@@ -22,9 +18,9 @@ public abstract class Warehouse implements MonthlyUpdatable{
 	 */
 	private StorageArea storageArea;
 	
-	private List<ProductionLine> productionLines;
+	private Collection<ProductionLine> productionLines;
 	
-	public List<ProductionLine> getProductionLines() {
+	public Collection<ProductionLine> getProductionLines() {
 		return productionLines;
 	}
 
@@ -35,66 +31,9 @@ public abstract class Warehouse implements MonthlyUpdatable{
 	
 	public void createProductionLines(){
 		
-		productionLines = new LinkedList<ProductionLine>();
-		
-		List<ProductionLineElement> touchedElements
-			= new LinkedList<ProductionLineElement>();
-		
-		for (int i = 0; i < this.ground.getRows(); i++)
-			for (int j = 0; j < this.ground.getCols(); j++){
-				
-				ProductionLineElement lineElement = this.ground.getTile(i, j)
-					.getLineElement();
-				
-				if (lineElement != null && !touchedElements
-						.contains(lineElement)){
-					this.productionLines.add(this
-							.processLineElement(lineElement,touchedElements));
-				}
-			}
-	}
-	
-	private ProductionLine processLineElement(ProductionLineElement lineElement,
-			List<ProductionLineElement> touchedElements) {
-		
-		touchedElements.add(lineElement);
-		
-		boolean circularLine = false;
-		ProductionLineElement previous = lineElement.getPreviousLineElement();
-		
-		/*
-		 * Try to find the first element in the line. 
-		 */
-		while (previous != null && !circularLine){
-		
-			if (previous == lineElement)
-				circularLine = true;
-			else
-				touchedElements.add(previous);
-			
-			previous = previous.getPreviousLineElement();
-		}
-		
-		/*
-		 * Add to the touchedElements list the production elements between 
-		 * lineElement and the last one in the line. 
-		 */
-		if (!circularLine){
-			
-			ProductionLineElement next = lineElement.getNextLineElement();
-			
-			while (next != null){
-				touchedElements.add(next);
-				next = lineElement.getNextLineElement();
-			}
-		}
-				
-		return !circularLine ? ProductionLine
-					.createCircularProductionLine(previous,this.storageArea
-					, new RawMaterials())
-							 : ProductionLine
-					.createValidProductionLine(previous,this.storageArea
-					, new RawMaterials());
+		ProductionLinesCreator creator = new ProductionLinesCreator(
+				this.storageArea);
+		productionLines = creator.createFromGround(this.ground);
 	}
 
 	// TODO: sellMachines() no debería deshacerse de las máquinas?

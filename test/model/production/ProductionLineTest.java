@@ -36,9 +36,8 @@ public class ProductionLineTest {
 			new ValidProductionSequences()), new  RawMaterials());
 	}
 	
-	@Ignore
 	// TODO: ver comentario en Machine#equals()
-	@Test
+	@Test @Ignore
 	public void equalsTest(){
 			
 		ProductionLine prodLineEquals = this
@@ -46,6 +45,7 @@ public class ProductionLineTest {
 							
 		assertEquals(prodLineEquals, this.productionLine);	
 	}
+	
 	
 	@Test
 	public void dailyProduction(){

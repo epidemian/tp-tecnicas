@@ -174,6 +174,7 @@ public class ProductionLine implements TickUpdatable, DailyUpdatable,
 //		
 //		return true;
 //	}
+	
 
 	private String toStringLine(){
 	
@@ -190,7 +191,7 @@ public class ProductionLine implements TickUpdatable, DailyUpdatable,
 		
 	@Override
 	public String toString() {
-		
+
 		return "ProductionLine [" + this.toStringLine() + "]";
-	}	
+	}
 }

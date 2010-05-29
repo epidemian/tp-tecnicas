@@ -1,27 +1,25 @@
 package model.warehouse;
 
-import model.production.ProductionLineElement;
-
 public class Tile {
 
-	private ProductionLineElement lineElement;
-	
-	public Tile(ProductionLineElement prodLineElement){
-		this.lineElement=prodLineElement;
-		
+	private TileElement element;
+
+	public Tile(TileElement element) {
+		this.element = element;
+
 	}
-	
-	public Tile(){
-		this.lineElement=null;
-		
+
+	public Tile() {
+		this.element = null;
+
 	}
-	
-	public ProductionLineElement getLineElement() {
-		return lineElement;
+
+	public TileElement getTileElement() {
+		return element;
 	}
-	
-	public void setLineElement(ProductionLineElement element) {
-		this.lineElement = element;
+
+	public void setTileElement(TileElement element) {
+		this.element = element;
 	}
 	
 }
