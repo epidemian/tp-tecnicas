@@ -1,10 +1,10 @@
 package model.warehouse;
 
+import static model.production.ProductionLine.*;
+
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
-import static model.production.ProductionLine.*;
 import model.production.Conveyor;
 import model.production.Machine;
 import model.production.ProductionLine;
@@ -23,6 +23,7 @@ public class ProductionLinesCreator {
 	public Collection<ProductionLine> createFromGround(Ground ground) {
 
 		ProductionLineElementCollector collector = new ProductionLineElementCollector();
+
 		for (int i = 0; i < ground.getRows(); i++) {
 			for (int j = 0; j < ground.getCols(); j++) {
 				TileElement tileElement = ground.getTile(i, j).getTileElement();
@@ -36,14 +37,16 @@ public class ProductionLinesCreator {
 	}
 
 	private Collection<ProductionLine> createFromProductionLineElements(
-			List<ProductionLineElement> lineElements) {
+			Collection<ProductionLineElement> lineElements) {
 
 		Collection<ProductionLine> lines = new ArrayList<ProductionLine>();
+		Collection<ProductionLineElement> touchedElements;
+		touchedElements = new ArrayList<ProductionLineElement>();
 
 		while (!lineElements.isEmpty()) {
-			ProductionLineElement lineElement = lineElements.get(0);
-			ProductionLine line = processLineElement(lineElement, lineElements);
-			lines.add(line);
+			ProductionLineElement lineElement = lineElements.iterator().next();
+			if (!touchedElements.contains(lineElement))
+				lines.add(processLineElement(lineElement, touchedElements));
 		}
 
 		return lines;
@@ -51,9 +54,9 @@ public class ProductionLinesCreator {
 
 	private ProductionLine processLineElement(
 			ProductionLineElement lineElement,
-			List<ProductionLineElement> lineElements) {
+			Collection<ProductionLineElement> touchedElements) {
 
-		lineElements.remove(lineElement);
+		touchedElements.add(lineElement);
 
 		boolean circularLine = false;
 		ProductionLineElement previous = lineElement.getPreviousLineElement();
@@ -66,7 +69,7 @@ public class ProductionLinesCreator {
 			if (previous == lineElement)
 				circularLine = true;
 			else
-				lineElements.remove(previous);
+				touchedElements.add(previous);
 
 			previous = previous.getPreviousLineElement();
 		}
@@ -80,7 +83,7 @@ public class ProductionLinesCreator {
 			ProductionLineElement next = lineElement.getNextLineElement();
 
 			while (next != null) {
-				lineElements.remove(next);
+				touchedElements.add(next);
 				next = lineElement.getNextLineElement();
 			}
 		}
@@ -95,13 +98,13 @@ public class ProductionLinesCreator {
 
 	private class ProductionLineElementCollector implements TileElementVisitor {
 
-		private List<ProductionLineElement> productionLineElements;
+		private Collection<ProductionLineElement> productionLineElements;
 
 		public ProductionLineElementCollector() {
 			this.productionLineElements = new ArrayList<ProductionLineElement>();
 		}
 
-		public List<ProductionLineElement> getProductionLineElements() {
+		public Collection<ProductionLineElement> getProductionLineElements() {
 			return this.productionLineElements;
 		}
 
