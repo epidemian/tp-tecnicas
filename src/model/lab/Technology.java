@@ -13,13 +13,12 @@ public abstract class Technology {
 	private int researchCost;
 	private boolean researched;
 	
-	public Technology(String name, String description, int researchCost,
-			boolean researched) {
+	public Technology(String name, String description, int researchCost) {
 		super();
 		setName(name);
 		setDescription(description);
 		setResearchCost(researchCost);
-		setResearched(researched);
+		setResearched(false);
 	}
 
 	public String getName() {

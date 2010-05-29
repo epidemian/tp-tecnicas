@@ -55,9 +55,8 @@ public class TechnologyTree {
 	 * 
 	 * @param technology
 	 * @throws BusinessLogicException
-	 *             If <code>technology</code> is already in tree, or a
-	 *             technology with the same name is already in tree, or
-	 *             <code>technology</code> is <code>null</null>.
+	 *             If <code>technology</code> is already in tree, or is
+	 *             <code>null</null>.
 	 */
 	public void addTechnology(Technology technology) {
 		testAddTechnology(technology);
@@ -91,7 +90,7 @@ public class TechnologyTree {
 		}
 		return deps;
 	}
-	
+
 	boolean areAllDependenciesResearched(Technology technology) {
 		for (Technology dep : getAllDependencies(technology)) {
 			if (!dep.isResearched())
@@ -136,8 +135,6 @@ public class TechnologyTree {
 		checkNotNull(technology, "technology");
 		checkArgCondition(technology, !contains(technology),
 				"already exists in technology tree");
-		checkArgCondition(technology, !containsTechnologyWithName(technology
-				.getName()), "technology with same name already exists");
 	}
 
 	private void doAddTechnology(Technology technology) {
@@ -146,13 +143,6 @@ public class TechnologyTree {
 
 	private boolean contains(Technology technology) {
 		return this.technologies.containsKey(technology);
-	}
-
-	private boolean containsTechnologyWithName(String name) {
-		for (Technology tech : this.technologies.keySet())
-			if (tech.getName().equals(name))
-				return true;
-		return false;
 	}
 
 	private boolean technologyDependsOn(Technology technology,

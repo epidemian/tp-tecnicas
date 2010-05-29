@@ -32,7 +32,7 @@ public class NewProductionSequenceTechnology extends Technology {
 			ProductType productType, ValidProductionSequences validSequences,
 			String description, int researchCost) {
 		super(checkNotNull(productType, "product type").getName(), description,
-				researchCost, false);
+				researchCost);
 		checkNotNull(validSequences, "valid production sequences");
 		checkNotNull(sequence, "production sequence");
 		this.sequence = sequence;

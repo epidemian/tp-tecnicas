@@ -1,52 +1,51 @@
 package model.lab;
 
-import org.junit.*;
 import static org.junit.Assert.*;
 import model.exception.BusinessLogicException;
-import model.lab.Technology;
-import static model.lab.ConcreteTechnology.*;
+
+import org.junit.Before;
+import org.junit.Test;
 
 
 public class TechnologyTest {
 
+	private ConcreteTechnology technology;
+
+	@Before
+	public void setUp() {
+		this.technology = new ConcreteTechnology();
+	}
 	
 	@Test(expected = BusinessLogicException.class)
 	public void createTechnologyWithNullName() {
-		new ConcreteTechnology(null, "", 0, false);
+		new ConcreteTechnology(null, "", 0);
 	}
 	
 	@Test(expected = BusinessLogicException.class)
 	public void createTechnologyWithNullDescription() {
-		new ConcreteTechnology("", null, 0, false);
+		new ConcreteTechnology("", null, 0);
 	}
 	
 	@Test(expected = BusinessLogicException.class)
 	public void createTechnologyWithNegativeCost() {
-		new ConcreteTechnology("", "", -1, false);
+		new ConcreteTechnology("", "", -1);
 	}
 	
 	@Test
-	public void researchNotResearchedTechnology() {
-		createUnresearchedTecnology().research();
+	public void researchUnresearchedTechnology() {
+		this.technology.research();
 	}
-	
-	@Test(expected = BusinessLogicException.class)
-	public void researchAlreadyResearchedTechnology() {
-		createResearchedTecnology().research();
-	}
-	
+
 	@Test
-	public void researchNotResearchedTechnologyAndTestIsResearched() {
-		Technology t = createUnresearchedTecnology();
-		t.research();
-		assertTrue(t.isResearched());
+	public void researchUnresearchedTechnologyAndTestIsResearched() {
+		this.technology.research();
+		assertTrue(this.technology.isResearched());
 	}
 	
 	@Test(expected = BusinessLogicException.class)
 	public void researchTechnologyTwice() {
-		Technology t = createUnresearchedTecnology();
-		t.research();
-		t.research();
+		this.technology.research();
+		this.technology.research();
 	}
 	
 	@Test
@@ -65,7 +64,7 @@ class HelloWorldTechnology extends Technology {
 	private StringBuffer output;
 
 	public HelloWorldTechnology(StringBuffer output) {
-		super("Hello World Tec.", "Says hello", 0, false);
+		super("Hello World Tec.", "Says hello", 0);
 		this.output = output;
 	}
 	

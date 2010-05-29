@@ -1,5 +1,7 @@
 package model.lab;
 
+import static org.junit.Assert.*;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -7,11 +9,9 @@ import java.util.List;
 
 import model.exception.BusinessLogicException;
 import model.game.Budget;
-import static model.lab.ConcreteTechnology.*;
 
-import org.junit.*;
-
-import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
 
 public class ResearchLabTest {
 
@@ -48,13 +48,13 @@ public class ResearchLabTest {
 	
 	@Test(expected = BusinessLogicException.class)
 	public void startResearchingAlreadyResearchedTechnology() {
-		Technology tech = setUpWithOneUnresearchedTechnology();
+		Technology tech = setUpWithOneResearchedTechnology();
 		lab.startResearching(tech);
 	}
 	
 	@Test(expected = BusinessLogicException.class)
 	public void startResearchingNonExistentTechnology() {
-		lab.startResearching(createUnresearchedTecnology());
+		lab.startResearching(new ConcreteTechnology());
 	}
 	
 	@Test
@@ -205,15 +205,16 @@ public class ResearchLabTest {
 		TechnologyTree techTree = new TechnologyTree();
 		Technology[] techs = new Technology[costs.length];
 		for (int i = 0; i < costs.length; i++) {
-			techs[i] = new ConcreteTechnology("Tech " + i, "", costs[i], false);
+			techs[i] = new ConcreteTechnology("Tech " + i, "", costs[i]);
 			techTree.addTechnology(techs[i]);
 		}
 		setUpWithTechnologyTree(techTree);
 		return techs;
 	}
 	
-	private Technology setUpWithOneUnresearchedTechnology() {
-		Technology tech = createResearchedTecnology();
+	private Technology setUpWithOneResearchedTechnology() {
+		Technology tech = new ConcreteTechnology();
+		tech.research();
 		TechnologyTree techTree = new TechnologyTree();
 		techTree.addTechnology(tech);
 		setUpWithTechnologyTree(techTree);
@@ -221,7 +222,7 @@ public class ResearchLabTest {
 	}
 	
 	private AoeTownCenterTechnologies setUpWithAoeTechnologies() {		
-		AoeTownCenterTechnologies techs = new AoeTownCenterTechnologies(0);
+		AoeTownCenterTechnologies techs = new AoeTownCenterTechnologies();
 		setUpWithTechnologyTree(techs.createTechnologyTree());
 		return techs;
 	}
@@ -242,15 +243,15 @@ class AoeTownCenterTechnologies {
 	final Technology         TownPatrol;
 	final Technology         advanceToImperialAge;
 	
-	public AoeTownCenterTechnologies(int age) {
-		loom                 = createTechnology("Loom",         50,   age > 0);
-		advanceToFeudalAge   = createTechnology("Feudal Age",   500,  age > 0);
-		wheelbarrow          = createTechnology("Wheelbarrow",  225,  age > 1);
-		townWatch            = createTechnology("Town Watch",   75,   age > 1);
-		advanceToCastleAge   = createTechnology("Castle Age",   1000, age > 1);
-		handCart             = createTechnology("Hand Cart",    550,  age > 2);
-		TownPatrol           = createTechnology("Town Patrol",  500,  age > 2);
-		advanceToImperialAge = createTechnology("Imperial Age", 1800, age > 2);
+	public AoeTownCenterTechnologies() {
+		loom                 = createTechnology("Loom",         50);
+		advanceToFeudalAge   = createTechnology("Feudal Age",   500);
+		wheelbarrow          = createTechnology("Wheelbarrow",  225);
+		townWatch            = createTechnology("Town Watch",   75);
+		advanceToCastleAge   = createTechnology("Castle Age",   1000);
+		handCart             = createTechnology("Hand Cart",    550);
+		TownPatrol           = createTechnology("Town Patrol",  500);
+		advanceToImperialAge = createTechnology("Imperial Age", 1800);
 	}
 	
 	public Technology[] getExpectedResearchSequence() {
@@ -295,9 +296,8 @@ class AoeTownCenterTechnologies {
 		techTree.addDependency(advanceToImperialAge, advanceToCastleAge);
 	}
 	
-	private Technology createTechnology(String name, int cost,
-			boolean researched) {
-		Technology t = new ConcreteTechnology(name, "Desc", cost, researched);
+	private Technology createTechnology(String name, int cost) {
+		Technology t = new ConcreteTechnology(name, "Desc", cost);
 		return t;
 	}
 }
