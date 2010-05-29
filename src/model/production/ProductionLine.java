@@ -10,7 +10,8 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import model.game.time.DailyUpdatable;
 import model.game.time.TickUpdatable;
 
-public class ProductionLine implements TickUpdatable, DailyUpdatable{
+public class ProductionLine implements TickUpdatable, DailyUpdatable,
+		Iterable<ProductionLineElement> {
 
 	/**
 	 * First element in the production line.
@@ -90,6 +91,7 @@ public class ProductionLine implements TickUpdatable, DailyUpdatable{
 		return this.productionHistory;
 	}
 	
+	@Override
 	public Iterator<ProductionLineElement> iterator(){
 		return new ProductionLineIterator();
 	}
@@ -142,33 +144,36 @@ public class ProductionLine implements TickUpdatable, DailyUpdatable{
 		return size;
 	}
 	
-	@Override
-	public boolean equals(Object other){
-		
-		ProductionLine otherLine = (ProductionLine)other;
-		
-		if (this.productionLineSize() != otherLine.productionLineSize())
-			return false;
-		
-		Iterator<ProductionLineElement> iterator = this.iterator();	
-		Iterator<ProductionLineElement> iteratorOther = otherLine.iterator();	
-				
-		while(iterator.hasNext()){
-			ProductionLineElement element = iterator.next();
-			ProductionLineElement elementOther = iteratorOther.next();
-		
-			if (element == null && elementOther == null)
-				continue;
-
-			if (element == null || elementOther == null)
-				return false;
-			
-			if (!element.equals(elementOther))
-				return false;
-		}
-		
-		return true;
-	}
+	/*
+	 * TODO: Lo mismo que en Machine#equals().
+	 */
+//	@Override
+//	public boolean equals(Object other){
+//		
+//		ProductionLine otherLine = (ProductionLine)other;
+//		
+//		if (this.productionLineSize() != otherLine.productionLineSize())
+//			return false;
+//		
+//		Iterator<ProductionLineElement> iterator = this.iterator();	
+//		Iterator<ProductionLineElement> iteratorOther = otherLine.iterator();	
+//				
+//		while(iterator.hasNext()){
+//			ProductionLineElement element = iterator.next();
+//			ProductionLineElement elementOther = iteratorOther.next();
+//		
+//			if (element == null && elementOther == null)
+//				continue;
+//
+//			if (element == null || elementOther == null)
+//				return false;
+//			
+//			if (!element.equals(elementOther))
+//				return false;
+//		}
+//		
+//		return true;
+//	}
 
 	private String toStringLine(){
 	

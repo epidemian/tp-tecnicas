@@ -1,6 +1,5 @@
 package model.warehouse;
 
-import static model.utils.ArgumentUtils.checkGreaterEqual;
 import model.production.ProductionLineElement;
 
 public class Tile {

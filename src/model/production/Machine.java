@@ -40,10 +40,19 @@ public abstract class Machine extends ProductionLineElement{
 	public String toString() {
 		return "ProductionMachine [" + this.getMachineType().toString() + "]";
 	}
-	
-	@Override
-	public boolean equals(Object other){
-		Machine otherMachine = (Machine)other;
-		return (this.machineType.equals(otherMachine.machineType));
-	}
+
+	/*
+	 * TODO: Por qué dos Machines son iguales si sus tipos son iguales
+	 * solamente? Si en la fábrica tengo 2 "hornos" por ejemplo, no son iguales,
+	 * por más de que sus tipos sean iguales. Si fuesen iguales, no se podría
+	 * buscar uno o el otro en una colección que los contenga.
+	 * 
+	 * Además, nunca redefinir el equals y dejar el hashCode sin redefinir: se
+	 * rompe la interfaz del hashCode.
+	 */
+//	@Override
+//	public boolean equals(Object other){
+//		Machine otherMachine = (Machine)other;
+//		return (this.machineType.equals(otherMachine.machineType));
+//	}
 }

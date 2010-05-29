@@ -235,7 +235,7 @@ public class TechnologyTreeTest {
 	}
 
 	private Technology createTechnology(String name) {
-		return createTechnology(name, true);
+		return createTechnology(name, false);
 	}
 
 	private Technology createTechnology() {
@@ -249,7 +249,7 @@ public class TechnologyTreeTest {
 	}
 
 	private Technology createAndAddTechnology(String name) {
-		return createAndAddTechnology(name, true);
+		return createAndAddTechnology(name, false);
 	}
 
 	private Technology createAndAddTechnology() {

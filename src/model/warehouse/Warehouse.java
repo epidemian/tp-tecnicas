@@ -1,6 +1,5 @@
 package model.warehouse;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -98,27 +97,28 @@ public abstract class Warehouse implements MonthlyUpdatable{
 					, new RawMaterials());
 	}
 
+	// TODO: sellMachines() no debería deshacerse de las máquinas?
 	private void sellMachines(){		
 		int price = 0;
 		
-		if(this.productionLines != null){
-			Iterator elementsProductionLine = null;
-			
-			for (int i = 0; i < this.productionLines.size(); i++){
-				elementsProductionLine = this.productionLines.get(i).iterator();
-								
-				while(elementsProductionLine.hasNext()){
-					ProductionLineElement element = (ProductionLineElement)elementsProductionLine.next();
-									
-					if(element instanceof Machine){
-						//TODO: Verificar el estado de las m�quinas...
-						price += ((Machine)element).getPrice();
+		if (this.productionLines != null) {
+			for (ProductionLine productionLine : this.productionLines) {
+				for (ProductionLineElement element : productionLine) {
+					// TODO: Evitar el instanceof.
+					if (element instanceof Machine) {
+						// TODO: Verificar el estado de las m�quinas...
+						price += ((Machine) element).getPrice();
 					}
-				}				
+				}
 			}
 		}
-		
-		budget.increment((int)(0.5 * price));
+
+		/*
+		 * TODO: Sacar constante hard-codeada. Preferentemente parametrizar este
+		 * porcentaje para después poder configurarlo facilmente desde un
+		 * archivo de entrada o algo
+		 */
+		budget.increment((int) (0.5 * price));
 	}	
 	
 	protected abstract void sellGround();
