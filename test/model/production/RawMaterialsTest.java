@@ -1,11 +1,14 @@
 package model.production;
 
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
+import static org.junit.matchers.JUnitMatchers.either;
+
 import java.util.LinkedList;
 import java.util.List;
 
 import model.exception.BusinessLogicException;
 
-import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,196 +16,210 @@ public class RawMaterialsTest {
 
 	private int rawMaterialSize = 4;
 	private int rawMaterialStandardQuantity = 10;
-	
+
 	private RawMaterials rawMaterial;
 	private List<RawMaterialType> rawMaterialTypesInRawMaterials;
 	private List<RawMaterialType> rawMaterialTypesThatAreNotInRawMaterials;
-		
+
 	@Before
 	public void setUp() {
-		
-		this.rawMaterial = TestUtils.createRawMaterials(
-				rawMaterialSize, 0, rawMaterialStandardQuantity);
+
+		this.rawMaterial = TestUtils.createRawMaterials(rawMaterialSize, 0,
+				rawMaterialStandardQuantity);
 		this.rawMaterialTypesInRawMaterials = TestUtils
-			.createRawMaterialTypeList(rawMaterialSize, 0);
+				.createRawMaterialTypeList(rawMaterialSize, 0);
 		this.rawMaterialTypesThatAreNotInRawMaterials = TestUtils
-			.createRawMaterialTypeList(rawMaterialSize, rawMaterialSize+1);
+				.createRawMaterialTypeList(rawMaterialSize, rawMaterialSize + 1);
 	}
-	
+
 	@Test(expected = BusinessLogicException.class)
 	public void createRawMaterialsWithNullMap() {
 		new RawMaterials(null);
 	}
-	
+
 	@Test(expected = BusinessLogicException.class)
-	public void storeRawMaterialWithNegativeQuantity() 
-		throws NotEnoughRawMaterialException {
-				
+	public void storeRawMaterialWithNegativeQuantity()
+			throws NotEnoughRawMaterialException {
+
 		int quantityExtract = -10;
-		this.rawMaterial.store(this.rawMaterialTypesInRawMaterials.get(0)
-			, quantityExtract);
+		this.rawMaterial.store(this.rawMaterialTypesInRawMaterials.get(0),
+				quantityExtract);
 	}
-	
+
 	public void storeRawMaterialAuxiliary(RawMaterialType rawMaterialType,
 			int quantityStore) throws NotEnoughRawMaterialException {
-	
+
 		int quantityBeforeStore = this.rawMaterial
-			.getRawMaterialQuantity(rawMaterialType);
-		
+				.getRawMaterialQuantity(rawMaterialType);
+
 		this.rawMaterial.store(rawMaterialType, quantityStore);
 
 		int quantityAfterStore = this.rawMaterial
-			.getRawMaterialQuantity(rawMaterialType);
-				
+				.getRawMaterialQuantity(rawMaterialType);
+
 		assertTrue((quantityAfterStore - quantityStore) == quantityBeforeStore);
 	}
-	
+
 	@Test
-	public void storeRawMaterialThatIsNotInTheMap() 
-		throws NotEnoughRawMaterialException {
-		
+	public void storeRawMaterialThatIsNotInTheMap()
+			throws NotEnoughRawMaterialException {
+
 		int quantityStore = 10;
-		this.storeRawMaterialAuxiliary(this
-			.rawMaterialTypesThatAreNotInRawMaterials.get(0), quantityStore);
+		this.storeRawMaterialAuxiliary(
+				this.rawMaterialTypesThatAreNotInRawMaterials.get(0),
+				quantityStore);
 	}
-	
+
 	@Test
-	public void storeRawMaterialThatIsInTheMap() 
-		throws NotEnoughRawMaterialException {
-		
+	public void storeRawMaterialThatIsInTheMap()
+			throws NotEnoughRawMaterialException {
+
 		int quantityStore = 10;
-		this.storeRawMaterialAuxiliary(this
-			.rawMaterialTypesInRawMaterials.get(0), quantityStore);
+		this.storeRawMaterialAuxiliary(this.rawMaterialTypesInRawMaterials
+				.get(0), quantityStore);
 	}
-	
+
 	@Test
 	public void canExtractRawMaterialMoreThanAvailable() {
-		
-		assertFalse(this.rawMaterial
-			.canExtract(this.rawMaterialTypesInRawMaterials.get(0), 
-			this.rawMaterialStandardQuantity + 1));
+
+		assertFalse(this.rawMaterial.canExtract(
+				this.rawMaterialTypesInRawMaterials.get(0),
+				this.rawMaterialStandardQuantity + 1));
 	}
 
 	@Test
 	public void canExtractRawMaterialAvailable() {
-		
-		assertTrue(this.rawMaterial
-			.canExtract(this.rawMaterialTypesInRawMaterials.get(0), 
-			this.rawMaterialStandardQuantity - 1));
+
+		assertTrue(this.rawMaterial.canExtract(
+				this.rawMaterialTypesInRawMaterials.get(0),
+				this.rawMaterialStandardQuantity - 1));
 	}
-	
+
 	@Test
 	public void canExtractRawMaterialThatIsNotInTheMap() {
-		
-		assertFalse(this.rawMaterial
-			.canExtract(this.rawMaterialTypesThatAreNotInRawMaterials.get(0),
-			this.rawMaterialStandardQuantity));
+
+		assertFalse(this.rawMaterial.canExtract(
+				this.rawMaterialTypesThatAreNotInRawMaterials.get(0),
+				this.rawMaterialStandardQuantity));
 	}
-	
+
 	public void extractRawMaterialAuxiliary(RawMaterialType rawMaterialType,
 			int quantityExtract) throws NotEnoughRawMaterialException {
-	
+
 		int quantityBeforeStore = this.rawMaterial
-			.getRawMaterialQuantity(rawMaterialType);
-		
+				.getRawMaterialQuantity(rawMaterialType);
+
 		this.rawMaterial.extract(rawMaterialType, quantityExtract);
-	
+
 		int quantityAfterStore = this.rawMaterial
-			.getRawMaterialQuantity(rawMaterialType);
-				
-		assertTrue((quantityAfterStore + quantityExtract) 
-				== quantityBeforeStore);
+				.getRawMaterialQuantity(rawMaterialType);
+
+		assertTrue((quantityAfterStore + quantityExtract) == quantityBeforeStore);
 	}
-	
+
 	@Test(expected = NotEnoughRawMaterialException.class)
-	public void extractRawMaterialMoreThanAvailable() 
-		throws NotEnoughRawMaterialException {
-		
-		this.extractRawMaterialAuxiliary(this
-			.rawMaterialTypesInRawMaterials.get(1),
-			this.rawMaterialStandardQuantity + 1);
+	public void extractRawMaterialMoreThanAvailable()
+			throws NotEnoughRawMaterialException {
+
+		this.extractRawMaterialAuxiliary(this.rawMaterialTypesInRawMaterials
+				.get(1), this.rawMaterialStandardQuantity + 1);
 	}
-	
+
 	@Test
-	public void extractRawMaterialAvailable() 
-		throws NotEnoughRawMaterialException {
-		
-		this.extractRawMaterialAuxiliary(this
-			.rawMaterialTypesInRawMaterials.get(1),
-			this.rawMaterialStandardQuantity - 1);
-	}	
-	
+	public void extractRawMaterialAvailable()
+			throws NotEnoughRawMaterialException {
+
+		this.extractRawMaterialAuxiliary(this.rawMaterialTypesInRawMaterials
+				.get(1), this.rawMaterialStandardQuantity - 1);
+	}
+
 	@Test(expected = BusinessLogicException.class)
-	public void extractRawMaterialWithNegativeQuantity() 
-		throws NotEnoughRawMaterialException {
-		
-		this.extractRawMaterialAuxiliary(this
-			.rawMaterialTypesInRawMaterials.get(1),
-			-this.rawMaterialStandardQuantity);
+	public void extractRawMaterialWithNegativeQuantity()
+			throws NotEnoughRawMaterialException {
+
+		this.extractRawMaterialAuxiliary(this.rawMaterialTypesInRawMaterials
+				.get(1), -this.rawMaterialStandardQuantity);
 	}
-	
-	@Test (expected = NotEnoughRawMaterialException.class)
-	public void extractRawMaterialsMoreThanAvailable() 
-		throws NotEnoughRawMaterialException {
-		
+
+	@Test(expected = NotEnoughRawMaterialException.class)
+	public void extractRawMaterialsMoreThanAvailable()
+			throws NotEnoughRawMaterialException {
+
 		RawMaterials rawMaterial = TestUtils.createRawMaterials(
-			this.rawMaterialSize, 0, this.rawMaterialStandardQuantity + 1);
-				
+				this.rawMaterialSize, 0, this.rawMaterialStandardQuantity + 1);
+
 		this.rawMaterial.extract(rawMaterial);
 	}
-	
+
 	@Test
-	public void extractRawMaterialsAvailable() 
-		throws NotEnoughRawMaterialException {
-	
+	public void extractRawMaterialsAvailable()
+			throws NotEnoughRawMaterialException {
+
 		int quantityExtract = this.rawMaterialStandardQuantity - 1;
-		
+
 		List<RawMaterialType> types = TestUtils.createRawMaterialTypeList(
-			this.rawMaterialSize, 0);
+				this.rawMaterialSize, 0);
 		RawMaterials rawMaterial = TestUtils.createRawMaterials(
-			this.rawMaterialSize, 0, quantityExtract);
-		
+				this.rawMaterialSize, 0, quantityExtract);
+
 		List<Integer> quantityBeforeStore = new LinkedList<Integer>();
-		for (RawMaterialType entry : types){
+		for (RawMaterialType entry : types) {
 			quantityBeforeStore.add(this.rawMaterial
-				.getRawMaterialQuantity(entry));
+					.getRawMaterialQuantity(entry));
 		}
-		
+
 		this.rawMaterial.extract(rawMaterial);
-			
+
 		List<Integer> quantityAfterStore = new LinkedList<Integer>();
-		for (RawMaterialType entry : types){
+		for (RawMaterialType entry : types) {
 			quantityAfterStore.add(this.rawMaterial
-				.getRawMaterialQuantity(entry));
+					.getRawMaterialQuantity(entry));
 		}
-		
-		for (int i = 0; i < types.size(); i++){
-			assertTrue((quantityAfterStore.get(i) + quantityExtract) 
-					== quantityBeforeStore.get(i));
+
+		for (int i = 0; i < types.size(); i++) {
+			assertTrue((quantityAfterStore.get(i) + quantityExtract) == quantityBeforeStore
+					.get(i));
 		}
-	}	
-	
+	}
+
 	@Test
-	public void equalsTest(){
-		
+	public void equalsTest() {
+
 		RawMaterials rawMaterial = TestUtils.createRawMaterials(
-			this.rawMaterialSize, 0, this.rawMaterialStandardQuantity);
-			
+				this.rawMaterialSize, 0, this.rawMaterialStandardQuantity);
+
 		assertEquals(this.rawMaterial, rawMaterial);
 	}
-	
+
 	@Test
-	public void equalsTestUsingStore(){
-	
+	public void equalsTestUsingStore() {
+
 		RawMaterials rawMaterial = new RawMaterials();
-		
+
 		List<RawMaterialType> types = TestUtils.createRawMaterialTypeList(
-			this.rawMaterialSize, 0);
-		
-		for (RawMaterialType entry : types){
+				this.rawMaterialSize, 0);
+
+		for (RawMaterialType entry : types) {
 			rawMaterial.store(entry, rawMaterialStandardQuantity);
 		}
-			
+
 		assertEquals(this.rawMaterial, rawMaterial);
 	}
+
+	@Test
+	public void toPrettyStringWithNoMaterials() {
+		RawMaterials materials = new RawMaterials();
+		assertEquals(RawMaterials.NO_MATERIALS_PRETTY_STRING, materials
+				.toPrettyString());
+	}
+
+	@Test
+	public void toPrettyString() {
+		RawMaterials archerMaterials = new RawMaterials();
+		archerMaterials.store(new RawMaterialType("Wood"), 25);
+		archerMaterials.store(new RawMaterialType("Gold"), 45);
+		assertThat(archerMaterials.toPrettyString(), is(either(
+				equalTo("25 Wood, 45 Gold")).or(equalTo("45 Gold, 25 Wood"))));
+	}
+
 }

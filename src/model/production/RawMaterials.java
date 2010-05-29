@@ -1,82 +1,85 @@
 package model.production;
 
 import static model.utils.ArgumentUtils.*;
+import static model.utils.StringUtils.join;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * Representation of the raw materials that can be used to create products.
  */
 public class RawMaterials {
 
-	public Map<RawMaterialType,Integer> rawMaterials;
-	
-	public RawMaterials(Map<RawMaterialType,Integer> rawMaterials){
+	public static final String NO_MATERIALS_PRETTY_STRING = "no materials";
+	public Map<RawMaterialType, Integer> rawMaterials;
+
+	public RawMaterials(Map<RawMaterialType, Integer> rawMaterials) {
 		checkNotNull(rawMaterials, "rawMaterials");
 		this.rawMaterials = rawMaterials;
 	}
-	
-	public RawMaterials(){
-		this.rawMaterials = new HashMap<RawMaterialType, Integer>();
+
+	public RawMaterials() {
+		this(new HashMap<RawMaterialType, Integer>());
 	}
 
-	public void extract(RawMaterials rawMaterials) 
-	   throws NotEnoughRawMaterialException{
-	
-		if (canExtract(rawMaterials)){
-			for (RawMaterialType key : rawMaterials.rawMaterials.keySet()){
+	public void extract(RawMaterials rawMaterials)
+			throws NotEnoughRawMaterialException {
+
+		if (canExtract(rawMaterials)) {
+			for (RawMaterialType key : rawMaterials.rawMaterials.keySet()) {
 				Integer value = rawMaterials.rawMaterials.get(key);
 				this.extract(key, value.intValue());
 			}
-		}
-		else
+		} else
 			throw new NotEnoughRawMaterialException();
 	}
-	
+
 	public void extract(RawMaterialType rawMaterialType, int quantityNeeded)
-		   throws NotEnoughRawMaterialException{
-		
+			throws NotEnoughRawMaterialException {
+
 		validateQuantity(quantityNeeded);
-		
-		if (canExtract(rawMaterialType,quantityNeeded)){
+
+		if (canExtract(rawMaterialType, quantityNeeded)) {
 			Integer quantity = this.rawMaterials.get(rawMaterialType);
-			this.rawMaterials.put(rawMaterialType, 
-					quantity.intValue()-quantityNeeded);
-		}
-		else
+			this.rawMaterials.put(rawMaterialType, quantity.intValue()
+					- quantityNeeded);
+		} else
 			throw new NotEnoughRawMaterialException();
 	}
-	
-	public boolean canExtract(RawMaterials rawMaterials){
-		
-		for (RawMaterialType key : rawMaterials.rawMaterials.keySet()){
+
+	public boolean canExtract(RawMaterials rawMaterials) {
+
+		for (RawMaterialType key : rawMaterials.rawMaterials.keySet()) {
 			int value = rawMaterials.getRawMaterialQuantity(key);
-			
+
 			if (!this.canExtract(key, value))
-				return false;	
+				return false;
 		}
-		
+
 		return true;
 	}
-	
+
 	public boolean canExtract(RawMaterialType rawMaterialType,
-			int quantityNeeded){
-		
+			int quantityNeeded) {
+
 		int quantity = this.getRawMaterialQuantity(rawMaterialType);
 		return quantity >= quantityNeeded;
 	}
 
-	public void store(RawMaterialType rawMaterialType, int quantityStore){
-	
+	public void store(RawMaterialType rawMaterialType, int quantityStore) {
+
 		validateQuantity(quantityStore);
-		
+
 		int quantity = this.getRawMaterialQuantity(rawMaterialType);
 		this.rawMaterials.put(rawMaterialType, quantityStore + quantity);
 	}
-	
-	public int getRawMaterialQuantity(RawMaterialType rawMaterialType){
-		
+
+	public int getRawMaterialQuantity(RawMaterialType rawMaterialType) {
+
 		Integer quantity = this.rawMaterials.get(rawMaterialType);
 		if (quantity != null)
 			return quantity.intValue();
@@ -84,10 +87,10 @@ public class RawMaterials {
 			return 0;
 	}
 
-	private void validateQuantity(int quantity){
-		checkGreaterEqual(quantity,0,"quantity");
-	}	
-	
+	private void validateQuantity(int quantity) {
+		checkGreaterEqual(quantity, 0, "quantity");
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -120,7 +123,11 @@ public class RawMaterials {
 	}
 
 	public String toPrettyString() {
-		// TODO Auto-generated method stub
-		return "";
+		if (rawMaterials.isEmpty())
+			return NO_MATERIALS_PRETTY_STRING;
+		List<String> matStrings = new ArrayList<String>(rawMaterials.size());
+		for (Entry<RawMaterialType, Integer> entry : rawMaterials.entrySet())
+			matStrings.add(entry.getValue() + " " + entry.getKey());
+		return join(matStrings, ", ");
 	}
 }

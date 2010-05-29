@@ -2,7 +2,6 @@ package model.lab;
 
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import model.exception.BusinessLogicException;
@@ -12,6 +11,7 @@ import model.production.ProductType;
 import model.production.ProductionSequence;
 import model.production.RawMaterialType;
 import model.production.RawMaterials;
+import model.production.TestUtils;
 import model.production.ValidProductionSequences;
 
 import org.junit.Before;
@@ -27,7 +27,7 @@ public class NewProductionSequenceTechnologyTest {
 	@Before
 	public void setUp() {
 
-		List<MachineType> lineMachines = getMachineTypeList("Requirements",
+		List<MachineType> lineMachines = TestUtils.createMachineTypeList("Requirements",
 				"Design", "Implementation", "Testing", "Maintenance");
 		RawMaterials rawMaterials = new RawMaterials();
 		rawMaterials.store(new RawMaterialType("Time"), 1000);
@@ -39,15 +39,8 @@ public class NewProductionSequenceTechnologyTest {
 		this.validProductionSequences = new ValidProductionSequences();
 		this.technology = new NewProductionSequenceTechnology(
 				this.productionSequence, this.productType,
-				this.validProductionSequences, 100);
-	}
-
-	private List<MachineType> getMachineTypeList(String... names) {
-		List<MachineType> machineTypes = new ArrayList<MachineType>(
-				names.length);
-		for (String name : names)
-			machineTypes.add(new MachineType(name));
-		return machineTypes;
+				this.validProductionSequences,
+				"Develop software using waterfall development process", 100);
 	}
 
 	@Test(expected = BusinessLogicException.class)
@@ -91,6 +84,6 @@ public class NewProductionSequenceTechnologyTest {
 		ValidProductionSequences validSequences = nullValidSequences ? null
 				: this.validProductionSequences;
 		return new NewProductionSequenceTechnology(sequence, productType,
-				validSequences, 0);
+				validSequences, "", 0);
 	}
 }

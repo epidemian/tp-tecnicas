@@ -7,7 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class ProductionSequence {
-
+	
 	/**
 	 * Contains the machines types of a specific line of production
 	 */
@@ -91,12 +91,7 @@ public class ProductionSequence {
 		return true;
 	}
 
-	public String toPrettyString() {
-		return this.rawMaterials.toPrettyString() + " "
-				+ getLineMachinesPrettyString();
-	}
-
-	private String getLineMachinesPrettyString() {
+	public String getLineMachinesPrettyString() {
 		return join(this.lineMachines, " -> ");
 	}
 }

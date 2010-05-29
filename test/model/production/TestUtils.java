@@ -81,4 +81,12 @@ public class TestUtils {
 			    ,TestUtils.createRawMaterials(sizeRawMaterials,
 				startRawMaterialTypeIndex, quantityRawMaterial));
 	}
+
+	public  static List<MachineType> createMachineTypeList(String... names) {
+		List<MachineType> machineTypes = new ArrayList<MachineType>(
+				names.length);
+		for (String name : names)
+			machineTypes.add(new MachineType(name));
+		return machineTypes;
+	}
 }
