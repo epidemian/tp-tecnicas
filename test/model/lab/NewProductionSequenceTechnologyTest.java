@@ -14,7 +14,8 @@ import model.production.RawMaterialType;
 import model.production.RawMaterials;
 import model.production.ValidProductionSequences;
 
-import org.junit.*;
+import org.junit.Before;
+import org.junit.Test;
 
 public class NewProductionSequenceTechnologyTest {
 

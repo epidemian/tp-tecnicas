@@ -1,6 +1,7 @@
 package model.production;
 
 import static model.utils.ArgumentUtils.checkNotNull;
+import static model.utils.StringUtils.join;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -12,31 +13,30 @@ public class ProductionSequence {
 	 */
 	private List<MachineType> lineMachines;
 	private RawMaterials rawMaterials;
-	
 
 	public ProductionSequence(List<MachineType> lineMachines,
 			RawMaterials rawMaterials) {
 		this.setLineMachines(lineMachines);
 		this.setRawMaterials(rawMaterials);
 	}
-	
+
 	public ProductionSequence(RawMaterials rawMaterials) {
-		this(new LinkedList<MachineType>(),rawMaterials);
+		this(new LinkedList<MachineType>(), rawMaterials);
 	}
-	
-	public void addMachineType(MachineType machineType){
+
+	public void addMachineType(MachineType machineType) {
 		checkNotNull(machineType, "machineType");
 		this.lineMachines.add(machineType);
 	}
-	
+
 	public RawMaterials getRawMaterials() {
 		return rawMaterials;
 	}
-	
+
 	public List<MachineType> getLineMachines() {
 		return lineMachines;
 	}
-	
+
 	private void setRawMaterials(RawMaterials rawMaterials) {
 		checkNotNull(rawMaterials, "rawMaterials");
 		this.rawMaterials = rawMaterials;
@@ -47,7 +47,8 @@ public class ProductionSequence {
 		this.lineMachines = lineMachines;
 	}
 
-	public ProductType identifyProductType(ValidProductionSequences validSequences){
+	public ProductType identifyProductType(
+			ValidProductionSequences validSequences) {
 		return validSequences.identifyProductType(this);
 	}
 
@@ -91,7 +92,11 @@ public class ProductionSequence {
 	}
 
 	public String toPrettyString() {
-		
-		return null;
+		return this.rawMaterials.toPrettyString() + " "
+				+ getLineMachinesPrettyString();
+	}
+
+	private String getLineMachinesPrettyString() {
+		return join(this.lineMachines, " -> ");
 	}
 }

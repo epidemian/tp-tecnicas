@@ -1,6 +1,7 @@
 import model.game.AllGameTests;
 import model.lab.AllLabTests;
 import model.production.AllProductionTests;
+import model.utils.AllUtilsTests;
 import model.utils.ArgumentUtilsTest;
 import model.warehouse.WarehouseTest;
 
@@ -17,6 +18,6 @@ import org.junit.runners.Suite.SuiteClasses;
         AllProductionTests.class,
         AllGameTests.class,
 	    WarehouseTest.class,
-	    ArgumentUtilsTest.class,
+	    AllUtilsTests.class,
 })
 public class AllTests { }

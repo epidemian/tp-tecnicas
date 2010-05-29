@@ -118,4 +118,9 @@ public class RawMaterials {
 			return false;
 		return true;
 	}
+
+	public String toPrettyString() {
+		// TODO Auto-generated method stub
+		return "";
+	}
 }

@@ -1,11 +1,10 @@
 package model.utils;
 
 import static model.utils.ArgumentUtils.*;
-
+import static org.junit.Assert.*;
 import model.exception.BusinessLogicException;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import org.junit.Test;
 
 public class ArgumentUtilsTest {
 
