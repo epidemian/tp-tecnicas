@@ -3,8 +3,8 @@ package model.warehouse;
 import static model.production.ProductionLine.*;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 import model.production.Conveyor;
 import model.production.Machine;
@@ -21,7 +21,7 @@ public class ProductionLinesCreator {
 		this.storageArea = storageArea;
 	}
 
-	public Collection<ProductionLine> createFromGround(Ground ground) {
+	public List<ProductionLine> createFromGround(Ground ground) {
 
 		ProductionLineElementCollector collector = new ProductionLineElementCollector();
 
@@ -37,11 +37,11 @@ public class ProductionLinesCreator {
 				.getProductionLineElements());
 	}
 
-	private Collection<ProductionLine> createFromProductionLineElements(
-			Collection<ProductionLineElement> lineElements) {
+	private List<ProductionLine> createFromProductionLineElements(
+			List<ProductionLineElement> lineElements) {
 
-		Collection<ProductionLine> lines = new ArrayList<ProductionLine>();
-		Collection<ProductionLineElement> touchedElements;
+		List<ProductionLine> lines = new ArrayList<ProductionLine>();
+		List<ProductionLineElement> touchedElements;
 		touchedElements = new ArrayList<ProductionLineElement>();
 
 		Iterator<ProductionLineElement> lineElementsIterator = 
@@ -58,7 +58,7 @@ public class ProductionLinesCreator {
 
 	private ProductionLine processLineElement(
 			ProductionLineElement lineElement,
-			Collection<ProductionLineElement> touchedElements) {
+			List<ProductionLineElement> touchedElements) {
 
 		touchedElements.add(lineElement);
 
@@ -104,13 +104,13 @@ public class ProductionLinesCreator {
 
 	private class ProductionLineElementCollector implements TileElementVisitor {
 
-		private Collection<ProductionLineElement> productionLineElements;
+		private List<ProductionLineElement> productionLineElements;
 
 		public ProductionLineElementCollector() {
 			this.productionLineElements = new ArrayList<ProductionLineElement>();
 		}
 
-		public Collection<ProductionLineElement> getProductionLineElements() {
+		public List<ProductionLineElement> getProductionLineElements() {
 			return this.productionLineElements;
 		}
 

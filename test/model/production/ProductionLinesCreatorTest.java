@@ -3,8 +3,7 @@ package model.production;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -32,7 +31,7 @@ public class ProductionLinesCreatorTest {
 	/*
 	 * Generates context!
 	 */
-	private Collection<ProductionLine> putProductionLineElements(Ground ground){
+	private List<ProductionLine> putProductionLineElements(Ground ground){
 		
 		MachineType machineType1 = new MachineType("Licuado");
 		MachineType machineType2 = new MachineType("Haz");
@@ -110,65 +109,12 @@ public class ProductionLinesCreatorTest {
 		 */
 		ground.getTile(8, 8).setTileElement(prodLine3Element1);
 				
-		Collection<ProductionLine> linesCreated = new ArrayList<ProductionLine>();
+		List<ProductionLine> linesCreated = new ArrayList<ProductionLine>();
 		linesCreated.add(line);
 		linesCreated.add(line2);
 		linesCreated.add(line3);
 				
 		return linesCreated;
-	}
-	
-	/*
-	 * This is only used in this test. It is not a real equals =).
-	 */
-	private static boolean equalsElement(ProductionLineElement element1,
-			ProductionLineElement element2){
-		
-		String toStringElement1 = element1.toString();
-		String toStringElement2 = element2.toString();
-		
-		return toStringElement1.equals(toStringElement2);		
-	}
-		
-	private static boolean equalsLine(ProductionLine line1,
-			ProductionLine line2){
-		
-		if (line1.productionLineSize() != line2.productionLineSize())
-			return false;
-		
-		Iterator<ProductionLineElement> line1Iterator = line1.iterator();
-		Iterator<ProductionLineElement> line2Iterator = line2.iterator();	
-		
-		while (line1Iterator.hasNext()){
-			if (!ProductionLinesCreatorTest.equalsElement(line1Iterator.next()
-				, line2Iterator.next()))
-				return false;			
-		}
-		
-		return true;
-	}
-	
-	/*
-	 * Analyze if the elements in prodLinesColl1 are also in prodLinesColl2.
-	 */
-	private static boolean contains(Collection<ProductionLine> prodLinesColl1,
-		Collection<ProductionLine> prodLinesColl2){
-		
-		boolean contains = true;
-		
-		Iterator<ProductionLine> coll1Iterator = prodLinesColl1.iterator();
-		while (coll1Iterator.hasNext() && contains){
-			
-			ProductionLine line1 = coll1Iterator.next();
-			Iterator<ProductionLine> coll2Iterator = prodLinesColl2.iterator();
-			contains = false;
-			while (coll2Iterator.hasNext() && !contains){
-				ProductionLine line2 = coll2Iterator.next();
-				contains = ProductionLinesCreatorTest.equalsLine(line1, line2);
-			}			
-		}
-		
-		return contains;		
 	}
 	
 	@Test 
@@ -177,13 +123,15 @@ public class ProductionLinesCreatorTest {
 		/*
 		 * Context.
 		 */
-		Collection<ProductionLine> linesCreated = this
+		List<ProductionLine> linesExpected = this
 			.putProductionLineElements(this.ground);
 		
-		Collection<ProductionLine> linesGround = this.linesCreator
+		List<ProductionLine> linesGround = this.linesCreator
 			.createFromGround(ground);
+
+		assertEquals(linesExpected.size(), linesGround.size());
 		
-		assertTrue(ProductionLinesCreatorTest.contains(
-				linesGround,linesCreated));
+		for (int i = 0; i < linesExpected.size(); i++)
+			assertEquals(linesExpected.get(i).getLineElements(), linesGround.get(i).getLineElements());
 	}
 }

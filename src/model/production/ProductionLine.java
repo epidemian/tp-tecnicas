@@ -49,6 +49,18 @@ public class ProductionLine implements TickUpdatable, DailyUpdatable,
 		return firstLineElement;
 	}	
 	
+	public List<ProductionLineElement> getLineElements(){
+		
+		List<ProductionLineElement> elements = 
+			new LinkedList<ProductionLineElement>();
+	
+		for (ProductionLineElement lineElement : this){
+			elements.add(lineElement);
+		}
+		
+		return elements;
+	}
+	
 	public void setRawMaterialConfiguration(
 		RawMaterials rawMaterialsConfiguracion){
 		checkNotNull(rawMaterialsConfiguracion, "rawMaterialsConfiguracion");
