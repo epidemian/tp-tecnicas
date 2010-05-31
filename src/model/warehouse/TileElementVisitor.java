@@ -1,20 +1,13 @@
 package model.warehouse;
 
 import model.production.Conveyor;
-import model.production.Machine;
+import model.production.ProductionMachine;
+import model.production.QualityControlMachine;
 
 public interface TileElementVisitor {
 
 	void visitWall(Wall wall);
-
 	void visitConveyor(Conveyor conveyor);
-
-	/*
-	 * Maybe more specific methods like visitProductionMachine and
-	 * visitQualityControlMachine will need to be created, but for now this
-	 * works...
-	 */
-	void visitMachine(Machine machine);
-
-	
+	void visitProductionMachine(ProductionMachine machine);
+	void visitQualityControlMachine(QualityControlMachine machine);
 }

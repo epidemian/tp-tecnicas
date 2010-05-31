@@ -7,9 +7,10 @@ import java.util.Iterator;
 import java.util.List;
 
 import model.production.Conveyor;
-import model.production.Machine;
 import model.production.ProductionLine;
 import model.production.ProductionLineElement;
+import model.production.ProductionMachine;
+import model.production.QualityControlMachine;
 import model.production.RawMaterials;
 import model.production.StorageArea;
 
@@ -128,9 +129,13 @@ public class ProductionLinesCreator {
 		}
 
 		@Override
-		public void visitMachine(Machine machine) {
+		public void visitProductionMachine(ProductionMachine machine){
 			this.productionLineElements.add(machine);
 		}
-
+		
+		@Override
+		public void visitQualityControlMachine(QualityControlMachine machine){
+			this.productionLineElements.add(machine);
+		}
 	}
 }

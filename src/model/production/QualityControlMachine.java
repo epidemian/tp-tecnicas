@@ -1,6 +1,7 @@
 package model.production;
 
 import static model.utils.ArgumentUtils.checkNotNull;
+import model.warehouse.TileElementVisitor;
 
 public class QualityControlMachine extends Machine{
 
@@ -25,6 +26,11 @@ public class QualityControlMachine extends Machine{
 				input = null;
 		}
 	} 
+	
+	@Override
+	public void accept(TileElementVisitor visitor) {
+		visitor.visitQualityControlMachine(this);
+	}
 	
 	@Override
 	public int getPrice() {

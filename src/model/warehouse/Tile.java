@@ -3,7 +3,8 @@ package model.warehouse;
 public class Tile {
 
 	private TileElement element;
-
+	
+	
 	public Tile(TileElement element) {
 		this.element = element;
 	}
