@@ -6,12 +6,10 @@ public class Tile {
 
 	public Tile(TileElement element) {
 		this.element = element;
-
 	}
 
 	public Tile() {
 		this.element = null;
-
 	}
 
 	public TileElement getTileElement() {
@@ -20,6 +18,5 @@ public class Tile {
 
 	public void setTileElement(TileElement element) {
 		this.element = element;
-	}
-	
+	}	
 }

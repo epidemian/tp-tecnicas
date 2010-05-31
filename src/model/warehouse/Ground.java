@@ -1,6 +1,6 @@
 package model.warehouse;
 
-import java.util.Iterator;
+import static model.utils.ArgumentUtils.checkGreaterEqual;
 
 public class Ground {
 	private int price;
@@ -11,6 +11,8 @@ public class Ground {
 
 	public Ground(int price, int rows, int cols) {
 		this.price = price;
+		this.setRows(rows);
+		this.setCols(cols);
 		this.groundTiles = new Tile[rows][cols];
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
@@ -33,5 +35,15 @@ public class Ground {
 
 	public int getCols() {
 		return this.cols;
+	}
+	
+	private void setRows(int rows){
+		checkGreaterEqual(rows, 1, "rows");
+		this.rows = rows;
+	}
+	
+	private void setCols(int cols){
+		checkGreaterEqual(cols, 1, "cols");
+		this.cols = cols;
 	}
 }

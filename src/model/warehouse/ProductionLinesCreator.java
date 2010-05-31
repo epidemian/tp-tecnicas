@@ -4,6 +4,7 @@ import static model.production.ProductionLine.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 
 import model.production.Conveyor;
 import model.production.Machine;
@@ -31,7 +32,7 @@ public class ProductionLinesCreator {
 					tileElement.accept(collector);
 			}
 		}
-
+	
 		return createFromProductionLineElements(collector
 				.getProductionLineElements());
 	}
@@ -43,8 +44,11 @@ public class ProductionLinesCreator {
 		Collection<ProductionLineElement> touchedElements;
 		touchedElements = new ArrayList<ProductionLineElement>();
 
-		while (!lineElements.isEmpty()) {
-			ProductionLineElement lineElement = lineElements.iterator().next();
+		Iterator<ProductionLineElement> lineElementsIterator = 
+			lineElements.iterator();
+		
+		while (lineElementsIterator.hasNext()){
+			ProductionLineElement lineElement = lineElementsIterator.next();
 			if (!touchedElements.contains(lineElement))
 				lines.add(processLineElement(lineElement, touchedElements));
 		}
@@ -60,6 +64,7 @@ public class ProductionLinesCreator {
 
 		boolean circularLine = false;
 		ProductionLineElement previous = lineElement.getPreviousLineElement();
+		ProductionLineElement firstElement = lineElement;
 
 		/*
 		 * Try to find the first element in the line.
@@ -71,6 +76,7 @@ public class ProductionLinesCreator {
 			else
 				touchedElements.add(previous);
 
+			firstElement = previous;
 			previous = previous.getPreviousLineElement();
 		}
 
@@ -84,14 +90,14 @@ public class ProductionLinesCreator {
 
 			while (next != null) {
 				touchedElements.add(next);
-				next = lineElement.getNextLineElement();
+				next = next.getNextLineElement();
 			}
 		}
 
 		// TODO: Ver qué hacer con los new RawMaterials()
 		return circularLine ? createCircularProductionLine(previous,
 				this.storageArea, new RawMaterials())
-				: createValidProductionLine(previous, this.storageArea,
+				: createValidProductionLine(firstElement, this.storageArea,
 						new RawMaterials());
 
 	}

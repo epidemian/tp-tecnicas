@@ -12,4 +12,9 @@ public class Conveyor extends ProductionLineElement{
 	public void accept(TileElementVisitor visitor) {
 		visitor.visitConveyor(this);
 	}
+	
+	@Override
+	public String toString(){
+		return "Conveyor";
+	}
 }
