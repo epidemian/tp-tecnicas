@@ -1,6 +1,6 @@
 package model.warehouse;
 
-public class Wall implements TileElement {
+public class Wall extends TileElement {
 
 	@Override
 	public void accept(TileElementVisitor visitor) {

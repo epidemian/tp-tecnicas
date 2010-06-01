@@ -2,7 +2,7 @@ package model.production;
 
 import model.warehouse.TileElement;
 
-abstract public class ProductionLineElement implements TileElement {
+abstract public class ProductionLineElement extends TileElement {
 	
 	/**
 	 * Output line element of the production line element.
