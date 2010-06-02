@@ -87,6 +87,7 @@ public class Player {
 
 	public void addProductLine(ProductionLine productionLine){
 		checkNotNull(productionLine, "productionLine");
+		checkNotNull(warehouse, "warehouse");
 		warehouse.getProductionLines().add(productionLine);
 		timeManager.subscribeTickUpdatable(productionLine);
 	}
