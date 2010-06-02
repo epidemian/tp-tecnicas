@@ -8,6 +8,7 @@ public class PurchaseWarehouse extends Warehouse{
 		super(ground, budget);
 	}
 
+	//TODO: Sacar el 0.8 y ponerlo en configuracion
 	public void sellGround() {
 		budget.increment((int)(0.8 * ground.getPrice()));
 	}
