@@ -1,17 +1,13 @@
 package model.game;
 
 import java.util.Collection;
-import java.util.Iterator;
-
 import model.warehouse.Ground;
 import model.warehouse.Warehouse;
 
 import model.game.Budget;
 import model.game.time.TimeManager;
 import model.lab.ResearchLab;
-import model.production.Machine;
 import model.production.ProductionLine;
-import model.production.ProductionLineElement;
 
 public class Player {
 	private Budget budget; 
