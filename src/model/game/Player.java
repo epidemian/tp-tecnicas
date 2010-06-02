@@ -61,7 +61,7 @@ public class Player {
 		return true;	
 	}
 	
-	void addProductLine(ProductionLine productionLine){
+	public void addProductLine(ProductionLine productionLine){
 		checkNotNull(productionLine, "productionLine");
 		warehouse.getProductionLines().add(productionLine);
 		timeManager.subscribeTickUpdatable(productionLine);
