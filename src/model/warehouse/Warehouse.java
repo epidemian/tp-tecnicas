@@ -1,5 +1,7 @@
 package model.warehouse;
 
+import static model.utils.ArgumentUtils.checkNotNull;
+
 import java.util.Collection;
 
 import model.game.Budget;
@@ -25,6 +27,8 @@ public abstract class Warehouse implements MonthlyUpdatable{
 	}
 
 	public Warehouse(Ground ground, Budget budget){
+		checkNotNull(ground, "ground");
+		checkNotNull(budget, "budget");
 		this.ground = ground;
 		this.budget = budget;
 	}

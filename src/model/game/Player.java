@@ -1,5 +1,7 @@
 package model.game;
 
+import static model.utils.ArgumentUtils.checkNotNull;
+
 import java.util.Collection;
 import model.warehouse.Ground;
 import model.warehouse.Warehouse;
@@ -13,13 +15,19 @@ public class Player {
 	private Budget budget; 
 	private float valueToWin;
 	private TimeManager timeManager;
+	private Warehouse warehouse;
 		
 	public Player(Budget budget, Warehouse warehouse, ResearchLab researchLab, 
 			float valueToWin, int ticksPerDay, int daysPerMonth)
 	{
+		checkNotNull(budget, "budget");
+		checkNotNull(warehouse, "warehouse");
+		checkNotNull(researchLab, "researchLab");
+			
 		this.budget = budget;
 		this.timeManager= new TimeManager(ticksPerDay, daysPerMonth); 
 		this.valueToWin = valueToWin;
+		this.warehouse = warehouse;
 		
 		Collection<ProductionLine> productionLines = warehouse.getProductionLines();
 		
@@ -43,6 +51,7 @@ public class Player {
 	}
 	
 	public boolean purchaseGround(Ground ground){
+		checkNotNull(ground, "ground");
 		if(budget.getBalance() < ground.getPrice()) {
 			return false;
 		}
@@ -50,6 +59,12 @@ public class Player {
 		budget.decrement(ground.getPrice());
 		
 		return true;	
+	}
+	
+	void addProductLine(ProductionLine productionLine){
+		checkNotNull(productionLine, "productionLine");
+		warehouse.getProductionLines().add(productionLine);
+		timeManager.subscribeTickUpdatable(productionLine);
 	}
 	
 	public GameState updateTick() {
