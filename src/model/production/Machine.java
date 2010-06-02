@@ -2,12 +2,16 @@ package model.production;
 
 import static model.utils.ArgumentUtils.checkNotNull;
 
+
 public abstract class Machine extends ProductionLineElement{
 
+	private MachineState machineState;
+	
 	public Machine(MachineType machineType, ProductionLineElement next, 
 		ProductionLineElement previous) {
 		super(next, previous);
 		this.setMachineType(machineType);
+		this.setMachineState(new HealthyMachineState());
 	}
 
 	private MachineType machineType;
@@ -32,6 +36,18 @@ public abstract class Machine extends ProductionLineElement{
 	private void setMachineType(MachineType machineType) {
 		checkNotNull(machineType, "machineType");
 		this.machineType = machineType;
+	}
+	
+	public void repair() throws CannotRepairHealthyMachineException{
+		this.getMachineState().repair(this);
+	}
+	
+	public MachineState getMachineState(){
+		return this.machineState;
+	}
+	
+	public void setMachineState(MachineState newState){
+		this.machineState=newState;
 	}
 	
 	public abstract int getPrice();
