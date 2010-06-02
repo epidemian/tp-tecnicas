@@ -16,30 +16,15 @@ public class Player {
 	private float valueToWin;
 	private TimeManager timeManager;
 	private Warehouse warehouse;
+	private ResearchLab researchLab;
 		
-	public Player(Budget budget, Warehouse warehouse, ResearchLab researchLab, 
-			float valueToWin, int ticksPerDay, int daysPerMonth)
+	public Player(Budget budget, float valueToWin, int ticksPerDay, int daysPerMonth)
 	{
 		checkNotNull(budget, "budget");
-		checkNotNull(warehouse, "warehouse");
-		checkNotNull(researchLab, "researchLab");
 			
-		this.budget = budget;
-		this.timeManager= new TimeManager(ticksPerDay, daysPerMonth); 
+		this.budget = budget; 
 		this.valueToWin = valueToWin;
-		this.warehouse = warehouse;
-		
-		Collection<ProductionLine> productionLines = warehouse.getProductionLines();
-		
-		if(productionLines != null){
-			for (ProductionLine productionLine : productionLines) {
-				timeManager.subscribeTickUpdatable(productionLine); 
-				timeManager.subscribeDailyUpdatable(productionLine);
-			}
-		}
-				
-		timeManager.subscribeDailyUpdatable(researchLab);
-		timeManager.subscribeMonthlyUpdatable(warehouse);
+		this.timeManager= new TimeManager(ticksPerDay, daysPerMonth);
 	}
 	
 	private boolean lostGame(int dayBalance){
@@ -49,18 +34,57 @@ public class Player {
 	private boolean winGame(){
 		return budget.getBalance() >= valueToWin;	
 	}
-	
-	public boolean purchaseGround(Ground ground){
+		
+	public boolean canPurchaseGround(Ground ground){
 		checkNotNull(ground, "ground");
 		if(budget.getBalance() < ground.getPrice()) {
 			return false;
 		}
-		
-		budget.decrement(ground.getPrice());
-		
+				
 		return true;	
 	}
 	
+	public boolean addResearchLab(ResearchLab researchLab){
+		checkNotNull(researchLab, "researchLab");
+		if(this.researchLab == null){		
+			this.researchLab = researchLab;
+			timeManager.subscribeDailyUpdatable(researchLab);
+			
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public boolean addWareHouse(Warehouse warehouse){
+		checkNotNull(warehouse, "warehouse");
+		
+		if(this.warehouse == null){		
+			if(budget.getBalance() < warehouse.getPriceGround()) {
+				return false;
+			}
+									
+			Collection<ProductionLine> productionLines = warehouse.getProductionLines();
+			
+			if(productionLines != null){
+				for (ProductionLine productionLine : productionLines) {
+					timeManager.subscribeTickUpdatable(productionLine); 
+					timeManager.subscribeDailyUpdatable(productionLine);
+				}
+			}
+					
+			timeManager.subscribeMonthlyUpdatable(warehouse);
+			
+			budget.decrement(warehouse.getPriceGround());
+			
+			this.warehouse = warehouse;
+			
+			return true;
+		}
+		
+		return false;
+	}
+
 	public void addProductLine(ProductionLine productionLine){
 		checkNotNull(productionLine, "productionLine");
 		warehouse.getProductionLines().add(productionLine);

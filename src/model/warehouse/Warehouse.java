@@ -64,6 +64,12 @@ public abstract class Warehouse implements MonthlyUpdatable{
 		budget.increment((int) (0.5 * price));
 	}	
 	
+	public int getPriceGround(){
+		checkNotNull(ground, "ground");
+		return ground.getPrice();
+	}
+	
+	
 	protected abstract void sellGround();
 	
 	public void sell() {
