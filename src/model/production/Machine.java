@@ -3,15 +3,30 @@ package model.production;
 import static model.utils.ArgumentUtils.checkNotNull;
 
 
-public abstract class Machine extends ProductionLineElement{
 
+
+
+import model.exception.BusinessLogicException;
+
+
+public abstract class Machine extends ProductionLineElement 
+			implements MachineObservable {
+
+	private final double brokenProbability = 0.05;
+	private final double damagedProbability = 0.15;
+	
 	private MachineState machineState;
+	
+
 	
 	public Machine(MachineType machineType, ProductionLineElement next, 
 		ProductionLineElement previous) {
 		super(next, previous);
 		this.setMachineType(machineType);
 		this.setMachineState(new HealthyMachineState());
+		if (this.brokenProbability+this.damagedProbability>1){
+			throw new BusinessLogicException();
+		}
 	}
 
 	private MachineType machineType;
@@ -21,8 +36,10 @@ public abstract class Machine extends ProductionLineElement{
 	}
 	
 	public Product process(Product input){
-		if (input != null)
+		if (input != null){
 			this.treatProduct(input);
+			this.processMachineDeterioration();
+		}
 		return super.process(input);
 	}
 	
@@ -42,6 +59,28 @@ public abstract class Machine extends ProductionLineElement{
 		this.getMachineState().repair(this);
 	}
 	
+	/*
+	 * Analizes whether after processing the product, the machine
+	 * becomes damaged or broken. 
+	 */
+	private void processMachineDeterioration(){
+		double number =  Math.random();
+		if (number < this.damagedProbability){
+			this.damageMachine();
+		}
+		else if(number > 1 - this.brokenProbability){
+			this.getMachineState().broke(this);
+		}
+	}
+	
+	protected void damageMachine(){
+		this.breakMachine();
+	}
+	
+	protected void breakMachine(){
+		this.getMachineState().broke(this);
+	}
+	
 	public MachineState getMachineState(){
 		return this.machineState;
 	}
@@ -56,7 +95,17 @@ public abstract class Machine extends ProductionLineElement{
 	public String toString() {
 		return "ProductionMachine [" + this.getMachineType().toString() + "]";
 	}
+	
 
+
+	public void notifyBreakdown(){
+		this.getProductionLineElementObserver().updateBreakdown();
+	}
+	
+	public void notifyBrokenMachineRepair(){
+		this.getProductionLineElementObserver().updateBrokenMachineRepair();
+	}
+	
 	/*
 	 * TODO: Por qué dos Machines son iguales si sus tipos son iguales
 	 * solamente? Si en la fábrica tengo 2 "hornos" por ejemplo, no son iguales,

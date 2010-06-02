@@ -5,13 +5,14 @@ import static model.utils.ArgumentUtils.checkNotNull;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+
 import java.util.List;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import model.game.time.DailyUpdatable;
 import model.game.time.TickUpdatable;
 
 public class ProductionLine implements TickUpdatable, DailyUpdatable,
-		Iterable<ProductionLineElement> {
+		Iterable<ProductionLineElement>, ProductionLineElementObserver  {
 
 	/**
 	 * First element in the production line.
@@ -22,6 +23,11 @@ public class ProductionLine implements TickUpdatable, DailyUpdatable,
 	private StorageArea storageArea;
 	private List<Integer> productionHistory;
 	
+	/**
+	 * A production line is working if none of its machines are broken.
+	 */
+	private int brokenMachines;
+	
 	private RawMaterials configuration;
 	
 	private ProductionLine(ProductionLineElement line, StorageArea storageArea,
@@ -30,6 +36,10 @@ public class ProductionLine implements TickUpdatable, DailyUpdatable,
 		this.setStorageArea(storageArea);
 		this.setRawMaterialConfiguration(rawMaterialsConfiguration);
 		this.productionHistory = new LinkedList<Integer>();
+		
+		this.setProductionLineElementsObserver();
+		
+		brokenMachines=0;
 	}
 	
 	public static ProductionLine createCircularProductionLine(
@@ -144,7 +154,15 @@ public class ProductionLine implements TickUpdatable, DailyUpdatable,
 			throw new NotImplementedException();
 		}
 	}
-
+	
+	public void setProductionLineElementsObserver(){
+		Iterator<ProductionLineElement> iterator=this.iterator();
+		while (iterator.hasNext()){
+			iterator.next().setProductionLineElementObserver(this);
+		}
+		
+	}
+	
 	public int productionLineSize(){
 		Iterator<ProductionLineElement> iterator = this.iterator();	
 		int size = 0;
@@ -155,6 +173,30 @@ public class ProductionLine implements TickUpdatable, DailyUpdatable,
 		}		
 		return size;
 	}
+	
+	public void updateBreakdown(){
+		this.brokenMachines++;
+	}
+	
+	/**
+	 * Called when a Broken machine is repaired
+	 */
+	public void updateBrokenMachineRepair(){
+		this.brokenMachines--;
+	}
+	
+	/*
+	private int countBrokenMachines(){
+		Iterator<ProductionLineElement> iterator = this.iterator();	
+		int broken = 0;
+		
+		while(iterator.hasNext()){
+			if (iterator.next().isBroken())
+			broken++;
+		}		
+		return broken;
+	}
+	*/
 	
 	/*
 	 * TODO: Lo mismo que en Machine#equals().
@@ -205,5 +247,9 @@ public class ProductionLine implements TickUpdatable, DailyUpdatable,
 	public String toString() {
 
 		return "ProductionLine [" + this.toStringLine() + "]";
+	}
+	
+	public boolean isWorking(){
+		return (this.brokenMachines == 0);
 	}
 }

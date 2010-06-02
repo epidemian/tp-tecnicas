@@ -71,4 +71,74 @@ public class ProductionLineTest {
 		
 		assertEquals(0,this.productionLine.getDailyProduction());
 	}	
+	
+	/*
+	public void workingProductionLineWhenMachineIsBroken(){
+		ProductionLine line = this.createProductionLineProcessingCarton();
+		assertTrue(line.isWorking());
+		
+		line.getFirstLineElement().
+	}
+	*/
+	
+	
+	/**
+	 * TODO: Una vez que se acople al visitor se tratara distinto esto!
+	 * La idea de la prueba es solo ver que el repair y la deteccion este
+	 * funcionando bien... 
+	 */
+	@Test 
+	public void LineWithThreeNonBrokenMachines() 
+			throws CannotRepairHealthyMachineException{
+		MachineMock machineMock1=
+			new MachineMock(new MachineType("Licuado"),null,null);
+		
+		MachineMock machineMock2 =
+			new MachineMock(new MachineType("Haz"),null,machineMock1);
+		machineMock1.setNextLineElement(machineMock2);
+		
+		MachineMock machineMock3 = new MachineMock(
+			new MachineType("Horno"),null,machineMock2);
+		machineMock2.setNextLineElement(machineMock3);
+		
+		ProductionLine line=ProductionLine.createValidProductionLine(
+				machineMock1, new StorageArea(new RawMaterials(),
+						new ValidProductionSequences()), new  RawMaterials());
+		
+		machineMock1.breakMachine();
+		machineMock2.breakMachine();
+		
+		//Should be false because two machines are broken
+		assertFalse(line.isWorking());
+		
+		machineMock1.repair();
+	
+		//Should be false because one machine is broken
+		assertFalse(line.isWorking());
+		
+		machineMock2.repair();
+		
+		//All machines are repaired
+		assertTrue(line.isWorking());
+	}
+	
+	/** In order to be able to avoid probability
+	 * 
+	 */
+	private class MachineMock extends ProductionMachine{
+	
+		private MachineMock(MachineType machineType, 
+				ProductionLineElement next, ProductionLineElement previous){
+			super( machineType, 
+					 next, previous);
+		}
+		
+		public void breakMachine(){
+			super.breakMachine();
+		}
+		
+		public void damageMachine(){
+			super.damageMachine();
+		}
+	}
 }

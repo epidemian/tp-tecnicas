@@ -15,6 +15,10 @@ abstract public class ProductionLineElement extends TileElement {
 	
 	protected Product productContained;
 	
+	
+	private ProductionLineElementObserver prodLineElementObserver;
+	
+	
 	public ProductionLineElement(ProductionLineElement next,
 		ProductionLineElement previous){
 		this.nextLineElement = next;
@@ -45,5 +49,13 @@ abstract public class ProductionLineElement extends TileElement {
 
 	public ProductionLineElement getPreviousLineElement() {
 		return previousLineElement;
+	}
+	
+	public void setProductionLineElementObserver(ProductionLineElementObserver obs){
+		this.prodLineElementObserver=obs;
+	}
+	
+	public ProductionLineElementObserver getProductionLineElementObserver(){
+		return this.prodLineElementObserver;
 	}
 }
