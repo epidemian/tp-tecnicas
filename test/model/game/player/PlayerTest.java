@@ -4,7 +4,10 @@ package model.game.player;
 import static org.junit.Assert.assertEquals;
 import model.game.Budget;
 import model.game.Player;
+import model.lab.ResearchLab;
+import model.lab.TechnologyTree;
 import model.warehouse.Ground;
+import model.warehouse.PurchaseWarehouse;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -35,8 +38,9 @@ public class PlayerTest {
 
 	@Test
 	public void checkPurchaseGroundAndCheckBalance() {
-		Budget budget = new Budget(INITIAL_BALANCE);
-		Player player = new Player(budget, VALUE_TO_WIN);
+		Budget budget = new Budget(INITIAL_BALANCE);	
+		Player player = new Player(budget, new PurchaseWarehouse(new Ground(PRICE_GROUND, 10, 10), budget), 
+				new ResearchLab(new TechnologyTree(), 10, budget), VALUE_TO_WIN, 3600, 30);
 		
 		assertEquals(player.purchaseGround(new Ground(PRICE_GROUND + INITIAL_BALANCE + 1000, 10, 10)), false);
 		assertEquals(player.purchaseGround(new Ground(PRICE_GROUND, 10, 10)), true);
