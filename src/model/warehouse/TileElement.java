@@ -30,12 +30,12 @@ abstract public class TileElement {
 		return height;
 	}
 
-	private void setHeight(int height) {
+	public void setHeight(int height) {
 		checkGreaterEqual(height, 1, "height");
 		this.height = height;
 	}
 
-	private void setWidth(int width) {
+	public void setWidth(int width) {
 		checkGreaterEqual(width, 1, "width");
 		this.width = width;
 	}
