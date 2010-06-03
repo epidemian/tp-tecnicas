@@ -38,16 +38,27 @@ public class Ground {
 	public int getCols() {
 		return this.cols;
 	}
-	
-	public Dimension getSize(){
-		return new Dimension(this.cols, this.rows);
+
+	private boolean isTileEmpty(int row, int col) {
+		return this.groundTiles[row][col].getTileElement() == null;
 	}
-	private void setRows(int rows){
+
+	public boolean isAreaEmpty(int row, int col, int width, int heigh) {
+
+		for (int j = col; j < col + width; j++)
+			for (int i = row; i < row + heigh; i++)
+				if (!isTileEmpty(i, j))
+					return false;
+
+		return true;
+	}
+
+	private void setRows(int rows) {
 		checkGreaterEqual(rows, 1, "rows");
 		this.rows = rows;
 	}
-	
-	private void setCols(int cols){
+
+	private void setCols(int cols) {
 		checkGreaterEqual(cols, 1, "cols");
 		this.cols = cols;
 	}

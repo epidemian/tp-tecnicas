@@ -72,9 +72,8 @@ public class GroundPanel extends JScrollPane {
 		}
 
 		private Dimension getGroundSize() {
-			Dimension groundSizeInTiles = this.ground.getSize();
-			return new Dimension(groundSizeInTiles.width * this.tileSize,
-					groundSizeInTiles.height * this.tileSize);
+			return new Dimension(this.ground.getCols() * this.tileSize,
+					this.ground.getRows() * this.tileSize);
 		}
 
 		protected void paintComponent(Graphics g) {
@@ -82,7 +81,8 @@ public class GroundPanel extends JScrollPane {
 			super.paintComponent(g);
 
 			Point viewPort = getViewPortPosition();
-			Dimension groundSizeInTiles = this.ground.getSize();
+			Dimension groundSizeInTiles = new Dimension(this.ground.getCols(),
+					this.ground.getRows());
 			Dimension dimension = getSize();
 
 			this.visitor.graphics = g;
@@ -93,27 +93,27 @@ public class GroundPanel extends JScrollPane {
 			 * Determines the index in which the ground begins to draw based on
 			 * the position of the viewport.
 			 */
-/*			double startIndexTileX = viewPort.x / (double) this.tileSize;
-			double startIndexTileY = viewPort.y / (double) this.tileSize;
-
-			double widthScreenInTiles = dimension.width
-					/ (double) this.tileSize;
-			double heightScreenInTiles = dimension.height
-					/ (double) this.tileSize;
-
-			int lastIndexTileX = (groundSizeInTiles.width <= widthScreenInTiles
-					+ startIndexTileX) ? groundSizeInTiles.width
-					: (int) (startIndexTileX + widthScreenInTiles + 1.0f);
-
-			int lastIndexTileY = (groundSizeInTiles.height <= heightScreenInTiles
-					+ startIndexTileY) ? groundSizeInTiles.height
-					: (int) (startIndexTileY + heightScreenInTiles + 1.0f);
-*/
+			/*
+			 * double startIndexTileX = viewPort.x / (double) this.tileSize;
+			 * double startIndexTileY = viewPort.y / (double) this.tileSize;
+			 * 
+			 * double widthScreenInTiles = dimension.width / (double)
+			 * this.tileSize; double heightScreenInTiles = dimension.height /
+			 * (double) this.tileSize;
+			 * 
+			 * int lastIndexTileX = (groundSizeInTiles.width <=
+			 * widthScreenInTiles + startIndexTileX) ? groundSizeInTiles.width :
+			 * (int) (startIndexTileX + widthScreenInTiles + 1.0f);
+			 * 
+			 * int lastIndexTileY = (groundSizeInTiles.height <=
+			 * heightScreenInTiles + startIndexTileY) ? groundSizeInTiles.height
+			 * : (int) (startIndexTileY + heightScreenInTiles + 1.0f);
+			 */
 			int startIndexTileX = 0;
 			int startIndexTileY = 0;
 			int lastIndexTileX = groundSizeInTiles.width;
 			int lastIndexTileY = groundSizeInTiles.height;
-			
+
 			// Vertical lines.
 			for (int i = (int) startIndexTileX; i <= lastIndexTileX; i++) {
 				g.drawLine(i * this.tileSize, (int) startIndexTileY
@@ -127,7 +127,7 @@ public class GroundPanel extends JScrollPane {
 						* this.tileSize, (int) lastIndexTileX * this.tileSize,
 						i * this.tileSize);
 			}
-			
+
 			/*
 			 * int cast to start before (or equals) the position of the
 			 * viewport.
