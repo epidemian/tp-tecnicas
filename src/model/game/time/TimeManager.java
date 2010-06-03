@@ -13,17 +13,21 @@ public class TimeManager implements TickUpdatable {
 
 	private Collection<TickUpdatable> tickUpdatables;
 	private Collection<DailyUpdatable> dailyUpdatables;
+	private Collection<WeeklyUpdatable> weeklyUpdatables;
 	private Collection<MonthlyUpdatable> monthlyUpdatables;
 	private int tickCount;
 	private int ticksPerDay;
+	private int daysPerWeek;
 	private int daysPerMonth;
 
-	public TimeManager(int ticksPerDay, int daysPerMonth) {
+	public TimeManager(int ticksPerDay, int daysPerWeek, int daysPerMonth) {
 		setTicksPerDay(ticksPerDay);
+		setDaysPerWeek(daysPerWeek);
 		setDaysPerMonth(daysPerMonth);
 		this.tickCount = 0;
 		this.tickUpdatables = new ArrayList<TickUpdatable>();
 		this.dailyUpdatables = new ArrayList<DailyUpdatable>();
+		this.weeklyUpdatables = new ArrayList<WeeklyUpdatable>();
 		this.monthlyUpdatables = new ArrayList<MonthlyUpdatable>();
 	}
 
@@ -40,6 +44,8 @@ public class TimeManager implements TickUpdatable {
 		updateTickUpdatables();
 		if (isNewDay())
 			updateDailyUpdatables();
+		if (isNewWeek())
+			updateWeeklyUpdatables();
 		if (isNewMonth())
 			updateMonthlyUpdatables();
 	}
@@ -50,6 +56,10 @@ public class TimeManager implements TickUpdatable {
 
 	public void subscribeDailyUpdatable(DailyUpdatable updatable) {
 		subscribeUpdatableTo(updatable, this.dailyUpdatables);
+	}
+	
+	public void subscribeWeeklyUpdatable(WeeklyUpdatable updatable) {
+		subscribeUpdatableTo(updatable, this.weeklyUpdatables);
 	}
 
 	public void subscribeMonthlyUpdatable(MonthlyUpdatable updatable) {
@@ -70,6 +80,10 @@ public class TimeManager implements TickUpdatable {
 	private boolean isNewDay() {
 		return this.tickCount % getTicksPerDay() == 0;
 	}
+	
+	private boolean isNewWeek() {
+		return this.tickCount % getTicksPerWeek() == 0;
+	}
 
 	private boolean isNewMonth() {
 		return this.tickCount % getTicksPerMonth() == 0;
@@ -83,6 +97,11 @@ public class TimeManager implements TickUpdatable {
 	private void updateDailyUpdatables() {
 		for (DailyUpdatable updatable : this.dailyUpdatables)
 			updatable.updateDay();
+	}
+	
+	private void updateWeeklyUpdatables() {
+		for (WeeklyUpdatable updatable : this.weeklyUpdatables)
+			updatable.updateWeek();
 	}
 
 	private void updateMonthlyUpdatables() {
@@ -99,6 +118,15 @@ public class TimeManager implements TickUpdatable {
 		this.ticksPerDay = ticksPerDay;
 	}
 
+	public int getDaysPerWeek() {
+		return daysPerWeek;
+	}
+
+	private void setDaysPerWeek(int daysPerWeek) {
+		checkGreaterThan(daysPerWeek, 0, "days per week");
+		this.daysPerWeek = daysPerWeek;
+	}
+
 	public int getDaysPerMonth() {
 		return daysPerMonth;
 	}
@@ -110,5 +138,9 @@ public class TimeManager implements TickUpdatable {
 
 	private int getTicksPerMonth() {
 		return getTicksPerDay() * getDaysPerMonth();
+	}
+	
+	private int getTicksPerWeek() {
+		return getTicksPerDay() * getDaysPerWeek();
 	}
 }

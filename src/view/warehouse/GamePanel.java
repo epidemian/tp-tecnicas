@@ -5,7 +5,6 @@ import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import view.warehouse.GameState;
 import model.warehouse.Ground;
 
 public class GamePanel extends JPanel {
