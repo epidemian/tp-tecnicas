@@ -1,6 +1,7 @@
 package model.production;
 
 import static org.junit.Assert.*;
+import static model.production.ProductionLineElement.connectLineElements;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,24 +37,16 @@ public class ProductionLinesCreatorTest {
 		/*
 		 * Creates the first line.
 		 */
-		ProductionLineElement prodLineElement1 = createProductionMachine(
-				"Licuado", null, null);
+		ProductionLineElement prodLineElement1 = createProductionMachine("Licuado");
+		ProductionLineElement prodLineElement2 = new Conveyor();
+		ProductionLineElement prodLineElement3 = createProductionMachine("Haz");
+		ProductionLineElement prodLineElement4 = new Conveyor();
+		ProductionLineElement prodLineElement5 = createProductionMachine("Horno");
 
-		ProductionLineElement prodLineElement2 = new Conveyor(null,
-				prodLineElement1);
-		prodLineElement1.setNextLineElement(prodLineElement2);
-
-		ProductionLineElement prodLineElement3 = createProductionMachine("Haz",
-				prodLineElement2, null);
-		prodLineElement2.setNextLineElement(prodLineElement3);
-
-		ProductionLineElement prodLineElement4 = new Conveyor(null,
-				prodLineElement3);
-		prodLineElement3.setNextLineElement(prodLineElement4);
-
-		ProductionLineElement prodLineElement5 = createProductionMachine(
-				"Horno", prodLineElement4, null);
-		prodLineElement4.setNextLineElement(prodLineElement5);
+		connectLineElements(prodLineElement1, prodLineElement2);
+		connectLineElements(prodLineElement2, prodLineElement3);
+		connectLineElements(prodLineElement3, prodLineElement4);
+		connectLineElements(prodLineElement4, prodLineElement5);
 
 		ProductionLine line = ProductionLine.createValidProductionLine(
 				prodLineElement1, this.storageArea, new RawMaterials());
@@ -61,16 +54,12 @@ public class ProductionLinesCreatorTest {
 		/*
 		 * Creates the second line.
 		 */
-		ProductionLineElement prodLine2Element1 = createProductionMachine(
-				"Procesador", null, null);
+		ProductionLineElement prodLine2Element1 = createProductionMachine("Procesador");
+		ProductionLineElement prodLine2Element2 = new Conveyor();
+		ProductionLineElement prodLine2Element3 = createProductionMachine("Super-Machine");
 
-		ProductionLineElement prodLine2Element2 = new Conveyor(null,
-				prodLine2Element1);
-		prodLine2Element1.setNextLineElement(prodLine2Element2);
-
-		ProductionLineElement prodLine2Element3 = createProductionMachine(
-				"Super-Machine", prodLine2Element1, null);
-		prodLine2Element2.setNextLineElement(prodLine2Element3);
+		connectLineElements(prodLine2Element1, prodLine2Element2);
+		connectLineElements(prodLine2Element2, prodLine2Element3);
 
 		ProductionLine line2 = ProductionLine.createValidProductionLine(
 				prodLine2Element1, this.storageArea, new RawMaterials());
@@ -78,8 +67,7 @@ public class ProductionLinesCreatorTest {
 		/*
 		 * Creates the third line.
 		 */
-		ProductionLineElement prodLine3Element1 = createProductionMachine(
-				"Lalala", null, null);
+		ProductionLineElement prodLine3Element1 = createProductionMachine("Isolated");
 
 		ProductionLine line3 = ProductionLine.createValidProductionLine(
 				prodLine3Element1, this.storageArea, new RawMaterials());
@@ -110,10 +98,8 @@ public class ProductionLinesCreatorTest {
 		return linesCreated;
 	}
 
-	private ProductionLineElement createProductionMachine(String typeName,
-			ProductionLineElement previous, ProductionLineElement next) {
-		return new ProductionMachine(new MachineType(typeName), next, previous,
-				1, 1);
+	private ProductionLineElement createProductionMachine(String typeName) {
+		return new ProductionMachine(new MachineType(typeName), 1, 1);
 	}
 
 	@Test

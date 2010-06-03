@@ -17,12 +17,8 @@ abstract public class ProductionLineElement extends TileElement {
 
 	private ProductionLineElementObserver prodLineElementObserver;
 
-	public ProductionLineElement(ProductionLineElement next,
-			ProductionLineElement previous, int width, int height) {
+	public ProductionLineElement(int width, int height) {
 		super(width, height);
-		this.nextLineElement = next;
-		this.previousLineElement = previous;
-		this.productContained = null;
 	}
 
 	/**
@@ -36,10 +32,6 @@ abstract public class ProductionLineElement extends TileElement {
 		Product output = this.productContained;
 		this.productContained = input;
 		return output;
-	}
-
-	public void setNextLineElement(ProductionLineElement nextLineElement) {
-		this.nextLineElement = nextLineElement;
 	}
 
 	public ProductionLineElement getNextLineElement() {
@@ -57,5 +49,11 @@ abstract public class ProductionLineElement extends TileElement {
 
 	public ProductionLineElementObserver getProductionLineElementObserver() {
 		return this.prodLineElementObserver;
+	}
+
+	public static void connectLineElements(ProductionLineElement previous,
+			ProductionLineElement next) {
+		previous.nextLineElement = next;
+		next.previousLineElement = previous;
 	}
 }

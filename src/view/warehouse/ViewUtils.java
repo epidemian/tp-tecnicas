@@ -19,13 +19,13 @@ public class ViewUtils {
 		 * Machines.
 		 */
 		TileElement machine1 = new ProductionMachine(
-				new MachineType("machine1"), null, null, 2, 2);
+				new MachineType("machine1"), 2, 2);
 		TileElement machine2 = new ProductionMachine(
-				new MachineType("machine2"), null, null, 2, 2);
+				new MachineType("machine2"), 2, 2);
 		TileElement machine3 = new ProductionMachine(
-				new MachineType("machine3"), null, null, 2, 2);
+				new MachineType("machine3"), 2, 2);
 		TileElement machine4 = new ProductionMachine(
-				new MachineType("machine4"), null, null, 2, 2);
+				new MachineType("machine4"), 2, 2);
 
 		ground.getTile(1, 1).setTileElement(machine1);
 		ground.getTile(1, 2).setTileElement(machine1);
@@ -50,22 +50,22 @@ public class ViewUtils {
 		/*
 		 * Conveyors.
 		 */
-		ground.getTile(1, 3).setTileElement(new Conveyor(null, null));
-		ground.getTile(1, 4).setTileElement(new Conveyor(null, null));
-		ground.getTile(1, 5).setTileElement(new Conveyor(null, null));
+		ground.getTile(1, 3).setTileElement(new Conveyor());
+		ground.getTile(1, 4).setTileElement(new Conveyor());
+		ground.getTile(1, 5).setTileElement(new Conveyor());
 
-		ground.getTile(1, 8).setTileElement(new Conveyor(null, null));
-		ground.getTile(1, 9).setTileElement(new Conveyor(null, null));
-		ground.getTile(1, 10).setTileElement(new Conveyor(null, null));
-		ground.getTile(2, 10).setTileElement(new Conveyor(null, null));
-		ground.getTile(3, 10).setTileElement(new Conveyor(null, null));
-		ground.getTile(4, 10).setTileElement(new Conveyor(null, null));
-		ground.getTile(4, 9).setTileElement(new Conveyor(null, null));
-		ground.getTile(4, 8).setTileElement(new Conveyor(null, null));
+		ground.getTile(1, 8).setTileElement(new Conveyor());
+		ground.getTile(1, 9).setTileElement(new Conveyor());
+		ground.getTile(1, 10).setTileElement(new Conveyor());
+		ground.getTile(2, 10).setTileElement(new Conveyor());
+		ground.getTile(3, 10).setTileElement(new Conveyor());
+		ground.getTile(4, 10).setTileElement(new Conveyor());
+		ground.getTile(4, 9).setTileElement(new Conveyor());
+		ground.getTile(4, 8).setTileElement(new Conveyor());
 
-		ground.getTile(6, 6).setTileElement(new Conveyor(null, null));
-		ground.getTile(7, 6).setTileElement(new Conveyor(null, null));
-		ground.getTile(8, 6).setTileElement(new Conveyor(null, null));
+		ground.getTile(6, 6).setTileElement(new Conveyor());
+		ground.getTile(7, 6).setTileElement(new Conveyor());
+		ground.getTile(8, 6).setTileElement(new Conveyor());
 
 		return ground;
 	}

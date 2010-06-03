@@ -12,7 +12,7 @@ public class MachineStateTest {
 	@Before
 	public void setUp() {
 
-		machine = new MachineMock(new MachineType("TestingMachine"), null, null);
+		machine = new MachineMock(new MachineType("TestingMachine"));
 		line = ProductionLine.createValidProductionLine(machine,
 				new StorageArea(new RawMaterials(),
 						new ValidProductionSequences()), new RawMaterials());
@@ -61,11 +61,11 @@ public class MachineStateTest {
 	 */
 	private class MachineMock extends ProductionMachine {
 
-		private MachineMock(MachineType machineType,
-				ProductionLineElement next, ProductionLineElement previous) {
-			super(machineType, next, previous, 1, 1);
+		private MachineMock(MachineType machineType) {
+			super(machineType, 1, 1);
 		}
 
+		// TODO: Para qué se redefine esto?
 		public void breakMachine() {
 			super.breakMachine();
 		}
