@@ -11,8 +11,7 @@ abstract public class TileElement {
 	 * TODO remove this constructor!
 	 */
 	public TileElement(){
-		this.setWidth(1);
-		this.setHeight(1);
+		this(1, 1);
 	}
 	
 	public TileElement(int width, int height){

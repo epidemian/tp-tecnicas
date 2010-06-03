@@ -3,7 +3,11 @@ package view.warehouse;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.MouseInfo;
 import java.awt.Point;
+import java.awt.PointerInfo;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.net.URL;
 
@@ -35,12 +39,59 @@ public class GroundPanel extends JScrollPane {
 		super(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
+		this.addMouseListener(new MouseListenerGroundPanel());
+
+		this.getCursor();
+
 		this.setViewportView(new DrawingPanel(ground));
 	}
 
 	private Point getViewPortPosition() {
 		return new Point(this.getHorizontalScrollBar().getValue(), this
 				.getVerticalScrollBar().getValue());
+	}
+
+	/*
+	 * Mouse Listener.
+	 */
+	private class MouseListenerGroundPanel implements MouseListener {
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			
+			
+			
+			
+			Point point = MouseInfo.getPointerInfo().getLocation();
+			System.out.println(point);
+			System.out.println(e);
+			
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+
+		}
 	}
 
 	/*
@@ -143,6 +194,13 @@ public class GroundPanel extends JScrollPane {
 				}
 
 			this.visitor.flush();
+			
+			
+			/*
+			 * Mouse.
+			 */
+			Point point = MouseInfo.getPointerInfo().getLocation();
+
 		}
 
 		/*
