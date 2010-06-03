@@ -12,8 +12,9 @@ import model.exception.BusinessLogicException;
 public abstract class Machine extends ProductionLineElement 
 			implements MachineObservable {
 
-	private final double brokenProbability = 0.05;
-	private final double damagedProbability = 0.15;
+	// TODO: esto debería levantese de algún archivo de confg o algo...
+	private final double BREAK_CHANCE = 0.05;
+	private final double DAMAGE_CHANCE = 0.15;
 	
 	private MachineState machineState;
 	
@@ -23,7 +24,7 @@ public abstract class Machine extends ProductionLineElement
 		super(width, height);
 		this.setMachineType(machineType);
 		this.setMachineState(new HealthyMachineState());
-		if (this.brokenProbability+this.damagedProbability>1){
+		if (this.BREAK_CHANCE+this.DAMAGE_CHANCE>1){
 			throw new BusinessLogicException();
 		}
 	}
@@ -64,10 +65,10 @@ public abstract class Machine extends ProductionLineElement
 	 */
 	private void processMachineDeterioration(){
 		double number =  Math.random();
-		if (number < this.damagedProbability){
+		if (number < this.DAMAGE_CHANCE){
 			this.damageMachine();
 		}
-		else if(number > 1 - this.brokenProbability){
+		else if(number > 1 - this.BREAK_CHANCE){
 			this.getMachineState().broke(this);
 		}
 	}
