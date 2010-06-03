@@ -20,8 +20,8 @@ public abstract class Machine extends ProductionLineElement
 
 	
 	public Machine(MachineType machineType, ProductionLineElement next, 
-		ProductionLineElement previous) {
-		super(next, previous);
+		ProductionLineElement previous, int width, int height) {
+		super(next, previous, width, height);
 		this.setMachineType(machineType);
 		this.setMachineState(new HealthyMachineState());
 		if (this.brokenProbability+this.damagedProbability>1){

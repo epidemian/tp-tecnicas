@@ -1,8 +1,6 @@
 package model.production;
 
-import static org.junit.Assert.*;
-
-import model.exception.BusinessLogicException;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -12,68 +10,67 @@ public class MachineStateTest {
 	private ProductionLine line;
 
 	@Before
-	public void setUp(){
-		
-		
-		machine=new MachineMock(new MachineType("TestingMachine"), null,null);
-		line=ProductionLine.createValidProductionLine(machine, 
-				new StorageArea(new RawMaterials(),new ValidProductionSequences()),
-				new RawMaterials());
+	public void setUp() {
+
+		machine = new MachineMock(new MachineType("TestingMachine"), null, null);
+		line = ProductionLine.createValidProductionLine(machine,
+				new StorageArea(new RawMaterials(),
+						new ValidProductionSequences()), new RawMaterials());
 		machine.setProductionLineElementObserver(line);
 	}
 
-	@Test (expected = CannotRepairHealthyMachineException.class) 
-	public void repairAlreadyHealthyMachine() 
-		throws CannotRepairHealthyMachineException{
-		
+	@Test(expected = CannotRepairHealthyMachineException.class)
+	public void repairAlreadyHealthyMachine()
+			throws CannotRepairHealthyMachineException {
+
 		machine.setMachineState(new HealthyMachineState());
 		machine.repair();
 	}
-	
+
 	@Test
 	public void repairDamagedMachine()
-		throws CannotRepairHealthyMachineException{
-		
+			throws CannotRepairHealthyMachineException {
+
 		machine.setMachineState(new DamagedMachineState());
 		machine.repair();
-		
+
 		assertEquals(machine.getMachineState(), new HealthyMachineState());
-	}	
-	
+	}
+
 	@Test
 	public void repairBrokenMachine()
-		throws CannotRepairHealthyMachineException{
-		
+			throws CannotRepairHealthyMachineException {
+
 		machine.setMachineState(new BrokenMachineState());
 		machine.repair();
-		
+
 		assertEquals(machine.getMachineState(), new HealthyMachineState());
-	}	
-	
+	}
+
 	@Test
-	public void breakHealthyMachine(){
+	public void breakHealthyMachine() {
 		machine.setMachineState(new HealthyMachineState());
 		machine.breakMachine();
 		assertEquals(machine.getMachineState(), new BrokenMachineState());
-		
+
 	}
-	
-	/** In order to be able to avoid probability
+
+	/**
+	 * In order to be able to avoid probability
 	 * 
 	 */
-	private class MachineMock extends ProductionMachine{
-	
-		private MachineMock(MachineType machineType, 
-				ProductionLineElement next, ProductionLineElement previous){
-			super( machineType, 
-					 next, previous);
+	private class MachineMock extends ProductionMachine {
+
+		private MachineMock(MachineType machineType,
+				ProductionLineElement next, ProductionLineElement previous) {
+			super(machineType, next, previous, 1, 1);
 		}
-		
-		public void breakMachine(){
+
+		public void breakMachine() {
 			super.breakMachine();
 		}
-		
-		public void damageMachine(){
+
+		public void damageMachine() {
 			super.damageMachine();
 		}
 	}

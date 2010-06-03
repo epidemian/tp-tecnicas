@@ -6,8 +6,8 @@ import model.warehouse.TileElementVisitor;
 public class QualityControlMachine extends Machine{
 
 	public QualityControlMachine(MachineType machineType, 
-			ProductionLineElement next, ProductionLineElement previous) {
-		super(machineType, next, previous);
+			ProductionLineElement next, ProductionLineElement previous, int width, int height) {
+		super(machineType, next, previous, width, height);
 	}
 	
 	/**

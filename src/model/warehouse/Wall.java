@@ -2,6 +2,10 @@ package model.warehouse;
 
 public class Wall extends TileElement {
 
+	public Wall(int width, int height) {
+		super(width, height);
+	}
+
 	@Override
 	public void accept(TileElementVisitor visitor) {
 		visitor.visitWall(this);

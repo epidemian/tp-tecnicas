@@ -14,7 +14,7 @@ public class ProductionMachineTest {
 		Product product2 = new Product(new RawMaterials());
 		
 		Machine machine = new ProductionMachine(new MachineType("m1")
-			, null, null);
+			, null, null, 1, 1);
 		
 		Product productProcessed1 = machine.process(product1);
 		assertNull(productProcessed1);

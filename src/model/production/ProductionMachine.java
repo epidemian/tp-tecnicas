@@ -5,32 +5,33 @@ import model.warehouse.TileElementVisitor;
 
 public class ProductionMachine extends Machine {
 
-	public ProductionMachine(MachineType machineType, 
-			ProductionLineElement next, ProductionLineElement previous) {
-		super(machineType, next, previous);
-	
+	public ProductionMachine(MachineType machineType,
+			ProductionLineElement next, ProductionLineElement previous,
+			int width, int height) {
+		super(machineType, next, previous, width, height);
+
 		this.productsProcess = 0;
 	}
-	
+
 	/**
-	 * Represents the number of products until one product become defective.
-	 * If the product is defective is remains defective. 
+	 * Represents the number of products until one product become defective. If
+	 * the product is defective is remains defective.
 	 */
 	private int damagedProductFrequency;
 	private int productsProcess;
-	
+
 	@Override
 	public void treatProduct(Product input) {
 		checkNotNull(input, "input product");
 		this.productsProcess++;
-		if (this.damagedProductFrequency == this.productsProcess){
+		if (this.damagedProductFrequency == this.productsProcess) {
 			input.setDefective();
 			this.productsProcess = 0;
 		}
-		
+
 		input.addMachineTypeToHistory(this.getMachineType());
 	}
-	
+
 	@Override
 	public int getPrice() {
 		return 0;
