@@ -2,29 +2,22 @@ package model.production;
 
 import static model.utils.ArgumentUtils.checkNotNull;
 
-
-
-
-
 import model.exception.BusinessLogicException;
 
-
-public abstract class Machine extends ProductionLineElement 
-			implements MachineObservable {
+public abstract class Machine extends ProductionLineElement implements
+		MachineObservable {
 
 	// TODO: esto debería levantese de algún archivo de confg o algo...
 	private final double BREAK_CHANCE = 0.05;
 	private final double DAMAGE_CHANCE = 0.15;
-	
-	private MachineState machineState;
-	
 
-	
+	private MachineState machineState;
+
 	public Machine(MachineType machineType, int width, int height) {
 		super(width, height);
 		this.setMachineType(machineType);
 		this.setMachineState(new HealthyMachineState());
-		if (this.BREAK_CHANCE+this.DAMAGE_CHANCE>1){
+		if (this.BREAK_CHANCE + this.DAMAGE_CHANCE > 1) {
 			throw new BusinessLogicException();
 		}
 	}
@@ -34,78 +27,76 @@ public abstract class Machine extends ProductionLineElement
 	public MachineType getMachineType() {
 		return machineType;
 	}
-	
-	public Product process(Product input){
-		if (input != null){
+
+	public Product process(Product input) {
+		if (input != null) {
 			this.treatProduct(input);
 			this.processMachineDeterioration();
 		}
 		return super.process(input);
 	}
-	
+
 	/**
-	 * Template method to treat the product. The ProductionMachine can 
+	 * Template method to treat the product. The ProductionMachine can
 	 * setDefective a producto, and a QualityControlMachine can discard it.
+	 * 
 	 * @param input
 	 */
 	public abstract void treatProduct(Product input);
-	
+
 	private void setMachineType(MachineType machineType) {
 		checkNotNull(machineType, "machineType");
 		this.machineType = machineType;
 	}
-	
-	public void repair() throws CannotRepairHealthyMachineException{
+
+	public void repair() throws CannotRepairHealthyMachineException {
 		this.getMachineState().repair(this);
 	}
-	
+
 	/*
-	 * Analizes whether after processing the product, the machine
-	 * becomes damaged or broken. 
+	 * Analizes whether after processing the product, the machine becomes
+	 * damaged or broken.
 	 */
-	private void processMachineDeterioration(){
-		double number =  Math.random();
-		if (number < this.DAMAGE_CHANCE){
+	private void processMachineDeterioration() {
+		double number = Math.random();
+		if (number < this.DAMAGE_CHANCE) {
 			this.damageMachine();
-		}
-		else if(number > 1 - this.BREAK_CHANCE){
+		} else if (number > 1 - this.BREAK_CHANCE) {
 			this.getMachineState().broke(this);
 		}
 	}
-	
-	protected void damageMachine(){
+
+	protected void damageMachine() {
 		this.breakMachine();
 	}
-	
-	protected void breakMachine(){
+
+	protected void breakMachine() {
 		this.getMachineState().broke(this);
 	}
-	
-	public MachineState getMachineState(){
+
+	public MachineState getMachineState() {
 		return this.machineState;
 	}
-	
-	public void setMachineState(MachineState newState){
-		this.machineState=newState;
+
+	public void setMachineState(MachineState newState) {
+		this.machineState = newState;
 	}
-	
+
 	public abstract int getPrice();
 
 	@Override
 	public String toString() {
 		return "ProductionMachine [" + this.getMachineType().toString() + "]";
 	}
-	
 
-
-	public void notifyBreakdown(){
+	public void notifyBreakdown() {
 		this.getProductionLineElementObserver().updateBreakdown();
 	}
-	
-	public void notifyBrokenMachineRepair(){
+
+	public void notifyBrokenMachineRepair() {
 		this.getProductionLineElementObserver().updateBrokenMachineRepair();
 	}
-	
+
 	/*
 	 * TODO: Por qué dos Machines son iguales si sus tipos son iguales
 	 * solamente? Si en la fábrica tengo 2 "hornos" por ejemplo, no son iguales,
@@ -115,9 +106,9 @@ public abstract class Machine extends ProductionLineElement
 	 * Además, nunca redefinir el equals y dejar el hashCode sin redefinir: se
 	 * rompe la interfaz del hashCode.
 	 */
-//	@Override
-//	public boolean equals(Object other){
-//		Machine otherMachine = (Machine)other;
-//		return (this.machineType.equals(otherMachine.machineType));
-//	}
+	// @Override
+	// public boolean equals(Object other){
+	// Machine otherMachine = (Machine)other;
+	// return (this.machineType.equals(otherMachine.machineType));
+	// }
 }
