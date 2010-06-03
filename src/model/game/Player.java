@@ -56,6 +56,10 @@ public class Player {
 		return false;
 	}
 	
+	public void deleteResearchLab(){
+		this.researchLab = null;
+	}
+	
 	public boolean addWareHouse(Warehouse warehouse){
 		checkNotNull(warehouse, "warehouse");
 		
@@ -85,6 +89,10 @@ public class Player {
 		return false;
 	}
 
+	public void deleteWareHouse(){
+		this.warehouse = null;
+	}
+	
 	public void addProductLine(ProductionLine productionLine){
 		checkNotNull(productionLine, "productionLine");
 		checkNotNull(warehouse, "warehouse");
