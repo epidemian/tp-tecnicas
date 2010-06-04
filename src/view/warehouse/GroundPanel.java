@@ -25,6 +25,26 @@ public class GroundPanel extends JScrollPane {
 
 	private static final long serialVersionUID = 1L;
 
+	/*
+	 * TODO Image class manager soon =)
+	 */
+	private static BufferedImage IMG_CONVEYOR = loadImage("./conveyor.gif");
+	private static BufferedImage IMG_QUALITY_CONTROL_MACHINE = loadImage("./qualityControlMachine.gif");
+	private static BufferedImage IMG_PRODUCTION_MACHINE = loadImage("./productionMachine.gif");
+	private static BufferedImage IMG_WALL = loadImage("./wall.gif");
+
+	private static BufferedImage loadImage(String path) {
+
+		BufferedImage image = null;
+		try {
+			URL url = GroundPanel.class.getClassLoader().getResource(path);
+			image = ImageIO.read(url);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return image;
+	}
+
 	public GroundPanel(Ground ground) {
 
 		/*
@@ -136,46 +156,22 @@ public class GroundPanel extends JScrollPane {
 
 			@Override
 			public void visitConveyor(Conveyor conveyor) {
-				this.drawElement(conveyor, this.conveyor);
+				this.drawElement(conveyor, IMG_CONVEYOR);
 			}
 
 			@Override
 			public void visitProductionMachine(ProductionMachine machine) {
-				this.drawElement(machine, this.productionMachineImg);
+				this.drawElement(machine, IMG_PRODUCTION_MACHINE);
 			}
 
 			@Override
 			public void visitQualityControlMachine(QualityControlMachine machine) {
-				this.drawElement(machine, this.qualityControlMachineImg);
+				this.drawElement(machine, IMG_QUALITY_CONTROL_MACHINE);
 			}
 
 			@Override
 			public void visitWall(Wall wall) {
-				this.drawElement(wall, this.wallImg);
-			}
-
-			/*
-			 * TODO Image class manager soon =)
-			 */
-			private BufferedImage conveyor = this.loadImage("./conveyor.gif");
-			private BufferedImage qualityControlMachineImg = this
-					.loadImage("./qualityControlMachine.gif");
-			private BufferedImage productionMachineImg = this
-					.loadImage("./productionMachine.gif");
-			private BufferedImage wallImg = this.loadImage("./wall.gif");
-
-			private BufferedImage loadImage(String path) {
-
-				BufferedImage image = null;
-
-				try {
-					URL url = getClass().getClassLoader().getResource(path);
-					image = ImageIO.read(url);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-
-				return image;
+				this.drawElement(wall, IMG_WALL);
 			}
 		} // End Visitor.
 	}
