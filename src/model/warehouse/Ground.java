@@ -2,8 +2,6 @@ package model.warehouse;
 
 import static model.utils.ArgumentUtils.checkGreaterEqual;
 
-import java.awt.Dimension;
-
 public class Ground {
 	private int price;
 	private Tile groundTiles[][];
@@ -54,6 +52,26 @@ public class Ground {
 		return true;
 	}
 
+	public void addTileElement(TileElement element, Position position) {
+
+		// TODO falta terminar
+		this.isAreaEmpty(position.row, position.col, element.getWidth(),
+				element.getHeight());
+	}
+
+	public void visitElements(GroundVisitor visitor){
+		
+		for (int col = 0; col < this.cols; col++)
+			for (int row = 0; row < this.rows; row++) {
+				visitor.getCurrentPosition().row = row;
+				visitor.getCurrentPosition().col = col;
+				
+				TileElement element = this.groundTiles[row][col].getTileElement();
+				if (element != null)
+					element.accept(visitor);
+			}
+	}
+	
 	private void setRows(int rows) {
 		checkGreaterEqual(rows, 1, "rows");
 		this.rows = rows;
