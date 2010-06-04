@@ -27,6 +27,7 @@ public class Ground {
 		return price;
 	}
 
+	@Deprecated
 	public Tile getTile(int row, int col) {
 		return this.groundTiles[row][col];
 	}
