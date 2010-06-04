@@ -4,8 +4,8 @@ import model.production.Conveyor;
 import model.production.MachineType;
 import model.production.ProductionMachine;
 import model.warehouse.Ground;
+import model.warehouse.Position;
 import model.warehouse.TileElement;
-import model.warehouse.Wall;
 
 public class ViewUtils {
 
@@ -28,48 +28,31 @@ public class ViewUtils {
 		TileElement machine4 = new ProductionMachine(
 				new MachineType("machine4"), 2, 2);
 
-		ground.getTile(1, 1).setTileElement(machine1);
-		ground.getTile(1, 2).setTileElement(machine1);
-		ground.getTile(2, 1).setTileElement(machine1);
-		ground.getTile(2, 2).setTileElement(machine1);
-
-		ground.getTile(1, 6).setTileElement(machine2);
-		ground.getTile(1, 7).setTileElement(machine2);
-		ground.getTile(2, 6).setTileElement(machine2);
-		ground.getTile(2, 7).setTileElement(machine2);
-
-		ground.getTile(4, 6).setTileElement(machine3);
-		ground.getTile(4, 7).setTileElement(machine3);
-		ground.getTile(5, 6).setTileElement(machine3);
-		ground.getTile(5, 7).setTileElement(machine3);
-
-		ground.getTile(9, 6).setTileElement(machine4);
-		ground.getTile(9, 7).setTileElement(machine4);
-		ground.getTile(10, 6).setTileElement(machine4);
-		ground.getTile(10, 7).setTileElement(machine4);
-
+		ground.addTileElement(machine1, new Position(1,1));
+		ground.addTileElement(machine2, new Position(1,6));
+		ground.addTileElement(machine3, new Position(4,6));
+		ground.addTileElement(machine4, new Position(9,6));
+		
 		/*
 		 * Conveyors.
 		 */
-		ground.getTile(1, 3).setTileElement(new Conveyor());
-		ground.getTile(1, 4).setTileElement(new Conveyor());
-		ground.getTile(1, 5).setTileElement(new Conveyor());
-
-		ground.getTile(1, 8).setTileElement(new Conveyor());
-		ground.getTile(1, 9).setTileElement(new Conveyor());
-		ground.getTile(1, 10).setTileElement(new Conveyor());
-		ground.getTile(2, 10).setTileElement(new Conveyor());
-		ground.getTile(3, 10).setTileElement(new Conveyor());
-		ground.getTile(4, 10).setTileElement(new Conveyor());
-		ground.getTile(4, 9).setTileElement(new Conveyor());
-		ground.getTile(4, 8).setTileElement(new Conveyor());
-
-		ground.getTile(6, 6).setTileElement(new Conveyor());
-		ground.getTile(7, 6).setTileElement(new Conveyor());
-		ground.getTile(8, 6).setTileElement(new Conveyor());
-
-		ground.getTile(12, 12).setTileElement(new Wall(1, 1));
-		ground.getTile(12, 13).setTileElement(new Wall(1, 1));
+		ground.addTileElement(new Conveyor(), new Position(1,3));
+		ground.addTileElement(new Conveyor(), new Position(1,4));
+		ground.addTileElement(new Conveyor(), new Position(1,5));
+			
+		ground.addTileElement(new Conveyor(), new Position(1,8));
+		ground.addTileElement(new Conveyor(), new Position(1,9));
+		ground.addTileElement(new Conveyor(), new Position(1,10));
+		ground.addTileElement(new Conveyor(), new Position(2,10));
+		ground.addTileElement(new Conveyor(), new Position(3,10));
+		ground.addTileElement(new Conveyor(), new Position(4,10));
+		ground.addTileElement(new Conveyor(), new Position(4,9));
+		ground.addTileElement(new Conveyor(), new Position(4,8));
+	
+		ground.addTileElement(new Conveyor(), new Position(6,6));
+		ground.addTileElement(new Conveyor(), new Position(7,6));
+		ground.addTileElement(new Conveyor(), new Position(8,6));
+		
 		return ground;
 	}
 }

@@ -1,6 +1,7 @@
 package model.warehouse;
 
 import static model.utils.ArgumentUtils.checkGreaterEqual;
+import model.exception.BusinessLogicException;
 
 public class Ground {
 	private int price;
@@ -54,24 +55,33 @@ public class Ground {
 
 	public void addTileElement(TileElement element, Position position) {
 
-		// TODO falta terminar
-		this.isAreaEmpty(position.row, position.col, element.getWidth(),
-				element.getHeight());
+		if (!this.isAreaEmpty(position.row, position.col, element.getWidth(),
+				element.getHeight())) {
+			throw new BusinessLogicException(
+					"Can not add tile element to the ground");
+		}
+
+		for (int col = position.col; col < position.col + element.getWidth(); col++)
+			for (int row = position.row; row < position.row
+					+ element.getHeight(); row++) {
+				this.groundTiles[row][col].setTileElement(element);
+			}
 	}
 
-	public void visitElements(GroundVisitor visitor){
-		
+	public void visitElements(GroundVisitor visitor) {
+
 		for (int col = 0; col < this.cols; col++)
 			for (int row = 0; row < this.rows; row++) {
 				visitor.getCurrentPosition().row = row;
 				visitor.getCurrentPosition().col = col;
-				
-				TileElement element = this.groundTiles[row][col].getTileElement();
+
+				TileElement element = this.groundTiles[row][col]
+						.getTileElement();
 				if (element != null)
 					element.accept(visitor);
 			}
 	}
-	
+
 	private void setRows(int rows) {
 		checkGreaterEqual(rows, 1, "rows");
 		this.rows = rows;
