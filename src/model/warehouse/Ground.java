@@ -26,11 +26,6 @@ public class Ground {
 		return price;
 	}
 
-	@Deprecated
-	public Tile getTile(int row, int col) {
-		return this.groundTiles[row][col];
-	}
-
 	public int getRows() {
 		return this.rows;
 	}
@@ -39,10 +34,21 @@ public class Ground {
 		return this.cols;
 	}
 
+	/**
+	 * 
+	 * @deprecated Use isTileEmpty(Position) instead
+	 */
+	@Deprecated
 	private boolean isTileEmpty(int row, int col) {
 		return this.groundTiles[row][col].getTileElement() == null;
 	}
 
+	/**
+	 * 
+	 * @deprecated Use isAreaEmpty(Position, width, height) or
+	 *             isAreaEmpty(Position, Dimension)... or isAreaEmpty(Area)
+	 */
+	@Deprecated
 	public boolean isAreaEmpty(int row, int col, int width, int heigh) {
 
 		for (int j = col; j < col + width; j++)

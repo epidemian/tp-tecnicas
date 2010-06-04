@@ -38,21 +38,14 @@ public class GroundTest {
 		// Tile starts with no machines
 		// One line element is placed on the ground
 		ProductionLineElement lineElement = createProdLineElement2x2();
-
-		int row = 5;
-		int col = 5;
-
-		for (int i = 0; i < lineElement.getWidth(); i++) {
-			for (int j = 0; j < lineElement.getHeight(); j++) {
-				ground.getTile(row + j, col + i).setTileElement(lineElement);
-			}
-		}
+		Position pos = new Position(5, 5);
+		ground.addTileElement(lineElement, pos);
 
 		// Check all the tiles occupied by the machine
-		assertFalse(ground.isAreaEmpty(row, col, 2, 2));
+		assertFalse(ground.isAreaEmpty(pos.row, pos.col, 2, 2));
 
 		// Checks when only some of the tiles are occupied
-		assertFalse(ground.isAreaEmpty(6, 6, 2, 2));
+		assertFalse(ground.isAreaEmpty(pos.row + 1, pos.col + 1, 2, 2));
 
 	}
 
@@ -60,15 +53,7 @@ public class GroundTest {
 	public void isAreaEmptyWhenMachineIsPlacedOutOfBounds() {
 
 		ProductionLineElement lineElement = createProdLineElement2x2();
-
-		int row = 9;
-		int col = 9;
-
-		for (int i = 0; i < lineElement.getWidth(); i++) {
-			for (int j = 0; j < lineElement.getHeight(); j++) {
-				ground.getTile(row + j, col + i).setTileElement(lineElement);
-			}
-		}
-
+		Position pos = new Position(9, 9);
+		ground.addTileElement(lineElement, pos);
 	}
 }

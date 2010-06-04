@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import model.warehouse.Ground;
+import model.warehouse.Position;
 import model.warehouse.ProductionLinesCreator;
 
 public class ProductionLinesCreatorTest {
@@ -75,20 +76,20 @@ public class ProductionLinesCreatorTest {
 		/*
 		 * Puts the lines in the ground.
 		 */
-		ground.getTile(3, 2).setTileElement(prodLineElement1);
-		ground.getTile(2, 2).setTileElement(prodLineElement2);
-		ground.getTile(2, 3).setTileElement(prodLineElement3);
-		ground.getTile(3, 4).setTileElement(prodLineElement4);
-		ground.getTile(4, 4).setTileElement(prodLineElement5);
+		ground.addTileElement(prodLineElement1, new Position(3, 2));
+		ground.addTileElement(prodLineElement2, new Position(2, 2));
+		ground.addTileElement(prodLineElement3, new Position(2, 3));
+		ground.addTileElement(prodLineElement4, new Position(3, 4));
+		ground.addTileElement(prodLineElement5, new Position(4, 4));
 
-		ground.getTile(5, 5).setTileElement(prodLine2Element1);
-		ground.getTile(6, 5).setTileElement(prodLine2Element2);
-		ground.getTile(6, 6).setTileElement(prodLine2Element3);
+		ground.addTileElement(prodLine2Element1, new Position(5, 5));
+		ground.addTileElement(prodLine2Element2, new Position(6, 5));
+		ground.addTileElement(prodLine2Element3, new Position(6, 6));
 
 		/*
 		 * Isolated machine.
 		 */
-		ground.getTile(8, 8).setTileElement(prodLine3Element1);
+		ground.addTileElement(prodLine3Element1, new Position(8, 8));
 
 		List<ProductionLine> linesCreated = new ArrayList<ProductionLine>();
 		linesCreated.add(line);
