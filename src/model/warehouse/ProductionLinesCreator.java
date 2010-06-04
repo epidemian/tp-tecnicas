@@ -25,15 +25,7 @@ public class ProductionLinesCreator {
 	public List<ProductionLine> createFromGround(Ground ground) {
 
 		ProductionLineElementCollector collector = new ProductionLineElementCollector();
-
-		for (int i = 0; i < ground.getRows(); i++) {
-			for (int j = 0; j < ground.getCols(); j++) {
-				TileElement tileElement = ground.getTile(i, j).getTileElement();
-				if (tileElement != null)
-					tileElement.accept(collector);
-			}
-		}
-	
+		ground.visitElements(collector);
 		return createFromProductionLineElements(collector
 				.getProductionLineElements());
 	}
@@ -45,10 +37,10 @@ public class ProductionLinesCreator {
 		List<ProductionLineElement> touchedElements;
 		touchedElements = new ArrayList<ProductionLineElement>();
 
-		Iterator<ProductionLineElement> lineElementsIterator = 
-			lineElements.iterator();
-		
-		while (lineElementsIterator.hasNext()){
+		Iterator<ProductionLineElement> lineElementsIterator = lineElements
+				.iterator();
+
+		while (lineElementsIterator.hasNext()) {
 			ProductionLineElement lineElement = lineElementsIterator.next();
 			if (!touchedElements.contains(lineElement))
 				lines.add(processLineElement(lineElement, touchedElements));
@@ -103,7 +95,7 @@ public class ProductionLinesCreator {
 
 	}
 
-	private class ProductionLineElementCollector implements TileElementVisitor {
+	private class ProductionLineElementCollector extends GroundVisitor {
 
 		private List<ProductionLineElement> productionLineElements;
 
@@ -116,25 +108,17 @@ public class ProductionLinesCreator {
 		}
 
 		@Override
-		public void visitWall(Wall wall) {
-			// I don't care 'bout walls you know...
-		}
-
-		@Override
 		public void visitConveyor(Conveyor conveyor) {
-			// TODO: it might be a good idea to distinguish between conveyors
-			// and machines, as the production line will probably have to do it
-			// after.
 			this.productionLineElements.add(conveyor);
 		}
 
 		@Override
-		public void visitProductionMachine(ProductionMachine machine){
+		public void visitProductionMachine(ProductionMachine machine) {
 			this.productionLineElements.add(machine);
 		}
-		
+
 		@Override
-		public void visitQualityControlMachine(QualityControlMachine machine){
+		public void visitQualityControlMachine(QualityControlMachine machine) {
 			this.productionLineElements.add(machine);
 		}
 	}

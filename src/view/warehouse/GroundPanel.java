@@ -19,6 +19,7 @@ import model.production.Conveyor;
 import model.production.ProductionMachine;
 import model.production.QualityControlMachine;
 import model.warehouse.Ground;
+import model.warehouse.GroundVisitor;
 import model.warehouse.TileElement;
 import model.warehouse.TileElementVisitor;
 import model.warehouse.Wall;
@@ -58,14 +59,11 @@ public class GroundPanel extends JScrollPane {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			
-			
-			
-			
+
 			Point point = MouseInfo.getPointerInfo().getLocation();
 			System.out.println(point);
 			System.out.println(e);
-			
+
 			// TODO Auto-generated method stub
 
 		}
@@ -102,7 +100,6 @@ public class GroundPanel extends JScrollPane {
 		private static final long serialVersionUID = 1L;
 
 		private Ground ground;
-		private GUIvisitor visitor;
 
 		/*
 		 * TODO Do not hard-code tileSize =(.
@@ -111,7 +108,6 @@ public class GroundPanel extends JScrollPane {
 
 		public DrawingPanel(Ground ground) {
 			this.ground = ground;
-			this.visitor = new GUIvisitor();
 			/*
 			 * TODO Do not hard-code Color.white =(.
 			 */
@@ -135,8 +131,6 @@ public class GroundPanel extends JScrollPane {
 			Dimension groundSizeInTiles = new Dimension(this.ground.getCols(),
 					this.ground.getRows());
 			Dimension dimension = getSize();
-
-			this.visitor.graphics = g;
 
 			/*
 			 * CLIPPING! =) Efficiency above everything else!
@@ -179,23 +173,9 @@ public class GroundPanel extends JScrollPane {
 						i * this.tileSize);
 			}
 
-			/*
-			 * int cast to start before (or equals) the position of the
-			 * viewport.
-			 */
-			for (int i = (int) startIndexTileX; i < lastIndexTileX; i++)
-				for (int j = (int) startIndexTileY; j < lastIndexTileY; j++) {
-					this.visitor.currentCol = i;
-					this.visitor.currentRow = j;
-					TileElement element = this.ground.getTile(j, i)
-							.getTileElement();
-					if (element != null)
-						element.accept(this.visitor);
-				}
+			GUIvisitor elementPainter = new GUIvisitor(g);
+			this.ground.visitElements(elementPainter);
 
-			this.visitor.flush();
-			
-			
 			/*
 			 * Mouse.
 			 */
@@ -206,31 +186,14 @@ public class GroundPanel extends JScrollPane {
 		/*
 		 * Visitor used to draw each element in the warehouse.
 		 */
-		private class GUIvisitor implements TileElementVisitor {
+		private class GUIvisitor extends GroundVisitor {
 
-			/*
-			 * GUIvisito state! GUIvisitos is a private class, no one outside
-			 * GroundPanel can see it. To simplify things, we use public
-			 * attributes.
-			 */
-			public int currentRow;
-			public int currentCol;
 			public Graphics graphics;
-
 			private List<TileElement> bigTouchedTiles;
 
-			public GUIvisitor() {
+			public GUIvisitor(Graphics g) {
 				this.bigTouchedTiles = new ArrayList<TileElement>();
-				this.currentCol = 0;
-				this.currentRow = 0;
-				this.graphics = null;
-			}
-
-			/*
-			 * Clears the list.
-			 */
-			public void flush() {
-				this.bigTouchedTiles.clear();
+				this.graphics = g;
 			}
 
 			private void drawElement(TileElement element, BufferedImage image) {
@@ -246,9 +209,9 @@ public class GroundPanel extends JScrollPane {
 					/*
 					 * TODO Add element size!
 					 */
-					this.graphics.drawImage(image, this.currentCol * tileSize,
-							this.currentRow * tileSize, tileSize
-									* element.getWidth(), tileSize
+					this.graphics.drawImage(image, getCurrentPosition().col
+							* tileSize, getCurrentPosition().row * tileSize,
+							tileSize * element.getWidth(), tileSize
 									* element.getHeight(), null);
 				}
 			}
@@ -260,28 +223,28 @@ public class GroundPanel extends JScrollPane {
 
 			@Override
 			public void visitProductionMachine(ProductionMachine machine) {
-				this.drawElement(machine, this.productionMachine);
+				this.drawElement(machine, this.productionMachineImg);
 			}
 
 			@Override
 			public void visitQualityControlMachine(QualityControlMachine machine) {
-				this.drawElement(machine, this.qualityControlMachine);
+				this.drawElement(machine, this.qualityControlMachineImg);
 			}
 
 			@Override
 			public void visitWall(Wall wall) {
-				this.drawElement(wall, this.wall);
+				this.drawElement(wall, this.wallImg);
 			}
 
 			/*
 			 * TODO Image class manager soon =)
 			 */
 			private BufferedImage conveyor = this.loadImage("./conveyor.gif");
-			private BufferedImage qualityControlMachine = this
+			private BufferedImage qualityControlMachineImg = this
 					.loadImage("./qualityControlMachine.gif");
-			private BufferedImage productionMachine = this
+			private BufferedImage productionMachineImg = this
 					.loadImage("./productionMachine.gif");
-			private BufferedImage wall = this.loadImage("./wall.gif");
+			private BufferedImage wallImg = this.loadImage("./wall.gif");
 
 			private BufferedImage loadImage(String path) {
 
