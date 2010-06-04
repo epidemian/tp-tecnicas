@@ -3,11 +3,6 @@ package view.warehouse;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.MouseInfo;
-import java.awt.Point;
-import java.awt.PointerInfo;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.net.URL;
 
@@ -21,7 +16,6 @@ import model.production.QualityControlMachine;
 import model.warehouse.Ground;
 import model.warehouse.GroundVisitor;
 import model.warehouse.TileElement;
-import model.warehouse.TileElementVisitor;
 import model.warehouse.Wall;
 
 import java.util.ArrayList;
@@ -40,56 +34,7 @@ public class GroundPanel extends JScrollPane {
 		super(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
-		this.addMouseListener(new MouseListenerGroundPanel());
-
-		this.getCursor();
-
 		this.setViewportView(new DrawingPanel(ground));
-	}
-
-	private Point getViewPortPosition() {
-		return new Point(this.getHorizontalScrollBar().getValue(), this
-				.getVerticalScrollBar().getValue());
-	}
-
-	/*
-	 * Mouse Listener.
-	 */
-	private class MouseListenerGroundPanel implements MouseListener {
-
-		@Override
-		public void mouseClicked(MouseEvent e) {
-
-			Point point = MouseInfo.getPointerInfo().getLocation();
-			System.out.println(point);
-			System.out.println(e);
-
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void mouseEntered(MouseEvent e) {
-			// TODO Auto-generated method stub
-		}
-
-		@Override
-		public void mouseExited(MouseEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void mousePressed(MouseEvent e) {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent e) {
-			// TODO Auto-generated method stub
-
-		}
 	}
 
 	/*
@@ -127,71 +72,44 @@ public class GroundPanel extends JScrollPane {
 
 			super.paintComponent(g);
 
-			Point viewPort = getViewPortPosition();
 			Dimension groundSizeInTiles = new Dimension(this.ground.getCols(),
 					this.ground.getRows());
-			Dimension dimension = getSize();
-
-			/*
-			 * CLIPPING! =) Efficiency above everything else!
-			 * 
-			 * Determines the index in which the ground begins to draw based on
-			 * the position of the viewport.
-			 */
-			/*
-			 * double startIndexTileX = viewPort.x / (double) this.tileSize;
-			 * double startIndexTileY = viewPort.y / (double) this.tileSize;
-			 * 
-			 * double widthScreenInTiles = dimension.width / (double)
-			 * this.tileSize; double heightScreenInTiles = dimension.height /
-			 * (double) this.tileSize;
-			 * 
-			 * int lastIndexTileX = (groundSizeInTiles.width <=
-			 * widthScreenInTiles + startIndexTileX) ? groundSizeInTiles.width :
-			 * (int) (startIndexTileX + widthScreenInTiles + 1.0f);
-			 * 
-			 * int lastIndexTileY = (groundSizeInTiles.height <=
-			 * heightScreenInTiles + startIndexTileY) ? groundSizeInTiles.height
-			 * : (int) (startIndexTileY + heightScreenInTiles + 1.0f);
-			 */
-			int startIndexTileX = 0;
-			int startIndexTileY = 0;
-			int lastIndexTileX = groundSizeInTiles.width;
-			int lastIndexTileY = groundSizeInTiles.height;
 
 			// Vertical lines.
-			for (int i = (int) startIndexTileX; i <= lastIndexTileX; i++) {
-				g.drawLine(i * this.tileSize, (int) startIndexTileY
-						* this.tileSize, i * this.tileSize,
-						(int) lastIndexTileY * this.tileSize);
+			for (int col = 0; col <= groundSizeInTiles.width; col++) {
+
+				int x1 = col * this.tileSize;
+				int y1 = 0;
+				int x2 = col * this.tileSize;
+				int y2 = groundSizeInTiles.height * this.tileSize;
+
+				g.drawLine(x1, y1, x2, y2);
 			}
 
 			// Horizontal lines.
-			for (int i = (int) startIndexTileY; i <= lastIndexTileY; i++) {
-				g.drawLine((int) startIndexTileX * this.tileSize, i
-						* this.tileSize, (int) lastIndexTileX * this.tileSize,
-						i * this.tileSize);
+			for (int row = 0; row <= groundSizeInTiles.height; row++) {
+
+				int x1 = 0;
+				int y1 = row * this.tileSize;
+				int x2 = groundSizeInTiles.width * this.tileSize;
+				int y2 = row * this.tileSize;
+
+				g.drawLine(x1, y1, x2, y2);
 			}
 
-			GUIvisitor elementPainter = new GUIvisitor(g);
+			ElementPainter elementPainter = new ElementPainter(g);
 			this.ground.visitElements(elementPainter);
-
-			/*
-			 * Mouse.
-			 */
-			Point point = MouseInfo.getPointerInfo().getLocation();
-
 		}
 
 		/*
 		 * Visitor used to draw each element in the warehouse.
 		 */
-		private class GUIvisitor extends GroundVisitor {
+		private class ElementPainter extends GroundVisitor {
 
 			public Graphics graphics;
 			private List<TileElement> bigTouchedTiles;
 
-			public GUIvisitor(Graphics g) {
+			public ElementPainter(Graphics g) {
 				this.bigTouchedTiles = new ArrayList<TileElement>();
 				this.graphics = g;
 			}
@@ -206,13 +124,13 @@ public class GroundPanel extends JScrollPane {
 				if (!this.bigTouchedTiles.contains(element)) {
 					if (element.getWidth() > 1 || element.getHeight() > 1)
 						this.bigTouchedTiles.add(element);
-					/*
-					 * TODO Add element size!
-					 */
-					this.graphics.drawImage(image, getCurrentPosition().col
-							* tileSize, getCurrentPosition().row * tileSize,
-							tileSize * element.getWidth(), tileSize
-									* element.getHeight(), null);
+
+					int x = getCurrentPosition().col * tileSize;
+					int y = getCurrentPosition().row * tileSize;
+					int width = element.getWidth() * tileSize;
+					int height = element.getHeight() * tileSize;
+
+					this.graphics.drawImage(image, x, y, width, height, null);
 				}
 			}
 
