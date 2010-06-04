@@ -9,7 +9,7 @@ public class HealthyMachineState extends MachineState{
 		throw new CannotRepairHealthyMachineException();
 	}
 	
-	public void broke(Machine machine){
+	public void breakUp(Machine machine){
 		machine.setMachineState(new BrokenMachineState());
 		machine.notifyBreakdown();
 	}

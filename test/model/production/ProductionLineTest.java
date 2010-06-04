@@ -35,17 +35,6 @@ public class ProductionLineTest {
 						new ValidProductionSequences()), new RawMaterials());
 	}
 
-	// TODO: ver comentario en Machine#equals()
-	@Test
-	@Ignore
-	public void equalsTest() {
-
-		ProductionLine prodLineEquals = this
-				.createProductionLineProcessingCarton();
-
-		assertEquals(prodLineEquals, this.productionLine);
-	}
-
 	@Test
 	public void dailyProduction() {
 
@@ -102,8 +91,8 @@ public class ProductionLineTest {
 				machineMock1, new StorageArea(new RawMaterials(),
 						new ValidProductionSequences()), new RawMaterials());
 
-		machineMock1.breakMachine();
-		machineMock2.breakMachine();
+		machineMock1.breakUp();
+		machineMock2.breakUp();
 
 		// Should be false because two machines are broken
 		assertFalse(line.isWorking());
@@ -130,12 +119,12 @@ public class ProductionLineTest {
 			super(machineType, 1, 1);
 		}
 
-		public void breakMachine() {
-			super.breakMachine();
+		public void breakUp() {
+			super.breakUp();
 		}
 
-		public void damageMachine() {
-			super.damageMachine();
+		public void damage() {
+			super.damage();
 		}
 	}
 }

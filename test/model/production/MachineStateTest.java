@@ -50,7 +50,7 @@ public class MachineStateTest {
 	@Test
 	public void breakHealthyMachine() {
 		machine.setMachineState(new HealthyMachineState());
-		machine.breakMachine();
+		machine.breakUp();
 		assertEquals(machine.getMachineState(), new BrokenMachineState());
 
 	}
@@ -66,12 +66,12 @@ public class MachineStateTest {
 		}
 
 		// TODO: Para qué se redefine esto?
-		public void breakMachine() {
-			super.breakMachine();
+		public void breakUp() {
+			super.breakUp();
 		}
 
-		public void damageMachine() {
-			super.damageMachine();
+		public void damage() {
+			super.damage();
 		}
 	}
 

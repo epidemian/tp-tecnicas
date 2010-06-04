@@ -11,7 +11,7 @@ public class DamagedMachineState extends MachineState{
 		machine.setMachineState(new HealthyMachineState());
 	}
 	
-	public void broke(Machine machine){
+	public void breakUp(Machine machine){
 		machine.setMachineState(new BrokenMachineState());
 		machine.notifyBreakdown();
 	}

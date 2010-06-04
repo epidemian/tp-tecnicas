@@ -8,8 +8,9 @@ public abstract class Machine extends ProductionLineElement implements
 		MachineObservable {
 
 	// TODO: esto debería levantese de algún archivo de confg o algo...
-	private final double BREAK_CHANCE = 0.05;
-	private final double DAMAGE_CHANCE = 0.15;
+	private static final double BREAK_CHANCE = 0.05;
+	private static final double DAMAGE_CHANCE = 0.15;
+
 
 	private MachineState machineState;
 
@@ -17,9 +18,6 @@ public abstract class Machine extends ProductionLineElement implements
 		super(width, height);
 		this.setMachineType(machineType);
 		this.setMachineState(new HealthyMachineState());
-		if (this.BREAK_CHANCE + this.DAMAGE_CHANCE > 1) {
-			throw new BusinessLogicException();
-		}
 	}
 
 	private MachineType machineType;
@@ -59,19 +57,19 @@ public abstract class Machine extends ProductionLineElement implements
 	 */
 	private void processMachineDeterioration() {
 		double number = Math.random();
-		if (number < this.DAMAGE_CHANCE) {
-			this.damageMachine();
-		} else if (number > 1 - this.BREAK_CHANCE) {
-			this.getMachineState().broke(this);
+		if (number < DAMAGE_CHANCE) {
+			this.damage();
+		} else if (number > 1 - BREAK_CHANCE) {
+			this.breakUp();
 		}
 	}
 
-	protected void damageMachine() {
-		this.breakMachine();
+	protected void damage() {
+		this.getMachineState().damage(this);
 	}
 
-	protected void breakMachine() {
-		this.getMachineState().broke(this);
+	protected void breakUp() {
+		this.getMachineState().breakUp(this);
 	}
 
 	public MachineState getMachineState() {

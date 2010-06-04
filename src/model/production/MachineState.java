@@ -4,7 +4,7 @@ public abstract class MachineState {
 	
 	public abstract void repair(Machine machine) throws CannotRepairHealthyMachineException;
 	
-	public void broke(Machine machine) {}
+	public void breakUp(Machine machine) {}
 	
 	public  void damage(Machine machine){}
 	

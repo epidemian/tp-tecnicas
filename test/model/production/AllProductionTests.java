@@ -6,14 +6,17 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({
-        RawMaterialsTest.class,
-        StorageAreaTest.class,
-        ValidProductionSequencesTest.class,
-        TypeTest.class,
-        ProductTypeTest.class,
-        ProductionSequenceTest.class,
-        ProductTest.class,
-        ProductionLineTest.class,
+	MachineStateTest.class,
+	ProductionLinesCreatorTest.class,
+	ProductionLineTest.class,
+	ProductionMachineTest.class,
+	ProductionSequenceTest.class,
+	ProductTest.class,
+	ProductTypeTest.class,
+    RawMaterialsTest.class,
+    StorageAreaTest.class,
+    TypeTest.class,
+    ValidProductionSequencesTest.class,
 })
 public class AllProductionTests {
 

@@ -5,13 +5,14 @@ import model.production.MachineType;
 import model.production.ProductionMachine;
 import model.warehouse.Ground;
 import model.warehouse.TileElement;
+import model.warehouse.Wall;
 
 public class ViewUtils {
 
 	public static Ground creatGroundSample1() {
 
 		int cols = 25;
-		int rows = 12;
+		int rows = 13;
 
 		Ground ground = new Ground(0, rows, cols);
 
@@ -67,6 +68,8 @@ public class ViewUtils {
 		ground.getTile(7, 6).setTileElement(new Conveyor());
 		ground.getTile(8, 6).setTileElement(new Conveyor());
 
+		ground.getTile(12, 12).setTileElement(new Wall(1, 1));
+		ground.getTile(12, 13).setTileElement(new Wall(1, 1));
 		return ground;
 	}
 }
