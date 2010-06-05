@@ -1,11 +1,12 @@
 package model.production;
 
+import static org.junit.Assert.*;
+
 import java.util.LinkedList;
 
 import model.exception.BusinessLogicException;
 
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 public class ProductionSequenceTest {
 

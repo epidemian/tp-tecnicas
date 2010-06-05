@@ -1,5 +1,7 @@
 package model.lab;
 
+import static model.utils.ArgumentUtils.*;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -7,7 +9,6 @@ import java.util.Map;
 import java.util.Set;
 
 import model.exception.BusinessLogicException;
-import static model.utils.ArgumentUtils.*;
 
 /**
  * A collection of {@link Technology}'s with dependencies between them. Notice

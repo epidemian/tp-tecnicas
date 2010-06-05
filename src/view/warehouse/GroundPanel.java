@@ -17,7 +17,6 @@ import model.production.ProductionMachine;
 import model.production.QualityControlMachine;
 import model.warehouse.Ground;
 import model.warehouse.GroundVisitor;
-import model.warehouse.TileElementVisitor;
 import model.warehouse.TileElement;
 import model.warehouse.Wall;
 

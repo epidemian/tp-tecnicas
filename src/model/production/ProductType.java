@@ -1,6 +1,6 @@
 package model.production;
 
-import static model.utils.ArgumentUtils.*;
+import static model.utils.ArgumentUtils.checkArgCondition;
 
 /**
  * Specifies a product type.

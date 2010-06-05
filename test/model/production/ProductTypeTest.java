@@ -1,9 +1,9 @@
 package model.production;
 
+import static org.junit.Assert.assertEquals;
 import model.exception.BusinessLogicException;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import org.junit.Test;
 
 public class ProductTypeTest {
 

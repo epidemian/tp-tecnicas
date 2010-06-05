@@ -1,8 +1,9 @@
 package model.warehouse;
 
 import static org.junit.Assert.*;
-
-import model.production.*;
+import model.production.MachineType;
+import model.production.ProductionLineElement;
+import model.production.ProductionMachine;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -18,12 +19,8 @@ public class GroundTest {
 
 	@Test
 	public void IsAreaEmptyWhenEmpty() {
-		// Tile starts with no machines
-		for (int cols = 0; cols < ground.getCols(); cols++) {
-			for (int rows = 0; rows < ground.getRows(); rows++) {
-				assertTrue(ground.isAreaEmpty(cols, rows, 1, 1));
-			}
-		}
+		assertTrue(ground.isAreaEmpty(Position.ZERO, ground.getRows(), ground
+				.getCols()));
 
 	}
 
@@ -42,10 +39,11 @@ public class GroundTest {
 		ground.addTileElement(lineElement, pos);
 
 		// Check all the tiles occupied by the machine
-		assertFalse(ground.isAreaEmpty(pos.row, pos.col, 2, 2));
+		assertFalse(ground.isAreaEmpty(pos, 2, 2));
 
 		// Checks when only some of the tiles are occupied
-		assertFalse(ground.isAreaEmpty(pos.row + 1, pos.col + 1, 2, 2));
+		Position pos2 = pos.add(new Position(1, 1));
+		assertFalse(ground.isAreaEmpty(pos2, 2, 2));
 
 	}
 

@@ -1,7 +1,6 @@
 package model.production;
 
-import static model.utils.ArgumentUtils.*;
-
+import static model.utils.ArgumentUtils.checkNotNull;
 import model.exception.BusinessLogicException;
 
 /**

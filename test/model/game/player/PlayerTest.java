@@ -8,7 +8,7 @@ import model.game.time.TimeManager;
 import model.lab.ResearchLab;
 import model.lab.TechnologyTree;
 import model.warehouse.Ground;
-import model.warehouse.PurchaseWarehouse;
+import model.warehouse.PurchasedWarehouse;
 import model.warehouse.Warehouse;
 
 import org.junit.Before;
@@ -56,7 +56,7 @@ public class PlayerTest {
 	@Test
 	public void purchaseGroundAndCheckBalance() {
 		Ground ground = createGroundWithDefaultPrice();
-		Warehouse warehouse = new PurchaseWarehouse(ground, this.budget);
+		Warehouse warehouse = new PurchasedWarehouse(ground, this.budget);
 		player.addWareHouse(warehouse);
 
 		assertEquals(INITIAL_BALANCE - ground.getPrice(), budget.getBalance());
@@ -68,7 +68,7 @@ public class PlayerTest {
 				budget);
 
 		Ground ground = new Ground(GROUND_PRICE, 10, 10);
-		Warehouse warehouse = new PurchaseWarehouse(ground, budget);
+		Warehouse warehouse = new PurchasedWarehouse(ground, budget);
 
 		player.addResearchLab(researchLab);
 		player.addWareHouse(warehouse);

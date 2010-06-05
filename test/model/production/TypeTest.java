@@ -1,8 +1,9 @@
 package model.production;
 
-import model.exception.BusinessLogicException;
-import org.junit.Test;
 import static org.junit.Assert.*;
+import model.exception.BusinessLogicException;
+
+import org.junit.Test;
 
 public class TypeTest {
 

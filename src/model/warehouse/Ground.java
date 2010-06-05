@@ -7,13 +7,10 @@ public class Ground {
 	private int price;
 	private TileElement tileElements[][];
 
-	private int rows;
-	private int cols;
-
 	public Ground(int price, int rows, int cols) {
 		this.price = price;
-		this.setRows(rows);
-		this.setCols(cols);
+		checkGreaterEqual(cols, 1, "cols");
+		checkGreaterEqual(rows, 1, "rows");
 		this.tileElements = new TileElement[rows][cols];
 	}
 
@@ -22,72 +19,58 @@ public class Ground {
 	}
 
 	public int getRows() {
-		return this.rows;
+		return this.tileElements.length;
 	}
 
 	public int getCols() {
-		return this.cols;
+		return this.tileElements[0].length;
 	}
 
-	/**
-	 * 
-	 * @deprecated Use isTileEmpty(Position) instead
-	 */
-	@Deprecated
-	private boolean isTileEmpty(int row, int col) {
-		return this.tileElements[row][col] == null;
-	}
+	public boolean isAreaEmpty(Position pos, int width, int heigh) {
 
-	/**
-	 * 
-	 * @deprecated Use isAreaEmpty(Position, width, height) or
-	 *             isAreaEmpty(Position, Dimension)... or isAreaEmpty(Area)
-	 */
-	@Deprecated
-	public boolean isAreaEmpty(int row, int col, int width, int heigh) {
-
-		for (int j = col; j < col + width; j++)
-			for (int i = row; i < row + heigh; i++)
-				if (!isTileEmpty(i, j))
+		for (int row = pos.getRow(); row < pos.getRow() + heigh; row++)
+			for (int col = pos.getCol(); col < pos.getCol() + width; col++)
+				if (!isTileEmpty(row, col))
 					return false;
-
+		
 		return true;
 	}
 
 	public void addTileElement(TileElement element, Position position) {
 
-		if (!this.isAreaEmpty(position.getRow(), position.getCol(), element
-				.getWidth(), element.getHeight())) {
+		if (!isAreaEmpty(position, element.getWidth(), element.getHeight())) {
 			throw new BusinessLogicException(
 					"Can not add tile element to the ground");
 		}
 
-		for (int col = position.getCol(); col < position.getCol()
-				+ element.getWidth(); col++)
-			for (int row = position.getRow(); row < position.getRow()
-					+ element.getHeight(); row++) {
-				this.tileElements[row][col] = element;
-			}
+		Position max = position.add(new Position(element.getHeight(), element
+				.getWidth()));
+		for (int row = position.getRow(); row < max.getRow(); row++)
+			for (int col = position.getCol(); col < max.getCol(); col++)
+				setTileElement(element, col, row);
 	}
 
 	public void visitElements(GroundVisitor visitor) {
 
-		for (int col = 0; col < this.cols; col++)
-			for (int row = 0; row < this.rows; row++) {
+		for (int row = 0; row < getRows(); row++) {
+			for (int col = 0; col < getCols(); col++) {
 				visitor.setCurrentPosition(new Position(row, col));
-				TileElement element = this.tileElements[row][col];
-				if (element != null)
-					element.accept(visitor);
+				if (!isTileEmpty(row, col))
+					getTileElement(row, col).accept(visitor);
 			}
+		}
 	}
 
-	private void setRows(int rows) {
-		checkGreaterEqual(rows, 1, "rows");
-		this.rows = rows;
+	private boolean isTileEmpty(int row, int col) {
+		return getTileElement(row, col) == null;
 	}
 
-	private void setCols(int cols) {
-		checkGreaterEqual(cols, 1, "cols");
-		this.cols = cols;
+	private TileElement getTileElement(int row, int col) {
+		return this.tileElements[row][col];
 	}
+
+	private void setTileElement(TileElement element, int col, int row) {
+		this.tileElements[row][col] = element;
+	}
+
 }

@@ -4,12 +4,11 @@ import static model.utils.ArgumentUtils.checkNotNull;
 
 import java.util.Iterator;
 import java.util.LinkedList;
-
-
 import java.util.List;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
 import model.game.time.DailyUpdatable;
 import model.game.time.TickUpdatable;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public class ProductionLine implements TickUpdatable, DailyUpdatable,
 		Iterable<ProductionLineElement>, ProductionLineElementObserver  {

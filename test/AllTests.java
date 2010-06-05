@@ -2,9 +2,7 @@ import model.game.AllGameTests;
 import model.lab.AllLabTests;
 import model.production.AllProductionTests;
 import model.utils.AllUtilsTests;
-import model.utils.ArgumentUtilsTest;
 import model.warehouse.AllWarehouseTests;
-import model.warehouse.WarehouseTest;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;

@@ -1,17 +1,17 @@
 package model.production;
 
-import static org.junit.Assert.*;
 import static model.production.ProductionLineElement.connectLineElements;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
-
 import model.warehouse.Ground;
 import model.warehouse.Position;
 import model.warehouse.ProductionLinesCreator;
+
+import org.junit.Before;
+import org.junit.Test;
 
 public class ProductionLinesCreatorTest {
 

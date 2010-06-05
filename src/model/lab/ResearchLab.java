@@ -1,11 +1,10 @@
 package model.lab;
 
-import static model.utils.ArgumentUtils.checkArgCondition;
+import static java.lang.Math.min;
 import static model.utils.ArgumentUtils.*;
 
 import java.util.HashSet;
 import java.util.Set;
-import static java.lang.Math.min;
 
 import model.game.Budget;
 import model.game.time.DailyUpdatable;

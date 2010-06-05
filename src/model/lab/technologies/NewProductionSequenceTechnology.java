@@ -1,10 +1,10 @@
 package model.lab.technologies;
 
+import static model.utils.ArgumentUtils.checkNotNull;
 import model.lab.Technology;
 import model.production.ProductType;
 import model.production.ProductionSequence;
 import model.production.ValidProductionSequences;
-import static model.utils.ArgumentUtils.*;
 
 /**
  * A technology that adds a new valid product sequence when researched.

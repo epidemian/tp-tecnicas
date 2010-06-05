@@ -1,25 +1,13 @@
 package model.warehouse;
 
-import static org.junit.Assert.*;
-
-import java.util.Collection;
-import java.util.List;
-
+import static org.junit.Assert.assertEquals;
 import model.game.Budget;
-import model.production.MachineType;
-import model.production.ProductionLine;
-import model.production.ProductionLineElement;
-import model.production.ProductionMachine;
-import model.production.RawMaterials;
-import model.production.StorageArea;
-import model.production.ValidProductionSequences;
 
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.Ignore;
 
 public class WarehouseTest {
 	private static final int INITIAL_BALANCE = 5000;
@@ -45,7 +33,7 @@ public class WarehouseTest {
 	@Test
 	public void sellPurcheaseWarehouseAndCheckBalance() {
 		Budget budget = new Budget(INITIAL_BALANCE);
-		Warehouse purchaseWarehouse = new PurchaseWarehouse(new Ground(PRICE_GROUND, 10, 10), budget); 
+		Warehouse purchaseWarehouse = new PurchasedWarehouse(new Ground(PRICE_GROUND, 10, 10), budget); 
 		
 		purchaseWarehouse.sell();
 		//TODO: Ojo que al m�todo sell le falta la parte de la venta de las m�quinas en buen estado
