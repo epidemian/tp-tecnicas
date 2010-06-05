@@ -2,9 +2,9 @@ package model.warehouse;
 
 import model.game.Budget;
 
-public class PurchaseWarehouse extends Warehouse{
+public class PurchasedWarehouse extends Warehouse{
 
-	public PurchaseWarehouse(Ground ground, Budget budget) {
+	public PurchasedWarehouse(Ground ground, Budget budget) {
 		super(ground, budget);
 	}
 

@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
@@ -15,11 +17,9 @@ import model.production.ProductionMachine;
 import model.production.QualityControlMachine;
 import model.warehouse.Ground;
 import model.warehouse.GroundVisitor;
+import model.warehouse.TileElementVisitor;
 import model.warehouse.TileElement;
 import model.warehouse.Wall;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class GroundPanel extends JScrollPane {
 
@@ -145,8 +145,8 @@ public class GroundPanel extends JScrollPane {
 					if (element.getWidth() > 1 || element.getHeight() > 1)
 						this.bigTouchedTiles.add(element);
 
-					int x = getCurrentPosition().col * tileSize;
-					int y = getCurrentPosition().row * tileSize;
+					int x = getCurrentPosition().getCol() * tileSize;
+					int y = getCurrentPosition().getRow() * tileSize;
 					int width = element.getWidth() * tileSize;
 					int height = element.getHeight() * tileSize;
 

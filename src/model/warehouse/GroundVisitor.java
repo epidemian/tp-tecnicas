@@ -4,12 +4,16 @@ import model.production.Conveyor;
 import model.production.ProductionMachine;
 import model.production.QualityControlMachine;
 
-public abstract class GroundVisitor implements TileElementVisitor {
-
+public class GroundVisitor implements TileElementVisitor {
+	
 	Position currentPosition = new Position();
 
 	public Position getCurrentPosition() {
 		return currentPosition;
+	}
+
+	public void setCurrentPosition(Position currentPosition) {
+		this.currentPosition = currentPosition;
 	}
 
 	@Override
@@ -27,5 +31,4 @@ public abstract class GroundVisitor implements TileElementVisitor {
 	@Override
 	public void visitWall(Wall wall) {
 	}
-
 }

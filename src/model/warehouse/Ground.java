@@ -5,7 +5,7 @@ import model.exception.BusinessLogicException;
 
 public class Ground {
 	private int price;
-	private Tile groundTiles[][];
+	private TileElement tileElements[][];
 
 	private int rows;
 	private int cols;
@@ -14,12 +14,7 @@ public class Ground {
 		this.price = price;
 		this.setRows(rows);
 		this.setCols(cols);
-		this.groundTiles = new Tile[rows][cols];
-		for (int i = 0; i < rows; i++) {
-			for (int j = 0; j < cols; j++) {
-				groundTiles[i][j] = new Tile();
-			}
-		}
+		this.tileElements = new TileElement[rows][cols];
 	}
 
 	public int getPrice() {
@@ -40,7 +35,7 @@ public class Ground {
 	 */
 	@Deprecated
 	private boolean isTileEmpty(int row, int col) {
-		return this.groundTiles[row][col].getTileElement() == null;
+		return this.tileElements[row][col] == null;
 	}
 
 	/**
@@ -61,16 +56,17 @@ public class Ground {
 
 	public void addTileElement(TileElement element, Position position) {
 
-		if (!this.isAreaEmpty(position.row, position.col, element.getWidth(),
-				element.getHeight())) {
+		if (!this.isAreaEmpty(position.getRow(), position.getCol(), element
+				.getWidth(), element.getHeight())) {
 			throw new BusinessLogicException(
 					"Can not add tile element to the ground");
 		}
 
-		for (int col = position.col; col < position.col + element.getWidth(); col++)
-			for (int row = position.row; row < position.row
+		for (int col = position.getCol(); col < position.getCol()
+				+ element.getWidth(); col++)
+			for (int row = position.getRow(); row < position.getRow()
 					+ element.getHeight(); row++) {
-				this.groundTiles[row][col].setTileElement(element);
+				this.tileElements[row][col] = element;
 			}
 	}
 
@@ -78,11 +74,8 @@ public class Ground {
 
 		for (int col = 0; col < this.cols; col++)
 			for (int row = 0; row < this.rows; row++) {
-				visitor.getCurrentPosition().row = row;
-				visitor.getCurrentPosition().col = col;
-
-				TileElement element = this.groundTiles[row][col]
-						.getTileElement();
+				visitor.setCurrentPosition(new Position(row, col));
+				TileElement element = this.tileElements[row][col];
 				if (element != null)
 					element.accept(visitor);
 			}
