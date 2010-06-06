@@ -55,44 +55,30 @@ public class Player {
 		return false;
 	}
 
-	public void deleteResearchLab() {
-		this.researchLab = null;
-	}
-
 	public boolean addWareHouse(Warehouse warehouse) {
 		checkNotNull(warehouse, "warehouse");
 
-		// TODO: Revisar esto. El código dentro del if NUNCA se va a llamar, ya
-		// que antes se checkeó que warehouse no es null!
-		if (this.warehouse == null) {
-			if (budget.getBalance() < warehouse.getPriceGround()) {
-				return false;
-			}
-
-			Collection<ProductionLine> productionLines = warehouse
-					.getProductionLines();
-
-			if (productionLines != null) {
-				for (ProductionLine productionLine : productionLines) {
-					timeManager.subscribeTickUpdatable(productionLine);
-					timeManager.subscribeDailyUpdatable(productionLine);
-				}
-			}
-
-			timeManager.subscribeMonthlyUpdatable(warehouse);
-
-			budget.decrement(warehouse.getPriceGround());
-
-			this.warehouse = warehouse;
-
-			return true;
+		if (budget.getBalance() < warehouse.getPriceGround()) {
+			return false;
 		}
 
-		return false;
-	}
+		Collection<ProductionLine> productionLines = warehouse
+				.getProductionLines();
 
-	public void deleteWareHouse() {
-		this.warehouse = null;
+		if (productionLines != null) {
+			for (ProductionLine productionLine : productionLines) {
+				timeManager.subscribeTickUpdatable(productionLine);
+				timeManager.subscribeDailyUpdatable(productionLine);
+			}
+		}
+
+		timeManager.subscribeMonthlyUpdatable(warehouse);
+
+		budget.decrement(warehouse.getPriceGround());
+
+		this.warehouse = warehouse;
+
+		return true;
 	}
 
 	public void addProductLine(ProductionLine productionLine) {
