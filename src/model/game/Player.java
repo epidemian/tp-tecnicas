@@ -14,8 +14,6 @@ public class Player {
 	private Budget budget;
 	private float valueToWin;
 	private TimeManager timeManager;
-	private Warehouse warehouse;
-	private ResearchLab researchLab;
 
 	public Player(Budget budget, float valueToWin, TimeManager timeManager) {
 		checkNotNull(budget, "budget");
@@ -34,11 +32,18 @@ public class Player {
 		return budget.getBalance() >= valueToWin;
 	}
 
-	public boolean canPurchaseGround(Ground ground) {
-		return ground.getPrice() <= this.budget.getBalance();
+	public boolean purchaseGround(Ground ground) {
+		checkNotNull(ground, "ground");
+		if(budget.amountCovered(ground.getPrice())){	
+			budget.decrement(ground.getPrice());
+			return true;
+		}
+		
+		return false;
 	}
-
-	public boolean addResearchLab(ResearchLab researchLab) {
+	
+	//TODO: Todo lo que esta comentado va afuera de esta clase segun lo que se hablo con Emiliano
+	/*public boolean addResearchLab(ResearchLab researchLab) {
 		checkNotNull(researchLab, "researchLab");
 		if (this.researchLab == null) {
 			this.researchLab = researchLab;
@@ -95,7 +100,7 @@ public class Player {
 		checkNotNull(warehouse, "warehouse");
 		warehouse.getProductionLines().add(productionLine);
 		timeManager.subscribeTickUpdatable(productionLine);
-	}
+	}*/
 
 	public GameState updateTick() {
 		int beforeBalance = budget.getBalance();
