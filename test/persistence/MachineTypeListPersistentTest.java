@@ -13,8 +13,8 @@ import org.dom4j.Element;
 import org.junit.Before;
 import org.junit.Test;
 
-import persistenceLayer.InvalidTagException;
-import persistenceLayer.MachineTypeListPersistent;
+import persistence.InvalidTagException;
+import persistence.MachineTypeListPersistent;
 import model.production.MachineType;
 
 public class MachineTypeListPersistentTest extends XMLPersistentTest{

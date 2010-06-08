@@ -12,10 +12,10 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import persistenceLayer.InvalidTagException;
+import persistence.InvalidTagException;
+import persistence.NoProductTypeDefinedInSequenceException;
+import persistence.ProductionSequenceTechnologyListPersistent;
 
-import persistenceLayer.NoProductTypeDefinedInSequenceException;
-import persistenceLayer.ProductionSequenceTechnologyListPersistent;
 
 import model.lab.technologies.NewProductionSequenceTechnology;
 

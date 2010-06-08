@@ -22,9 +22,9 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import persistenceLayer.InvalidTagException;
-import persistenceLayer.NoProductTypeDefinedInSequenceException;
-import persistenceLayer.ProductionSequenceTechnologyPersistent;
+import persistence.InvalidTagException;
+import persistence.NoProductTypeDefinedInSequenceException;
+import persistence.ProductionSequenceTechnologyPersistent;
 
 public class ProductionSequenceTechnologyPersistentTest 
 					extends XMLPersistentTest{

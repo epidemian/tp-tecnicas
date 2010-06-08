@@ -1,4 +1,4 @@
-package persistenceLayer;
+package persistence;
 
 public class NoProductTypeDefinedInSequenceException extends Exception {
 

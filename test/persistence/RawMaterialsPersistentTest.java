@@ -11,8 +11,8 @@ import org.dom4j.Element;
 import org.junit.Before;
 import org.junit.Test;
 
-import persistenceLayer.InvalidTagException;
-import persistenceLayer.RawMaterialsPersistent;
+import persistence.InvalidTagException;
+import persistence.RawMaterialsPersistent;
 
 public class RawMaterialsPersistentTest extends XMLPersistentTest{
 

@@ -8,8 +8,8 @@ import org.dom4j.Element;
 import org.junit.Before;
 import org.junit.Test;
 
-import persistenceLayer.GroundPersistent;
-import persistenceLayer.InvalidTagException;
+import persistence.GroundPersistent;
+import persistence.InvalidTagException;
 import model.warehouse.Ground;
 
 public class GroundPersistentTest extends XMLPersistentTest {

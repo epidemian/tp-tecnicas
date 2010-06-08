@@ -14,8 +14,8 @@ import org.dom4j.Element;
 import org.junit.Before;
 import org.junit.Test;
 
-import persistenceLayer.GroundListPersistent;
-import persistenceLayer.InvalidTagException;
+import persistence.GroundListPersistent;
+import persistence.InvalidTagException;
 
 public class GroundListPersistentTest  extends XMLPersistentTest {
 	List<Ground> list;

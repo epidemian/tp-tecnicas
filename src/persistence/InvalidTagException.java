@@ -1,4 +1,4 @@
-package persistenceLayer;
+package persistence;
 
 public class InvalidTagException extends Exception{
 

@@ -8,8 +8,8 @@ import org.dom4j.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import persistenceLayer.InvalidTagException;
-import persistenceLayer.ProductTypePersistent;
+import persistence.InvalidTagException;
+import persistence.ProductTypePersistent;
 
 public class ProductTypePersistentTest extends XMLPersistentTest{
 

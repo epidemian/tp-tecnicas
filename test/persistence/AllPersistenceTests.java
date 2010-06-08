@@ -4,8 +4,8 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
-import persistenceLayer.PriceMapPersistent;
-import persistenceLayer.PriceMapPersistentTest;
+import persistence.PriceMapPersistent;
+import persistence.PriceMapPersistentTest;
 
 
 @RunWith(Suite.class)

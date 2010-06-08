@@ -1,4 +1,4 @@
-package persistenceLayer;
+package persistence;
 
 
 import model.production.ProductType;

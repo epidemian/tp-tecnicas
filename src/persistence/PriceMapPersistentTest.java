@@ -1,4 +1,4 @@
-package persistenceLayer;
+package persistence;
 
 import static org.junit.Assert.assertEquals;
 

@@ -12,8 +12,8 @@ import org.dom4j.Element;
 import org.junit.Before;
 import org.junit.Test;
 
-import persistenceLayer.InvalidTagException;
-import persistenceLayer.MachineTypePersistent;
+import persistence.InvalidTagException;
+import persistence.MachineTypePersistent;
 
 public class MachineTypePersistentTest extends XMLPersistentTest{
 
