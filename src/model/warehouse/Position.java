@@ -62,4 +62,9 @@ public class Position implements Cloneable {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return "Position [col=" + col + ", row=" + row + "]";
+	}
+
 }

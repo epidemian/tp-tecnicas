@@ -71,7 +71,7 @@ public abstract class Technology {
 		this.researchCost = researchCost;
 	}
 
-	/*
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -80,7 +80,6 @@ public abstract class Technology {
 				+ ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + researchCost;
-		result = prime * result + (researched ? 1231 : 1237);
 		return result;
 	}
 
@@ -105,12 +104,8 @@ public abstract class Technology {
 			return false;
 		if (researchCost != other.researchCost)
 			return false;
-		if (researched != other.researched)
-			return false;
 		return true;
 	}
-
-	*/
 	
 	private void setResearched(boolean researched) {
 		this.researched = researched;

@@ -45,7 +45,6 @@ public class NewProductionSequenceTechnology extends Technology {
 		this.validSequences.addValidProductionSequence(this.sequence,
 				this.productType);
 	}
-	
 
 	@Override
 	public int hashCode() {
@@ -55,8 +54,6 @@ public class NewProductionSequenceTechnology extends Technology {
 				+ ((productType == null) ? 0 : productType.hashCode());
 		result = prime * result
 				+ ((sequence == null) ? 0 : sequence.hashCode());
-		result = prime * result
-				+ ((validSequences == null) ? 0 : validSequences.hashCode());
 		return result;
 	}
 
@@ -79,10 +76,8 @@ public class NewProductionSequenceTechnology extends Technology {
 				return false;
 		} else if (!sequence.equals(other.sequence))
 			return false;
-		if (this.getResearchCost() != other.getResearchCost()){
-			return false;
-		}
 		return true;
 	}
+
 
 }

@@ -8,6 +8,7 @@ import org.junit.runners.Suite.SuiteClasses;
 @RunWith(Suite.class)
 @SuiteClasses({
 		GroundTest.class,
+		PositionTest.class,
         WarehouseTest.class,
 })
 public class AllWarehouseTests {
