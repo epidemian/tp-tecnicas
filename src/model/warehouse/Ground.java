@@ -1,20 +1,20 @@
 package model.warehouse;
 
-import static model.utils.ArgumentUtils.checkGreaterEqual;
+import static model.utils.ArgumentUtils.*;
 
 import java.util.Arrays;
-
-import model.exception.BusinessLogicException;
 
 public class Ground {
 	private int price;
 	private TileElement tileElements[][];
+	private EmptyElementRecognizer emptyElementRecognizer = new EmptyElementRecognizer();
 
 	public Ground(int price, int rows, int cols) {
 		this.price = price;
 		checkGreaterEqual(cols, 1, "cols");
 		checkGreaterEqual(rows, 1, "rows");
 		this.tileElements = new TileElement[rows][cols];
+		fillAreaWithEmptySpace(Position.ZERO, rows, cols);
 	}
 
 	public int getPrice() {
@@ -35,22 +35,17 @@ public class Ground {
 			for (int col = pos.getCol(); col < pos.getCol() + width; col++)
 				if (!isTileEmpty(row, col))
 					return false;
-		
+
 		return true;
 	}
 
 	public void addTileElement(TileElement element, Position position) {
+		checkNotNull(element, "tile element");
+		checkArgCondition(element, isAreaEmpty(position, element.getWidth(),
+				element.getHeight()), "area is not empty");
 
-		if (!isAreaEmpty(position, element.getWidth(), element.getHeight())) {
-			throw new BusinessLogicException(
-					"Can not add tile element to the ground");
-		}
-
-		Position max = position.add(new Position(element.getHeight(), element
-				.getWidth()));
-		for (int row = position.getRow(); row < max.getRow(); row++)
-			for (int col = position.getCol(); col < max.getCol(); col++)
-				setTileElement(element, col, row);
+		fillAreaWithElement(element, position, element.getWidth(), element
+				.getHeight());
 	}
 
 	public void visitElements(GroundVisitor visitor) {
@@ -58,14 +53,13 @@ public class Ground {
 		for (int row = 0; row < getRows(); row++) {
 			for (int col = 0; col < getCols(); col++) {
 				visitor.setCurrentPosition(new Position(row, col));
-				if (!isTileEmpty(row, col))
-					getTileElement(row, col).accept(visitor);
+				getTileElement(row, col).accept(visitor);
 			}
 		}
 	}
 
 	private boolean isTileEmpty(int row, int col) {
-		return getTileElement(row, col) == null;
+		return emptyElementRecognizer.isEmptyTile(getTileElement(row, col));
 	}
 
 	private TileElement getTileElement(int row, int col) {
@@ -74,6 +68,34 @@ public class Ground {
 
 	private void setTileElement(TileElement element, int col, int row) {
 		this.tileElements[row][col] = element;
+	}
+
+	private void fillAreaWithEmptySpace(Position from, int width, int height) {
+		fillAreaWithElement(EmptyTileElement.getInstance(), from, width, height);
+	}
+
+	private void fillAreaWithElement(TileElement element, Position position,
+			int width, int height) {
+		Position max = position.add(new Position(width, height));
+		for (int row = position.getRow(); row < max.getRow(); row++)
+			for (int col = position.getCol(); col < max.getCol(); col++)
+				setTileElement(element, col, row);
+	}
+
+	public class EmptyElementRecognizer extends TileElementVisitor {
+
+		private boolean emptyTile = false;
+
+		public boolean isEmptyTile(TileElement tileElement) {
+			this.emptyTile = false;
+			tileElement.accept(this);
+			return this.emptyTile;
+		}
+
+		@Override
+		public void visitEmptyElement(EmptyTileElement emptyTileElement) {
+			this.emptyTile = true;
+		}
 	}
 
 	@Override
@@ -96,9 +118,9 @@ public class Ground {
 		Ground other = (Ground) obj;
 		if (price != other.price)
 			return false;
-		if (this.getRows()!=other.getRows())
+		if (this.getRows() != other.getRows())
 			return false;
-		if (this.getCols()!=other.getCols())
+		if (this.getCols() != other.getCols())
 			return false;
 		return true;
 	}

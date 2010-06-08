@@ -4,15 +4,20 @@ import model.production.Conveyor;
 import model.production.ProductionMachine;
 import model.production.QualityControlMachine;
 
-public interface TileElementVisitor {
-	
-	public void visitConveyor(Conveyor conveyor);
+public abstract class TileElementVisitor {
 
-	public void visitProductionMachine(ProductionMachine machine);
+	public void visitConveyor(Conveyor conveyor) {
+	}
 
-	
-	public void visitQualityControlMachine(QualityControlMachine machine);
+	public void visitProductionMachine(ProductionMachine machine) {
+	}
 
-	
-	public void visitWall(Wall wall);
+	public void visitQualityControlMachine(QualityControlMachine machine) {
+	}
+
+	public void visitWall(Wall wall) {
+	}
+
+	public void visitEmptyElement(EmptyTileElement emptyTileElement) {
+	}
 }

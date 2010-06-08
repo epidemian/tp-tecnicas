@@ -4,7 +4,7 @@ import model.production.Conveyor;
 import model.production.ProductionMachine;
 import model.production.QualityControlMachine;
 
-public class GroundVisitor implements TileElementVisitor {
+public abstract class GroundVisitor extends TileElementVisitor {
 	
 	Position currentPosition = new Position();
 

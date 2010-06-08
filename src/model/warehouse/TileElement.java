@@ -22,12 +22,12 @@ abstract public class TileElement {
 		return height;
 	}
 
-	public void setHeight(int height) {
+	private void setHeight(int height) {
 		checkGreaterEqual(height, 1, "height");
 		this.height = height;
 	}
 
-	public void setWidth(int width) {
+	private void setWidth(int width) {
 		checkGreaterEqual(width, 1, "width");
 		this.width = width;
 	}
