@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 import model.game.Budget;
 import model.game.GameState;
 import model.game.Player;
-import model.game.time.TimeManager;
+import model.game.time.UpdateScheduler;
 import model.lab.ResearchLab;
 import model.lab.TechnologyTree;
 import model.warehouse.Ground;
@@ -23,13 +23,14 @@ public class PlayerTest {
 	private static final int DAYS_PER_MONTH = 10;
 	private Budget budget;
 	private Player player;
+	private UpdateScheduler scheduler;
 
 	@Before
 	public void setUp() throws Exception {
 		this.budget = new Budget(INITIAL_BALANCE);
-		TimeManager timeManager = new TimeManager(TICKS_PER_DAY, DAYS_PER_WEEK,
+		this.scheduler = new UpdateScheduler(TICKS_PER_DAY, DAYS_PER_WEEK,
 				DAYS_PER_MONTH);
-		this.player = new Player(budget, WIN_VALUE, timeManager);
+		this.player = new Player(budget, WIN_VALUE, this.scheduler);
 	}
 
 	@Test
@@ -63,20 +64,14 @@ public class PlayerTest {
 
 	@Test
 	public void checkWinGame() {
-		this.budget = new Budget(INITIAL_BALANCE);
-
-		TimeManager timeManager = new TimeManager(TICKS_PER_DAY, DAYS_PER_WEEK,
-				DAYS_PER_MONTH);
-		this.player = new Player(budget, WIN_VALUE, timeManager);
-		
 		ResearchLab researchLab = new ResearchLab(new TechnologyTree(), 10,
 				budget);
 
-		Ground ground = new Ground(GROUND_PRICE, 10, 10);
+		Ground ground = createGroundByPrice(INITIAL_BALANCE);
 		Warehouse warehouse = new PurchasedWarehouse(ground, budget);
 
-		timeManager.subscribeDailyUpdatable(researchLab);
-		timeManager.subscribeMonthlyUpdatable(warehouse);
+		this.scheduler.subscribeDailyUpdatable(researchLab);
+		this.scheduler.subscribeMonthlyUpdatable(warehouse);
 		
 		GameState gameState = player.updateTick();
 		

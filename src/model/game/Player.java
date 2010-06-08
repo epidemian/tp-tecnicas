@@ -4,7 +4,7 @@ import static model.utils.ArgumentUtils.checkNotNull;
 
 import java.util.Collection;
 
-import model.game.time.TimeManager;
+import model.game.time.UpdateScheduler;
 import model.lab.ResearchLab;
 import model.production.ProductionLine;
 import model.warehouse.Ground;
@@ -13,15 +13,15 @@ import model.warehouse.Warehouse;
 public class Player {
 	private Budget budget;
 	private float valueToWin;
-	private TimeManager timeManager;
+	private UpdateScheduler scheduler;
 
-	public Player(Budget budget, float valueToWin, TimeManager timeManager) {
+	public Player(Budget budget, float valueToWin, UpdateScheduler scheduler) {
 		checkNotNull(budget, "budget");
-		checkNotNull(timeManager, "time manager");
+		checkNotNull(scheduler, "update scheduler");
 
 		this.budget = budget;
 		this.valueToWin = valueToWin;
-		this.timeManager = timeManager;
+		this.scheduler = scheduler;
 	}
 
 	private boolean lostGame(int dayBalance) {
@@ -90,7 +90,7 @@ public class Player {
 
 	public GameState updateTick() {
 		int beforeBalance = budget.getBalance();
-		timeManager.updateTick();
+		scheduler.updateTick();
 		int affterBalance = budget.getBalance();
 
 		if (winGame()) {

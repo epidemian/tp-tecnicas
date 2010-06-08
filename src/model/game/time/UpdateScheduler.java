@@ -5,11 +5,7 @@ import static model.utils.ArgumentUtils.*;
 import java.util.ArrayList;
 import java.util.Collection;
 
-/**
- * 
- * TODO: look for a better name! xD
- */
-public class TimeManager implements TickUpdatable {
+public class UpdateScheduler implements TickUpdatable {
 
 	private Collection<TickUpdatable> tickUpdatables;
 	private Collection<DailyUpdatable> dailyUpdatables;
@@ -20,7 +16,7 @@ public class TimeManager implements TickUpdatable {
 	private int daysPerWeek;
 	private int daysPerMonth;
 
-	public TimeManager(int ticksPerDay, int daysPerWeek, int daysPerMonth) {
+	public UpdateScheduler(int ticksPerDay, int daysPerWeek, int daysPerMonth) {
 		setTicksPerDay(ticksPerDay);
 		setDaysPerWeek(daysPerWeek);
 		setDaysPerMonth(daysPerMonth);
