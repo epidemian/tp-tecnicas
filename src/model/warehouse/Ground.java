@@ -1,6 +1,9 @@
 package model.warehouse;
 
 import static model.utils.ArgumentUtils.checkGreaterEqual;
+
+import java.util.Arrays;
+
 import model.exception.BusinessLogicException;
 
 public class Ground {
@@ -71,6 +74,33 @@ public class Ground {
 
 	private void setTileElement(TileElement element, int col, int row) {
 		this.tileElements[row][col] = element;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + price;
+		result = prime * result + Arrays.hashCode(tileElements);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Ground other = (Ground) obj;
+		if (price != other.price)
+			return false;
+		if (this.getRows()!=other.getRows())
+			return false;
+		if (this.getCols()!=other.getCols())
+			return false;
+		return true;
 	}
 
 }

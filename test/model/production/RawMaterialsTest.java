@@ -218,7 +218,7 @@ public class RawMaterialsTest {
 		RawMaterials archerMaterials = new RawMaterials();
 		archerMaterials.store(new RawMaterialType("Wood"), 25);
 		archerMaterials.store(new RawMaterialType("Gold"), 45);
-		assertThat(archerMaterials.toPrettyString(), is(either(
+		assertThat(archerMaterials.toPrettyString(), is(either(		
 				equalTo("25 Wood, 45 Gold")).or(equalTo("45 Gold, 25 Wood"))));
 	}
 

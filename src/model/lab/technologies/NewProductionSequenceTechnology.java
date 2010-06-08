@@ -45,4 +45,44 @@ public class NewProductionSequenceTechnology extends Technology {
 		this.validSequences.addValidProductionSequence(this.sequence,
 				this.productType);
 	}
+	
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result
+				+ ((productType == null) ? 0 : productType.hashCode());
+		result = prime * result
+				+ ((sequence == null) ? 0 : sequence.hashCode());
+		result = prime * result
+				+ ((validSequences == null) ? 0 : validSequences.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		NewProductionSequenceTechnology other = (NewProductionSequenceTechnology) obj;
+		if (productType == null) {
+			if (other.productType != null)
+				return false;
+		} else if (!productType.equals(other.productType))
+			return false;
+		if (sequence == null) {
+			if (other.sequence != null)
+				return false;
+		} else if (!sequence.equals(other.sequence))
+			return false;
+		if (this.getResearchCost() != other.getResearchCost()){
+			return false;
+		}
+		return true;
+	}
+
 }

@@ -1,0 +1,5 @@
+<MachineList>
+			<MachineType id="LumberProcess"/>
+			<MachineType id="Oven"/>
+			<MachineType id="Forge"/>
+</MachineList>

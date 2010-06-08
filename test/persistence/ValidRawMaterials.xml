@@ -1,0 +1,5 @@
+<RawMaterials>
+	<rawMaterial id="wood" quantity="75"/>
+	<rawMaterial id="gold" quantity="100"/>
+	<rawMaterial id="stone" quantity="200"/>
+</RawMaterials>

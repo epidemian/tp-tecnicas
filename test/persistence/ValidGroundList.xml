@@ -1,0 +1,5 @@
+<Map>		
+	<Ground price="1000" rows="10" cols="30"/>
+	<Ground price="3000" rows="50" cols="30"/>
+	<Ground price="2000" rows="30" cols="30"/>		
+</Map>

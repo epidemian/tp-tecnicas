@@ -1,0 +1,20 @@
+
+<sequences>
+	<productionSequence>
+		<RawMaterials>
+			<rawMaterial id="wood" quantity="75"/>
+			<rawMaterial id="gold" quantity="100"/>
+			<rawMaterial id="stone" quantity="200"/>
+		</RawMaterials>
+		<MachineList>
+			<machineType id="LumberProcess"/>
+			<machineType id="Oven"/>
+			<machineType id="Forge"/>
+		</MachineList>
+		<ProductType id="Axe"/>
+	</productionSequence>
+</sequences>
+		
+		
+		
+			

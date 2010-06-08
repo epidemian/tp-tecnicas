@@ -1,0 +1,24 @@
+<Sequences>	
+	<ProductionSequence cost="10" desc="Weapon mastered by the French (?)">
+		<RawMaterials>
+			<rawMaterial id="wood" quantity="75"/>
+			<rawMaterial id="gold" quantity="100"/>
+			<rawMaterial id="stone" quantity="200"/>
+		</RawMaterials>
+		<MachineList>
+			<MachineType id="LumberProcess"/>
+			<MachineType id="Oven"/>
+			<MachineType id="Forge"/>
+		</MachineList>
+		<ProductType id="Axe"/>
+	</ProductionSequence>
+	<ProductionSequence cost="30" desc="Powerful as the excaliburg">
+		<RawMaterials>
+			<rawMaterial id="gold" quantity="500"/>			
+		</RawMaterials>
+		<MachineList>
+			<MachineType id="Forge"/>
+		</MachineList>
+		<ProductType id="Sword"/>
+	</ProductionSequence>
+</Sequences>

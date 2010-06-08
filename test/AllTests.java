@@ -8,6 +8,8 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
+import persistence.AllPersistenceTests;
+
 /**
  * Test suite to run all test cases at once.
  */
@@ -18,6 +20,7 @@ import org.junit.runners.Suite.SuiteClasses;
         AllGameTests.class,
 	    AllWarehouseTests.class,
 	    AllUtilsTests.class,
+	    AllPersistenceTests.class,
 	    
 })
 public class AllTests { }
