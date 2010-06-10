@@ -24,12 +24,15 @@ public class Game {
         /*
          * TODO hardcoding just for test.
          */
-        this.lineElements.add(new ProductionMachine(new MachineType(new String("machine1")),1,1));
-        this.lineElements.add(new QualityControlMachine(new MachineType(new String("quality1")),1,1));
-        this.lineElements.add(new Conveyor());
+		this.lineElements.add(new ProductionMachine(new MachineType("machine1",
+				1, 1)));
+		this.lineElements.add(new QualityControlMachine(new MachineType(
+				"quality1", 1, 1)));
+		this.lineElements.add(new Conveyor());
 
         for (int i = 3; i < 20; i++)
-            this.lineElements.add(new ProductionMachine(new MachineType(new String("" + i)),1,1));
+			this.lineElements.add(new ProductionMachine(new MachineType("" + i,
+					1, 1)));
         
     }
 

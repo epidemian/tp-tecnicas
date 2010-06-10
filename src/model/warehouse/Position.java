@@ -31,6 +31,10 @@ public class Position implements Cloneable {
 	public Position add(Position other) {
 		return new Position(this.row + other.row, this.col + other.col);
 	}
+	
+	public Position subtract(Position other) {
+		return new Position(this.row - other.row, this.col - other.col);
+	}
 
 	@Override
 	public Position clone() {

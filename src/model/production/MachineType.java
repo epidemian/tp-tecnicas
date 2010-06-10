@@ -1,66 +1,63 @@
 package model.production;
 
+import static model.utils.ArgumentUtils.*;
+import model.warehouse.Position;
+
 public class MachineType extends AbstractType {
 
 	private int height;
 	private int width;
 	private int price;
-	
-	
-	
+
+	private Position inputRelativePosition;
+	private Position outputRelativePosition;
 
 	/*
 	 * TODO borrar!
 	 */
-	public MachineType(String name){
-		super(name);
-		this.height=0;
-		this.width=0;
-		this.price=0;
+	public MachineType(String name) {
+		this(name, 1, 1);
 	}
-	
 
-	public MachineType(String name,int width,int height) {
-		super(name);
-		this.height = height;
-		this.width = width;
-		this.price=0;
+	/*
+	 * TODO borrar!
+	 */
+	public MachineType(String name, int width, int height) {
+		this(name, width, height, 0);
 	}
-	
-	public MachineType(String name, int height, int width, int price) {
+
+	public MachineType(String name, int width, int height, int price) {
 		super(name);
+		checkGreaterEqual(height, 1, "height");
+		checkGreaterEqual(width, 1, "width");
 		this.height = height;
 		this.width = width;
 		this.price = price;
-	}
-	
-	public int getHeight() {
-		return height;
+
+		// TODO: This is hard-coded, pass positions as parameters.
+		this.inputRelativePosition = new Position(0, -1);
+		this.outputRelativePosition = new Position(0, width);
 	}
 
-	public void setHeight(int height) {
-		this.height = height;
+	public int getHeight() {
+		return height;
 	}
 
 	public int getWidth() {
 		return width;
 	}
 
-	public void setWidth(int width) {
-		this.width = width;
-	}
-
-
-	@SuppressWarnings("unused")
-	private void setPrice(int price) {
-		this.price = price;
-	}
-
-
 	public int getPrice() {
 		return price;
 	}
 
+	public Position getInputRelativePosition() {
+		return inputRelativePosition;
+	}
+
+	public Position getOutputRelativePosition() {
+		return outputRelativePosition;
+	}
 
 	@Override
 	public int hashCode() {
@@ -71,7 +68,6 @@ public class MachineType extends AbstractType {
 		result = prime * result + width;
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -90,6 +86,5 @@ public class MachineType extends AbstractType {
 			return false;
 		return true;
 	}
-	
-	
+
 }

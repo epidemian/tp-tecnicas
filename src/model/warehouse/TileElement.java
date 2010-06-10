@@ -67,8 +67,9 @@ abstract public class TileElement {
 	 */
 	final void addToGround(Ground ground, Position position) {
 		checkNotNull(ground, "ground");
+		// TODO checkear que no esté en un ground ya...
 		setPosition(position);
-		onAddedToGround(null);
+		onAddedToGround(ground);
 	}
 
 	protected void onAddedToGround(Ground ground) {

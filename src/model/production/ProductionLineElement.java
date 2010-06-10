@@ -1,24 +1,23 @@
 package model.production;
 
-import static model.production.ProductionLineElementUtils.*;
-import java.util.ArrayList;
+import static model.production.ProductionLineElementUtils.recognizeProductionLineElement;
+
 import java.util.Collection;
 
 import model.warehouse.Ground;
 import model.warehouse.Position;
 import model.warehouse.TileElement;
-import model.warehouse.TileElementVisitor;
 
 abstract public class ProductionLineElement extends TileElement {
 
 	/**
 	 * Output line element of the production line element.
 	 */
-	private ProductionLineElement nextLineElement;
+	private ProductionLineElement nextLineElement = null;
 	/**
 	 * Input line element of the production line element.
 	 */
-	private ProductionLineElement previousLineElement;
+	private ProductionLineElement previousLineElement = null;
 
 	protected Product productContained;
 
@@ -58,42 +57,85 @@ abstract public class ProductionLineElement extends TileElement {
 		return this.prodLineElementObserver;
 	}
 
-//	@Override
-//	protected final void onAddedToGround(Ground ground) {
-//		if (!hasPreviousLineElement()) {
-//			for (Position validPrevPos : getValidPreviousLineElementPositions()) {
-//				ProductionLineElement lineElement = recognizeProductionLineElement(ground
-//						.getTileElementAt(validPrevPos));
-//				if (lineElement != null && !lineElement.hasNextLineElement()
-//						&& lineElement.canConnectTo(this)) {
-//					connectLineElements(lineElement, this);
-//					break;
-//				}
-//			}
-//		}
-//
-//		// Repeat the same for the next element.
-//
-//	}
-//
-//	protected abstract boolean canConnectTo(ProductionLineElement lineElement);
-//
-//	protected abstract Collection<Position> getValidPreviousLineElementPositions();
-//
-//	protected abstract Collection<Position> getValidNextLineElementPositions();
+	@Override
+	protected final void onAddedToGround(Ground ground) {
+		if (!hasPreviousLineElement()) {
+			for (Position validPrevPos : getValidPreviousLineElementPositions()) {
+				ProductionLineElement lineElement = recognizeProductionLineElement(ground
+						.getTileElementAt(validPrevPos));
+				if (canBePreviousLineElement(lineElement)) {
+					connectLineElements(lineElement, this);
+					break;
+				}
+			}
+		}
 
-	private boolean hasPreviousLineElement() {
+		if (!hasNextLineElement()) {
+			for (Position validNextPos : getValidNextLineElementPositions()) {
+				ProductionLineElement lineElement = recognizeProductionLineElement(ground
+						.getTileElementAt(validNextPos));
+				if (canBeNextLineElement(lineElement)) {
+					connectLineElements(this, lineElement);
+					break;
+				}
+			}
+		}
+	}
+
+	protected abstract boolean canConnectToByType(
+			ProductionLineElement lineElement);
+
+	protected abstract Collection<Position> getValidPreviousLineElementPositions();
+
+	protected abstract Collection<Position> getValidNextLineElementPositions();
+
+	protected void setNextLineElement(ProductionLineElement nextLineElement) {
+		this.nextLineElement = nextLineElement;
+	}
+
+	protected void setPreviousLineElement(
+			ProductionLineElement previousLineElement) {
+		this.previousLineElement = previousLineElement;
+	}
+
+	private boolean canBePreviousLineElement(ProductionLineElement lineElement) {
+		return lineElement != null
+				&& !lineElement.hasNextLineElement()
+				&& containsAnyPosition(lineElement
+						.getValidNextLineElementPositions())
+				&& lineElement.canConnectToByType(this);
+	}
+
+	private boolean canBeNextLineElement(ProductionLineElement lineElement) {
+		return lineElement != null
+				&& !lineElement.hasPreviousLineElement()
+				&& containsAnyPosition(lineElement
+						.getValidPreviousLineElementPositions())
+				&& lineElement.canConnectToByType(this);
+	}
+
+	private boolean containsAnyPosition(Collection<Position> positions) {
+		for (Position pos : positions) {
+			Position diff = pos.subtract(getPosition());
+			if (0 <= diff.getRow() && diff.getRow() < getHeight()
+					&& 0 <= diff.getCol() && diff.getCol() < getWidth())
+				return true;
+		}
+		return false;
+	}
+
+	public boolean hasPreviousLineElement() {
 		return getPreviousLineElement() != null;
 	}
 
-	private boolean hasNextLineElement() {
+	public boolean hasNextLineElement() {
 		return getNextLineElement() != null;
 	}
 
 	// TODO: Make me private!
-	public static void connectLineElements(ProductionLineElement previous,
+	private static void connectLineElements(ProductionLineElement previous,
 			ProductionLineElement next) {
-		previous.nextLineElement = next;
-		next.previousLineElement = previous;
+		previous.setNextLineElement(next);
+		next.setPreviousLineElement(previous);
 	}
 }

@@ -2,59 +2,50 @@ package view.warehouse;
 
 import model.production.Conveyor;
 import model.production.MachineType;
+import model.production.ProductionLineElement;
 import model.production.ProductionMachine;
 import model.warehouse.Ground;
 import model.warehouse.Position;
-import model.warehouse.TileElement;
 
 public class ViewUtils {
 
+	private static final String[] GROUND_CONFIG = {
+			"                         ", 
+			"    CCCMCCCCC            ",
+			"            CCCMCCC      ", 
+			"   CCCMCC         C      ",
+			"               CCCC      ", 
+			"       CMCC    C         ",
+			"       C       CCM       ", 
+			"   CCMCC                 ",
+			"                         ", 
+			"                         ", };
+
 	public static Ground creatGroundSample1() {
 
-		int cols = 25;
-		int rows = 13;
+		int cols = GROUND_CONFIG[0].length();
+		int rows = GROUND_CONFIG.length;
 
 		Ground ground = new Ground(0, rows, cols);
 
-		
-		
-		/*
-		 * Machines.
-		 */
-		TileElement machine1 = new ProductionMachine(
-				new MachineType("machine1",2,2));
-		TileElement machine2 = new ProductionMachine(
-				new MachineType("machine2",2,2));
-		TileElement machine3 = new ProductionMachine(
-				new MachineType("machine3",2,2));
-		TileElement machine4 = new ProductionMachine(
-				new MachineType("machine4",2,2));
-
-		ground.addTileElement(machine1, new Position(1,1));
-		ground.addTileElement(machine2, new Position(1,6));
-		ground.addTileElement(machine3, new Position(4,6));
-		ground.addTileElement(machine4, new Position(9,6));
-		
-		/*
-		 * Conveyors.
-		 */
-		ground.addTileElement(new Conveyor(), new Position(1,3));
-		ground.addTileElement(new Conveyor(), new Position(1,4));
-		ground.addTileElement(new Conveyor(), new Position(1,5));
-			
-		ground.addTileElement(new Conveyor(), new Position(1,8));
-		ground.addTileElement(new Conveyor(), new Position(1,9));
-		ground.addTileElement(new Conveyor(), new Position(1,10));
-		ground.addTileElement(new Conveyor(), new Position(2,10));
-		ground.addTileElement(new Conveyor(), new Position(3,10));
-		ground.addTileElement(new Conveyor(), new Position(4,10));
-		ground.addTileElement(new Conveyor(), new Position(4,9));
-		ground.addTileElement(new Conveyor(), new Position(4,8));
-	
-		ground.addTileElement(new Conveyor(), new Position(6,6));
-		ground.addTileElement(new Conveyor(), new Position(7,6));
-		ground.addTileElement(new Conveyor(), new Position(8,6));
-		
+		for (int row = 0; row < rows; row++) {
+			for (int col = 0; col < cols; col++) {
+				Position pos = new Position(row, col);
+				char c = GROUND_CONFIG[row].charAt(col);
+				ProductionLineElement element = null;
+				switch (c) {
+				case 'C':
+					element = new Conveyor();
+					break;
+				case 'M':
+					element = new ProductionMachine(new MachineType(
+							"Machine at " + pos, 1, 1));
+					break;
+				}
+				if (element != null)
+					ground.addTileElement(element, pos);
+			}
+		}
 		return ground;
 	}
 }

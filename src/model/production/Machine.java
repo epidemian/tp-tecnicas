@@ -1,8 +1,11 @@
 package model.production;
 
+import static model.production.ProductionLineElementUtils.isConveyor;
 import static model.utils.ArgumentUtils.checkNotNull;
-import model.exception.BusinessLogicException;
-import model.warehouse.Ground;
+
+import java.util.ArrayList;
+import java.util.Collection;
+
 import model.warehouse.Position;
 
 public abstract class Machine extends ProductionLineElement implements
@@ -14,20 +17,19 @@ public abstract class Machine extends ProductionLineElement implements
 
 	private MachineState machineState;
 	private MachineType machineType;
-	
+
 	/*
-	public Machine(MachineType machineType, int width, int height) {
-		super(width, height);
-		this.setMachineType(machineType);
-		this.setMachineState(new HealthyMachineState());
-	}
-	*/
-	
+	 * public Machine(MachineType machineType, int width, int height) {
+	 * super(width, height); this.setMachineType(machineType);
+	 * this.setMachineState(new HealthyMachineState()); }
+	 */
+
 	public Machine(MachineType machineType) {
 		super(machineType.getWidth(), machineType.getHeight());
 		this.setMachineType(machineType);
 		this.setMachineState(new HealthyMachineState());
 	}
+
 	public MachineType getMachineType() {
 		return machineType;
 	}
@@ -79,17 +81,15 @@ public abstract class Machine extends ProductionLineElement implements
 		checkNotNull(machineType, "machineType");
 		this.machineType = machineType;
 	}
-	
-	
 
-//	@Override
-//	public void addToGround(Ground ground, Position position) {
-//		// TODO Auto-generated method stub
-//		if (getPreviousLineElement() != null && getNextLineElement() != null)
-//			throw new BusinessLogicException("Already connected");
-//		
-//		
-//	}
+	// @Override
+	// public void addToGround(Ground ground, Position position) {
+	// // TODO Auto-generated method stub
+	// if (getPreviousLineElement() != null && getNextLineElement() != null)
+	// throw new BusinessLogicException("Already connected");
+	//		
+	//		
+	// }
 
 	/*
 	 * Analizes whether after processing the product, the machine becomes
@@ -111,6 +111,37 @@ public abstract class Machine extends ProductionLineElement implements
 	protected void breakUp() {
 		this.getMachineState().breakUp(this);
 	}
+
+	@Override
+	protected boolean canConnectToByType(ProductionLineElement lineElement) {
+		return isConveyor(lineElement);
+	}
+
+	@Override
+	protected Collection<Position> getValidPreviousLineElementPositions() {
+		Collection<Position> positions = new ArrayList<Position>();
+		if (!hasPreviousLineElement())
+			positions.add(getPosition().add(getInputRelativePosition()));
+		return positions;
+	}
+
+	@Override
+	protected Collection<Position> getValidNextLineElementPositions() {
+		Collection<Position> positions = new ArrayList<Position>();
+		if (!hasNextLineElement())
+			positions.add(getPosition().add(getOutputRelativePosition()));
+		return positions;
+	}
+
+
+	private Position getInputRelativePosition() {
+		return machineType.getInputRelativePosition();
+	}
+
+	private Position getOutputRelativePosition() {
+		return machineType.getOutputRelativePosition();
+	}
+
 	/*
 	 * TODO: Por qué dos Machines son iguales si sus tipos son iguales
 	 * solamente? Si en la fábrica tengo 2 "hornos" por ejemplo, no son iguales,
