@@ -111,22 +111,3 @@ public class Ground {
 		return true;
 	}
 }
-
-/**
- * TODO: Delete meeee.
- */
-final class EmptyElementRecognizer extends TileElementVisitor {
-
-	private boolean emptyTile = false;
-
-	public boolean isEmptyTile(TileElement tileElement) {
-		this.emptyTile = false;
-		tileElement.accept(this);
-		return this.emptyTile;
-	}
-
-	@Override
-	public void visitEmptyElement(EmptyTileElement emptyTileElement) {
-		this.emptyTile = true;
-	}
-}

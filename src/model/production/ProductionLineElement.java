@@ -1,11 +1,13 @@
 package model.production;
 
+import static model.production.ProductionLineElementUtils.*;
 import java.util.ArrayList;
 import java.util.Collection;
 
 import model.warehouse.Ground;
 import model.warehouse.Position;
 import model.warehouse.TileElement;
+import model.warehouse.TileElementVisitor;
 
 abstract public class ProductionLineElement extends TileElement {
 
@@ -56,8 +58,8 @@ abstract public class ProductionLineElement extends TileElement {
 		return this.prodLineElementObserver;
 	}
 
-	@Override
-	protected final void onAddedToGround(Ground ground) {
+//	@Override
+//	protected final void onAddedToGround(Ground ground) {
 //		if (!hasPreviousLineElement()) {
 //			for (Position validPrevPos : getValidPreviousLineElementPositions()) {
 //				ProductionLineElement lineElement = recognizeProductionLineElement(ground
@@ -69,18 +71,21 @@ abstract public class ProductionLineElement extends TileElement {
 //				}
 //			}
 //		}
-
-		// Repeat the same for the next element.
-
-	}
-
+//
+//		// Repeat the same for the next element.
+//
+//	}
+//
+//	protected abstract boolean canConnectTo(ProductionLineElement lineElement);
+//
 //	protected abstract Collection<Position> getValidPreviousLineElementPositions();
+//
 //	protected abstract Collection<Position> getValidNextLineElementPositions();
 
 	private boolean hasPreviousLineElement() {
 		return getPreviousLineElement() != null;
 	}
-	
+
 	private boolean hasNextLineElement() {
 		return getNextLineElement() != null;
 	}
@@ -91,13 +96,4 @@ abstract public class ProductionLineElement extends TileElement {
 		previous.nextLineElement = next;
 		next.previousLineElement = previous;
 	}
-	
-	private ProductionLineElement recognizeProductionLineElement(
-			TileElement tileElementAt) {
-		return null;
-	}
-}
-
-class ProductionLineElementRecognizer {
-	
 }

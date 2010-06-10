@@ -4,45 +4,19 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import model.production.Conveyor;
-import model.production.ProductionMachine;
-import model.production.QualityControlMachine;
 import model.warehouse.Ground;
 import model.warehouse.TileElement;
 import model.warehouse.TileElementVisitor;
-import model.warehouse.Wall;
 
 public class GroundPanel extends JScrollPane {
 
 	private static final long serialVersionUID = 1L;
-
-	/*
-	 * TODO Image class manager soon =)
-	 */
-	private static BufferedImage IMG_CONVEYOR = loadImage("./conveyor.gif");
-	private static BufferedImage IMG_QUALITY_CONTROL_MACHINE = loadImage("./qualityControlMachine.gif");
-	private static BufferedImage IMG_PRODUCTION_MACHINE = loadImage("./productionMachine.gif");
-	private static BufferedImage IMG_WALL = loadImage("./wall.gif");
-
-	private static BufferedImage loadImage(String path) {
-
-		BufferedImage image = null;
-		try {
-			URL url = GroundPanel.class.getClassLoader().getResource(path);
-			image = ImageIO.read(url);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return image;
-	}
 
 	public GroundPanel(Ground ground) {
 
@@ -87,9 +61,9 @@ public class GroundPanel extends JScrollPane {
 					this.ground.getRows() * this.tileSize);
 		}
 
-		protected void paintComponent(Graphics g) {
+		protected void paintComponent(Graphics graphics) {
 
-			super.paintComponent(g);
+			super.paintComponent(graphics);
 
 			Dimension groundSizeInTiles = new Dimension(this.ground.getCols(),
 					this.ground.getRows());
@@ -102,7 +76,7 @@ public class GroundPanel extends JScrollPane {
 				int x2 = col * this.tileSize;
 				int y2 = groundSizeInTiles.height * this.tileSize;
 
-				g.drawLine(x1, y1, x2, y2);
+				graphics.drawLine(x1, y1, x2, y2);
 			}
 
 			// Horizontal lines.
@@ -113,65 +87,41 @@ public class GroundPanel extends JScrollPane {
 				int x2 = groundSizeInTiles.width * this.tileSize;
 				int y2 = row * this.tileSize;
 
-				g.drawLine(x1, y1, x2, y2);
+				graphics.drawLine(x1, y1, x2, y2);
 			}
 
-			ElementPainter elementPainter = new ElementPainter(g);
-			this.ground.visitElements(elementPainter);
+			this.ground.visitElements(createElementPainter(graphics));
 		}
 
 		/*
 		 * Visitor used to draw each element in the warehouse.
 		 */
-		private class ElementPainter extends TileElementVisitor {
+		private TileElementVisitor createElementPainter(final Graphics graphics) {
+			return new TileElementImageRecognizer() {
+				private List<TileElement> bigTouchedTiles = new ArrayList<TileElement>();
+				
+				@Override
+				protected void onTileElmentVisited(TileElement element,
+						BufferedImage image) {
+					/*
+					 * Checks if 'element' is contained in the touchedTiles list. If
+					 * it is not, adds the element to the list (if size is bigger
+					 * than one tile, because is the only way that can try to draw
+					 * it twice.)
+					 */
+					if (!this.bigTouchedTiles.contains(element)) {
+						if (element.getWidth() > 1 || element.getHeight() > 1)
+							this.bigTouchedTiles.add(element);
 
-			public Graphics graphics;
-			private List<TileElement> bigTouchedTiles;
+						int x = element.getPosition().getCol() * tileSize;
+						int y = element.getPosition().getRow() * tileSize;
+						int width = element.getWidth() * tileSize;
+						int height = element.getHeight() * tileSize;
 
-			public ElementPainter(Graphics g) {
-				this.bigTouchedTiles = new ArrayList<TileElement>();
-				this.graphics = g;
-			}
-
-			private void drawElement(TileElement element, BufferedImage image) {
-				/*
-				 * Checks if 'element' is contained in the touchedTiles list. If
-				 * it is not, adds the element to the list (if size is bigger
-				 * than one tile, because is the only way that can try to draw
-				 * it twice.)
-				 */
-				if (!this.bigTouchedTiles.contains(element)) {
-					if (element.getWidth() > 1 || element.getHeight() > 1)
-						this.bigTouchedTiles.add(element);
-
-					int x = element.getPosition().getCol() * tileSize;
-					int y = element.getPosition().getRow() * tileSize;
-					int width = element.getWidth() * tileSize;
-					int height = element.getHeight() * tileSize;
-
-					this.graphics.drawImage(image, x, y, width, height, null);
+						graphics.drawImage(image, x, y, width, height, null);
+					}
 				}
-			}
-
-			@Override
-			public void visitConveyor(Conveyor conveyor) {
-				this.drawElement(conveyor, IMG_CONVEYOR);
-			}
-
-			@Override
-			public void visitProductionMachine(ProductionMachine machine) {
-				this.drawElement(machine, IMG_PRODUCTION_MACHINE);
-			}
-
-			@Override
-			public void visitQualityControlMachine(QualityControlMachine machine) {
-				this.drawElement(machine, IMG_QUALITY_CONTROL_MACHINE);
-			}
-
-			@Override
-			public void visitWall(Wall wall) {
-				this.drawElement(wall, IMG_WALL);
-			}
-		} // End Visitor.
+			};
+		}
 	}
 }
