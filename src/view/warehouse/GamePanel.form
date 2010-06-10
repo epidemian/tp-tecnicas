@@ -21,26 +21,51 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="toolBarPanel" min="-2" pref="193" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="groundPanel" pref="451" max="32767" attributes="1"/>
+                      <Component id="groundPanel" pref="595" max="32767" attributes="1"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
-                  <Component id="jToolBar1" alignment="0" pref="650" max="32767" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jToolBar1" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace pref="54" max="32767" attributes="0"/>
+                              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
+                              <Component id="jLabel2" min="-2" pref="125" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jToolBar1" min="-2" pref="114" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jToolBar1" min="-2" pref="114" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="1">
+                      <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+              </Group>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Component id="groundPanel" pref="417" max="32767" attributes="1"/>
                   <Component id="toolBarPanel" alignment="1" pref="417" max="32767" attributes="1"/>
@@ -165,7 +190,7 @@
                             <Property name="text" type="java.lang.String" value="jButton1"/>
                           </Properties>
                           <AuxValues>
-                            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new ProductionLineElementButton()"/>
+                            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new LineElementButton()"/>
                           </AuxValues>
                         </Component>
                         <Component class="javax.swing.JButton" name="lineElementButton2">
@@ -173,7 +198,7 @@
                             <Property name="text" type="java.lang.String" value="jButton2"/>
                           </Properties>
                           <AuxValues>
-                            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new ProductionLineElementButton()"/>
+                            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new LineElementButton()"/>
                           </AuxValues>
                         </Component>
                         <Component class="javax.swing.JButton" name="lineElementButton3">
@@ -181,7 +206,7 @@
                             <Property name="text" type="java.lang.String" value="jButton3"/>
                           </Properties>
                           <AuxValues>
-                            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new ProductionLineElementButton()"/>
+                            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new LineElementButton()"/>
                           </AuxValues>
                         </Component>
                         <Component class="javax.swing.JButton" name="lineElementButton4">
@@ -189,7 +214,7 @@
                             <Property name="text" type="java.lang.String" value="jButton4"/>
                           </Properties>
                           <AuxValues>
-                            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new ProductionLineElementButton()"/>
+                            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new LineElementButton()"/>
                           </AuxValues>
                         </Component>
                         <Component class="javax.swing.JButton" name="lineElementButton5">
@@ -197,7 +222,7 @@
                             <Property name="text" type="java.lang.String" value="jButton5"/>
                           </Properties>
                           <AuxValues>
-                            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new ProductionLineElementButton()"/>
+                            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new LineElementButton()"/>
                           </AuxValues>
                         </Component>
                         <Component class="javax.swing.JButton" name="lineElementButton6">
@@ -205,7 +230,7 @@
                             <Property name="text" type="java.lang.String" value="jButton6"/>
                           </Properties>
                           <AuxValues>
-                            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new ProductionLineElementButton()"/>
+                            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new LineElementButton()"/>
                           </AuxValues>
                         </Component>
                         <Component class="javax.swing.JButton" name="lineElementButton7">
@@ -213,7 +238,7 @@
                             <Property name="text" type="java.lang.String" value="jButton7"/>
                           </Properties>
                           <AuxValues>
-                            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new ProductionLineElementButton()"/>
+                            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new LineElementButton()"/>
                           </AuxValues>
                         </Component>
                         <Component class="javax.swing.JButton" name="lineElementButton8">
@@ -221,7 +246,7 @@
                             <Property name="text" type="java.lang.String" value="jButton8"/>
                           </Properties>
                           <AuxValues>
-                            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new ProductionLineElementButton()"/>
+                            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new LineElementButton()"/>
                           </AuxValues>
                         </Component>
                         <Component class="javax.swing.JButton" name="lineElementButton9">
@@ -229,7 +254,7 @@
                             <Property name="text" type="java.lang.String" value="jButton9"/>
                           </Properties>
                           <AuxValues>
-                            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new ProductionLineElementButton()"/>
+                            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new LineElementButton()"/>
                           </AuxValues>
                         </Component>
                         <Component class="javax.swing.JButton" name="lineElementButton10">
@@ -237,7 +262,7 @@
                             <Property name="text" type="java.lang.String" value="jButton10"/>
                           </Properties>
                           <AuxValues>
-                            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new ProductionLineElementButton()"/>
+                            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new LineElementButton()"/>
                           </AuxValues>
                         </Component>
                         <Component class="javax.swing.JButton" name="lineElementButton11">
@@ -245,7 +270,7 @@
                             <Property name="text" type="java.lang.String" value="jButton11"/>
                           </Properties>
                           <AuxValues>
-                            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new ProductionLineElementButton()"/>
+                            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new LineElementButton()"/>
                           </AuxValues>
                         </Component>
                         <Component class="javax.swing.JButton" name="lineElementButton12">
@@ -253,7 +278,7 @@
                             <Property name="text" type="java.lang.String" value="jButton12"/>
                           </Properties>
                           <AuxValues>
-                            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new ProductionLineElementButton()"/>
+                            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new LineElementButton()"/>
                           </AuxValues>
                         </Component>
                         <Component class="javax.swing.JButton" name="lineElementButton13">
@@ -261,7 +286,7 @@
                             <Property name="text" type="java.lang.String" value="jButton13"/>
                           </Properties>
                           <AuxValues>
-                            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new ProductionLineElementButton()"/>
+                            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new LineElementButton()"/>
                           </AuxValues>
                         </Component>
                         <Component class="javax.swing.JButton" name="lineElementButton14">
@@ -269,7 +294,7 @@
                             <Property name="text" type="java.lang.String" value="jButton14"/>
                           </Properties>
                           <AuxValues>
-                            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new ProductionLineElementButton()"/>
+                            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new LineElementButton()"/>
                           </AuxValues>
                         </Component>
                         <Component class="javax.swing.JButton" name="lineElementButton15">
@@ -277,7 +302,7 @@
                             <Property name="text" type="java.lang.String" value="jButton15"/>
                           </Properties>
                           <AuxValues>
-                            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new ProductionLineElementButton()"/>
+                            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new LineElementButton()"/>
                           </AuxValues>
                         </Component>
                       </SubComponents>
@@ -498,5 +523,27 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JLabel" name="jLabel1">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Purisa" size="14" style="0"/>
+        </Property>
+        <Property name="horizontalAlignment" type="int" value="0"/>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="MONEY" type="code"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel2">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Purisa" size="24" style="0"/>
+        </Property>
+        <Property name="horizontalAlignment" type="int" value="0"/>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="MONEY_SYMBOL + &quot; &quot; + this.game.getBudget().getBalance()" type="code"/>
+        </Property>
+      </Properties>
+    </Component>
   </SubComponents>
 </Form>

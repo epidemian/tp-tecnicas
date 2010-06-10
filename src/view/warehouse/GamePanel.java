@@ -6,7 +6,7 @@ import model.game.Game;
 import model.production.ProductionLineElement;
 
 public class GamePanel extends javax.swing.JPanel {
-
+ 
     /** Creates new form GamePanel */
     public GamePanel(Game game) {
         this.game = game;
@@ -88,6 +88,8 @@ public class GamePanel extends javax.swing.JPanel {
         technologyTreeButton = new javax.swing.JButton();
         validProductionsButton = new javax.swing.JButton();
         exitButton = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setFont(new java.awt.Font("Purisa", 0, 13));
 
@@ -103,7 +105,7 @@ public class GamePanel extends javax.swing.JPanel {
         );
         rawMaterialsPanelLayout.setVerticalGroup(
             rawMaterialsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 317, Short.MAX_VALUE)
+            .addGap(0, 341, Short.MAX_VALUE)
         );
 
         marketTabbedPanel.addTab("Raw Materials", rawMaterialsPanel);
@@ -196,7 +198,7 @@ public class GamePanel extends javax.swing.JPanel {
                 .addComponent(lineElementsButtonsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(prevNextPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(71, Short.MAX_VALUE))
+                .addContainerGap(95, Short.MAX_VALUE))
         );
 
         marketTabbedPanel.addTab("tab2", lineElementsPanel);
@@ -205,11 +207,11 @@ public class GamePanel extends javax.swing.JPanel {
         marketPanel.setLayout(marketPanelLayout);
         marketPanelLayout.setHorizontalGroup(
             marketPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(marketTabbedPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE)
+            .addComponent(marketTabbedPanel)
         );
         marketPanelLayout.setVerticalGroup(
             marketPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(marketTabbedPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 367, Short.MAX_VALUE)
+            .addComponent(marketTabbedPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE)
         );
 
         toolBarPanel.addTab("Market", marketPanel);
@@ -218,11 +220,11 @@ public class GamePanel extends javax.swing.JPanel {
         labPanel.setLayout(labPanelLayout);
         labPanelLayout.setHorizontalGroup(
             labPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 181, Short.MAX_VALUE)
+            .addGap(0, 189, Short.MAX_VALUE)
         );
         labPanelLayout.setVerticalGroup(
             labPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 367, Short.MAX_VALUE)
+            .addGap(0, 379, Short.MAX_VALUE)
         );
 
         toolBarPanel.addTab("Lab", labPanel);
@@ -231,11 +233,11 @@ public class GamePanel extends javax.swing.JPanel {
         warehousePanel.setLayout(warehousePanelLayout);
         warehousePanelLayout.setHorizontalGroup(
             warehousePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 181, Short.MAX_VALUE)
+            .addGap(0, 189, Short.MAX_VALUE)
         );
         warehousePanelLayout.setVerticalGroup(
             warehousePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 367, Short.MAX_VALUE)
+            .addGap(0, 379, Short.MAX_VALUE)
         );
 
         toolBarPanel.addTab("Warehouse", warehousePanel);
@@ -297,6 +299,14 @@ public class GamePanel extends javax.swing.JPanel {
         exitButton.setToolTipText(EXIT_TIP);
         jToolBar1.add(exitButton);
 
+        jLabel1.setFont(new java.awt.Font("Purisa", 0, 14)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText(MONEY);
+
+        jLabel2.setFont(new java.awt.Font("Purisa", 0, 24)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText(MONEY_SYMBOL + " " + this.game.getBudget().getBalance());
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -307,16 +317,34 @@ public class GamePanel extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(toolBarPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(groundPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 451, Short.MAX_VALUE))
-                    .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE))
-                .addContainerGap())
+                        .addComponent(groundPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 595, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                                .addComponent(jLabel1)
+                                .addGap(51, 51, 51))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(41, 41, 41)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(groundPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 417, Short.MAX_VALUE)
                     .addComponent(toolBarPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 417, Short.MAX_VALUE))
@@ -339,9 +367,14 @@ public class GamePanel extends javax.swing.JPanel {
     private static final String PLAY_TIP = "Play game";
     private static final String EXIT_TIP = "Exit game";
 
+    private static final String MONEY = "Money";
+    private static final String MONEY_SYMBOL = "$";
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton exitButton;
     private javax.swing.JScrollPane groundPanel;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JPanel labPanel;
     private javax.swing.JButton lineElementButton1;

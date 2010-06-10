@@ -11,11 +11,13 @@ public class Game {
 
     private Ground ground;
     private List<ProductionLineElement> lineElements;
+    private Budget budget;
 
     public Game(Ground ground){
         this.ground = ground;
         this.lineElements = new LinkedList<ProductionLineElement>();
-
+        this.budget = new Budget(1000);
+        
         /*
          * TODO hardcoding just for test.
          */
@@ -30,5 +32,9 @@ public class Game {
 
     public List<ProductionLineElement> getProductionLineElements() {
         return this.lineElements;
+    }
+
+    public Budget getBudget() {
+        return this.budget;
     }
 }
