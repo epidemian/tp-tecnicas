@@ -2,15 +2,18 @@
 <project default="dist" name="TP 2010 Técnicas de diseño">
 	
 	<property name="jar_file" value="tp.jar"></property>	
-	<property name="build_dir" value="bin"></property>
+	<property name="build_dir" value="classes"></property>
 	<property name="src_dir" value="src"></property>
-	<property name="juint_lib" value="./lib/junit.jar"></property>
-	<property name="main_class" value="main.GameApp"></property>
+	<property name="test_dir" value="test"></property>
+	<property name="juint_lib" value="./lib/junit4/junit-4.8.2.jar"></property>
+	<property name="dom4j_lib" value="./lib/dom4j/dom4j-1.6.1.jar"></property>
+	<property name="main_class" value="view.warehouse.MainFrame"></property>
 	
 	<!-- classpath -->
 	<path id="class_path">
-		<pathelement path="${build}"/>
-		<!-- <pathelement path="${juint_lib}"/> -->
+		<pathelement path="${build_dir}"/>
+		<pathelement path="${juint_lib}"/>
+		<pathelement path="${dom4j_lib}"/>
 	</path>
 	
 	
@@ -18,7 +21,7 @@
  	<target name="compile" description="Compile the project">
  		<echo message="Compiling..."></echo>
  		<mkdir dir="${build_dir}"/>
-        <javac srcdir="${src_dir}" destdir="${build_dir}" 
+        <javac srcdir="${src_dir}:${test_dir}" destdir="${build_dir}" 
         	compiler="javac1.6" encoding="UTF-8" >
         	<classpath refid="class_path"></classpath>
         </javac>
@@ -34,22 +37,34 @@
                 <attribute name="Class-Path" value="."/>
             </manifest>
             <fileset dir="${build_dir}"/>
-            <!-- <zipfileset excludes="META-INF/*.SF" src="${juint_lib}"/> -->
+            <zipfileset excludes="META-INF/*.SF" src="${juint_lib}"/>
+        	<zipfileset excludes="META-INF/*.SF" src="${dom4j_lib}"/>
         </jar>
 	</target>
 	
-	<!-- Hole project -->
+	<!-- Whole project -->
     <target name="dist" depends="jar" description="Build the hole project">
     </target>
 	
-	<!-- <target name="runtests" depends="jar" description="Run unit tests">
+	<target name="runtests2" depends="jar" description="Run unit tests">
 		<java fork="yes" classname="org.junit.runner.JUnitCore" taskname="junit" failonerror="true">
 			<arg value="test.AllTests"/>
 			<classpath>
 				<pathelement path="${jar_file}"/>
 			</classpath>
 		</java>
-	</target> -->
+	</target>
+	
+	<target name="runtests" depends="jar">
+	  <junit fork="yes" haltonfailure="yes">
+	    <test name="AllTests" />
+	    <formatter type="plain" usefile="false" />
+	  	<classpath>
+			<pathelement path="${jar_file}"/>
+		</classpath>
+	  </junit>
+	</target>
+
 	
 	<target name="clean" description="Clean the project">
 		<delete dir="${build_dir}"></delete>

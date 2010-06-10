@@ -10,7 +10,7 @@ import org.junit.runners.Suite.SuiteClasses;
 @RunWith(Suite.class)
 @SuiteClasses({
         UpdateSchedulerTest.class,
-        PlayerTest.class,
+        PlayerTest.class
 })
 public class AllGameTests {
 

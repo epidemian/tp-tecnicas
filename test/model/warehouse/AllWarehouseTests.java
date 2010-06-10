@@ -9,7 +9,7 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuiteClasses({
 		GroundTest.class,
 		PositionTest.class,
-        WarehouseTest.class,
+        WarehouseTest.class
 })
 public class AllWarehouseTests {
 

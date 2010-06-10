@@ -8,7 +8,6 @@ import java.util.List;
 
 import model.game.time.DailyUpdatable;
 import model.game.time.TickUpdatable;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public class ProductionLine implements TickUpdatable, DailyUpdatable,
 		Iterable<ProductionLineElement>, ProductionLineElementObserver  {
@@ -150,7 +149,7 @@ public class ProductionLine implements TickUpdatable, DailyUpdatable,
 
 		@Override
 		public void remove() {
-			throw new NotImplementedException();
+			throw new UnsupportedOperationException();
 		}
 	}
 	

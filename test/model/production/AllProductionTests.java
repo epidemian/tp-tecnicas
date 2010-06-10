@@ -16,7 +16,7 @@ import org.junit.runners.Suite.SuiteClasses;
     RawMaterialsTest.class,
     StorageAreaTest.class,
     TypeTest.class,
-    ValidProductionSequencesTest.class,
+    ValidProductionSequencesTest.class
 })
 public class AllProductionTests {
 

@@ -5,7 +5,6 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 import persistence.PriceMapPersistent;
-import persistence.PriceMapPersistentTest;
 
 
 @RunWith(Suite.class)
@@ -17,8 +16,8 @@ import persistence.PriceMapPersistentTest;
         ProductionSequenceTechnologyListPersistentTest.class,
         ProductionSequenceTechnologyPersistentTest.class,
         ProductTypePersistentTest.class,
-        RawMaterialsPersistentTest.class,
-        PriceMapPersistentTest.class,
+        RawMaterialsPersistentTest.class
+//        PriceMapPersistentTest.class
 
 })
 public class AllPersistenceTests {

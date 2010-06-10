@@ -8,6 +8,7 @@ public class Ground {
 	private int price;
 	private TileElement tileElements[][];
 	private EmptyElementRecognizer emptyElementRecognizer = new EmptyElementRecognizer();
+	private LineElementsConnector lineElementsConnector = new LineElementsConnector();
 
 	public Ground(int price, int rows, int cols) {
 		this.price = price;
@@ -46,6 +47,8 @@ public class Ground {
 
 		fillAreaWithElement(element, position, element.getWidth(), element
 				.getHeight());
+
+		
 	}
 
 	public void visitElements(GroundVisitor visitor) {
@@ -82,22 +85,6 @@ public class Ground {
 				setTileElement(element, col, row);
 	}
 
-	public class EmptyElementRecognizer extends TileElementVisitor {
-
-		private boolean emptyTile = false;
-
-		public boolean isEmptyTile(TileElement tileElement) {
-			this.emptyTile = false;
-			tileElement.accept(this);
-			return this.emptyTile;
-		}
-
-		@Override
-		public void visitEmptyElement(EmptyTileElement emptyTileElement) {
-			this.emptyTile = true;
-		}
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -125,4 +112,23 @@ public class Ground {
 		return true;
 	}
 
+	private class LineElementsConnector extends GroundVisitor {
+		
+	}
+}
+
+final class EmptyElementRecognizer extends TileElementVisitor {
+
+	private boolean emptyTile = false;
+
+	public boolean isEmptyTile(TileElement tileElement) {
+		this.emptyTile = false;
+		tileElement.accept(this);
+		return this.emptyTile;
+	}
+
+	@Override
+	public void visitEmptyElement(EmptyTileElement emptyTileElement) {
+		this.emptyTile = true;
+	}
 }

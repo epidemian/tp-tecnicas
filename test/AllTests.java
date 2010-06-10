@@ -20,7 +20,7 @@ import persistence.AllPersistenceTests;
         AllGameTests.class,
 	    AllWarehouseTests.class,
 	    AllUtilsTests.class,
-	    AllPersistenceTests.class,
+	    AllPersistenceTests.class
 	    
 })
 public class AllTests { }

@@ -9,7 +9,7 @@ import org.junit.runners.Suite.SuiteClasses;
         TechnologyTest.class,
         TechnologyTreeTest.class,
         ResearchLabTest.class,
-        NewProductionSequenceTechnologyTest.class,
+        NewProductionSequenceTechnologyTest.class
 })
 public class AllLabTests {
 

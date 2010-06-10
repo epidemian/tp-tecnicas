@@ -1,6 +1,9 @@
 package model.production;
 
 import static model.utils.ArgumentUtils.checkNotNull;
+import model.exception.BusinessLogicException;
+import model.warehouse.Ground;
+import model.warehouse.Position;
 
 public abstract class Machine extends ProductionLineElement implements
 		MachineObservable {
@@ -9,16 +12,14 @@ public abstract class Machine extends ProductionLineElement implements
 	private static final double BREAK_CHANCE = 0.05;
 	private static final double DAMAGE_CHANCE = 0.15;
 
-
 	private MachineState machineState;
+	private MachineType machineType;
 
 	public Machine(MachineType machineType, int width, int height) {
 		super(width, height);
 		this.setMachineType(machineType);
 		this.setMachineState(new HealthyMachineState());
 	}
-
-	private MachineType machineType;
 
 	public MachineType getMachineType() {
 		return machineType;
@@ -40,34 +41,8 @@ public abstract class Machine extends ProductionLineElement implements
 	 */
 	public abstract void treatProduct(Product input);
 
-	private void setMachineType(MachineType machineType) {
-		checkNotNull(machineType, "machineType");
-		this.machineType = machineType;
-	}
-
 	public void repair() throws CannotRepairHealthyMachineException {
 		this.getMachineState().repair(this);
-	}
-
-	/*
-	 * Analizes whether after processing the product, the machine becomes
-	 * damaged or broken.
-	 */
-	private void processMachineDeterioration() {
-		double number = Math.random();
-		if (number < DAMAGE_CHANCE) {
-			this.damage();
-		} else if (number > 1 - BREAK_CHANCE) {
-			this.breakUp();
-		}
-	}
-
-	protected void damage() {
-		this.getMachineState().damage(this);
-	}
-
-	protected void breakUp() {
-		this.getMachineState().breakUp(this);
 	}
 
 	public MachineState getMachineState() {
@@ -93,6 +68,42 @@ public abstract class Machine extends ProductionLineElement implements
 		this.getProductionLineElementObserver().updateBrokenMachineRepair();
 	}
 
+	private void setMachineType(MachineType machineType) {
+		checkNotNull(machineType, "machineType");
+		this.machineType = machineType;
+	}
+	
+	
+
+//	@Override
+//	public void addToGround(Ground ground, Position position) {
+//		// TODO Auto-generated method stub
+//		if (getPreviousLineElement() != null && getNextLineElement() != null)
+//			throw new BusinessLogicException("Already connected");
+//		
+//		
+//	}
+
+	/*
+	 * Analizes whether after processing the product, the machine becomes
+	 * damaged or broken.
+	 */
+	private void processMachineDeterioration() {
+		double number = Math.random();
+		if (number < DAMAGE_CHANCE) {
+			this.damage();
+		} else if (number > 1 - BREAK_CHANCE) {
+			this.breakUp();
+		}
+	}
+
+	protected void damage() {
+		this.getMachineState().damage(this);
+	}
+
+	protected void breakUp() {
+		this.getMachineState().breakUp(this);
+	}
 	/*
 	 * TODO: Por qué dos Machines son iguales si sus tipos son iguales
 	 * solamente? Si en la fábrica tengo 2 "hornos" por ejemplo, no son iguales,
