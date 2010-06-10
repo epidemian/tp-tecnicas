@@ -14,6 +14,7 @@ public class RawMaterialsPersistent {
 	static String TAG_ATR_ID="id";
 	static String TAG_ATR_QUANTITY="quantity";
 	
+	@SuppressWarnings("unchecked")
 	public static RawMaterials buildFromXML(Element element) 
 		throws InvalidTagException{
 

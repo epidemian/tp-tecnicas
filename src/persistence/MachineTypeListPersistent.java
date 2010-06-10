@@ -12,6 +12,7 @@ public class MachineTypeListPersistent {
 	
 	static String TAG_NAME="MachineList";
 	
+	@SuppressWarnings("unchecked")
 	public static List<MachineType> buildFromXML(Element element) 
 		throws InvalidTagException{
 		if (!element.getName().equals(MachineTypeListPersistent.TAG_NAME))

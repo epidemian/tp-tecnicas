@@ -1,7 +1,6 @@
 package persistence;
 
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +18,6 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import persistence.InvalidTagException;
@@ -53,9 +51,9 @@ public class ProductionSequenceTechnologyPersistentTest
 		
 		List<MachineType> list=new ArrayList<MachineType>();
 		
-		list.add(new MachineType("LumberProcess"));
-		list.add(new MachineType("Oven"));
-		list.add(new MachineType("Forge"));
+		list.add(new MachineType("LumberProcess",3,4));
+		list.add(new MachineType("Oven",3,4));
+		list.add(new MachineType("Forge",3,4));
 		
 		ProductType prodType=new ProductType("Axe");
 		
@@ -76,7 +74,7 @@ public class ProductionSequenceTechnologyPersistentTest
 		
 		List<MachineType> list=new ArrayList<MachineType>();
 		
-		list.add(new MachineType("Forge"));
+		list.add(new MachineType("Forge",3,4));
 		
 		ProductType prodType=new ProductType("Sword");
 		
@@ -145,6 +143,7 @@ public class ProductionSequenceTechnologyPersistentTest
 						"ProductionSequenceTechnologyThatDoesNotDefineProduct.xml");
 			Element element=doc.getRootElement();
 			
+			@SuppressWarnings("unused")
 			NewProductionSequenceTechnology productionSequenceTechnologyRecovered = 
 				ProductionSequenceTechnologyPersistent.buildFromXML(element);
 			

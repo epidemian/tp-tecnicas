@@ -25,8 +25,8 @@ public class GroundTest {
 	}
 
 	private ProductionLineElement createProdLineElement2x2() {
-		MachineType type = new MachineType("testingMachine");
-		return new ProductionMachine(type, 2, 2);
+		MachineType type = new MachineType("testingMachine",2,2);
+		return new ProductionMachine(type);
 	}
 
 	@Test

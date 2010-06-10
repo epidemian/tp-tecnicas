@@ -4,21 +4,23 @@ import java.util.List;
 import java.util.Map;
 
 import model.lab.technologies.NewProductionSequenceTechnology;
+import model.production.MachineType;
 import model.warehouse.Ground;
-
-import org.dom4j.DocumentException;
 
 public abstract class InputFactory {
 	public abstract List<NewProductionSequenceTechnology> 
 				loadTechnologies(String path) 
-			throws DocumentException, 
-			SecurityException, InvalidTagException, ClassNotFoundException, 
-			NoSuchMethodException, NoProductTypeDefinedInSequenceException;
+			throws Exception;
 	
 	public abstract List<Ground>  loadGrounds(String path) 
-			throws InvalidTagException, DocumentException;
+			throws Exception;
 	
 	public abstract Map<String,Integer> loadPrices(String weekNr) 
-			throws InvalidTagException, DocumentException;
+			throws Exception;
+	
+	public abstract List<MachineType> loadMachines(String availableMachines)
+			throws Exception;;
+		
+	
 	
 }

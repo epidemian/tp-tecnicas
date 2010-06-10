@@ -1,13 +1,10 @@
 package persistence;
 
-import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Iterator;
-import java.util.List;
 
-import model.production.AbstractType;
-import model.production.MachineType;
 
 
 import org.dom4j.Element;
@@ -15,6 +12,7 @@ import org.dom4j.Element;
 public class PriceMapPersistent {
 	static String TAG_NAME="PriceMap";
 	
+	@SuppressWarnings("unchecked")
 	public static Map<String,Integer> buildFromXML(Element element) 
 	throws InvalidTagException{
 		

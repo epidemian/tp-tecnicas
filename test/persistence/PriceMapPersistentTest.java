@@ -3,10 +3,7 @@ package persistence;
 import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-import model.production.MachineType;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;

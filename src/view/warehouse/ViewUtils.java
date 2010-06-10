@@ -16,17 +16,19 @@ public class ViewUtils {
 
 		Ground ground = new Ground(0, rows, cols);
 
+		
+		
 		/*
 		 * Machines.
 		 */
 		TileElement machine1 = new ProductionMachine(
-				new MachineType("machine1"), 2, 2);
+				new MachineType("machine1",2,2));
 		TileElement machine2 = new ProductionMachine(
-				new MachineType("machine2"), 2, 2);
+				new MachineType("machine2",2,2));
 		TileElement machine3 = new ProductionMachine(
-				new MachineType("machine3"), 2, 2);
+				new MachineType("machine3",2,2));
 		TileElement machine4 = new ProductionMachine(
-				new MachineType("machine4"), 2, 2);
+				new MachineType("machine4",2,2));
 
 		ground.addTileElement(machine1, new Position(1,1));
 		ground.addTileElement(machine2, new Position(1,6));

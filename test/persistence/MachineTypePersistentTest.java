@@ -2,7 +2,7 @@ package persistence;
 
 
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import model.production.MachineType;
 
 
@@ -22,7 +22,7 @@ public class MachineTypePersistentTest extends XMLPersistentTest{
 	@Before
 	public void setUp(){
 		super.setUp();
-		machineType=new MachineType("Oven");
+		machineType=new MachineType("Oven",4,3);
 	}	
 	
 	@Test
@@ -37,5 +37,20 @@ public class MachineTypePersistentTest extends XMLPersistentTest{
 			 MachineTypePersistent.buildFromXML(element);
 		
 		assertEquals(recovered,machineType);
+	}
+	
+	@Test
+	public void validMachineTypeWithDifferentDimensions() 
+			throws DocumentException, InvalidTagException{
+		
+		Document doc= reader.read("test/persistence/input/" +
+				"MachineTypeWithDifferentDimensions.xml");
+		
+		Element element=doc.getRootElement();
+		
+		MachineType recovered=
+			 MachineTypePersistent.buildFromXML(element);
+		
+		assertFalse(recovered.equals(machineType));
 	}
 }

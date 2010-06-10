@@ -8,6 +8,8 @@ package model.production;
  */
 public class BrokenMachineState extends MachineState{
 
+	
+	
 	public void repair(Machine machine){
 		machine.setMachineState(new HealthyMachineState());
 		machine.notifyBrokenMachineRepair();

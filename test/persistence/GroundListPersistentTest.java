@@ -4,8 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import model.production.MachineType;
 import model.warehouse.Ground;
 
 import org.dom4j.Document;

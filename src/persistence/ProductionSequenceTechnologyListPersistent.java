@@ -14,6 +14,7 @@ public class ProductionSequenceTechnologyListPersistent {
 
 	static String TAG_NAME="Sequences";
 	
+	@SuppressWarnings("unchecked")
 	public static List<NewProductionSequenceTechnology> 
 						buildFromXML(Element element) 
 			throws InvalidTagException, SecurityException, 

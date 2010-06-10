@@ -12,6 +12,7 @@ public class GroundListPersistent {
 
 	static String TAG_NAME="Map";
 	
+	@SuppressWarnings("unchecked")
 	public static List<Ground> buildFromXML(Element element) 
 	throws InvalidTagException{
 	if (!element.getName().equals(GroundListPersistent.TAG_NAME))

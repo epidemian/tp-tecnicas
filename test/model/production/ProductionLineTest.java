@@ -20,11 +20,11 @@ public class ProductionLineTest {
 	private ProductionLine createProductionLineProcessingCarton() {
 
 		ProductionLineElement prodLineElement1 = new ProductionMachine(
-				new MachineType("Licuado"), 1, 1);
+				new MachineType("Licuado",1,1));
 		ProductionLineElement prodLineElement2 = new ProductionMachine(
-				new MachineType("Haz"), 1, 1);
+				new MachineType("Haz",1,1));
 		ProductionLineElement prodLineElement3 = new ProductionMachine(
-				new MachineType("Horno"), 1, 1);
+				new MachineType("Horno",1,1));
 
 		connectLineElements(prodLineElement1, prodLineElement2);
 		connectLineElements(prodLineElement2, prodLineElement3);
@@ -79,9 +79,9 @@ public class ProductionLineTest {
 
 		// TODO: Este código está idéntico en otra prueba de este test case.. y
 		// muy similar en otro test case
-		MachineMock machineMock1 = new MachineMock(new MachineType("Licuado"));
-		MachineMock machineMock2 = new MachineMock(new MachineType("Haz"));
-		MachineMock machineMock3 = new MachineMock(new MachineType("Horno"));
+		MachineMock machineMock1 = new MachineMock(new MachineType("Licuado",1,1));
+		MachineMock machineMock2 = new MachineMock(new MachineType("Haz",1,1));
+		MachineMock machineMock3 = new MachineMock(new MachineType("Horno",1,1));
 
 		connectLineElements(machineMock1, machineMock2);
 		connectLineElements(machineMock2, machineMock3);
@@ -115,7 +115,7 @@ public class ProductionLineTest {
 	private class MachineMock extends ProductionMachine {
 
 		private MachineMock(MachineType machineType) {
-			super(machineType, 1, 1);
+			super(machineType);
 		}
 
 		public void breakUp() {

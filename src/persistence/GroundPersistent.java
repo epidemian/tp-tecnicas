@@ -4,8 +4,7 @@ import java.util.Iterator;
 
 import org.dom4j.Element;
 
-import model.production.MachineType;
-import model.production.RawMaterialType;
+
 import model.warehouse.Ground;
 import model.warehouse.Position;
 import model.warehouse.Wall;
@@ -23,6 +22,7 @@ public class GroundPersistent{
 	static String TAG_CHILD_ATR_HEIGHT="height";
 	
 	
+	@SuppressWarnings("unchecked")
 	public static Ground buildFromXML(Element element) 
 	throws InvalidTagException{
 

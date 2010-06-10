@@ -5,8 +5,14 @@ import model.warehouse.TileElementVisitor;
 
 public class ProductionMachine extends Machine {
 
+	/*
 	public ProductionMachine(MachineType machineType, int width, int height) {
 		super(machineType, width, height);
+		this.productsProcess = 0;
+	}
+	*/
+	public ProductionMachine(MachineType machineType){
+		super(machineType);
 		this.productsProcess = 0;
 	}
 

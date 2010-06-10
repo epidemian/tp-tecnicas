@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import model.lab.technologies.NewProductionSequenceTechnology;
+import model.production.MachineType;
 import model.warehouse.Ground;
 
 import org.dom4j.*;
@@ -56,6 +57,17 @@ public class XMLFactory extends InputFactory{
 		
 		return PriceMapPersistent.buildFromXML(element);		
 	}
+
+	@Override
+	public List<MachineType> loadMachines(String availableMachines) 
+				throws InvalidTagException, DocumentException {
+			document= reader.read(availableMachines);		
+			Element element=document.getRootElement();
+		
+		return MachineTypeListPersistent.buildFromXML(element); 
+	}
+	
+	
 	
 	
 }

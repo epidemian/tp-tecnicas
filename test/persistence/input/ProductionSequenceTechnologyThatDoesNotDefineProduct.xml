@@ -5,9 +5,9 @@
 		<rawMaterial id="stone" quantity="200"/>
 	</RawMaterials>
 	<MachineList>
-		<MachineType id="LumberProcess"/>
-		<MachineType id="Oven"/>
-		<MachineType id="Forge"/>
+		<MachineType id="LumberProcess" width="3" height="4"/>
+		<MachineType id="Oven" width="3" height="4" />
+		<MachineType id="Forge" width="3" height="4"/>
 	</MachineList>
 </ProductionSequence>
 	

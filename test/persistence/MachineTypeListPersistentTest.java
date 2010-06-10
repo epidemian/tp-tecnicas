@@ -1,6 +1,6 @@
 package persistence;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,9 +25,9 @@ public class MachineTypeListPersistentTest extends XMLPersistentTest{
 	public void setUp(){
 		super.setUp();
 		list=new ArrayList<MachineType>();
-		list.add(new MachineType("LumberProcess"));
-		list.add(new MachineType("Oven"));
-		list.add(new MachineType("Forge"));
+		list.add(new MachineType("LumberProcess",2,3,10));
+		list.add(new MachineType("Oven",2,3,20));
+		list.add(new MachineType("Forge",2,3,30));
 	}
 	
 	@Test
@@ -42,6 +42,22 @@ public class MachineTypeListPersistentTest extends XMLPersistentTest{
 			MachineTypeListPersistent.buildFromXML(element);
 		
 		assertEquals(recovered,list);
+		
+	}
+	
+	@Test
+	public void MachineTypeListWithDifferentPrices()
+		throws DocumentException, InvalidTagException{		
+		
+		Document doc= 
+			reader.read("test/persistence/input/" +
+					"MachineTypeListWithDifferentPrices.xml");
+		Element element=doc.getRootElement();
+		
+		List<MachineType> recovered=
+			MachineTypeListPersistent.buildFromXML(element);
+		
+		assertFalse(recovered.equals(list));
 		
 	}
 }

@@ -3,7 +3,7 @@
 			<rawMaterial id="gold" quantity="500"/>			
 		</RawMaterials>
 		<MachineList>
-			<MachineType id="Forge"/>
+			<MachineType id="Forge" width="3" height="4"/>
 		</MachineList>
 		<ProductType id="Sword"/>
 </ProductionSequence>

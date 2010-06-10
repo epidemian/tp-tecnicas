@@ -1,5 +1,5 @@
 <MachineList>
-			<MachineType id="LumberProcess" width="2" height="3" price="10"/>
+			<MachineType id="LumberProcess" width="2" height="3" price="700"/>
 			<MachineType id="Oven" width="2" height="3" price="20"/>
 			<MachineType id="Forge" width="2" height="3" price="30"/>
 </MachineList>

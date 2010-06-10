@@ -22,6 +22,7 @@ public class ProductionSequenceTechnologyPersistent {
 	static String TAG_ATR_DESC="desc";
 	static String TAG_ATR_COST="cost";
 
+	@SuppressWarnings("unchecked")
 	public static NewProductionSequenceTechnology buildFromXML(Element element) 
 			throws InvalidTagException, ClassNotFoundException, 
 					SecurityException, NoSuchMethodException,
@@ -42,6 +43,7 @@ public class ProductionSequenceTechnologyPersistent {
 		Iterator<Element> iter=childs.iterator();
 		rawMaterials=recoverRawMaterials(iter);
 
+			
 		iter=childs.iterator();
 		machines=recoverMachines(iter);		
 		

@@ -14,13 +14,20 @@ public abstract class Machine extends ProductionLineElement implements
 
 	private MachineState machineState;
 	private MachineType machineType;
-
+	
+	/*
 	public Machine(MachineType machineType, int width, int height) {
 		super(width, height);
 		this.setMachineType(machineType);
 		this.setMachineState(new HealthyMachineState());
 	}
-
+	*/
+	
+	public Machine(MachineType machineType) {
+		super(machineType.getWidth(), machineType.getHeight());
+		this.setMachineType(machineType);
+		this.setMachineState(new HealthyMachineState());
+	}
 	public MachineType getMachineType() {
 		return machineType;
 	}
