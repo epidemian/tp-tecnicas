@@ -35,8 +35,8 @@ public class MainFrame extends JFrame {
 		this.setVisible(true);
 		// this.pack();
 		this.setSize(new Dimension(850, 650));
-		this.setLocationRelativeTo(null);
-		// this.maximize();
+		//this.setLocationRelativeTo(null);
+		this.maximize();
 	}
 
 	public void maximize() {
