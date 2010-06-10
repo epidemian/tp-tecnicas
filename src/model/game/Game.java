@@ -2,10 +2,13 @@ package model.game;
 
 import java.util.LinkedList;
 import java.util.List;
+import model.production.Conveyor;
 import model.production.MachineType;
 import model.production.ProductionLineElement;
 import model.production.ProductionMachine;
+import model.production.QualityControlMachine;
 import model.warehouse.Ground;
+import model.warehouse.Wall;
 
 public class Game {
 
@@ -21,7 +24,11 @@ public class Game {
         /*
          * TODO hardcoding just for test.
          */
-        for (int i = 0; i < 20; i++)
+        this.lineElements.add(new ProductionMachine(new MachineType(new String("machine1")),1,1));
+        this.lineElements.add(new QualityControlMachine(new MachineType(new String("quality1")),1,1));
+        this.lineElements.add(new Conveyor());
+
+        for (int i = 3; i < 20; i++)
             this.lineElements.add(new ProductionMachine(new MachineType(new String("" + i)),1,1));
         
     }
