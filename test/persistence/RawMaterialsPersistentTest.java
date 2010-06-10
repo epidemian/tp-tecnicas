@@ -37,7 +37,7 @@ public class RawMaterialsPersistentTest extends XMLPersistentTest{
 		throws DocumentException, InvalidTagException{		
 		
 		Document doc= 
-			reader.read("test/persistence/ValidRawMaterials.xml");
+			reader.read("test/persistence/input/ValidRawMaterials.xml");
 		Element element=doc.getRootElement();
 		
 		RawMaterials recovered=
@@ -54,7 +54,8 @@ public class RawMaterialsPersistentTest extends XMLPersistentTest{
 		throws DocumentException, InvalidTagException{		
 		
 		Document doc= 
-			reader.read("test/persistence/RawMaterialsWithNonMaterialChild.xml");
+			reader.read("test/persistence/input/" +
+					"RawMaterialsWithNonMaterialChild.xml");
 		Element element=doc.getRootElement();
 		
 		RawMaterials recovered=

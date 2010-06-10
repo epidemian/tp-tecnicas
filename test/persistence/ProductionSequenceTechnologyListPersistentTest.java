@@ -19,8 +19,7 @@ import persistence.ProductionSequenceTechnologyListPersistent;
 
 import model.lab.technologies.NewProductionSequenceTechnology;
 
-//TODO RESOLVE IGNORES!!
-@Ignore
+
 public class ProductionSequenceTechnologyListPersistentTest 
 	extends XMLPersistentTest{
 	
@@ -39,13 +38,13 @@ public class ProductionSequenceTechnologyListPersistentTest
 	}
 
 
-	@Ignore
+	@Test
 	public void validProductionSequenceTechnologyList() 
 				throws DocumentException, InvalidTagException,
 				SecurityException, ClassNotFoundException, 
 				NoSuchMethodException, NoProductTypeDefinedInSequenceException{
 		Document doc= 
-			reader.read("test/persistence/" +
+			reader.read("test/persistence/input/" +
 					"ValidProductionSequencesTechnologyList.xml");
 		Element element=doc.getRootElement();
 		

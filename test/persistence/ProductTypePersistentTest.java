@@ -25,7 +25,7 @@ public class ProductTypePersistentTest extends XMLPersistentTest{
 	public void validProductTypeXMLFileWithProductTypeAxe() 
 			throws DocumentException, InvalidTagException{
 		
-		Document doc= reader.read("test/persistence/ValidProductType.xml");
+		Document doc= reader.read("test/persistence/input/ValidProductType.xml");
 		
 		Element element=doc.getRootElement();
 		
@@ -39,7 +39,8 @@ public class ProductTypePersistentTest extends XMLPersistentTest{
 	public void ProductTypeXMLFileWithInvalidTag() 
 			throws DocumentException, InvalidTagException{
 			
-		Document doc= reader.read("test/persistence/InvalidTagProductType.xml");
+		Document doc= reader.read("test/persistence/input/" +
+				"InvalidTagProductType.xml");
 		
 		Element element=doc.getRootElement();
 		
@@ -53,7 +54,8 @@ public class ProductTypePersistentTest extends XMLPersistentTest{
 	public void ProductTypeXMLFileWithNoName() 
 			throws DocumentException, InvalidTagException{
 			
-		Document doc= reader.read("test/persistence/MissingIDProductType.xml");
+		Document doc= reader.read("test/persistence/input/" +
+				"MissingIDProductType.xml");
 		
 		Element element=doc.getRootElement();
 		

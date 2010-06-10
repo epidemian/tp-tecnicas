@@ -33,7 +33,7 @@ public class PriceMapPersistentTest extends XMLPersistentTest{
 		throws DocumentException, InvalidTagException{		
 			
 			Document doc= 
-				reader.read("test/persistence/ValidPriceList.xml");
+				reader.read("test/persistence/input/ValidPriceList.xml");
 			Element element=doc.getRootElement();
 			
 			Map<String, Integer> recovered=

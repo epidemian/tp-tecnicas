@@ -91,14 +91,15 @@ public class ProductionSequenceTechnologyPersistentTest
 	
 	
 	
-	@Ignore
+	@Test
 	public void validProductionSequenceTechnologyAxe()
 		throws DocumentException, InvalidTagException, 
 		SecurityException, ClassNotFoundException, NoSuchMethodException, 
 		NoProductTypeDefinedInSequenceException{		
 			
 			Document doc= reader.read
-				("test/persistence/ValidProductionSequenceTechnologyAxe.xml");
+				("test/persistence/input/" +
+						"ValidProductionSequenceTechnologyAxe.xml");
 			Element element=doc.getRootElement();
 			
 			NewProductionSequenceTechnology productionSequenceTechnologyRecovered = 
@@ -112,14 +113,15 @@ public class ProductionSequenceTechnologyPersistentTest
 		
 	}
 	
-	@Ignore
+	@Test
 	public void validProductionSequenceTechnologySword()
 		throws DocumentException, InvalidTagException, 
 		SecurityException, ClassNotFoundException, NoSuchMethodException, 
 		NoProductTypeDefinedInSequenceException{		
 			
 			Document doc= reader.read
-				("test/persistence/ValidProductionSequenceTechnologySword.xml");
+				("test/persistence/input/" +
+						"ValidProductionSequenceTechnologySword.xml");
 			Element element=doc.getRootElement();
 			
 			NewProductionSequenceTechnology productionSequenceTechnologyRecovered = 
@@ -139,7 +141,7 @@ public class ProductionSequenceTechnologyPersistentTest
 		SecurityException, ClassNotFoundException, NoSuchMethodException, 
 		NoProductTypeDefinedInSequenceException{		
 			
-			Document doc= reader.read("test/persistence/" +
+			Document doc= reader.read("test/persistence/input/" +
 						"ProductionSequenceTechnologyThatDoesNotDefineProduct.xml");
 			Element element=doc.getRootElement();
 			

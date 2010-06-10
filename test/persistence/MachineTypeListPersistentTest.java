@@ -35,7 +35,7 @@ public class MachineTypeListPersistentTest extends XMLPersistentTest{
 		throws DocumentException, InvalidTagException{		
 		
 		Document doc= 
-			reader.read("test/persistence/ValidMachineList.xml");
+			reader.read("test/persistence/input/ValidMachineList.xml");
 		Element element=doc.getRootElement();
 		
 		List<MachineType> recovered=

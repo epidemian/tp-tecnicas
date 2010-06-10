@@ -29,7 +29,7 @@ public class MachineTypePersistentTest extends XMLPersistentTest{
 	public void validMachineTypeWithTypeOven() 
 			throws DocumentException, InvalidTagException{
 		
-		Document doc= reader.read("test/persistence/ValidMachineType.xml");
+		Document doc= reader.read("test/persistence/input/ValidMachineType.xml");
 		
 		Element element=doc.getRootElement();
 		

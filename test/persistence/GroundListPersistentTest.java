@@ -34,7 +34,7 @@ public class GroundListPersistentTest  extends XMLPersistentTest {
 		throws DocumentException, InvalidTagException{		
 		
 		Document doc= 
-			reader.read("test/persistence/ValidGroundList.xml");
+			reader.read("test/persistence/input/ValidGroundList.xml");
 		Element element=doc.getRootElement();
 		
 		List<Ground> recovered=
