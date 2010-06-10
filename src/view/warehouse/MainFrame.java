@@ -34,8 +34,9 @@ public class MainFrame extends JFrame {
 		// Display the window.
 		this.setVisible(true);
 		// this.pack();
-		this.setSize(new Dimension(640,480));
-		this.maximize();
+		this.setSize(new Dimension(850, 650));
+		this.setLocationRelativeTo(null);
+		// this.maximize();
 	}
 
 	public void maximize() {
@@ -44,33 +45,27 @@ public class MainFrame extends JFrame {
 
 	public static void main(String[] args) throws InterruptedException {
 
-            try {
-                String laf = UIManager.getSystemLookAndFeelClassName();
-                UIManager.setLookAndFeel(laf);
-            }
-            catch (Exception e){
-                System.out.println("Cannot look like operation system");
-            }
+		try {
+			String laf = UIManager.getSystemLookAndFeelClassName();
+			UIManager.setLookAndFeel(laf);
+		} catch (Exception e) {
+			System.out.println("Cannot look like operation system");
+		}
 
-            Ground ground = ViewUtils.creatGroundSample1();
-            Game game = new Game(ground);
-            final MainFrame mainFrame = new MainFrame(game);
-            mainFrame.setVisible(true);
+		Ground ground = ViewUtils.creatGroundSample1();
+		Game game = new Game(ground);
+		final MainFrame mainFrame = new MainFrame(game);
+		mainFrame.setVisible(true);
 
-            /*
-             * Main loop. Refresh 25 frames per second.
-             */
-            /*
-            TimerTask mainLoopTask = new TimerTask() {
-
-                @Override
-                public void run() {
-                    mainFrame.repaint();
-                }
-            };
-            Timer mainLoop = new Timer();
-            mainLoop.scheduleAtFixedRate(mainLoopTask, 0, 40);
-            */
-    }
+		/*
+		 * Main loop. Refresh 25 frames per second.
+		 */
+		/*
+		 * TimerTask mainLoopTask = new TimerTask() {
+		 * 
+		 * @Override public void run() { mainFrame.repaint(); } }; Timer
+		 * mainLoop = new Timer(); mainLoop.scheduleAtFixedRate(mainLoopTask, 0,
+		 * 40);
+		 */
+	}
 }
-

@@ -42,7 +42,7 @@ public class GroundPanel extends JScrollPane {
 		/*
 		 * TODO Do not hard-code tileSize =(.
 		 */
-		private int tileSize = 75;
+		private int tileSize = 50;
 
 		public DrawingPanel(Ground ground) {
 			this.ground = ground;
