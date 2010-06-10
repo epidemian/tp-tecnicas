@@ -16,8 +16,8 @@ import persistence.PriceMapPersistent;
         ProductionSequenceTechnologyListPersistentTest.class,
         ProductionSequenceTechnologyPersistentTest.class,
         ProductTypePersistentTest.class,
-        RawMaterialsPersistentTest.class
-//        PriceMapPersistentTest.class
+        RawMaterialsPersistentTest.class,
+        PriceMapPersistentTest.class
 
 })
 public class AllPersistenceTests {
