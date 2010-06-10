@@ -16,8 +16,8 @@ import model.production.Conveyor;
 import model.production.ProductionMachine;
 import model.production.QualityControlMachine;
 import model.warehouse.Ground;
-import model.warehouse.GroundVisitor;
 import model.warehouse.TileElement;
+import model.warehouse.TileElementVisitor;
 import model.warehouse.Wall;
 
 public class GroundPanel extends JScrollPane {
@@ -123,7 +123,7 @@ public class GroundPanel extends JScrollPane {
 		/*
 		 * Visitor used to draw each element in the warehouse.
 		 */
-		private class ElementPainter extends GroundVisitor {
+		private class ElementPainter extends TileElementVisitor {
 
 			public Graphics graphics;
 			private List<TileElement> bigTouchedTiles;
@@ -144,8 +144,8 @@ public class GroundPanel extends JScrollPane {
 					if (element.getWidth() > 1 || element.getHeight() > 1)
 						this.bigTouchedTiles.add(element);
 
-					int x = getCurrentPosition().getCol() * tileSize;
-					int y = getCurrentPosition().getRow() * tileSize;
+					int x = element.getPosition().getCol() * tileSize;
+					int y = element.getPosition().getRow() * tileSize;
 					int width = element.getWidth() * tileSize;
 					int height = element.getHeight() * tileSize;
 

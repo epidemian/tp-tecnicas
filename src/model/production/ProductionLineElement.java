@@ -1,5 +1,10 @@
 package model.production;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
+import model.warehouse.Ground;
+import model.warehouse.Position;
 import model.warehouse.TileElement;
 
 abstract public class ProductionLineElement extends TileElement {
@@ -51,9 +56,48 @@ abstract public class ProductionLineElement extends TileElement {
 		return this.prodLineElementObserver;
 	}
 
+	@Override
+	protected final void onAddedToGround(Ground ground) {
+//		if (!hasPreviousLineElement()) {
+//			for (Position validPrevPos : getValidPreviousLineElementPositions()) {
+//				ProductionLineElement lineElement = recognizeProductionLineElement(ground
+//						.getTileElementAt(validPrevPos));
+//				if (lineElement != null && !lineElement.hasNextLineElement()
+//						&& lineElement.canConnectTo(this)) {
+//					connectLineElements(lineElement, this);
+//					break;
+//				}
+//			}
+//		}
+
+		// Repeat the same for the next element.
+
+	}
+
+//	protected abstract Collection<Position> getValidPreviousLineElementPositions();
+//	protected abstract Collection<Position> getValidNextLineElementPositions();
+
+	private boolean hasPreviousLineElement() {
+		return getPreviousLineElement() != null;
+	}
+	
+	private boolean hasNextLineElement() {
+		return getNextLineElement() != null;
+	}
+
+	// TODO: Make me private!
 	public static void connectLineElements(ProductionLineElement previous,
 			ProductionLineElement next) {
 		previous.nextLineElement = next;
 		next.previousLineElement = previous;
 	}
+	
+	private ProductionLineElement recognizeProductionLineElement(
+			TileElement tileElementAt) {
+		return null;
+	}
+}
+
+class ProductionLineElementRecognizer {
+	
 }

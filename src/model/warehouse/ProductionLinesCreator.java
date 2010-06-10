@@ -95,7 +95,7 @@ public class ProductionLinesCreator {
 
 	}
 
-	private class ProductionLineElementCollector extends GroundVisitor {
+	private class ProductionLineElementCollector extends TileElementVisitor {
 
 		private List<ProductionLineElement> productionLineElements;
 

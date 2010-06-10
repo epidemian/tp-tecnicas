@@ -7,8 +7,6 @@ import java.util.Arrays;
 public class Ground {
 	private int price;
 	private TileElement tileElements[][];
-	private EmptyElementRecognizer emptyElementRecognizer = new EmptyElementRecognizer();
-	private LineElementsConnector lineElementsConnector = new LineElementsConnector();
 
 	public Ground(int price, int rows, int cols) {
 		this.price = price;
@@ -48,21 +46,22 @@ public class Ground {
 		fillAreaWithElement(element, position, element.getWidth(), element
 				.getHeight());
 
-		
+		element.addToGround(this, position);
 	}
 
-	public void visitElements(GroundVisitor visitor) {
+	public void visitElements(TileElementVisitor visitor) {
 
-		for (int row = 0; row < getRows(); row++) {
-			for (int col = 0; col < getCols(); col++) {
-				visitor.setCurrentPosition(new Position(row, col));
+		for (int row = 0; row < getRows(); row++)
+			for (int col = 0; col < getCols(); col++)
 				getTileElement(row, col).accept(visitor);
-			}
-		}
+	}
+
+	public TileElement getTileElementAt(Position position) {
+		return getTileElement(position.getRow(), position.getCol());
 	}
 
 	private boolean isTileEmpty(int row, int col) {
-		return emptyElementRecognizer.isEmptyTile(getTileElement(row, col));
+		return getTileElement(row, col).equals(EmptyTileElement.getInstance());
 	}
 
 	private TileElement getTileElement(int row, int col) {
@@ -111,12 +110,11 @@ public class Ground {
 			return false;
 		return true;
 	}
-
-	private class LineElementsConnector extends GroundVisitor {
-		
-	}
 }
 
+/**
+ * TODO: Delete meeee.
+ */
 final class EmptyElementRecognizer extends TileElementVisitor {
 
 	private boolean emptyTile = false;
