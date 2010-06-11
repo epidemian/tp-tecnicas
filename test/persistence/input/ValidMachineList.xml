@@ -1,5 +1,17 @@
 <MachineList>
-			<MachineType id="LumberProcess" width="2" height="3" price="10"/>
-			<MachineType id="Oven" width="2" height="3" price="20"/>
-			<MachineType id="Forge" width="2" height="3" price="30"/>
+			<MachineType id="LumberProcess" width="2" height="3" price="10">
+				<Input  rows="1" cols="-1"/>
+				<Output rows="1" cols="2"/>
+			</MachineType>
+				
+			<MachineType id="Oven" width="2" height="3" price="20">
+					<Input  rows="1" cols="-1"/>
+					<Output rows="1" cols="2"/>
+			</MachineType>
+			
+			<MachineType id="Forge" width="2" height="3" price="30">
+					<Input  rows="1"  cols="-1"/>
+					<Output rows="1"  cols="2"/>
+			</MachineType>
+			
 </MachineList>

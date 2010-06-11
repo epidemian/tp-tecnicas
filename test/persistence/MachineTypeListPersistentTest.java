@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.production.MachineType;
+import model.warehouse.Position;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -21,9 +22,12 @@ public class MachineTypeListPersistentTest extends XMLPersistentTest{
 	public void setUp(){
 		super.setUp();
 		list=new ArrayList<MachineType>();
-		list.add(new MachineType("LumberProcess",2,3,10));
-		list.add(new MachineType("Oven",2,3,20));
-		list.add(new MachineType("Forge",2,3,30));
+		list.add(new MachineType("LumberProcess",2,3,
+									new Position(1,-1),new Position(1,2),10));
+		list.add(new MachineType("Oven",2,3,
+									new Position(1,-1),new Position(1,2),20));
+		list.add(new MachineType("Forge",2,3,
+									new Position(1,-1),new Position(1,2),30));
 	}
 	
 	@Test
@@ -36,6 +40,7 @@ public class MachineTypeListPersistentTest extends XMLPersistentTest{
 		
 		List<MachineType> recovered=
 			MachineTypeListPersistent.buildFromXML(element);
+		
 		
 		assertEquals(recovered,list);
 		
