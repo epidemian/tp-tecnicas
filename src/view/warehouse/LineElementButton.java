@@ -29,23 +29,23 @@ public class LineElementButton extends JButton {
 
 			this.lineElement = lineElement;
 			
-			  // TODO Scale image!
                           this.lineElement.accept(new
 			  TileElementImageRecognizer() {
-			  
+
                             @Override protected void onTileElmentVisited(TileElement element,
                             BufferedImage image) {
 
-                              Dimension dimension = LineElementButton.this.getSize();
+                              // TODO HARDCODE! getSize from this class return 0! WTF!!
+                              Dimension dimension = new Dimension(50, 35);
 
-                              if (dimension.width != 0 && dimension.height != 0){
                               ImageIcon imageButton = new ImageIcon(image);
                               Image imageIcon = imageButton.getImage();
                               Image scaleImageIcon = imageIcon.getScaledInstance(dimension.width,dimension.height, Image.SCALE_SMOOTH);
-                              imageButton.setImage(scaleImageIcon);
+                              imageButton = new ImageIcon(scaleImageIcon);
 
                               LineElementButton.this.setIcon(imageButton);
-                              }
+
+
                             }
 
                           });
