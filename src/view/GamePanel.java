@@ -1,4 +1,4 @@
-package view.warehouse;
+package view;
 
 import java.util.LinkedList;
 import java.util.List;

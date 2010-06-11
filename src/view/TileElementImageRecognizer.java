@@ -1,6 +1,5 @@
-package view.warehouse;
+package view;
 
-import static model.production.Conveyor.*;
 import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.util.HashMap;
@@ -38,7 +37,6 @@ public abstract class TileElementImageRecognizer extends TileElementVisitor {
 		map.put(Direction.SOUTH, "S");
 		map.put(Direction.WEST, "W");
 		map.put(Direction.EAST, "E");
-		map.put(Direction.NONE, "0");
 		return map;
 	}
 

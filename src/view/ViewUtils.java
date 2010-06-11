@@ -1,4 +1,4 @@
-package view.warehouse;
+package view;
 
 import model.production.Conveyor;
 import model.production.MachineType;

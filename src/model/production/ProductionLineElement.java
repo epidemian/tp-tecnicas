@@ -50,15 +50,6 @@ abstract public class ProductionLineElement extends TileElement {
 	public ProductionLineElementObserver getProductionLineElementObserver() {
 		return this.prodLineElementObserver;
 	}
-	
-	protected void setNextLineElement(ProductionLineElement nextLineElement) {
-		this.nextLineElement = nextLineElement;
-	}
-
-	protected void setPreviousLineElement(
-			ProductionLineElement previousLineElement) {
-		this.previousLineElement = previousLineElement;
-	}
 
 	public boolean hasPreviousLineElement() {
 		return getPreviousLineElement() != null;
@@ -70,7 +61,7 @@ abstract public class ProductionLineElement extends TileElement {
 
 	public static void connectLineElements(ProductionLineElement previous,
 			ProductionLineElement next) {
-		previous.setNextLineElement(next);
-		next.setPreviousLineElement(previous);
+		previous.nextLineElement = next;
+		next.previousLineElement = previous;
 	}
 }

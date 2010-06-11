@@ -1,4 +1,4 @@
-package view.warehouse;
+package view;
 
 import java.awt.Dimension;
 import java.util.Timer;
@@ -43,29 +43,4 @@ public class MainFrame extends JFrame {
 		this.setExtendedState(this.getExtendedState() | JFrame.MAXIMIZED_BOTH);
 	}
 
-	public static void main(String[] args) throws InterruptedException {
-
-		try {
-			String laf = UIManager.getSystemLookAndFeelClassName();
-			UIManager.setLookAndFeel(laf);
-		} catch (Exception e) {
-			System.out.println("Cannot look like operation system");
-		}
-
-		Ground ground = ViewUtils.creatGroundSample1();
-		Game game = new Game(ground);
-		final MainFrame mainFrame = new MainFrame(game);
-		mainFrame.setVisible(true);
-
-		/*
-		 * Main loop. Refresh 25 frames per second.
-		 */
-		/*
-		 * TimerTask mainLoopTask = new TimerTask() {
-		 * 
-		 * @Override public void run() { mainFrame.repaint(); } }; Timer
-		 * mainLoop = new Timer(); mainLoop.scheduleAtFixedRate(mainLoopTask, 0,
-		 * 40);
-		 */
-	}
 }
