@@ -2,13 +2,11 @@ package view.warehouse;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.util.List;
 
 import javax.swing.JButton;
 
 import model.production.ProductionLineElement;
-import model.warehouse.TileElement;
 
 public class LineElementsPanelLogic {
 
@@ -27,17 +25,16 @@ public class LineElementsPanelLogic {
 
 	public LineElementsPanelLogic(List<ProductionLineElement> lineElements,
 			List<LineElementButton> lineElementButtons,
-			JButton previousMachines, JButton nextMachines,
+			JButton previousLineElements, JButton nextLineElements,
 			BackGroundPanel lineElementPreview) {
 
+		// TODO Check not null!
 		this.lineElements = lineElements;
 		this.lineElementButtons = lineElementButtons;
 		this.lineElementPreview = lineElementPreview;
 
-		this.setUpLineElementButtons();
-
-		// Init action listeners.
-		previousMachines.addActionListener(new ActionListener() {
+		// Sets up action listener to previous line element button.
+		previousLineElements.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent ae) {
@@ -45,7 +42,8 @@ public class LineElementsPanelLogic {
 			}
 		});
 
-		nextMachines.addActionListener(new ActionListener() {
+		// Sets up action listener to next line element button.
+		nextLineElements.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent ae) {
@@ -53,40 +51,11 @@ public class LineElementsPanelLogic {
 			}
 		});
 
-		// TODO Refactor!
-		for (final LineElementButton button : this.lineElementButtons) {
-			button.addActionListener(new ActionListener() {
-
-				/*
-				 * Sets the lineElement store in this class with the one that is
-				 * contained in the button.
-				 */
-				@Override
-				public void actionPerformed(ActionEvent ae) {
-					LineElementsPanelLogic.this.setProductionLineElement(button
-							.getProductionLineElement());
-
-					button.getProductionLineElement().accept(
-							new TileElementImageRecognizer() {
-
-								/*
-								 * Visitor used to select the image in the
-								 * lineElementPreview.
-								 */
-								@Override
-								protected void onTileElmentVisited(
-										TileElement element, BufferedImage image) {
-									LineElementsPanelLogic.this.lineElementPreview
-											.setImage(image);
-									LineElementsPanelLogic.this.lineElementPreview
-											.repaint();
-								}
-							});
-
-				}
-			});
-		} // End for.
+		this.setActionListenerLineElementButtons();
+		this.setUpLineElementButtons();
 	}
+
+
 
 	public void increseLineElementsTab() {
 		int lineElementsSize = this.lineElements.size();
@@ -108,19 +77,53 @@ public class LineElementsPanelLogic {
 		return this.lineElement;
 	}
 
+	@Override
+	public String toString() {
+		return "LineElementsPanelLogic [lineElement=" + lineElement
+				+ ", lineElementButtons=" + lineElementButtons
+				+ ", lineElementButtonsSize=" + lineElementButtonsSize
+				+ ", lineElements=" + lineElements + ", lineElementsTab="
+				+ lineElementsTab + "]";
+	}
+	
+	private void setActionListenerLineElementButtons() {
+
+		for (final LineElementButton button : this.lineElementButtons) {
+
+			button.addActionListener(new ActionListener() {
+
+				/*
+				 * Sets the lineElement store in this class with the one that is
+				 * contained in the button.
+				 */
+				@Override
+				public void actionPerformed(ActionEvent ae) {
+
+					LineElementsPanelLogic.this.setProductionLineElement(button
+							.getProductionLineElement());
+
+					LineElementsPanelLogic.this.lineElementPreview
+							.setImage(button.getImage());
+					LineElementsPanelLogic.this.lineElementPreview.repaint();
+				}
+			});
+
+		} // End for.
+	}
+	
 	private void setProductionLineElement(ProductionLineElement lineElement) {
-		// Check not null.
+		// TODO Check not null.
 		this.lineElement = lineElement;
 	}
 
+	/**
+	 * Determines the buttons that has to be shown on the panel.
+	 */
 	private void setUpLineElementButtons() {
 		int startIndex = this.lineElementButtonsSize * this.lineElementsTab;
 		int lastIndex = this.lineElements.size() >= startIndex
 				+ this.lineElementButtonsSize ? startIndex
 				+ this.lineElementButtonsSize : this.lineElements.size();
-
-		System.out.println("Inicio: " + startIndex);
-		System.out.println("Fin: " + lastIndex);
 
 		int j = 0;
 		for (int i = startIndex; i < lastIndex; i++, j++) {
@@ -131,14 +134,5 @@ public class LineElementsPanelLogic {
 			this.lineElementButtons.get(j).setVisible(false);
 		}
 
-	}
-
-	@Override
-	public String toString() {
-		return "LineElementsPanelLogic [lineElement=" + lineElement
-				+ ", lineElementButtons=" + lineElementButtons
-				+ ", lineElementButtonsSize=" + lineElementButtonsSize
-				+ ", lineElements=" + lineElements + ", lineElementsTab="
-				+ lineElementsTab + "]";
 	}
 }

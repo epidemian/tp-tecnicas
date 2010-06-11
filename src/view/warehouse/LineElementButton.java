@@ -12,7 +12,17 @@ import model.warehouse.TileElement;
 
 public class LineElementButton extends JButton {
 
+	private static final long serialVersionUID = 1L;
+
+	/*
+	 * TODO If we make the buttons no resizable this size is pretty good. We can
+	 * discuss this. I found a way to do it with the size of the button,
+	 * resizing if it is necessary but it was too slow!
+	 */
+	private final static Dimension IMAGE_SIZE = new Dimension(50, 35);
+
 	public ProductionLineElement lineElement;
+	public BufferedImage image;
 
 	public LineElementButton() {
 		this(null);
@@ -28,30 +38,27 @@ public class LineElementButton extends JButton {
 		if (!nullLineElementType) {
 
 			this.lineElement = lineElement;
-			
-                          this.lineElement.accept(new
-			  TileElementImageRecognizer() {
 
-                            @Override protected void onTileElmentVisited(TileElement element,
-                            BufferedImage image) {
+			/*
+			 * This visitor is used to get the image from the line element.
+			 */
+			this.lineElement.accept(new TileElementImageRecognizer() {
+				@Override
+				protected void onTileElmentVisited(TileElement element,
+						BufferedImage image) {
 
-                              // TODO HARDCODE! getSize from this class return 0! WTF!!
-                              Dimension dimension = new Dimension(50, 35);
+					// TODO Check not null!
+					LineElementButton.this.image = image;
+					LineElementButton.this.setIconFromBufferedImage();
+				}
+			}); // End Visitor.
 
-                              ImageIcon imageButton = new ImageIcon(image);
-                              Image imageIcon = imageButton.getImage();
-                              Image scaleImageIcon = imageIcon.getScaledInstance(dimension.width,dimension.height, Image.SCALE_SMOOTH);
-                              imageButton = new ImageIcon(scaleImageIcon);
-
-                              LineElementButton.this.setIcon(imageButton);
-
-
-                            }
-
-                          });
-			 
 		}
 		this.setVisible(!nullLineElementType);
+	}
+
+	public BufferedImage getImage() {
+		return this.image;
 	}
 
 	public ProductionLineElement getProductionLineElement() {
@@ -61,5 +68,14 @@ public class LineElementButton extends JButton {
 	@Override
 	public String toString() {
 		return "LineElementButton [lineElement=" + lineElement + "]";
+	}
+
+	private void setIconFromBufferedImage() {
+
+		Image scaleImage = new ImageIcon(this.image).getImage()
+				.getScaledInstance(IMAGE_SIZE.width, IMAGE_SIZE.height,
+						Image.SCALE_SMOOTH);
+
+		this.setIcon(new ImageIcon(scaleImage));
 	}
 }

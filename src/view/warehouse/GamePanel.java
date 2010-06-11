@@ -17,8 +17,12 @@ public class GamePanel extends javax.swing.JPanel {
 		initComponents();
 		this.initLineElementPanelLogic(game.getProductionLineElements());
 
-		// TODO: No se le puede poner el tipo posta a esta variable???
-		// Estaría bueno evitar el casteo.
+		/*
+		 *  TODO: No se le puede poner el tipo posta a esta variable???
+		 *  Estaría bueno evitar el casteo.
+		 *  Nico: Mismo problema que con los botones. No puede encontrar una forma
+		 *  de solucionarlo todavia.
+		 */
 		GroundPanel groundPanel = ((GroundPanelContainer) this.groundPanel)
 				.getGroundPanel();
 		EditionToolMediator toolMediator = new EditionToolMediator(groundPanel);
@@ -138,50 +142,20 @@ public class GamePanel extends javax.swing.JPanel {
         marketTabbedPanel.addTab("Raw Materials", rawMaterialsPanel);
 
         lineElementsButtonsPanel.setLayout(new java.awt.GridLayout(5, 3));
-
-        lineElementButton1.setText("jButton1");
         lineElementsButtonsPanel.add(lineElementButton1);
-
-        lineElementButton2.setText("jButton2");
         lineElementsButtonsPanel.add(lineElementButton2);
-
-        lineElementButton3.setText("jButton3");
         lineElementsButtonsPanel.add(lineElementButton3);
-
-        lineElementButton4.setText("jButton4");
         lineElementsButtonsPanel.add(lineElementButton4);
-
-        lineElementButton5.setText("jButton5");
         lineElementsButtonsPanel.add(lineElementButton5);
-
-        lineElementButton6.setText("jButton6");
         lineElementsButtonsPanel.add(lineElementButton6);
-
-        lineElementButton7.setText("jButton7");
         lineElementsButtonsPanel.add(lineElementButton7);
-
-        lineElementButton8.setText("jButton8");
         lineElementsButtonsPanel.add(lineElementButton8);
-
-        lineElementButton9.setText("jButton9");
         lineElementsButtonsPanel.add(lineElementButton9);
-
-        lineElementButton10.setText("jButton10");
         lineElementsButtonsPanel.add(lineElementButton10);
-
-        lineElementButton11.setText("jButton11");
         lineElementsButtonsPanel.add(lineElementButton11);
-
-        lineElementButton12.setText("jButton12");
         lineElementsButtonsPanel.add(lineElementButton12);
-
-        lineElementButton13.setText("jButton13");
         lineElementsButtonsPanel.add(lineElementButton13);
-
-        lineElementButton14.setText("jButton14");
         lineElementsButtonsPanel.add(lineElementButton14);
-
-        lineElementButton15.setText("jButton15");
         lineElementsButtonsPanel.add(lineElementButton15);
 
         previousMachines.setText("Previous");
@@ -269,7 +243,7 @@ public class GamePanel extends javax.swing.JPanel {
         );
         labPanelLayout.setVerticalGroup(
             labPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 443, Short.MAX_VALUE)
+            .addGap(0, 457, Short.MAX_VALUE)
         );
 
         toolBarPanel.addTab("Lab", labPanel);
@@ -282,7 +256,7 @@ public class GamePanel extends javax.swing.JPanel {
         );
         warehousePanelLayout.setVerticalGroup(
             warehousePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 443, Short.MAX_VALUE)
+            .addGap(0, 457, Short.MAX_VALUE)
         );
 
         toolBarPanel.addTab("Warehouse", warehousePanel);
@@ -384,8 +358,8 @@ public class GamePanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(toolBarPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(groundPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 633, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(groundPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 639, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 610, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -401,8 +375,8 @@ public class GamePanel extends javax.swing.JPanel {
                     .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(groundPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 481, Short.MAX_VALUE)
-                    .addComponent(toolBarPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 481, Short.MAX_VALUE))
+                    .addComponent(groundPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 495, Short.MAX_VALUE)
+                    .addComponent(toolBarPanel))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
