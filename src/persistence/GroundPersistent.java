@@ -15,8 +15,8 @@ public class GroundPersistent{
 	static String TAG_ATR_PRICE="price";
 	static String TAG_ATR_ROWS="rows";
 	static String TAG_ATR_COLS="cols";	
-	static String TAG_CHILD_ATR_X="x";
-	static String TAG_CHILD_ATR_Y="y";
+	static String TAG_CHILD_ATR_ROWS="rows";
+	static String TAG_CHILD_ATR_COLS="cols";
 	static String TAG_CHILD_ATR_WIDTH="width";
 	static String TAG_CHILD_ATR_HEIGHT="height";
 	
@@ -45,15 +45,15 @@ public class GroundPersistent{
 		
 
 		Wall wall=new Wall(Integer.valueOf(elem.attributeValue(
-								GroundPersistent.TAG_CHILD_ATR_HEIGHT)),
+								GroundPersistent.TAG_CHILD_ATR_WIDTH)),
 							Integer.valueOf(elem.attributeValue(
-									GroundPersistent.TAG_CHILD_ATR_WIDTH)));
+									GroundPersistent.TAG_CHILD_ATR_HEIGHT)));
 
 		ground.addTileElement(wall, new Position(
 								Integer.valueOf(elem.attributeValue(
-										GroundPersistent.TAG_CHILD_ATR_X)),
+										GroundPersistent.TAG_CHILD_ATR_ROWS)),
 								Integer.valueOf(elem.attributeValue(
-										GroundPersistent.TAG_CHILD_ATR_Y))));
+										GroundPersistent.TAG_CHILD_ATR_COLS))));
 	}
 
 	

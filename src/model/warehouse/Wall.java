@@ -11,4 +11,7 @@ public class Wall extends TileElement {
 		visitor.visitWall(this);
 	}
 
+	public boolean equals(Object obj){		
+		return (getClass() == obj.getClass());
+	}
 }
