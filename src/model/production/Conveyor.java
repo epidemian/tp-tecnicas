@@ -12,7 +12,7 @@ import model.warehouse.TileElementVisitor;
 
 public class Conveyor extends ProductionLineElement {
 
-	private enum Direction {
+	public enum Direction {
 		NORTH, EAST, SOUTH, WEST, NONE;
 	}
 
@@ -23,6 +23,14 @@ public class Conveyor extends ProductionLineElement {
 		super(1, 1);
 	}
 
+	public Direction getPreviousLineElementDirection() {
+		return previousLineElementDirection;
+	}
+
+	public Direction getNextLineElementDirection() {
+		return nextLineElementDirection;
+	}
+	
 	@Override
 	public void accept(TileElementVisitor visitor) {
 		visitor.visitConveyor(this);
