@@ -19,7 +19,7 @@ public class Ground {
 	public int getPrice() {
 		return price;
 	}
-
+	
 	public int getRows() {
 		return this.tileElements.length;
 	}
@@ -27,6 +27,7 @@ public class Ground {
 	public int getCols() {
 		return this.tileElements[0].length;
 	}
+	
 
 	public boolean isAreaEmpty(Position pos, int width, int heigh) {
 
@@ -68,14 +69,17 @@ public class Ground {
 		return this.tileElements[row][col];
 	}
 
-	private void setTileElement(TileElement element, int col, int row) {
-		this.tileElements[row][col] = element;
-	}
-
+	
+	/*
 	private void fillAreaWithEmptySpace(Position from, int width, int height) {
 		fillAreaWithElement(EmptyTileElement.getInstance(), from, width, height);
 	}
 
+	
+	private void setTileElement(TileElement element, int col, int row) {
+		this.tileElements[row][col] = element;
+	}
+	
 	private void fillAreaWithElement(TileElement element, Position position,
 			int width, int height) {
 		Position max = position.add(new Position(width, height));
@@ -83,7 +87,27 @@ public class Ground {
 			for (int col = position.getCol(); col < max.getCol(); col++)
 				setTileElement(element, col, row);
 	}
+	*/
+	
 
+	private void fillAreaWithEmptySpace(Position from, int width, int height) {
+		fillAreaWithElement(EmptyTileElement.getInstance(), from, height, width);
+	} 
+	
+	private void fillAreaWithElement(TileElement element, Position position,
+			int width, int height) {
+		Position max = position.add(new Position(height, width));
+		
+		for (int row = position.getRow(); row < max.getRow(); row++)
+			for (int col = position.getCol(); col < max.getCol(); col++)
+				setTileElement(element, row, col);
+	}
+	
+	private void setTileElement(TileElement element, int row, int col) {
+		this.tileElements[row][col] = element;
+	}
+	
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

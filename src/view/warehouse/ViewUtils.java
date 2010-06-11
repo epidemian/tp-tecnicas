@@ -6,6 +6,7 @@ import model.production.ProductionLineElement;
 import model.production.ProductionMachine;
 import model.warehouse.Ground;
 import model.warehouse.Position;
+import model.warehouse.Wall;
 
 public class ViewUtils {
 
@@ -46,6 +47,19 @@ public class ViewUtils {
 					ground.addTileElement(element, pos);
 			}
 		}
+		return ground;
+	}
+	
+	public static Ground creatGroundSample2() {
+
+		Ground ground = new Ground(0, 15, 20);
+		
+	//	Wall upperWall=new Wall(10,1);
+		Wall lowerWall=new Wall(16,1);
+		
+		ground.addTileElement(lowerWall,new Position(1,1));
+	//	ground.addTileElement(upperWall,new Position(5,1));
+			
 		return ground;
 	}
 }
