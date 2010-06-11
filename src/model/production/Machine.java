@@ -64,11 +64,11 @@ public abstract class Machine extends ProductionLineElement implements
 	}
 
 	public void notifyBreakdown() {
-		this.getProductionLineElementObserver().updateBreakdown();
+		this.getProductionLineElementObserver().updateBreakdown(this);
 	}
 
 	public void notifyBrokenMachineRepair() {
-		this.getProductionLineElementObserver().updateBrokenMachineRepair();
+		this.getProductionLineElementObserver().updateBrokenMachineRepair(this);
 	}
 
 	private void setMachineType(MachineType machineType) {

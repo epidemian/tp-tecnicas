@@ -2,6 +2,7 @@ package model.production;
 
 import static model.utils.ArgumentUtils.checkNotNull;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -21,10 +22,12 @@ public class ProductionLine implements TickUpdatable, DailyUpdatable,
 	private StorageArea storageArea;
 	private List<Integer> productionHistory;
 	
+	
+	
 	/**
 	 * A production line is working if none of its machines are broken.
 	 */
-	private int brokenMachines;
+	private List<Machine> brokenMachines;
 	
 	private RawMaterials configuration;
 	
@@ -37,7 +40,8 @@ public class ProductionLine implements TickUpdatable, DailyUpdatable,
 		
 		this.setProductionLineElementsObserver();
 		
-		brokenMachines=0;
+		brokenMachines=new ArrayList<Machine>();
+	
 	}
 	
 	public static ProductionLine createCircularProductionLine(
@@ -172,60 +176,19 @@ public class ProductionLine implements TickUpdatable, DailyUpdatable,
 		return size;
 	}
 	
-	public void updateBreakdown(){
-		this.brokenMachines++;
+	public void updateBreakdown(Machine machine){
+		
+		this.brokenMachines.add(machine);
 	}
 	
 	/**
 	 * Called when a Broken machine is repaired
 	 */
-	public void updateBrokenMachineRepair(){
-		this.brokenMachines--;
-	}
-	
-	/*
-	private int countBrokenMachines(){
-		Iterator<ProductionLineElement> iterator = this.iterator();	
-		int broken = 0;
+	public void updateBrokenMachineRepair(Machine machine){
 		
-		while(iterator.hasNext()){
-			if (iterator.next().isBroken())
-			broken++;
-		}		
-		return broken;
+		this.brokenMachines.remove(machine);
 	}
-	*/
 	
-	/*
-	 * TODO: Lo mismo que en Machine#equals().
-	 */
-//	@Override
-//	public boolean equals(Object other){
-//		
-//		ProductionLine otherLine = (ProductionLine)other;
-//		
-//		if (this.productionLineSize() != otherLine.productionLineSize())
-//			return false;
-//		
-//		Iterator<ProductionLineElement> iterator = this.iterator();	
-//		Iterator<ProductionLineElement> iteratorOther = otherLine.iterator();	
-//				
-//		while(iterator.hasNext()){
-//			ProductionLineElement element = iterator.next();
-//			ProductionLineElement elementOther = iteratorOther.next();
-//		
-//			if (element == null && elementOther == null)
-//				continue;
-//
-//			if (element == null || elementOther == null)
-//				return false;
-//			
-//			if (!element.equals(elementOther))
-//				return false;
-//		}
-//		
-//		return true;
-//	}
 	
 
 	private String toStringLine(){
@@ -248,6 +211,6 @@ public class ProductionLine implements TickUpdatable, DailyUpdatable,
 	}
 	
 	public boolean isWorking(){
-		return (this.brokenMachines == 0);
+		return (this.brokenMachines.size() == 0);
 	}
 }
