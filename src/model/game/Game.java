@@ -2,13 +2,13 @@ package model.game;
 
 import java.util.LinkedList;
 import java.util.List;
+
 import model.production.Conveyor;
 import model.production.MachineType;
 import model.production.ProductionLineElement;
 import model.production.ProductionMachine;
 import model.production.QualityControlMachine;
 import model.warehouse.Ground;
-import model.warehouse.Wall;
 
 public class Game {
 

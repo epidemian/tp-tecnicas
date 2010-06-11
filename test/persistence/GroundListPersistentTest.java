@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import model.warehouse.Ground;
 
 import org.dom4j.Document;
@@ -11,9 +12,6 @@ import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.junit.Before;
 import org.junit.Test;
-
-import persistence.GroundListPersistent;
-import persistence.InvalidTagException;
 
 public class GroundListPersistentTest  extends XMLPersistentTest {
 	List<Ground> list;

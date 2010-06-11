@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import model.lab.technologies.NewProductionSequenceTechnology;
 import model.production.MachineType;
 import model.production.ProductType;
@@ -19,10 +18,6 @@ import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.junit.Before;
 import org.junit.Test;
-
-import persistence.InvalidTagException;
-import persistence.NoProductTypeDefinedInSequenceException;
-import persistence.ProductionSequenceTechnologyPersistent;
 
 public class ProductionSequenceTechnologyPersistentTest 
 					extends XMLPersistentTest{

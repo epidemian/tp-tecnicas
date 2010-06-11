@@ -1,6 +1,6 @@
 package model.production;
 
-import static model.production.ProductionLineElement.*;
+import static model.production.ProductionLineElement.connectLineElements;
 import static org.junit.Assert.*;
 
 import java.util.List;

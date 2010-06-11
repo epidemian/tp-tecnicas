@@ -1,15 +1,14 @@
 package persistence;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import model.exception.BusinessLogicException;
 import model.production.ProductType;
 
-import org.dom4j.*;
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.Element;
 import org.junit.Before;
 import org.junit.Test;
-
-import persistence.InvalidTagException;
-import persistence.ProductTypePersistent;
 
 public class ProductTypePersistentTest extends XMLPersistentTest{
 

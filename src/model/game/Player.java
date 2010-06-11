@@ -1,14 +1,8 @@
 package model.game;
 
 import static model.utils.ArgumentUtils.checkNotNull;
-
-import java.util.Collection;
-
 import model.game.time.UpdateScheduler;
-import model.lab.ResearchLab;
-import model.production.ProductionLine;
 import model.warehouse.Ground;
-import model.warehouse.Warehouse;
 
 public class Player {
 	private Budget budget;

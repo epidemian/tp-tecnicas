@@ -5,18 +5,13 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.lab.technologies.NewProductionSequenceTechnology;
+
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.junit.Before;
 import org.junit.Test;
-
-import persistence.InvalidTagException;
-import persistence.NoProductTypeDefinedInSequenceException;
-import persistence.ProductionSequenceTechnologyListPersistent;
-
-
-import model.lab.technologies.NewProductionSequenceTechnology;
 
 
 public class ProductionSequenceTechnologyListPersistentTest 

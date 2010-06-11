@@ -5,17 +5,13 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
+import model.production.MachineType;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.junit.Before;
 import org.junit.Test;
-
-import persistence.InvalidTagException;
-import persistence.MachineTypeListPersistent;
-import model.production.MachineType;
 
 public class MachineTypeListPersistentTest extends XMLPersistentTest{
 

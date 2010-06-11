@@ -1,4 +1,4 @@
-package view;
+package view.warehouse;
 
 import java.awt.Dimension;
 import java.awt.Image;
@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+
 import model.production.ProductionLineElement;
 import model.warehouse.TileElement;
 

@@ -4,8 +4,8 @@ import javax.swing.UIManager;
 
 import model.game.Game;
 import model.warehouse.Ground;
-import view.MainFrame;
-import view.ViewUtils;
+import view.warehouse.MainFrame;
+import view.warehouse.ViewUtils;
 
 public class Main {
 

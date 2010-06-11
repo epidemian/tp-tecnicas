@@ -1,9 +1,12 @@
-package view;
+package view.warehouse;
 
 import java.util.LinkedList;
 import java.util.List;
+
 import model.game.Game;
 import model.production.ProductionLineElement;
+import view.warehouse.edition.EditionToolMediator;
+import view.warehouse.edition.EditionToolbar;
 
 public class GamePanel extends javax.swing.JPanel {
  
@@ -11,9 +14,29 @@ public class GamePanel extends javax.swing.JPanel {
     public GamePanel(Game game) {
         this.game = game;
      //   this.machinesPanelLogic = new ProductionElementsPanelLogic(game.getMachines());
-        initComponents();
-        this.initLineElementPanelLogic(game.getProductionLineElements());
-    }
+		initComponents();
+		this.initLineElementPanelLogic(game.getProductionLineElements());
+
+		// TODO: No se le puede poner el tipo posta a esta variable???
+		// Estaría bueno evitar el casteo.
+		GroundPanel groundPanel = ((GroundPanelContainer) this.groundPanel)
+				.getGroundPanel();
+		EditionToolMediator toolMediator = new EditionToolMediator(groundPanel);
+		EditionToolbar editionToolbar = new EditionToolbar(toolMediator);		
+		
+		/*
+		 * TODO: Esto hay que sacarlo, la idea es que la editionToolbar sea un
+		 * componente gráfico de esta clase, con botones para elegir las
+		 * distintas herramientas de edición. Los botones setearían herramientas
+		 * en el toolMediator. Por ahora, pongo que escuche las teclas del
+		 * GamePanel, cosa de poder seleccionar las herramientas así. (ojo,
+		 * puede quedar el tema de selección de herramientas con el teclado, que
+		 * es bastante pro =P. Habría que ver quién las escucha, y ese tipo se
+		 * encargue de setear la herramienta en el toolMediator. (La tecla ESC
+		 * me parece que va a haber que escucharla sí o sí...)
+		 */
+		addKeyListener(editionToolbar);
+	}
 
     private void initLineElementPanelLogic(List<ProductionLineElement> lineElements){
 
@@ -55,7 +78,7 @@ public class GamePanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        groundPanel = new GroundPanel(this.game.getGround());
+        groundPanel = new GroundPanelContainer(this.game.getGround());
         toolBarPanel = new javax.swing.JTabbedPane();
         marketPanel = new javax.swing.JPanel();
         marketTabbedPanel = new javax.swing.JTabbedPane();

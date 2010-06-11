@@ -1,18 +1,11 @@
-package view;
+package view.warehouse;
 
 import java.awt.Dimension;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-import model.game.Game;
 
-import model.warehouse.Ground;
+import model.game.Game;
 
 public class MainFrame extends JFrame {
 

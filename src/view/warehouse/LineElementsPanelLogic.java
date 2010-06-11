@@ -1,12 +1,12 @@
-package view;
+package view.warehouse;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.List;
-import javax.swing.ImageIcon;
 
 import javax.swing.JButton;
+
 import model.production.ProductionLineElement;
 import model.warehouse.TileElement;
 

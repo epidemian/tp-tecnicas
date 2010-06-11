@@ -1,7 +1,6 @@
 package persistence;
 
 import static org.junit.Assert.assertEquals;
-
 import model.production.RawMaterialType;
 import model.production.RawMaterials;
 
@@ -10,9 +9,6 @@ import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.junit.Before;
 import org.junit.Test;
-
-import persistence.InvalidTagException;
-import persistence.RawMaterialsPersistent;
 
 public class RawMaterialsPersistentTest extends XMLPersistentTest{
 

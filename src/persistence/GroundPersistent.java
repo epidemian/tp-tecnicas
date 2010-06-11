@@ -2,12 +2,11 @@ package persistence;
 
 import java.util.Iterator;
 
-import org.dom4j.Element;
-
-
 import model.warehouse.Ground;
 import model.warehouse.Position;
 import model.warehouse.Wall;
+
+import org.dom4j.Element;
 
 public class GroundPersistent{
 

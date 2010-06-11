@@ -2,11 +2,6 @@ package model.production;
 
 import static model.utils.ArgumentUtils.checkNotNull;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
-import model.warehouse.Position;
-
 public abstract class Machine extends ProductionLineElement implements
 		MachineObservable {
 

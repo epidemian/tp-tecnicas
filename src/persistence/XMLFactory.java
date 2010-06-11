@@ -7,8 +7,10 @@ import model.lab.technologies.NewProductionSequenceTechnology;
 import model.production.MachineType;
 import model.warehouse.Ground;
 
-import org.dom4j.*;
-import org.dom4j.io.*;
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.Element;
+import org.dom4j.io.SAXReader;
 
 public class XMLFactory extends InputFactory{
 

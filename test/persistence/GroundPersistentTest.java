@@ -1,6 +1,9 @@
 package persistence;
 
 import static org.junit.Assert.assertEquals;
+import model.warehouse.Ground;
+import model.warehouse.Position;
+import model.warehouse.Wall;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -8,12 +11,6 @@ import org.dom4j.Element;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-
-import persistence.GroundPersistent;
-import persistence.InvalidTagException;
-import model.warehouse.Ground;
-import model.warehouse.Position;
-import model.warehouse.Wall;
 
 public class GroundPersistentTest extends XMLPersistentTest {
 

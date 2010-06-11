@@ -2,9 +2,7 @@ package persistence;
 
 import model.production.MachineType;
 
-
-
-import org.dom4j.*;
+import org.dom4j.Element;
 
 public class MachineTypePersistent  {
 

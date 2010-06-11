@@ -3,8 +3,7 @@ package persistence;
 
 import model.production.ProductType;
 
-
-import org.dom4j.*;
+import org.dom4j.Element;
 
 public class ProductTypePersistent {
 

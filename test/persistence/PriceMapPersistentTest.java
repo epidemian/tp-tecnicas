@@ -11,8 +11,6 @@ import org.dom4j.Element;
 import org.junit.Before;
 import org.junit.Test;
 
-import persistence.XMLPersistentTest;
-
 public class PriceMapPersistentTest extends XMLPersistentTest{
 	
 	Map<String, Integer> map;
