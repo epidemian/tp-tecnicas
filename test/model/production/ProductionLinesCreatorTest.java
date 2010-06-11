@@ -1,5 +1,6 @@
 package model.production;
 
+import static model.production.ProductionLineElement.*;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
@@ -43,10 +44,10 @@ public class ProductionLinesCreatorTest {
 		ProductionLineElement prodLineElement4 = new Conveyor();
 		ProductionLineElement prodLineElement5 = createProductionMachine("Horno");
 
-//		connectLineElements(prodLineElement1, prodLineElement2);
-//		connectLineElements(prodLineElement2, prodLineElement3);
-//		connectLineElements(prodLineElement3, prodLineElement4);
-//		connectLineElements(prodLineElement4, prodLineElement5);
+		connectLineElements(prodLineElement1, prodLineElement2);
+		connectLineElements(prodLineElement2, prodLineElement3);
+		connectLineElements(prodLineElement3, prodLineElement4);
+		connectLineElements(prodLineElement4, prodLineElement5);
 
 		ProductionLine line = ProductionLine.createValidProductionLine(
 				prodLineElement1, this.storageArea, new RawMaterials());
@@ -58,8 +59,8 @@ public class ProductionLinesCreatorTest {
 		ProductionLineElement prodLine2Element2 = new Conveyor();
 		ProductionLineElement prodLine2Element3 = createProductionMachine("Super-Machine");
 
-//		connectLineElements(prodLine2Element1, prodLine2Element2);
-//		connectLineElements(prodLine2Element2, prodLine2Element3);
+		connectLineElements(prodLine2Element1, prodLine2Element2);
+		connectLineElements(prodLine2Element2, prodLine2Element3);
 
 		ProductionLine line2 = ProductionLine.createValidProductionLine(
 				prodLine2Element1, this.storageArea, new RawMaterials());

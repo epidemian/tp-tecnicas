@@ -1,5 +1,6 @@
 package model.production;
 
+import static model.production.ProductionLineElement.*;
 import static org.junit.Assert.*;
 
 import java.util.List;
@@ -25,8 +26,8 @@ public class ProductionLineTest {
 		ProductionLineElement prodLineElement3 = new ProductionMachine(
 				new MachineType("Horno",1,1));
 
-//		connectLineElements(prodLineElement1, prodLineElement2);
-//		connectLineElements(prodLineElement2, prodLineElement3);
+		connectLineElements(prodLineElement1, prodLineElement2);
+		connectLineElements(prodLineElement2, prodLineElement3);
 
 		return ProductionLine.createValidProductionLine(prodLineElement1,
 				new StorageArea(new RawMaterials(),
@@ -82,8 +83,8 @@ public class ProductionLineTest {
 		MachineMock machineMock2 = new MachineMock(new MachineType("Haz",1,1));
 		MachineMock machineMock3 = new MachineMock(new MachineType("Horno",1,1));
 
-//		connectLineElements(machineMock1, machineMock2);
-//		connectLineElements(machineMock2, machineMock3);
+		connectLineElements(machineMock1, machineMock2);
+		connectLineElements(machineMock2, machineMock3);
 
 		ProductionLine line = ProductionLine.createValidProductionLine(
 				machineMock1, new StorageArea(new RawMaterials(),

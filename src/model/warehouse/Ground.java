@@ -45,8 +45,8 @@ public class Ground {
 
 		fillAreaWithElement(element, position, element.getWidth(), element
 				.getHeight());
-
-		element.addToGround(this, position);
+		
+		element.setPosition(position);
 	}
 
 	public void visitElements(TileElementVisitor visitor) {

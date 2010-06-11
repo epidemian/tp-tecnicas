@@ -5,7 +5,7 @@ import model.exception.BusinessLogicException;
 
 abstract public class TileElement {
 
-	private static final Position NOWHERE = new Position(-1, -1);
+	static final Position NOWHERE = new Position(-1, -1);
 
 	private int width;
 	private int height;
@@ -48,31 +48,13 @@ abstract public class TileElement {
 		this.width = width;
 	}
 
-	private void setPosition(Position position) {
-		checkNotNull(position, "position");
-		this.position = position;
-	}
-
 	/**
-	 * Adds the tile element to a ground, setting it's position to a given one
-	 * inside the ground.
-	 * 
-	 * Note that this method should only be called by {@link Ground}, as both
-	 * ground and element states should be consistent. Use
-	 * {@link Ground#addTileElement(TileElement, Position)} to add a tile
-	 * element to a ground.
-	 * 
-	 * @param ground
+	 * Note: Should only be called by {@link Ground#addTileElement(TileElement, Position)}
 	 * @param position
 	 */
-	final void addToGround(Ground ground, Position position) {
-		checkNotNull(ground, "ground");
-		// TODO checkear que no esté en un ground ya...
-		setPosition(position);
-		onAddedToGround(ground);
-	}
-
-	protected void onAddedToGround(Ground ground) {
+	void setPosition(Position position) {
+		checkNotNull(position, "position");
+		this.position = position;
 	}
 
 }

@@ -1,6 +1,5 @@
 package model.production;
 
-import static model.production.ProductionLineElementUtils.isConveyor;
 import static model.utils.ArgumentUtils.checkNotNull;
 
 import java.util.ArrayList;
@@ -112,48 +111,4 @@ public abstract class Machine extends ProductionLineElement implements
 		this.getMachineState().breakUp(this);
 	}
 
-	@Override
-	protected boolean canConnectToByType(ProductionLineElement lineElement) {
-		return isConveyor(lineElement);
-	}
-
-	@Override
-	protected Collection<Position> getValidPreviousLineElementPositions() {
-		Collection<Position> positions = new ArrayList<Position>();
-		if (!hasPreviousLineElement())
-			positions.add(getPosition().add(getInputRelativePosition()));
-		return positions;
-	}
-
-	@Override
-	protected Collection<Position> getValidNextLineElementPositions() {
-		Collection<Position> positions = new ArrayList<Position>();
-		if (!hasNextLineElement())
-			positions.add(getPosition().add(getOutputRelativePosition()));
-		return positions;
-	}
-
-
-	private Position getInputRelativePosition() {
-		return machineType.getInputRelativePosition();
-	}
-
-	private Position getOutputRelativePosition() {
-		return machineType.getOutputRelativePosition();
-	}
-
-	/*
-	 * TODO: Por qué dos Machines son iguales si sus tipos son iguales
-	 * solamente? Si en la fábrica tengo 2 "hornos" por ejemplo, no son iguales,
-	 * por más de que sus tipos sean iguales. Si fuesen iguales, no se podría
-	 * buscar uno o el otro en una colección que los contenga.
-	 * 
-	 * Además, nunca redefinir el equals y dejar el hashCode sin redefinir: se
-	 * rompe la interfaz del hashCode.
-	 */
-	// @Override
-	// public boolean equals(Object other){
-	// Machine otherMachine = (Machine)other;
-	// return (this.machineType.equals(otherMachine.machineType));
-	// }
 }
