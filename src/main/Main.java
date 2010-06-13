@@ -1,5 +1,8 @@
 package main;
 
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
 import javax.swing.UIManager;
 
 import model.game.Game;
@@ -22,6 +25,7 @@ public class Main {
 		Game game = new Game(ground);
 		final MainFrame mainFrame = new MainFrame(game);
 		mainFrame.setVisible(true);
+		mainFrame.requestFocus();
 
 		/*
 		 * Main loop. Refresh 25 frames per second.

@@ -1,5 +1,6 @@
 package view.warehouse;
 
+import static model.utils.ArgumentUtils.*;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -9,10 +10,13 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
+import com.sun.org.apache.xpath.internal.Arg;
+
+import model.utils.ArgumentUtils;
 import model.warehouse.Ground;
 import model.warehouse.TileElement;
 import model.warehouse.TileElementVisitor;
-import view.warehouse.edition.EditionToolMediator;
+import view.warehouse.edition.EditionTool;
 
 public class GroundPanel extends JPanel {
 
@@ -25,31 +29,38 @@ public class GroundPanel extends JPanel {
 	 */
 	private int tileSize = 50;
 
+	private GroundPanelPainter painter;
+
 	public GroundPanel(Ground ground) {
 		this.ground = ground;
 		/*
 		 * TODO Do not hard-code Color.white =(.
 		 */
-		this.setBackground(Color.white);
+		this.setBackground(Color.WHITE);
 		/*
 		 * This a scroll-able panel. The scroll can be used in the area.
 		 */
 		setPreferredSize(this.getGroundSize());
+
+		setPainter(new NullPainter());
 	}
 
 	private Dimension getGroundSize() {
-		return new Dimension(this.ground.getCols() * this.tileSize,
-				this.ground.getRows() * this.tileSize);
+		int width = this.ground.getCols() * this.tileSize;
+		int height = this.ground.getRows() * this.tileSize;
+		return new Dimension(width, height);
 	}
 
 	@Override
 	protected void paintComponent(Graphics graphics) {
 		super.paintComponent(graphics);
-		
+
 		drawVerticalLines(graphics);
 		dreawHorizontalLines(graphics);
 
 		this.ground.visitElements(createElementPainter(graphics));
+
+		this.painter.paint(this, graphics);
 	}
 
 	private void drawVerticalLines(Graphics graphics) {
@@ -82,7 +93,7 @@ public class GroundPanel extends JPanel {
 	private TileElementVisitor createElementPainter(final Graphics graphics) {
 		return new TileElementImageRecognizer() {
 			private List<TileElement> bigTouchedTiles = new ArrayList<TileElement>();
-			
+
 			@Override
 			protected void onTileElmentVisited(TileElement element,
 					BufferedImage image) {
@@ -107,8 +118,18 @@ public class GroundPanel extends JPanel {
 		};
 	}
 
-	public void setPainter(EditionToolMediator toolMediator) {
-		// TODO Auto-generated method stub
-		
+	public void setPainter(GroundPanelPainter painter) {
+		checkNotNull(painter, "painter");
+		this.painter = painter;
 	}
+}
+
+class NullPainter implements GroundPanelPainter {
+
+	@Override
+	public void paint(GroundPanel groundPanel, Graphics graphics) {
+		// TODO Auto-generated method stub
+
+	}
+
 }

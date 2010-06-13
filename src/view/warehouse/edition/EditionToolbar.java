@@ -1,32 +1,29 @@
 package view.warehouse.edition;
 
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.JPanel;
 
-public class EditionToolbar extends JPanel implements KeyListener {
+public class EditionToolbar extends JPanel {
 
-	public EditionToolbar(EditionToolMediator toolMediator) {
-		// TODO Auto-generated constructor stub
+	private KeyListener keyListener;
+
+	public EditionToolbar(EditionTool toolMediator) {
+		keyListener = new Listener();
 	}
 
-	@Override
-	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
+	public KeyListener getKeyListener() {
+		return this.keyListener;
 	}
 
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	private class Listener extends KeyAdapter {
 
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+		@Override
+		public void keyPressed(KeyEvent e) {
+			System.out.println("Key pressed: " + e);
+		}
 
+	}
 }

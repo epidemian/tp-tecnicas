@@ -1,6 +1,11 @@
 package view.warehouse;
 
 import java.awt.Dimension;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowFocusListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -28,8 +33,16 @@ public class MainFrame extends JFrame {
 		this.setVisible(true);
 		// this.pack();
 		this.setSize(new Dimension(850, 650));
-		//this.setLocationRelativeTo(null);
+		// this.setLocationRelativeTo(null);
 		this.maximize();
+		
+		// Give focus to GamePanel when selected.
+		this.addWindowFocusListener(new WindowAdapter() {
+			@Override
+			public void windowGainedFocus(WindowEvent e) {
+				MainFrame.this.contentPane.requestFocusInWindow();
+			}
+		});
 	}
 
 	public void maximize() {

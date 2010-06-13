@@ -41,7 +41,6 @@ public abstract class TileElementImageRecognizer extends TileElementVisitor {
 	}
 
 	private static BufferedImage loadImage(String path) {
-		System.out.println("LOAD IMAGE " + path);
 		BufferedImage image = null;
 		try {
 			URL url = TileElementImageRecognizer.class.getClassLoader().getResource(path);

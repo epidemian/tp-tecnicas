@@ -5,7 +5,7 @@ import java.util.List;
 
 import model.game.Game;
 import model.production.ProductionLineElement;
-import view.warehouse.edition.EditionToolMediator;
+import view.warehouse.edition.EditionTool;
 import view.warehouse.edition.EditionToolbar;
 
 public class GamePanel extends javax.swing.JPanel {
@@ -25,8 +25,8 @@ public class GamePanel extends javax.swing.JPanel {
 		 */
 		GroundPanel groundPanel = ((GroundPanelContainer) this.groundPanel)
 				.getGroundPanel();
-		EditionToolMediator toolMediator = new EditionToolMediator(groundPanel);
-		EditionToolbar editionToolbar = new EditionToolbar(toolMediator);		
+		EditionTool editionTool = new EditionTool(groundPanel);
+		EditionToolbar editionToolbar = new EditionToolbar(editionTool);		
 		
 		/*
 		 * TODO: Esto hay que sacarlo, la idea es que la editionToolbar sea un
@@ -39,7 +39,8 @@ public class GamePanel extends javax.swing.JPanel {
 		 * encargue de setear la herramienta en el toolMediator. (La tecla ESC
 		 * me parece que va a haber que escucharla sí o sí...)
 		 */
-		addKeyListener(editionToolbar);
+		this.addKeyListener(editionToolbar.getKeyListener());
+		
 	}
 
     private void initLineElementPanelLogic(List<ProductionLineElement> lineElements){
