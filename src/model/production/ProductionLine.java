@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import model.game.Budget;
 import model.game.time.DailyUpdatable;
 import model.game.time.TickUpdatable;
 
@@ -211,6 +212,23 @@ public class ProductionLine implements TickUpdatable, DailyUpdatable,
 	}
 	
 	public boolean isWorking(){
-		return (this.brokenMachines.size() == 0);
+		return (this.brokenMachines.size() == 0);		
 	}
+	
+	public void repairAllMachines(Budget budget) 
+					throws CannotRepairHealthyMachineException{
+	
+		// As items are removes in each iteration, we remove always the first item
+		int originalSize=brokenMachines.size();
+		
+		// originalSize is used because if .size() would be used, the size 
+		// would be recalculated on each iteration
+		for(int i=0; i<originalSize;i++){
+			brokenMachines.get(0).repair(budget);		
+		}
+		
+
+	}
+
+
 }

@@ -3,20 +3,30 @@ package model.production;
 import static model.production.ProductionLineElement.connectLineElements;
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import model.game.Budget;
+import model.warehouse.Position;
+
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class ProductionLineTest {
 
 	private ProductionLine productionLine;
+	
+	//At runtime a controller will assign a specific budget from where the line/
+	//machine will extract from repair.
+	private Budget budget;
 
 	@Before
 	public void setUp() {
 		this.productionLine = this.createProductionLineProcessingCarton();
+		this.budget=new Budget(10000);
 	}
-
+	
 	private ProductionLine createProductionLineProcessingCarton() {
 
 		ProductionLineElement prodLineElement1 = new ProductionMachine(
@@ -60,70 +70,101 @@ public class ProductionLineTest {
 		assertEquals(0, this.productionLine.getDailyProduction());
 	}
 
-	/*
-	 * public void workingProductionLineWhenMachineIsBroken(){ ProductionLine
-	 * line = this.createProductionLineProcessingCarton();
-	 * assertTrue(line.isWorking());
-	 * 
-	 * line.getFirstLineElement(). }
-	 */
 
-	/**
-	 * TODO: Una vez que se acople al visitor se tratara distinto esto! La idea
-	 * de la prueba es solo ver que el repair y la deteccion este funcionando
-	 * bien...
-	 */
-	@Test
-	public void LineWithThreeNonBrokenMachines()
-			throws CannotRepairHealthyMachineException {
-
-		// TODO: Este código está idéntico en otra prueba de este test case.. y
-		// muy similar en otro test case
-		MachineMock machineMock1 = new MachineMock(new MachineType("Licuado",1,1));
-		MachineMock machineMock2 = new MachineMock(new MachineType("Haz",1,1));
-		MachineMock machineMock3 = new MachineMock(new MachineType("Horno",1,1));
-
+	private List<MachineMock> createListConnectedMachineMocks(){
+		List<MachineMock> list=new ArrayList<MachineMock>();
+		
+		MachineMock machineMock1 = 
+			new MachineMock(new MachineType
+					("Licuado",1,1,new Position(0,-1),new Position(0,1),100));
+		MachineMock machineMock2 = 
+			new MachineMock(new MachineType
+					("Haz",1,1,new Position(0,-1),new Position(0,1),100));
+		MachineMock machineMock3 = 
+			new MachineMock(new MachineType
+					("Horno",1,1,new Position(0,-1),new Position(0,1),100));
+		
 		connectLineElements(machineMock1, machineMock2);
 		connectLineElements(machineMock2, machineMock3);
+		
+		list.add(machineMock1);
+		list.add(machineMock2);
+		list.add(machineMock3);
+	
+		
+		return list;
+	}
+	
+	@Test
+	public void LineWithThreeNonBrokenMachinesRepairedFromMachines()
+			throws CannotRepairHealthyMachineException {
+
+		List<MachineMock> machines= createListConnectedMachineMocks();
 
 		ProductionLine line = ProductionLine.createValidProductionLine(
-				machineMock1, new StorageArea(new RawMaterials(),
+				machines.get(0), new StorageArea(new RawMaterials(),
 						new ValidProductionSequences()), new RawMaterials());
 
-		machineMock1.breakUp();
-		machineMock2.breakUp();
-
+		machines.get(0).breakUp();
+		machines.get(1).breakUp();
+		
+	
 		// Should be false because two machines are broken
 		assertFalse(line.isWorking());
-
-		machineMock1.repair();
+		
+		machines.get(0).repair(this.budget);
 
 		// Should be false because one machine is broken
 		assertFalse(line.isWorking());
 
-		machineMock2.repair();
+		machines.get(1).repair(this.budget);
 
-		// All machines are repaired
+		// All machines are now repaired!
 		assertTrue(line.isWorking());
+		
 	}
+	
+	@Test
+	public void LineWithThreeNonBrokenMachinesRepairedFromLine()
+			throws CannotRepairHealthyMachineException {
 
-	/**
-	 * In order to be able to avoid probability
-	 * 
-	 */
-	// TODO: Esto no es un mock...
-	private class MachineMock extends ProductionMachine {
+		List<MachineMock> machines= createListConnectedMachineMocks();
 
-		private MachineMock(MachineType machineType) {
-			super(machineType);
-		}
+		ProductionLine line = ProductionLine.createValidProductionLine(
+				machines.get(0), new StorageArea(new RawMaterials(),
+						new ValidProductionSequences()), new RawMaterials());
 
-		public void breakUp() {
-			super.breakUp();
-		}
+		machines.get(0).breakUp();
+		machines.get(1).breakUp();
+		
+		line.repairAllMachines(budget);
 
-		public void damage() {
-			super.damage();
-		}
+		// All machines are now repaired!
+		assertTrue(line.isWorking());
+		
 	}
+	
+	@Test
+	public void debitFromBudgetWhenRepairingLine() 
+							throws CannotRepairHealthyMachineException{
+		int initialBudget=this.budget.getBalance();
+		
+		List<MachineMock> machines= createListConnectedMachineMocks();
+
+		ProductionLine line = ProductionLine.createValidProductionLine(
+				machines.get(0), new StorageArea(new RawMaterials(),
+						new ValidProductionSequences()), new RawMaterials());
+		
+		//One machine will be broken and the line will be repaired.
+		machines.get(0).breakUp();
+		assertFalse(line.isWorking());
+		
+		line.repairAllMachines(this.budget);
+		
+		assertEquals(this.budget.getBalance(), initialBudget - 
+				Math.round(machines.get(0).getPrice()*Machine.PRICE_REPAIR_COEF));
+	}
+	
+	
+	
 }

@@ -22,4 +22,8 @@ public class Budget {
 	public boolean amountCovered(int amount) {
 		return (this.balance >= amount) && (this.balance >= 0);
 	}
+	
+	public String toString(){
+		return "Budget:"+balance;
+	}
 }

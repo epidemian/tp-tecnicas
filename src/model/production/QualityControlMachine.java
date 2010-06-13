@@ -31,8 +31,4 @@ public class QualityControlMachine extends Machine {
 		visitor.visitQualityControlMachine(this);
 	}
 
-	@Override
-	public int getPrice() {
-		return 0;
-	}
 }

@@ -1,16 +1,19 @@
 package model.production;
 
 import static model.utils.ArgumentUtils.checkNotNull;
+import model.game.Budget;
 
 public abstract class Machine extends ProductionLineElement implements
 		MachineObservable {
 
-	// TODO: esto debería levantese de algún archivo de confg o algo...
 	private static final double BREAK_CHANCE = 0.05;
 	private static final double DAMAGE_CHANCE = 0.15;
-
+	public static final float PRICE_REPAIR_COEF =(float) 0.05;
+	
 	private MachineState machineState;
 	private MachineType machineType;
+	
+
 
 	/*
 	 * public Machine(MachineType machineType, int width, int height) {
@@ -38,13 +41,16 @@ public abstract class Machine extends ProductionLineElement implements
 
 	/**
 	 * Template method to treat the product. The ProductionMachine can
-	 * setDefective a producto, and a QualityControlMachine can discard it.
+	 * setDefective a product, and a QualityControlMachine can discard it.
 	 * 
 	 * @param input
 	 */
 	public abstract void treatProduct(Product input);
 
-	public void repair() throws CannotRepairHealthyMachineException {
+	public void repair(Budget budget) throws CannotRepairHealthyMachineException
+	{
+		budget.decrement(Math.
+				round(this.machineType.getPrice()*PRICE_REPAIR_COEF));
 		this.getMachineState().repair(this);
 	}
 
@@ -56,7 +62,9 @@ public abstract class Machine extends ProductionLineElement implements
 		this.machineState = newState;
 	}
 
-	public abstract int getPrice();
+	public int getPrice(){
+		return this.machineType.getPrice();
+	}
 
 	@Override
 	public String toString() {

@@ -2,13 +2,20 @@ package model.production;
 
 import static org.junit.Assert.assertEquals;
 
+import model.game.Budget;
+
 import org.junit.Before;
 import org.junit.Test;
 
 public class MachineStateTest {
+	
 	private MachineMock machine;
 	private ProductionLine line;
 
+	//At runtime a controller will assign a specific budget from where the line/
+	//machine will extract from repair.
+	private Budget budget;
+	
 	@Before
 	public void setUp() {
 
@@ -17,6 +24,7 @@ public class MachineStateTest {
 				new StorageArea(new RawMaterials(),
 						new ValidProductionSequences()), new RawMaterials());
 		machine.setProductionLineElementObserver(line);
+		this.budget=new Budget(10000);
 	}
 
 	@Test(expected = CannotRepairHealthyMachineException.class)
@@ -24,7 +32,7 @@ public class MachineStateTest {
 			throws CannotRepairHealthyMachineException {
 
 		machine.setMachineState(new HealthyMachineState());
-		machine.repair();
+		machine.repair(budget);
 	}
 
 	@Test
@@ -32,7 +40,7 @@ public class MachineStateTest {
 			throws CannotRepairHealthyMachineException {
 
 		machine.setMachineState(new DamagedMachineState());
-		machine.repair();
+		machine.repair(budget);
 
 		assertEquals(machine.getMachineState(), new HealthyMachineState());
 	}
@@ -42,7 +50,7 @@ public class MachineStateTest {
 			throws CannotRepairHealthyMachineException {
 
 		machine.setMachineState(new BrokenMachineState());
-		machine.repair();
+		machine.repair(this.budget);
 
 		assertEquals(machine.getMachineState(), new HealthyMachineState());
 	}
@@ -59,6 +67,7 @@ public class MachineStateTest {
 	 * In order to be able to avoid probability
 	 * 
 	 */
+	/*
 	private class MachineMock extends ProductionMachine {
 
 		private MachineMock(MachineType machineType) {
@@ -74,5 +83,5 @@ public class MachineStateTest {
 			super.damage();
 		}
 	}
-
+	*/
 }
