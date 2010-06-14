@@ -7,12 +7,15 @@ import java.util.Arrays;
 public class Ground {
 	private int price;
 	private TileElement tileElements[][];
+	private EmptyTileElement emptyElement;
 
 	public Ground(int price, int rows, int cols) {
 		this.price = price;
 		checkGreaterEqual(cols, 1, "cols");
 		checkGreaterEqual(rows, 1, "rows");
 		this.tileElements = new TileElement[rows][cols];
+		this.emptyElement = new EmptyTileElement(cols, rows);
+		this.emptyElement.setPosition(Position.ZERO);
 		fillAreaWithEmptySpace(Position.ZERO, rows, cols);
 	}
 
@@ -78,7 +81,7 @@ public class Ground {
 	}
 
 	private boolean isTileEmpty(int row, int col) {
-		return getTileElement(row, col).equals(EmptyTileElement.getInstance());
+		return getTileElement(row, col) == this.emptyElement;
 	}
 
 	private TileElement getTileElement(int row, int col) {
@@ -86,7 +89,7 @@ public class Ground {
 	}
 
 	private void fillAreaWithEmptySpace(Position from, int width, int height) {
-		fillAreaWithElement(EmptyTileElement.getInstance(), from, height, width);
+		fillAreaWithElement(this.emptyElement, from, height, width);
 	}
 
 	private void fillAreaWithElement(TileElement element, Position position,

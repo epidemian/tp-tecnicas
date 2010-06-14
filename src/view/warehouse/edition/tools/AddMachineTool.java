@@ -1,17 +1,14 @@
 package view.warehouse.edition.tools;
 
 import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 
+import model.game.Game;
+import model.production.MachineType;
+import model.warehouse.Position;
 import view.warehouse.GamePanel;
 import view.warehouse.GroundPanel;
 import view.warehouse.edition.EditionTool;
-import model.game.Budget;
-import model.game.Game;
-import model.production.Machine;
-import model.production.MachineType;
-import model.production.ProductionMachine;
-import model.warehouse.Position;
 
 public class AddMachineTool extends EditionTool {
 
@@ -32,7 +29,7 @@ public class AddMachineTool extends EditionTool {
 	}
 
 	@Override
-	public void paint(Graphics graphics) {
+	public void paint(Graphics2D graphics) {
 		Position position = this.groundPanel.getCurrentMousePosition();
 		if (position != null) {
 			Color color = canPutMachineAt(position) ? OK_COLOR : BAD_COLOR;

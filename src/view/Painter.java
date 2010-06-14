@@ -1,10 +1,8 @@
 package view;
 
-import java.awt.Graphics;
-
-import javax.swing.JComponent;
+import java.awt.Graphics2D;
 
 public interface Painter {
 	
-	public void paint(Graphics graphics);
+	public void paint(Graphics2D graphics);
 }

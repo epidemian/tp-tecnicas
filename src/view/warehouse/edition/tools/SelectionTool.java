@@ -1,7 +1,7 @@
 package view.warehouse.edition.tools;
 
 import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 import model.game.Game;
 import model.warehouse.EmptyTileElement;
@@ -12,10 +12,8 @@ import view.warehouse.GroundPanel;
 import view.warehouse.edition.EditionTool;
 
 public class SelectionTool extends EditionTool {
-
-	private static final Color SELECTION_COLOR = new Color(0, 1, 0, 0.3F);
 	
-	private TileElement selectedTileElement = EmptyTileElement.getInstance();
+	private TileElement selectedTileElement = null;
 	private GroundPanel groundPanel;
 
 	public SelectionTool(GamePanel gamePanel, Game game) {
@@ -30,12 +28,13 @@ public class SelectionTool extends EditionTool {
 	}
 
 	@Override
-	public void paint(Graphics graphics) {
-		if (!this.selectedTileElement.equals(EmptyTileElement.getInstance()))
-			this.groundPanel.getPainter().paintResctangle(graphics,
-					selectedTileElement.getPosition(),
-					selectedTileElement.getWidth(),
-					selectedTileElement.getHeight(), SELECTION_COLOR);
+	public void paint(Graphics2D graphics) {
+		if (this.selectedTileElement != null)
+			this.groundPanel.getPainter().highlightTileElement(this.selectedTileElement, graphics);
+//		paintResctangle(graphics,
+//					selectedTileElement.getPosition(),
+//					selectedTileElement.getWidth(),
+//					selectedTileElement.getHeight(), SELECTION_COLOR);
 	}
 
 	@Override

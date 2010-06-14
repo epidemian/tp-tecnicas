@@ -8,9 +8,9 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 
 import model.production.Conveyor;
+import model.production.Direction;
 import model.production.ProductionMachine;
 import model.production.QualityControlMachine;
-import model.production.Conveyor.Direction;
 import model.warehouse.TileElement;
 import model.warehouse.TileElementVisitor;
 import model.warehouse.Wall;
@@ -20,7 +20,6 @@ public abstract class TileElementImageRecognizer extends TileElementVisitor {
 	/*
 	 * TODO Image class manager soon =)
 	 */
-	private static final BufferedImage IMG_CONVEYOR = loadImage("./conveyor.gif");
 	private static final BufferedImage IMG_QUALITY_CONTROL_MACHINE = loadImage("./qualityControlMachine.gif");
 	private static final BufferedImage IMG_PRODUCTION_MACHINE = loadImage("./productionMachine.gif");
 	private static final BufferedImage IMG_WALL = loadImage("./wall.gif");
@@ -76,9 +75,9 @@ public abstract class TileElementImageRecognizer extends TileElementVisitor {
 
 	private BufferedImage getConveyorImage(Conveyor conveyor) {
 		String prevStr = CONVEYOR_DIRECTION_STRINGS.get(conveyor
-				.getPreviousLineElementDirection());
+				.getInputConnectionDirection());
 		String nextStr = CONVEYOR_DIRECTION_STRINGS.get(conveyor
-				.getNextLineElementDirection());
+				.getOutputConnectionDirection());
 		String imgName = CONVEYOR_IMG_PREFIX + prevStr + nextStr
 				+ CONVEYOR_IMG_SUFFIX;
 

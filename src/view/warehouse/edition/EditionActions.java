@@ -12,6 +12,7 @@ import model.game.Game;
 import model.production.MachineType;
 import view.warehouse.GamePanel;
 import view.warehouse.GroundPanel;
+import view.warehouse.edition.tools.AddConveyorTool;
 import view.warehouse.edition.tools.AddMachineTool;
 import view.warehouse.edition.tools.SelectionTool;
 
@@ -66,6 +67,18 @@ public class EditionActions {
 	
 	private static void printToolSelection(String toolName) {
 		out.println("You have selected the " + toolName + " Tool");
+	}
+
+	public Action getActionToSetConveyorTool() {
+		return new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				printToolSelection("Add-Conveyor");
+				groundPanel.setEditionTool(new AddConveyorTool(gamePanel, game));
+			}
+
+			private static final long serialVersionUID = 1L;
+		};
 	}
 	
 	

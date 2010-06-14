@@ -2,42 +2,40 @@ package model.production;
 
 import static model.utils.ArgumentUtils.checkNotNull;
 import model.exception.BusinessLogicException;
+import model.warehouse.Position;
 import model.warehouse.TileElementVisitor;
 
 public class Conveyor extends ProductionLineElement {
 
-	public enum Direction {
-		NORTH, EAST, SOUTH, WEST;
-	}
-
-	private final Direction previousLineElementDirection;
-	private final Direction nextLineElementDirection;
+	private final Direction inputConnectionDirection;
+	private final Direction outputConnectionDirection;
 
 	public Conveyor() {
 		this(Direction.WEST, Direction.EAST);
 	}
-	
-	public Conveyor(Direction prevLineElementDirection,
-			Direction nextLineElementDirection) {
+
+	public Conveyor(Direction inputConnectionDirection,
+			Direction outputConnectionDirection) {
 		super(1, 1);
-		
-		checkNotNull(prevLineElementDirection,
-				"previous line element direction");
-		checkNotNull(nextLineElementDirection, "next line element direction");
-		if (prevLineElementDirection == nextLineElementDirection)
+
+		checkNotNull(inputConnectionDirection, "input connection direction");
+		checkNotNull(outputConnectionDirection, "output connection direction");
+		if (inputConnectionDirection == outputConnectionDirection)
 			throw new BusinessLogicException(
-					"previous and next line element directions must be different");
-		
-		this.previousLineElementDirection = prevLineElementDirection;
-		this.nextLineElementDirection = nextLineElementDirection;
+					"input and output connection directions must be different");
+
+		this.inputConnectionDirection = inputConnectionDirection;
+		this.outputConnectionDirection = outputConnectionDirection;
 	}
 
-	public Direction getPreviousLineElementDirection() {
-		return previousLineElementDirection;
+	@Override
+	public Direction getInputConnectionDirection() {
+		return inputConnectionDirection;
 	}
 
-	public Direction getNextLineElementDirection() {
-		return nextLineElementDirection;
+	@Override
+	public Direction getOutputConnectionDirection() {
+		return outputConnectionDirection;
 	}
 
 	@Override
@@ -48,5 +46,17 @@ public class Conveyor extends ProductionLineElement {
 	@Override
 	public String toString() {
 		return "Conveyor";
+	}
+
+	@Override
+	public Position getInputConnectionPosition() {
+		return this.getPosition().add(
+				this.getInputConnectionDirection().getAssociatedPosition());
+	}
+
+	@Override
+	public Position getOutputConnectionPosition() {
+		return this.getPosition().add(
+				this.getOutputConnectionDirection().getAssociatedPosition());
 	}
 }

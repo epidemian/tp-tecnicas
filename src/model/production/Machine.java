@@ -1,19 +1,19 @@
 package model.production;
 
 import static model.utils.ArgumentUtils.checkNotNull;
+import model.exception.BusinessLogicException;
 import model.game.Budget;
+import model.warehouse.Position;
 
 public abstract class Machine extends ProductionLineElement implements
 		MachineObservable {
 
 	private static final double BREAK_CHANCE = 0.05;
 	private static final double DAMAGE_CHANCE = 0.15;
-	public static final float PRICE_REPAIR_COEF =(float) 0.05;
-	
+	public static final float PRICE_REPAIR_COEF = (float) 0.05;
+
 	private MachineState machineState;
 	private MachineType machineType;
-	
-
 
 	/*
 	 * public Machine(MachineType machineType, int width, int height) {
@@ -47,10 +47,10 @@ public abstract class Machine extends ProductionLineElement implements
 	 */
 	public abstract void treatProduct(Product input);
 
-	public void repair(Budget budget) throws CannotRepairHealthyMachineException
-	{
-		budget.decrement(Math.
-				round(this.machineType.getPrice()*PRICE_REPAIR_COEF));
+	public void repair(Budget budget)
+			throws CannotRepairHealthyMachineException {
+		budget.decrement(Math.round(this.machineType.getPrice()
+				* PRICE_REPAIR_COEF));
 		this.getMachineState().repair(this);
 	}
 
@@ -62,7 +62,7 @@ public abstract class Machine extends ProductionLineElement implements
 		this.machineState = newState;
 	}
 
-	public int getPrice(){
+	public int getPrice() {
 		return this.machineType.getPrice();
 	}
 
@@ -112,6 +112,46 @@ public abstract class Machine extends ProductionLineElement implements
 
 	protected void breakUp() {
 		this.getMachineState().breakUp(this);
+	}
+
+	@Override
+	public Direction getInputConnectionDirection() {
+		return getInOutDirectionByPosition(this.getInputRelativePosition());
+	}
+
+	@Override
+	public Direction getOutputConnectionDirection() {
+		return getInOutDirectionByPosition(this.getOutputRelativePosition());
+	}
+
+	private Direction getInOutDirectionByPosition(Position position) {
+		if (position.getRow() == -1)
+			return Direction.NORTH;
+		if (position.getRow() == getHeight())
+			return Direction.SOUTH;
+		if (position.getCol() == -1)
+			return Direction.WEST;
+		if (position.getCol() == getWidth())
+			return Direction.EAST;
+		throw new BusinessLogicException("Invalid position");
+	}
+
+	@Override
+	public Position getInputConnectionPosition() {
+		return this.getPosition().add(this.getInputRelativePosition());
+	}
+
+	@Override
+	public Position getOutputConnectionPosition() {
+		return this.getPosition().add(this.getInputRelativePosition());
+	}
+
+	public Position getInputRelativePosition() {
+		return machineType.getInputRelativePosition();
+	}
+
+	public Position getOutputRelativePosition() {
+		return machineType.getOutputRelativePosition();
 	}
 
 }

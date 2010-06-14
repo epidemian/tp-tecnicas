@@ -1,5 +1,6 @@
 package model.production;
 
+import model.warehouse.Position;
 import model.warehouse.TileElement;
 
 abstract public class ProductionLineElement extends TileElement {
@@ -64,4 +65,12 @@ abstract public class ProductionLineElement extends TileElement {
 		previous.nextLineElement = next;
 		next.previousLineElement = previous;
 	}
+
+	public abstract Position getInputConnectionPosition();
+
+	public abstract Position getOutputConnectionPosition();
+
+	public abstract Direction getInputConnectionDirection();
+
+	public abstract Direction getOutputConnectionDirection();
 }

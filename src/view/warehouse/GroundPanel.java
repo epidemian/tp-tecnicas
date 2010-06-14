@@ -6,6 +6,7 @@ import static view.warehouse.GroundPainter.TILE_SIZE;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -48,8 +49,9 @@ public class GroundPanel extends JPanel {
 	protected void paintComponent(Graphics graphics) {
 		super.paintComponent(graphics);
 
-		this.groundPainter.paint(graphics);
-		this.editionTool.paint(graphics);
+		Graphics2D g2d = (Graphics2D) graphics;
+		this.groundPainter.paint(g2d);
+		this.editionTool.paint(g2d);
 	}
 
 	public void setEditionTool(EditionTool tool) {
@@ -115,7 +117,7 @@ class NullEditionTool extends EditionTool {
 	}
 
 	@Override
-	public void paint(Graphics graphics) {
+	public void paint(Graphics2D graphics) {
 	}
 
 	@Override

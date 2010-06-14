@@ -2,14 +2,8 @@ package model.warehouse;
 
 public class EmptyTileElement extends TileElement {
 
-	private static final EmptyTileElement INSTANCE = new EmptyTileElement();
-
-	private EmptyTileElement() {
-		super(1, 1);
-	}
-
-	public static EmptyTileElement getInstance() {
-		return INSTANCE;
+	public EmptyTileElement(int width, int height) {
+		super(width, height);
 	}
 
 	@Override
