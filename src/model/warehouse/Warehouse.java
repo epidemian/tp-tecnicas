@@ -7,9 +7,9 @@ import java.util.Collection;
 import model.game.Budget;
 import model.game.time.MonthlyUpdatable;
 import model.production.Machine;
-import model.production.ProductionLine;
 import model.production.ProductionLineElement;
 import model.production.StorageArea;
+import model.production.line.ProductionLine;
 
 public abstract class Warehouse implements MonthlyUpdatable{
 	protected Budget budget; 

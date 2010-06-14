@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.game.Budget;
+import model.production.line.ProductionLine;
 import model.warehouse.Position;
 
 import org.junit.Before;

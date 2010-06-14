@@ -1,18 +1,18 @@
 package model.warehouse;
 
-import static model.production.ProductionLine.*;
+import static model.production.line.ProductionLine.*;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import model.production.Conveyor;
-import model.production.ProductionLine;
 import model.production.ProductionLineElement;
 import model.production.ProductionMachine;
 import model.production.QualityControlMachine;
 import model.production.RawMaterials;
 import model.production.StorageArea;
+import model.production.line.ProductionLine;
 
 public class ProductionLinesCreator {
 
@@ -88,8 +88,7 @@ public class ProductionLinesCreator {
 		}
 
 		// TODO: Ver qué hacer con los new RawMaterials()
-		return circularLine ? createCircularProductionLine(previous,
-				this.storageArea, new RawMaterials())
+		return circularLine ? createCircularProductionLine(previous)
 				: createValidProductionLine(firstElement, this.storageArea,
 						new RawMaterials());
 

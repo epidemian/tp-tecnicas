@@ -78,6 +78,6 @@ abstract public class ProductionLineElement extends TileElement {
 	public void repair(Budget budget)
 		throws CannotRepairHealthyMachineException {}
 	
-	protected void breakUp(){}
+	public void breakUp(){}
 	
 }

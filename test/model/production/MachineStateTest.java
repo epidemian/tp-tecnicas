@@ -3,6 +3,7 @@ package model.production;
 import static org.junit.Assert.assertEquals;
 
 import model.game.Budget;
+import model.production.line.ProductionLine;
 
 import org.junit.Before;
 import org.junit.Test;

@@ -110,7 +110,7 @@ public abstract class Machine extends ProductionLineElement implements
 		this.getMachineState().damage(this);
 	}
 
-	protected void breakUp() {
+	public void breakUp() {
 		this.getMachineState().breakUp(this);
 	}
 
