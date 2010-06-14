@@ -13,6 +13,8 @@ import view.warehouse.edition.EditionTool;
 
 public class SelectionTool extends EditionTool {
 
+	private static final Color SELECTION_COLOR = new Color(0, 1, 0, 0.3F);
+	
 	private TileElement selectedTileElement = EmptyTileElement.getInstance();
 	private GroundPanel groundPanel;
 
@@ -33,7 +35,7 @@ public class SelectionTool extends EditionTool {
 			this.groundPanel.getPainter().paintResctangle(graphics,
 					selectedTileElement.getPosition(),
 					selectedTileElement.getWidth(),
-					selectedTileElement.getHeight(), Color.GREEN);
+					selectedTileElement.getHeight(), SELECTION_COLOR);
 	}
 
 	@Override

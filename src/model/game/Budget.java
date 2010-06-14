@@ -19,6 +19,10 @@ public class Budget {
 		this.balance -= amount;
 	}
 	
+	public boolean canPurchase(int amount) {
+		return this.balance >= amount;
+	}
+	
 	public boolean amountCovered(int amount) {
 		return (this.balance >= amount) && (this.balance >= 0);
 	}

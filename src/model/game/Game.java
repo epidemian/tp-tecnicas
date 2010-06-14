@@ -1,5 +1,6 @@
 package model.game;
 
+import static model.utils.ArgumentUtils.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import model.production.ProductionLineElement;
 import model.production.ProductionMachine;
 import model.production.QualityControlMachine;
 import model.warehouse.Ground;
+import model.warehouse.Position;
 
 public class Game {
 
@@ -47,4 +49,17 @@ public class Game {
     public Budget getBudget() {
         return this.budget;
     }
+
+	public boolean canPurchase(int amount) {
+		return getBudget().canPurchase(amount);
+	}
+
+	public void buyAndAddProductionMachine(MachineType machineType,
+			Position position) {
+		int price = machineType.getPrice();
+		checkArgCondition(price, canPurchase(price));
+		
+		getGround().putTileElement(new ProductionMachine(machineType), position);
+		getBudget().decrement(price);
+	}
 }

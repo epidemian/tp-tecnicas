@@ -15,6 +15,8 @@ import model.warehouse.Position;
 
 public class AddMachineTool extends EditionTool {
 
+	private static final Color OK_COLOR = new Color(0, 1, 0, 0.3F);
+	private static final Color BAD_COLOR = new Color(1, 0, 0, 0.3F);
 	private MachineType machineType;
 	private GroundPanel groundPanel;
 
@@ -33,7 +35,7 @@ public class AddMachineTool extends EditionTool {
 	public void paint(Graphics graphics) {
 		Position position = this.groundPanel.getCurrentMousePosition();
 		if (position != null) {
-			Color color = canPutMachineAt(position) ? Color.GREEN : Color.RED;
+			Color color = canPutMachineAt(position) ? OK_COLOR : BAD_COLOR;
 			this.groundPanel.getPainter().paintResctangle(graphics, position,
 					this.machineType.getWidth(), this.machineType.getHeight(),
 					color);
@@ -43,22 +45,24 @@ public class AddMachineTool extends EditionTool {
 	@Override
 	public void mouseClicked(Position position) {
 		if (canPutMachineAt(position)) {
-			ProductionMachine machine = new ProductionMachine(this.machineType);
+			boolean enoughMoney = this.getGame().canPurchase(
+					this.machineType.getPrice());
+			if (!enoughMoney) {
+				// TODO: show noy enough money notification.
+			}
+			else {
+				this.getGame().buyAndAddProductionMachine(this.machineType, position);
+				// TODO: habría que avisar a la vista cosa que se actualice...
+				// this.getGamePanel().getTopPanel().setMoneyBalance(budget.getBalance());
+			}
 
-			// TODO: Esto no se si irá así jajjaa
-			Budget budget = this.getGame().getBudget();
-			budget.decrement(this.machineType.getPrice());
-			// TODO: habría que avisar a la vista cosa que se actualice...
-			// this.getGamePanel().getTopPanel().setMoneyBalance(budget.getBalance());
-			
-			this.getGame().getGround().putTileElement(machine, position);
 		}
 	}
 
 	private boolean canPutMachineAt(Position position) {
 		int width = this.machineType.getWidth();
 		int height = this.machineType.getHeight();
-		return this.groundPanel.getGround().canPutTileElementByDimension(width,
+		return this.getGame().getGround().canPutTileElementByDimension(width,
 				height, position);
 	}
 

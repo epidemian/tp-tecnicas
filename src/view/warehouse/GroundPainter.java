@@ -96,6 +96,6 @@ public class GroundPainter implements Painter {
 		int y = position.getRow() * TILE_SIZE;
 		int pixelW = width * TILE_SIZE;
 		int pixelH = height * TILE_SIZE;
-		graphics.drawRect(x, y, pixelW, pixelH);
+		graphics.fillRect(x, y, pixelW, pixelH);
 	}
 }
