@@ -8,6 +8,7 @@ import java.util.List;
 
 import model.game.Budget;
 import model.production.line.ProductionLine;
+import model.production.machineState.CannotRepairHealthyMachineException;
 import model.warehouse.Position;
 
 import org.junit.Before;
@@ -163,6 +164,7 @@ public class ProductionLineTest {
 		
 	}
 	
+	
 	@Test
 	public void debitFromBudgetWhenRepairingLine() 
 							throws CannotRepairHealthyMachineException{
@@ -182,6 +184,41 @@ public class ProductionLineTest {
 		
 		assertEquals(this.budget.getBalance(), initialBudget - 
 				Math.round(machines.get(0).getPrice()*Machine.PRICE_REPAIR_COEF));
+	}
+	
+	@Test
+	public void sellMachinesWhenNotBroken(){
+		int initialBudget=this.budget.getBalance();
+		
+		List<MachineMock> machines= createListConnectedMachineMocks();
+		
+		ProductionLine line = ProductionLine.createValidProductionLine(
+				machines.get(0), new StorageArea(new RawMaterials(),
+						new ValidProductionSequences()), new RawMaterials());
+		
+		line.sell(budget);
+		
+		assertEquals(initialBudget+150,budget.getBalance());
+	}
+	
+	@Test
+	public void sellMachinesWhenOneBrokenAndOneDamaged(){
+		int initialBudget=this.budget.getBalance();
+		
+		List<MachineMock> machines= createListConnectedMachineMocks();
+		
+		ProductionLine line = ProductionLine.createValidProductionLine(
+				machines.get(0), new StorageArea(new RawMaterials(),
+						new ValidProductionSequences()), new RawMaterials());
+		
+		machines.get(0).damage();
+		//machines.get(0).breakUp();
+		machines.get(1).breakUp();
+		
+		
+		line.sell(budget);
+		
+		assertEquals(initialBudget+100,budget.getBalance());
 	}
 	
 	@Test

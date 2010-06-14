@@ -1,4 +1,6 @@
-package model.production;
+package model.production.machineState;
+
+import model.production.Machine;
 
 /**
  * Represents the state in which the Machine makes the production line
@@ -12,8 +14,11 @@ public class BrokenMachineState extends MachineState{
 	
 	public void repair(Machine machine){
 		machine.setMachineState(new HealthyMachineState());
+		machine.setCurrentCoef(MachineState.healthyCoef);
 		machine.notifyBrokenMachineRepair();
 	}
 
-	
+	public int sell(Machine machine) {
+		return 0;
+	}
 }

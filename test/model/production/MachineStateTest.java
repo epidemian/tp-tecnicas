@@ -4,6 +4,10 @@ import static org.junit.Assert.assertEquals;
 
 import model.game.Budget;
 import model.production.line.ProductionLine;
+import model.production.machineState.BrokenMachineState;
+import model.production.machineState.CannotRepairHealthyMachineException;
+import model.production.machineState.DamagedMachineState;
+import model.production.machineState.HealthyMachineState;
 
 import org.junit.Before;
 import org.junit.Test;

@@ -1,6 +1,7 @@
 package model.production;
 
 import model.game.Budget;
+import model.production.machineState.CannotRepairHealthyMachineException;
 import model.warehouse.Position;
 import model.warehouse.TileElement;
 
@@ -79,5 +80,7 @@ abstract public class ProductionLineElement extends TileElement {
 		throws CannotRepairHealthyMachineException {}
 	
 	public void breakUp(){}
+
+	public void sell(Budget budget) {}
 	
 }

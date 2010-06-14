@@ -3,6 +3,9 @@ package model.production;
 import static model.utils.ArgumentUtils.checkNotNull;
 import model.exception.BusinessLogicException;
 import model.game.Budget;
+import model.production.machineState.CannotRepairHealthyMachineException;
+import model.production.machineState.HealthyMachineState;
+import model.production.machineState.MachineState;
 import model.warehouse.Position;
 
 public abstract class Machine extends ProductionLineElement implements
@@ -14,6 +17,7 @@ public abstract class Machine extends ProductionLineElement implements
 
 	private MachineState machineState;
 	private MachineType machineType;
+	private double currentCoef;
 
 	/*
 	 * public Machine(MachineType machineType, int width, int height) {
@@ -134,4 +138,15 @@ public abstract class Machine extends ProductionLineElement implements
 		return this.getPosition().add(machineType.getOutputRelativePosition());
 	}
 
+	public void setCurrentCoef(double currentCoef) {
+		this.currentCoef = currentCoef;
+	}
+
+	public double getCurrentCoef() {
+		return currentCoef;
+	}
+	
+	public void sell(Budget budget){
+		budget.increment(this.machineState.sell(this));
+	}
 }
