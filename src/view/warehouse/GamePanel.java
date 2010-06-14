@@ -5,45 +5,38 @@ import java.util.List;
 
 import model.game.Game;
 import model.production.ProductionLineElement;
-import view.warehouse.edition.EditionTool;
-import view.warehouse.edition.EditionToolbar;
+import view.warehouse.edition.EditionActions;
+import view.warehouse.edition.KeyInputActionMapper;
 
 public class GamePanel extends javax.swing.JPanel {
- 
-    /** Creates new form GamePanel */
+    
+	/** Creates new form GamePanel */
     public GamePanel(Game game) {
         this.game = game;
      //   this.machinesPanelLogic = new ProductionElementsPanelLogic(game.getMachines());
 		initComponents();
 		this.initLineElementPanelLogic(game.getProductionLineElements());
 
-		/*
-		 *  TODO: No se le puede poner el tipo posta a esta variable???
-		 *  Estaría bueno evitar el casteo.
-		 *  Nico: Mismo problema que con los botones. No puede encontrar una forma
-		 *  de solucionarlo todavia.
-		 */
-		GroundPanel groundPanel = ((GroundPanelContainer) this.groundPanel)
-				.getGroundPanel();
-		EditionTool editionTool = new EditionTool(groundPanel);
-		EditionToolbar editionToolbar = new EditionToolbar(editionTool);		
+		GroundPanel groundPanel = getGroundPanelContainer().getGroundPanel();
 		
-		/*
-		 * TODO: Esto hay que sacarlo, la idea es que la editionToolbar sea un
-		 * componente gráfico de esta clase, con botones para elegir las
-		 * distintas herramientas de edición. Los botones setearían herramientas
-		 * en el toolMediator. Por ahora, pongo que escuche las teclas del
-		 * GamePanel, cosa de poder seleccionar las herramientas así. (ojo,
-		 * puede quedar el tema de selección de herramientas con el teclado, que
-		 * es bastante pro =P. Habría que ver quién las escucha, y ese tipo se
-		 * encargue de setear la herramienta en el toolMediator. (La tecla ESC
-		 * me parece que va a haber que escucharla sí o sí...)
-		 */
-		this.addKeyListener(editionToolbar.getKeyListener());
+		EditionActions editionActions = new EditionActions(this, game);
+		assignKeyActions(editionActions);
 		
+		// TODO: make a toolbar from the toolkit so it's buttons select a given
+		// tool
+		// this.getContentPane().add(new EditionToolbar(toolkit));
 	}
 
-    private void initLineElementPanelLogic(List<ProductionLineElement> lineElements){
+	public GroundPanelContainer getGroundPanelContainer() {
+		return ((GroundPanelContainer) this.groundPanel);
+	}
+
+    private void assignKeyActions(EditionActions editionActions) {
+    	KeyInputActionMapper mapper = new KeyInputActionMapper(editionActions);
+    	mapper.mapActions(this.getInputMap(), this.getActionMap());
+	}
+
+	private void initLineElementPanelLogic(List<ProductionLineElement> lineElements){
 
         List<LineElementButton> lineElementButtons
             = new LinkedList<LineElementButton>();

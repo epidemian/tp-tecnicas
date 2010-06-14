@@ -1,8 +1,11 @@
 package main;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import javax.swing.Timer;
 import javax.swing.UIManager;
 
 import model.game.Game;
@@ -28,8 +31,16 @@ public class Main {
 		mainFrame.requestFocus();
 
 		/*
-		 * Main loop. Refresh 25 frames per second.
+		 * Main loop. Refresh 20 frames per second.
 		 */
+		Timer mainLoopTimer = new Timer(50, new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mainFrame.repaint();
+			}
+		});
+		mainLoopTimer.start();
 		/*
 		 * TimerTask mainLoopTask = new TimerTask() {
 		 * 

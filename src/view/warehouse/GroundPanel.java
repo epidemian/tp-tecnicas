@@ -1,21 +1,19 @@
 package view.warehouse;
 
-import static model.utils.ArgumentUtils.*;
+import static model.utils.ArgumentUtils.checkNotNull;
+import static view.warehouse.GroundPainter.TILE_SIZE;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.List;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 
 import javax.swing.JPanel;
 
-import com.sun.org.apache.xpath.internal.Arg;
-
-import model.utils.ArgumentUtils;
 import model.warehouse.Ground;
-import model.warehouse.TileElement;
-import model.warehouse.TileElementVisitor;
+import model.warehouse.Position;
 import view.warehouse.edition.EditionTool;
 
 public class GroundPanel extends JPanel {
@@ -23,16 +21,17 @@ public class GroundPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	private Ground ground;
+	private GroundPainter groundPainter;
+	private EditionTool editionTool;
 
-	/*
-	 * TODO Do not hard-code tileSize =(.
-	 */
-	private int tileSize = 50;
-
-	private GroundPanelPainter painter;
+	protected Position currentPosition = new Position();
 
 	public GroundPanel(Ground ground) {
+		super();
+
 		this.ground = ground;
+		this.groundPainter = new GroundPainter(ground);
+
 		/*
 		 * TODO Do not hard-code Color.white =(.
 		 */
@@ -40,96 +39,94 @@ public class GroundPanel extends JPanel {
 		/*
 		 * This a scroll-able panel. The scroll can be used in the area.
 		 */
-		setPreferredSize(this.getGroundSize());
+		this.setPreferredSize(this.getGroundSize(ground));
 
-		setPainter(new NullPainter());
+		this.setEditionTool(new NullEditionTool());
+		this.setMouseListeners();
 	}
-
-	private Dimension getGroundSize() {
-		int width = this.ground.getCols() * this.tileSize;
-		int height = this.ground.getRows() * this.tileSize;
-		return new Dimension(width, height);
-	}
+	
+	
 
 	@Override
 	protected void paintComponent(Graphics graphics) {
 		super.paintComponent(graphics);
 
-		drawVerticalLines(graphics);
-		dreawHorizontalLines(graphics);
-
-		this.ground.visitElements(createElementPainter(graphics));
-
-		this.painter.paint(this, graphics);
+		this.groundPainter.paint(graphics);
+		this.editionTool.paint(graphics);
 	}
 
-	private void drawVerticalLines(Graphics graphics) {
-		for (int col = 0; col <= this.ground.getCols(); col++) {
-
-			int x1 = col * this.tileSize;
-			int y1 = 0;
-			int x2 = col * this.tileSize;
-			int y2 = this.ground.getRows() * this.tileSize;
-
-			graphics.drawLine(x1, y1, x2, y2);
-		}
+	public void setEditionTool(EditionTool tool) {
+		checkNotNull(tool, "edition tool");
+		this.editionTool = tool;
 	}
 
-	private void dreawHorizontalLines(Graphics graphics) {
-		for (int row = 0; row <= this.ground.getRows(); row++) {
-
-			int x1 = 0;
-			int y1 = row * this.tileSize;
-			int x2 = this.ground.getCols() * this.tileSize;
-			int y2 = row * this.tileSize;
-
-			graphics.drawLine(x1, y1, x2, y2);
-		}
+	public EditionTool getEditionTool() {
+		return this.editionTool;
 	}
 
-	/*
-	 * Visitor used to draw each element in the warehouse.
-	 */
-	private TileElementVisitor createElementPainter(final Graphics graphics) {
-		return new TileElementImageRecognizer() {
-			private List<TileElement> bigTouchedTiles = new ArrayList<TileElement>();
+	public Ground getGround() {
+		return ground;
+	}
 
+	public GroundPainter getPainter() {
+		return this.groundPainter;
+	}
+	
+	private void setMouseListeners() {
+		
+		this.addMouseMotionListener(new MouseMotionAdapter() {
 			@Override
-			protected void onTileElmentVisited(TileElement element,
-					BufferedImage image) {
-				/*
-				 * Checks if 'element' is contained in the touchedTiles list. If
-				 * it is not, adds the element to the list (if size is bigger
-				 * than one tile, because is the only way that can try to draw
-				 * it twice.)
-				 */
-				if (!this.bigTouchedTiles.contains(element)) {
-					if (element.getWidth() > 1 || element.getHeight() > 1)
-						this.bigTouchedTiles.add(element);
-
-					int x = element.getPosition().getCol() * tileSize;
-					int y = element.getPosition().getRow() * tileSize;
-					int width = element.getWidth() * tileSize;
-					int height = element.getHeight() * tileSize;
-
-					graphics.drawImage(image, x, y, width, height, null);
+			public void mouseMoved(MouseEvent e) {
+				Position newPosition = getPositionFromMouseEvent(e);
+				if (!newPosition.equals(currentPosition )) {
+					currentPosition = newPosition;
+					editionTool.mouseMoved(newPosition);
 				}
 			}
-		};
+		});
+		
+		this.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				editionTool.mouseClicked(getPositionFromMouseEvent(e));
+			}
+		});
+	}
+	
+	private Dimension getGroundSize(Ground ground) {
+		int width = ground.getCols() * TILE_SIZE;
+		int height = ground.getRows() * TILE_SIZE;
+		return new Dimension(width, height);
 	}
 
-	public void setPainter(GroundPanelPainter painter) {
-		checkNotNull(painter, "painter");
-		this.painter = painter;
+
+
+	private Position getPositionFromMouseEvent(MouseEvent e) {
+		return new Position(e.getY() / TILE_SIZE, e.getX() / TILE_SIZE);
 	}
 }
 
-class NullPainter implements GroundPanelPainter {
+class NullEditionTool extends EditionTool {
+
+	public NullEditionTool() {
+		// TODO: this is quite ugly xD
+		super(null, null);
+	}
 
 	@Override
-	public void paint(GroundPanel groundPanel, Graphics graphics) {
-		// TODO Auto-generated method stub
+	public void cancelOperation() {
+	}
 
+	@Override
+	public void paint(Graphics graphics) {
+	}
+
+	@Override
+	public void mouseClicked(Position position) {
+	}
+
+	@Override
+	public void mouseMoved(Position position) {
 	}
 
 }

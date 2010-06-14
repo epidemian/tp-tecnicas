@@ -1,28 +1,32 @@
 package view.warehouse.edition;
 
-import static java.lang.System.out;
-import java.awt.Graphics;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseMotionAdapter;
+import model.game.Game;
+import model.warehouse.Position;
+import view.Painter;
+import view.warehouse.GamePanel;
 
-import view.warehouse.GroundPanel;
-import view.warehouse.GroundPanelPainter;
+public abstract class EditionTool implements Painter {
 
-public class EditionTool implements GroundPanelPainter {
+	private GamePanel gamePanel;
+	private Game game;
 
-
-	public EditionTool(GroundPanel groundPanel) {
-		groundPanel.addMouseListener(new MouseAdapter() {
-		});
-		groundPanel.addMouseMotionListener(new MouseMotionAdapter() {
-		});
-		groundPanel.setPainter(this);
+	public EditionTool(GamePanel gamePanel, Game game) {
+		this.gamePanel = gamePanel;
+		this.game = game;
+	}
+	
+	public GamePanel getGamePanel() {
+		return gamePanel;
 	}
 
-	@Override
-	public void paint(GroundPanel groundPanel, Graphics graphics) {
-		// TODO Auto-generated method stub
-		//out.println("Paint!");
+	public Game getGame() {
+		return game;
 	}
+
+	public abstract void cancelOperation();
+
+	public abstract void mouseMoved(Position position);
+
+	public abstract void mouseClicked(Position position);
 
 }
