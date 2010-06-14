@@ -1,5 +1,6 @@
 package model.production;
 
+import model.game.Budget;
 import model.warehouse.Position;
 import model.warehouse.TileElement;
 
@@ -73,4 +74,10 @@ abstract public class ProductionLineElement extends TileElement {
 	public abstract Direction getInputConnectionDirection();
 
 	public abstract Direction getOutputConnectionDirection();
+	
+	public void repair(Budget budget)
+		throws CannotRepairHealthyMachineException {}
+	
+	protected void breakUp(){}
+	
 }

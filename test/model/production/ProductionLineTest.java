@@ -23,11 +23,11 @@ public class ProductionLineTest {
 
 	@Before
 	public void setUp() {
-		this.productionLine = this.createProductionLineProcessingCarton();
+		this.productionLine = this.createProductionLineProcessingCartonWithOnlyMachines();
 		this.budget=new Budget(10000);
 	}
 	
-	private ProductionLine createProductionLineProcessingCarton() {
+	private ProductionLine createProductionLineProcessingCartonWithOnlyMachines() {
 
 		ProductionLineElement prodLineElement1 = new ProductionMachine(
 				new MachineType("Licuado",1,1));
@@ -43,6 +43,24 @@ public class ProductionLineTest {
 				new StorageArea(new RawMaterials(),
 						new ValidProductionSequences()), new RawMaterials());
 	}
+	
+	private ProductionLine createProductionLineProcessingCartonWithConveyor(){
+
+		ProductionLineElement prodLineElement1 = new ProductionMachine(
+				new MachineType("Licuado",1,1));
+		ProductionLineElement prodLineElement2 = new Conveyor();
+		
+		ProductionLineElement prodLineElement3 = new ProductionMachine(
+				new MachineType("Horno",1,1));
+
+		connectLineElements(prodLineElement1, prodLineElement2);
+		connectLineElements(prodLineElement2, prodLineElement3);
+
+		return ProductionLine.createValidProductionLine(prodLineElement1,
+				new StorageArea(new RawMaterials(),
+						new ValidProductionSequences()), new RawMaterials());
+	}
+
 
 	@Test
 	public void dailyProduction() {
@@ -165,6 +183,15 @@ public class ProductionLineTest {
 				Math.round(machines.get(0).getPrice()*Machine.PRICE_REPAIR_COEF));
 	}
 	
+	@Test
+	public void breakAllMachinesInATwoMachineLine(){
+		ProductionLine line= 
+			this.createProductionLineProcessingCartonWithConveyor();
+		
+		line.breakAllMachines();
+		
+		assertEquals(line.getBrokenMachines().size(),2);
 	
+	}
 	
 }

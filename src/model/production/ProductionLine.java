@@ -229,6 +229,17 @@ public class ProductionLine implements TickUpdatable, DailyUpdatable,
 		
 
 	}
-
+	
+	// TODO check visibility
+	public void breakAllMachines(){
+		Iterator<ProductionLineElement> iter = this.iterator();
+		while(iter.hasNext()){
+			iter.next().breakUp();
+		}
+	}
+	
+	public List<Machine> getBrokenMachines(){
+		return this.brokenMachines;
+	}
 
 }
