@@ -116,42 +116,22 @@ public abstract class Machine extends ProductionLineElement implements
 
 	@Override
 	public Direction getInputConnectionDirection() {
-		return getInOutDirectionByPosition(this.getInputRelativePosition());
+		return this.machineType.getInputConnectionDirection();
 	}
 
 	@Override
 	public Direction getOutputConnectionDirection() {
-		return getInOutDirectionByPosition(this.getOutputRelativePosition());
-	}
-
-	private Direction getInOutDirectionByPosition(Position position) {
-		if (position.getRow() == -1)
-			return Direction.NORTH;
-		if (position.getRow() == getHeight())
-			return Direction.SOUTH;
-		if (position.getCol() == -1)
-			return Direction.WEST;
-		if (position.getCol() == getWidth())
-			return Direction.EAST;
-		throw new BusinessLogicException("Invalid position");
+		return this.machineType.getOutputConnectionDirection();
 	}
 
 	@Override
 	public Position getInputConnectionPosition() {
-		return this.getPosition().add(this.getInputRelativePosition());
+		return this.getPosition().add(machineType.getInputRelativePosition());
 	}
 
 	@Override
 	public Position getOutputConnectionPosition() {
-		return this.getPosition().add(this.getInputRelativePosition());
-	}
-
-	public Position getInputRelativePosition() {
-		return machineType.getInputRelativePosition();
-	}
-
-	public Position getOutputRelativePosition() {
-		return machineType.getOutputRelativePosition();
+		return this.getPosition().add(machineType.getOutputRelativePosition());
 	}
 
 }

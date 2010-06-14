@@ -4,12 +4,14 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Polygon;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
 import model.production.Conveyor;
+import model.production.Direction;
 import model.production.ProductionLineElement;
 import model.production.ProductionMachine;
 import model.production.QualityControlMachine;
@@ -18,6 +20,7 @@ import model.warehouse.Position;
 import model.warehouse.TileElement;
 import model.warehouse.TileElementVisitor;
 import model.warehouse.Wall;
+import sun.java2d.loops.DrawRect;
 import view.Painter;
 
 public class GroundPainter implements Painter {
@@ -39,7 +42,7 @@ public class GroundPainter implements Painter {
 	@Override
 	public void paint(Graphics2D graphics) {
 		drawVerticalLines(graphics);
-		dreawHorizontalLines(graphics);
+		drawHorizontalLines(graphics);
 
 		this.ground.visitElements(createElementPainter(graphics));
 	}
@@ -56,7 +59,7 @@ public class GroundPainter implements Painter {
 		}
 	}
 
-	private void dreawHorizontalLines(Graphics2D graphics) {
+	private void drawHorizontalLines(Graphics2D graphics) {
 		for (int row = 0; row <= this.ground.getRows(); row++) {
 
 			int x1 = 0;
@@ -92,14 +95,14 @@ public class GroundPainter implements Painter {
 					int y = element.getPosition().getRow() * TILE_SIZE;
 					int width = element.getWidth() * TILE_SIZE;
 					int height = element.getHeight() * TILE_SIZE;
-					
+
 					graphics.drawImage(image, x, y, width, height, null);
 				}
 			}
 		};
 	}
 
-	public void paintResctangle(Graphics2D graphics, Position position,
+	public void drawRectangle(Graphics2D graphics, Position position,
 			int width, int height, Color color) {
 		int x = position.getCol() * TILE_SIZE;
 		int y = position.getRow() * TILE_SIZE;
@@ -141,22 +144,62 @@ public class GroundPainter implements Painter {
 			}
 
 			private void drawHighlightRectangle() {
-				paintResctangle(graphics, tileElement.getPosition(),
-						tileElement.getWidth(), tileElement.getHeight(),
-						HIGHLIGHT_COLOR);
+				drawRectangle(graphics, tileElement.getPosition(), tileElement
+						.getWidth(), tileElement.getHeight(), HIGHLIGHT_COLOR);
 			}
 		});
 	}
 
 	private void drawProductionLineElementArrows(
-			ProductionLineElement lineElement, Graphics2D graphics,
-			Color highlightArrowsColor) {
+			ProductionLineElement lineElement, Graphics2D graphics, Color color) {
+		drawInputArrow(lineElement.getInputConnectionPosition(), lineElement
+				.getInputConnectionDirection(), color, graphics);
+		drawOutputArrow(lineElement.getOutputConnectionPosition(), lineElement
+				.getOutputConnectionDirection(), color, graphics);
+
 		AffineTransform transform = graphics.getTransform();
-		
-		
-		
-		
+
 		graphics.setTransform(transform);
 	}
 
+	public void drawInputArrow(Position position, Direction direction,
+			Color color, Graphics2D graphics) {
+		double[] xFloats = { 0.1, 0.5, 0.9 };
+		double[] yFloats = { 0.7, 0.9, 0.7 };
+		int[] xInts = scaleToInts(TILE_SIZE, xFloats);
+		int[] yInts = scaleToInts(TILE_SIZE, yFloats);
+		Polygon arrow = new Polygon(xInts, yInts, xFloats.length);
+		drawArrow(arrow, position, direction, color, graphics);
+	}
+
+	public void drawOutputArrow(Position position, Direction direction,
+			Color color, Graphics2D graphics) {
+		double[] xFloats = { 0.1, 0.5, 0.9 };
+		double[] yFloats = { 0.9, 0.7, 0.9 };
+		int[] xInts = scaleToInts(TILE_SIZE, xFloats);
+		int[] yInts = scaleToInts(TILE_SIZE, yFloats);
+		Polygon arrow = new Polygon(xInts, yInts, xFloats.length);
+		drawArrow(arrow, position, direction, color, graphics);
+	}
+
+	private int[] scaleToInts(double scale, double[] floats) {
+		int[] ints = new int[floats.length];
+		for (int i = 0; i < floats.length; i++)
+			ints[i] = (int) (floats[i] * scale);
+		return ints;
+	}
+
+	private void drawArrow(Polygon arrow, Position position,
+			Direction direction, Color color, Graphics2D graphics) {
+		AffineTransform backupTransform = graphics.getTransform();
+		double theta = direction.getAssociatedRotation();
+		double tx = TILE_SIZE * position.getCol();
+		double ty = TILE_SIZE * position.getRow();
+		graphics.translate(tx, ty);
+		graphics.rotate(theta, TILE_SIZE * 0.5, TILE_SIZE * 0.5);
+		graphics.setColor(color);
+		graphics.fillPolygon(arrow);
+
+		graphics.setTransform(backupTransform);
+	}
 }

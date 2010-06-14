@@ -4,9 +4,12 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import model.game.Game;
+import model.production.Direction;
 import model.production.MachineType;
+import model.warehouse.Ground;
 import model.warehouse.Position;
 import view.warehouse.GamePanel;
+import view.warehouse.GroundPainter;
 import view.warehouse.GroundPanel;
 import view.warehouse.edition.EditionTool;
 
@@ -32,10 +35,22 @@ public class AddMachineTool extends EditionTool {
 	public void paint(Graphics2D graphics) {
 		Position position = this.groundPanel.getCurrentMousePosition();
 		if (position != null) {
+
 			Color color = canPutMachineAt(position) ? OK_COLOR : BAD_COLOR;
-			this.groundPanel.getPainter().paintResctangle(graphics, position,
-					this.machineType.getWidth(), this.machineType.getHeight(),
-					color);
+			GroundPainter painter = this.groundPanel.getPainter();
+			int width = this.machineType.getWidth();
+			int height = this.machineType.getHeight();
+			painter.drawRectangle(graphics, position, width, height, color);
+
+			Position inPos = position.add(this.machineType
+					.getInputRelativePosition());
+			Direction inDir = this.machineType.getInputConnectionDirection();
+			painter.drawInputArrow(inPos, inDir, color, graphics);
+
+			Position outPos = position.add(this.machineType
+					.getOutputRelativePosition());
+			Direction outDir = this.machineType.getOutputConnectionDirection();
+			painter.drawOutputArrow(outPos, outDir, color, graphics);
 		}
 	}
 
@@ -46,9 +61,9 @@ public class AddMachineTool extends EditionTool {
 					this.machineType.getPrice());
 			if (!enoughMoney) {
 				// TODO: show noy enough money notification.
-			}
-			else {
-				this.getGame().buyAndAddProductionMachine(this.machineType, position);
+			} else {
+				this.getGame().buyAndAddProductionMachine(this.machineType,
+						position);
 				// TODO: habría que avisar a la vista cosa que se actualice...
 				// this.getGamePanel().getTopPanel().setMoneyBalance(budget.getBalance());
 			}
@@ -59,8 +74,17 @@ public class AddMachineTool extends EditionTool {
 	private boolean canPutMachineAt(Position position) {
 		int width = this.machineType.getWidth();
 		int height = this.machineType.getHeight();
-		return this.getGame().getGround().canPutTileElementByDimension(width,
-				height, position);
-	}
+		Ground ground = this.getGame().getGround();
+		Position inPos = position.add(this.machineType
+				.getInputRelativePosition());
+		Position outPos = position.add(this.machineType
+				.getOutputRelativePosition());
 
+		boolean canPutMachine = ground.canPutTileElementByDimension(width,
+				height, position);
+		boolean canPutInput = ground.canPutTileElementByDimension(1, 1, inPos);
+		boolean canPutOutput = ground
+				.canPutTileElementByDimension(1, 1, outPos);
+		return canPutMachine && canPutInput && canPutOutput;
+	}
 }

@@ -172,4 +172,24 @@ public class MachineType extends AbstractType {
 		return true;
 	}
 
+	public Direction getInputConnectionDirection() {
+		return getInOutDirectionByPosition(this.getInputRelativePosition());
+	}
+
+	public Direction getOutputConnectionDirection() {
+		return getInOutDirectionByPosition(this.getOutputRelativePosition());
+	}
+	
+	private Direction getInOutDirectionByPosition(Position position) {
+		if (position.getRow() == -1)
+			return Direction.NORTH;
+		if (position.getRow() == getHeight())
+			return Direction.SOUTH;
+		if (position.getCol() == -1)
+			return Direction.WEST;
+		if (position.getCol() == getWidth())
+			return Direction.EAST;
+		throw new BusinessLogicException("Invalid position");
+	}
+
 }

@@ -31,10 +31,6 @@ public class SelectionTool extends EditionTool {
 	public void paint(Graphics2D graphics) {
 		if (this.selectedTileElement != null)
 			this.groundPanel.getPainter().highlightTileElement(this.selectedTileElement, graphics);
-//		paintResctangle(graphics,
-//					selectedTileElement.getPosition(),
-//					selectedTileElement.getWidth(),
-//					selectedTileElement.getHeight(), SELECTION_COLOR);
 	}
 
 	@Override

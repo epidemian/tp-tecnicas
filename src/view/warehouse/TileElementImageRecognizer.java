@@ -30,21 +30,12 @@ public abstract class TileElementImageRecognizer extends TileElementVisitor {
 
 	private static Map<String, BufferedImage> machineImages = new HashMap<String, BufferedImage>();
 	private static Map<String, BufferedImage> conveyorImages = new HashMap<String, BufferedImage>();
-	private static final Map<Direction, String> CONVEYOR_DIRECTION_STRINGS = getConveyorDirectionStrings();
-
-	private static Map<Direction, String> getConveyorDirectionStrings() {
-		Map<Direction, String> map = new HashMap<Direction, String>();
-		map.put(Direction.NORTH, "N");
-		map.put(Direction.SOUTH, "S");
-		map.put(Direction.WEST, "W");
-		map.put(Direction.EAST, "E");
-		return map;
-	}
 
 	private static BufferedImage loadImage(String path) {
 		BufferedImage image = null;
 		try {
-			URL url = TileElementImageRecognizer.class.getClassLoader().getResource(path);
+			URL url = TileElementImageRecognizer.class.getClassLoader()
+					.getResource(path);
 			image = ImageIO.read(url);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -76,11 +67,9 @@ public abstract class TileElementImageRecognizer extends TileElementVisitor {
 	}
 
 	public static BufferedImage getConveyorImage(Conveyor conveyor) {
-		String prevStr = CONVEYOR_DIRECTION_STRINGS.get(conveyor
-				.getInputConnectionDirection());
-		String nextStr = CONVEYOR_DIRECTION_STRINGS.get(conveyor
-				.getOutputConnectionDirection());
-		String imgName = CONVEYOR_IMG_PREFIX + prevStr + nextStr
+		char prevSymbol = conveyor.getInputConnectionDirection().getSymbol();
+		char nextSymbol = conveyor.getOutputConnectionDirection().getSymbol();
+		String imgName = CONVEYOR_IMG_PREFIX + prevSymbol + nextSymbol
 				+ IMG_EXTENSION;
 
 		if (!conveyorImages.containsKey(imgName))

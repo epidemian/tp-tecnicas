@@ -1,21 +1,37 @@
 package model.production;
 
+import static java.lang.Math.PI;
 import model.warehouse.Position;
 
 public enum Direction {
-	NORTH(-1, 0), EAST(0, 1), SOUTH(1, 0), WEST(0, 1);
+	NORTH(-1, 0, 'N', 0), 
+	EAST(0, 1, 'E', PI * 0.5), 
+	SOUTH(1, 0, 'S', PI), 
+	WEST(0, -1, 'W', PI * 1.5);
 
-	private final Position associatedPosition;
+	private final Position position;
+	private final char symbol;
+	private final double rotation;
 
-	Direction(int row, int col) {
-		this(new Position(row, col));
+	Direction(int row, int col, char symbol, double rotation) {
+		this(new Position(row, col), symbol, rotation);
 	}
 
-	Direction(Position associatedPosition) {
-		this.associatedPosition = associatedPosition;
+	Direction(Position position, char symbol, double rotation) {
+		this.position = position;
+		this.symbol = symbol;
+		this.rotation = rotation;
 	}
 
 	public Position getAssociatedPosition() {
-		return associatedPosition;
+		return position;
+	}
+
+	public char getSymbol() {
+		return symbol;
+	}
+
+	public double getAssociatedRotation() {
+		return rotation;
 	}
 }
