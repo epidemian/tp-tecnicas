@@ -5,13 +5,18 @@ import javax.swing.InputMap;
 import javax.swing.KeyStroke;
 
 import model.production.MachineType;
+import model.warehouse.Position;
 
 public class KeyInputActionMapper {
+
+	// TODO: Delete this...
+	private static final MachineType MACHINE_TYPE = new MachineType(
+			"Big Machine", 3, 2, new Position(0, -1), new Position(1, 3), 50);
 
 	private static final String ESC_PRESSED = "esc-pressed";
 	private static final String M_PRESSED = "m-pressed";
 	private static final Object S_PRESSED = "s-pressed";
-	
+
 	private EditionActions editionActions;
 
 	public KeyInputActionMapper(EditionActions editionActions) {
@@ -22,14 +27,11 @@ public class KeyInputActionMapper {
 		inputMap.put(KeyStroke.getKeyStroke("ESCAPE"), ESC_PRESSED);
 		inputMap.put(KeyStroke.getKeyStroke("M"), M_PRESSED);
 		inputMap.put(KeyStroke.getKeyStroke("S"), S_PRESSED);
-		
-		
+
 		actionMap.put(ESC_PRESSED, editionActions.getEscAction());
-		// TODO: Delete this action... it's just an example.
 		actionMap.put(M_PRESSED, editionActions
-				.getActionToSetNewMachineTool(new MachineType("Big Machine", 3, 2)));
+				.getActionToSetNewMachineTool(MACHINE_TYPE));
 		actionMap.put(S_PRESSED, editionActions.getActionToSetSelectionTool());
 	}
 
-	
 }

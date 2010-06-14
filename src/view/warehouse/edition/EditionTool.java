@@ -25,8 +25,6 @@ public abstract class EditionTool implements Painter {
 
 	public abstract void cancelOperation();
 
-	public abstract void mouseMoved(Position position);
-
 	public abstract void mouseClicked(Position position);
 
 }

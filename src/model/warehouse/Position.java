@@ -7,7 +7,7 @@ package model.warehouse;
 public class Position implements Cloneable {
 
 	public static final Position ZERO = new Position();
-	
+
 	private final int row;
 	private final int col;
 
@@ -27,11 +27,11 @@ public class Position implements Cloneable {
 	public int getCol() {
 		return col;
 	}
-	
+
 	public Position add(Position other) {
 		return new Position(this.row + other.row, this.col + other.col);
 	}
-	
+
 	public Position subtract(Position other) {
 		return new Position(this.row - other.row, this.col - other.col);
 	}
@@ -64,7 +64,7 @@ public class Position implements Cloneable {
 
 	@Override
 	public String toString() {
-		return "Position [col=" + col + ", row=" + row + "]";
+		return "Position [row=" + row + ", col=" + col + "]";
 	}
 
 }

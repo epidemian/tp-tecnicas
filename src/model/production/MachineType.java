@@ -1,9 +1,10 @@
 package model.production;
 
-import static model.utils.ArgumentUtils.checkGreaterEqual;
+import static model.utils.ArgumentUtils.*;
 
 import com.sun.xml.internal.bind.v2.runtime.RuntimeUtil.ToStringAdapter;
 
+import model.exception.BusinessLogicException;
 import model.warehouse.Position;
 
 public class MachineType extends AbstractType {
@@ -15,7 +16,8 @@ public class MachineType extends AbstractType {
 	private Position inputRelativePosition;
 	private Position outputRelativePosition;
 
-	public static final int DEFECT_MACHINE_PRICE=0;
+	public static final int DEFECT_MACHINE_PRICE = 0;
+
 	/*
 	 * TODO borrar!
 	 */
@@ -27,47 +29,82 @@ public class MachineType extends AbstractType {
 	 * TODO borrar!
 	 */
 	public MachineType(String name, int width, int height) {
-		this(name, width, height, new Position(0,-1),new Position(0,width),
+		this(name, width, height, new Position(0, -1), new Position(0, width),
 				MachineType.DEFECT_MACHINE_PRICE);
 	}
 
-	/*
-	public MachineType(String name, int height,int width,int price){
-		this(name, width, height, price,new Position(0,-1),new Position(0,width));
-		
-	}
-	*/
-	
-	public MachineType(String name, int height, int width, 
-			Position inputRelativePosition, Position outputRelativePosition,int price) {
+	public MachineType(String name, int width, int height,
+			Position inputRelativePosition, Position outputRelativePosition,
+			int price) {
 		super(name);
 		this.height = height;
 		this.width = width;
+
+		checkGreaterEqual(price, 0, "price");
 		this.price = price;
+
+		checkInputAndOutputPositions(inputRelativePosition,
+				outputRelativePosition);
 		this.inputRelativePosition = inputRelativePosition;
 		this.outputRelativePosition = outputRelativePosition;
 	}
-	
+
+	private void checkInputAndOutputPositions(Position inputPosition,
+			Position outputPosition) {
+		if (inputPosition.equals(outputPosition))
+			throw new BusinessLogicException(
+					"Input and output positions must not be equal");
+		checkArgCondition(inputPosition,
+				isValidInputOrOutputPosition(inputPosition),
+				"Invalid input position");
+		checkArgCondition(outputPosition,
+				isValidInputOrOutputPosition(outputPosition),
+				"Invalid output position");
+	}
+
 	/*
-	public static MachineType createMachineTypeWithPriceAndInputOutputPositions
-		(String name, int height, int width, int price,
-			Position inputRelativePosition, Position outputRelativePosition){
-		MachineType type = 
-				new MachineType(name,height,width,price,inputRelativePosition,
-						outputRelativePosition);
-		return type;
-		
+	 * public static MachineType
+	 * createMachineTypeWithPriceAndInputOutputPositions (String name, int
+	 * height, int width, int price, Position inputRelativePosition, Position
+	 * outputRelativePosition){ MachineType type = new
+	 * MachineType(name,height,width,price,inputRelativePosition,
+	 * outputRelativePosition); return type;
+	 * 
+	 * }
+	 * 
+	 * public static MachineType createMachineTypeInputOutputPositions (String
+	 * name, int height, int width, Position inputRelativePosition, Position
+	 * outputRelativePosition){ MachineType type = new
+	 * MachineType(name,height,width,0,inputRelativePosition,
+	 * outputRelativePosition); return type; }
+	 */
+
+	/**
+	 * Returns true if position is in the "surroundings" of the machine area.
+	 * Graphically, position P can be:
+	 * 
+	 * <pre>
+	 *    PPP
+	 *   PMMMP
+	 *   PMMMP
+	 *    PPP
+	 * </pre>
+	 * 
+	 * Where M are are the tiles occupied by the machine =P, and the top-left M
+	 * is (0,0).
+	 */
+	private boolean isValidInputOrOutputPosition(Position position) {
+
+		int row = position.getRow();
+		int col = position.getCol();
+
+		if (row == -1 || row == this.getHeight())
+			return 0 <= col && col < this.getWidth();
+		else if (col == -1 || col == this.getWidth())
+			return 0 <= row && row < this.getHeight();
+		else
+			return false;
 	}
-	
-	public static MachineType createMachineTypeInputOutputPositions
-	(String name, int height, int width,
-			Position inputRelativePosition, Position outputRelativePosition){
-		MachineType type = 
-				new MachineType(name,height,width,0,inputRelativePosition,
-						outputRelativePosition);
-		return type;
-	}
-	*/
 
 	public int getHeight() {
 		return height;

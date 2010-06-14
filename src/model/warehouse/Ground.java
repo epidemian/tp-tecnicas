@@ -29,9 +29,9 @@ public class Ground {
 	}
 	
 
-	public boolean isAreaEmpty(Position pos, int width, int heigh) {
+	public boolean isAreaEmpty(Position pos, int width, int height) {
 
-		for (int row = pos.getRow(); row < pos.getRow() + heigh; row++)
+		for (int row = pos.getRow(); row < pos.getRow() + height; row++)
 			for (int col = pos.getCol(); col < pos.getCol() + width; col++)
 				if (!isTileEmpty(row, col))
 					return false;

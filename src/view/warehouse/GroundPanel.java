@@ -6,6 +6,7 @@ import static view.warehouse.GroundPainter.TILE_SIZE;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
@@ -23,8 +24,6 @@ public class GroundPanel extends JPanel {
 	private Ground ground;
 	private GroundPainter groundPainter;
 	private EditionTool editionTool;
-
-	protected Position currentPosition = new Position();
 
 	public GroundPanel(Ground ground) {
 		super();
@@ -72,23 +71,23 @@ public class GroundPanel extends JPanel {
 		return this.groundPainter;
 	}
 	
+	/**
+	 * Retrieves the mouse position in ground coordinates, or null if mouse is not
+	 * over the ground.
+	 * 
+	 * @return
+	 */
+	public Position getCurrentMousePosition() {
+		Point mousePosition = getMousePosition();
+		return mousePosition == null ? null : getPositionFromMousePosition(mousePosition);
+	}
+	
 	private void setMouseListeners() {
-		
-		this.addMouseMotionListener(new MouseMotionAdapter() {
-			@Override
-			public void mouseMoved(MouseEvent e) {
-				Position newPosition = getPositionFromMouseEvent(e);
-				if (!newPosition.equals(currentPosition )) {
-					currentPosition = newPosition;
-					editionTool.mouseMoved(newPosition);
-				}
-			}
-		});
 		
 		this.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				editionTool.mouseClicked(getPositionFromMouseEvent(e));
+				editionTool.mouseClicked(getPositionFromMousePosition(e.getPoint()));
 			}
 		});
 	}
@@ -101,8 +100,8 @@ public class GroundPanel extends JPanel {
 
 
 
-	private Position getPositionFromMouseEvent(MouseEvent e) {
-		return new Position(e.getY() / TILE_SIZE, e.getX() / TILE_SIZE);
+	private Position getPositionFromMousePosition(Point point) {
+		return new Position(point.y / TILE_SIZE, point.x / TILE_SIZE);
 	}
 }
 
@@ -123,10 +122,6 @@ class NullEditionTool extends EditionTool {
 
 	@Override
 	public void mouseClicked(Position position) {
-	}
-
-	@Override
-	public void mouseMoved(Position position) {
 	}
 
 }
