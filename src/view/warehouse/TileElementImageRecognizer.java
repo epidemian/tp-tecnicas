@@ -9,6 +9,7 @@ import javax.imageio.ImageIO;
 
 import model.production.Conveyor;
 import model.production.Direction;
+import model.production.MachineType;
 import model.production.ProductionMachine;
 import model.production.QualityControlMachine;
 import model.warehouse.TileElement;
@@ -27,6 +28,7 @@ public abstract class TileElementImageRecognizer extends TileElementVisitor {
 	private static final String CONVEYOR_IMG_PREFIX = "./conveyor_";
 	private static final String CONVEYOR_IMG_SUFFIX = ".png";
 
+	private static Map<String, BufferedImage> machineImages = new HashMap<String, BufferedImage>();
 	private static Map<String, BufferedImage> conveyorImages = new HashMap<String, BufferedImage>();
 	private static final Map<Direction, String> CONVEYOR_DIRECTION_STRINGS = getConveyorDirectionStrings();
 
@@ -73,7 +75,7 @@ public abstract class TileElementImageRecognizer extends TileElementVisitor {
 		this.onTileElmentVisited(conveyor, getConveyorImage(conveyor));
 	}
 
-	private BufferedImage getConveyorImage(Conveyor conveyor) {
+	public static BufferedImage getConveyorImage(Conveyor conveyor) {
 		String prevStr = CONVEYOR_DIRECTION_STRINGS.get(conveyor
 				.getInputConnectionDirection());
 		String nextStr = CONVEYOR_DIRECTION_STRINGS.get(conveyor
@@ -84,5 +86,13 @@ public abstract class TileElementImageRecognizer extends TileElementVisitor {
 		if (!conveyorImages.containsKey(imgName))
 			conveyorImages.put(imgName, loadImage(imgName));
 		return conveyorImages.get(imgName);
+	}
+	
+	public static BufferedImage getMachineImage(MachineType mtype){
+		String imgName = mtype.getName();
+		
+		if (!machineImages.containsKey(imgName))
+			machineImages.put(imgName, loadImage(imgName));
+		return machineImages.get(imgName);
 	}
 }
