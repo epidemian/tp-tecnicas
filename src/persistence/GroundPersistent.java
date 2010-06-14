@@ -49,7 +49,7 @@ public class GroundPersistent{
 							Integer.valueOf(elem.attributeValue(
 									GroundPersistent.TAG_CHILD_ATR_HEIGHT)));
 
-		ground.addTileElement(wall, new Position(
+		ground.putTileElement(wall, new Position(
 								Integer.valueOf(elem.attributeValue(
 										GroundPersistent.TAG_CHILD_ATR_ROWS)),
 								Integer.valueOf(elem.attributeValue(

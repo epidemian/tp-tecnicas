@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import view.warehouse.GamePanel;
 import view.warehouse.GroundPanel;
 import view.warehouse.edition.EditionTool;
+import model.game.Budget;
 import model.game.Game;
 import model.production.Machine;
 import model.production.MachineType;
@@ -31,10 +32,12 @@ public class AddMachineTool extends EditionTool {
 	@Override
 	public void paint(Graphics graphics) {
 		Position position = this.groundPanel.getCurrentMousePosition();
-		Color color = canPutMachineAt(position) ? Color.GREEN : Color.RED;
-		this.groundPanel.getPainter().paintResctangle(graphics, position,
-				this.machineType.getWidth(), this.machineType.getHeight(),
-				color);
+		if (position != null) {
+			Color color = canPutMachineAt(position) ? Color.GREEN : Color.RED;
+			this.groundPanel.getPainter().paintResctangle(graphics, position,
+					this.machineType.getWidth(), this.machineType.getHeight(),
+					color);
+		}
 	}
 
 	@Override
@@ -43,17 +46,20 @@ public class AddMachineTool extends EditionTool {
 			ProductionMachine machine = new ProductionMachine(this.machineType);
 
 			// TODO: Esto no se si irá así jajjaa
-			this.getGame().getBudget().decrement(this.machineType.getPrice());
-			this.getGame().getGround().addTileElement(machine, position);
+			Budget budget = this.getGame().getBudget();
+			budget.decrement(this.machineType.getPrice());
+			// TODO: habría que avisar a la vista cosa que se actualice...
+			// this.getGamePanel().getTopPanel().setMoneyBalance(budget.getBalance());
+			
+			this.getGame().getGround().putTileElement(machine, position);
 		}
 	}
 
 	private boolean canPutMachineAt(Position position) {
 		int width = this.machineType.getWidth();
 		int height = this.machineType.getHeight();
-		boolean areaEmpty = this.groundPanel.getGround().isAreaEmpty(position,
-				width, height);
-		return areaEmpty;
+		return this.groundPanel.getGround().canPutTileElementByDimension(width,
+				height, position);
 	}
 
 }

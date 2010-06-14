@@ -76,20 +76,20 @@ public class ProductionLinesCreatorTest {
 		/*
 		 * Puts the lines in the ground.
 		 */
-		ground.addTileElement(prodLineElement1, new Position(3, 2));
-		ground.addTileElement(prodLineElement2, new Position(2, 2));
-		ground.addTileElement(prodLineElement3, new Position(2, 3));
-		ground.addTileElement(prodLineElement4, new Position(3, 4));
-		ground.addTileElement(prodLineElement5, new Position(4, 4));
+		ground.putTileElement(prodLineElement1, new Position(3, 2));
+		ground.putTileElement(prodLineElement2, new Position(2, 2));
+		ground.putTileElement(prodLineElement3, new Position(2, 3));
+		ground.putTileElement(prodLineElement4, new Position(3, 4));
+		ground.putTileElement(prodLineElement5, new Position(4, 4));
 
-		ground.addTileElement(prodLine2Element1, new Position(5, 5));
-		ground.addTileElement(prodLine2Element2, new Position(6, 5));
-		ground.addTileElement(prodLine2Element3, new Position(6, 6));
+		ground.putTileElement(prodLine2Element1, new Position(5, 5));
+		ground.putTileElement(prodLine2Element2, new Position(6, 5));
+		ground.putTileElement(prodLine2Element3, new Position(6, 6));
 
 		/*
 		 * Isolated machine.
 		 */
-		ground.addTileElement(prodLine3Element1, new Position(8, 8));
+		ground.putTileElement(prodLine3Element1, new Position(8, 8));
 
 		List<ProductionLine> linesCreated = new ArrayList<ProductionLine>();
 		linesCreated.add(line);

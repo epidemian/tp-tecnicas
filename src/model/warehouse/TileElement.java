@@ -49,7 +49,7 @@ abstract public class TileElement {
 	}
 
 	/**
-	 * Note: Should only be called by {@link Ground#addTileElement(TileElement, Position)}
+	 * Note: Should only be called by {@link Ground#putTileElement(TileElement, Position)}
 	 * @param position
 	 */
 	void setPosition(Position position) {

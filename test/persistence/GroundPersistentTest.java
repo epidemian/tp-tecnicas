@@ -48,8 +48,8 @@ public class GroundPersistentTest extends XMLPersistentTest {
 		Wall upperWall=new Wall(10,1);
 		Wall lowerWall=new Wall(10,1);
 			
-		ground.addTileElement(lowerWall,new Position(1,1));
-		ground.addTileElement(upperWall,new Position(11,1));
+		ground.putTileElement(lowerWall,new Position(1,1));
+		ground.putTileElement(upperWall,new Position(11,1));
 		
 		Document doc= reader.read("test/persistence/input/" +
 						"ValidGroundWithWalls.xml");

@@ -43,8 +43,6 @@ public class GroundPanel extends JPanel {
 		this.setEditionTool(new NullEditionTool());
 		this.setMouseListeners();
 	}
-	
-	
 
 	@Override
 	protected void paintComponent(Graphics graphics) {
@@ -70,35 +68,35 @@ public class GroundPanel extends JPanel {
 	public GroundPainter getPainter() {
 		return this.groundPainter;
 	}
-	
+
 	/**
-	 * Retrieves the mouse position in ground coordinates, or null if mouse is not
-	 * over the ground.
+	 * Retrieves the mouse position in ground coordinates, or null if mouse is
+	 * not over the ground.
 	 * 
 	 * @return
 	 */
 	public Position getCurrentMousePosition() {
 		Point mousePosition = getMousePosition();
-		return mousePosition == null ? null : getPositionFromMousePosition(mousePosition);
+		return mousePosition == null ? null
+				: getPositionFromMousePosition(mousePosition);
 	}
-	
+
 	private void setMouseListeners() {
-		
+
 		this.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				editionTool.mouseClicked(getPositionFromMousePosition(e.getPoint()));
+				editionTool.mouseClicked(getPositionFromMousePosition(e
+						.getPoint()));
 			}
 		});
 	}
-	
+
 	private Dimension getGroundSize(Ground ground) {
 		int width = ground.getCols() * TILE_SIZE;
 		int height = ground.getRows() * TILE_SIZE;
 		return new Dimension(width, height);
 	}
-
-
 
 	private Position getPositionFromMousePosition(Point point) {
 		return new Position(point.y / TILE_SIZE, point.x / TILE_SIZE);
