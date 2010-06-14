@@ -26,7 +26,7 @@ public abstract class TileElementImageRecognizer extends TileElementVisitor {
 	private static final BufferedImage IMG_WALL = loadImage("./wall.gif");
 
 	private static final String CONVEYOR_IMG_PREFIX = "./conveyor_";
-	private static final String CONVEYOR_IMG_SUFFIX = ".png";
+	private static final String IMG_EXTENSION = ".png";
 
 	private static Map<String, BufferedImage> machineImages = new HashMap<String, BufferedImage>();
 	private static Map<String, BufferedImage> conveyorImages = new HashMap<String, BufferedImage>();
@@ -81,7 +81,7 @@ public abstract class TileElementImageRecognizer extends TileElementVisitor {
 		String nextStr = CONVEYOR_DIRECTION_STRINGS.get(conveyor
 				.getOutputConnectionDirection());
 		String imgName = CONVEYOR_IMG_PREFIX + prevStr + nextStr
-				+ CONVEYOR_IMG_SUFFIX;
+				+ IMG_EXTENSION;
 
 		if (!conveyorImages.containsKey(imgName))
 			conveyorImages.put(imgName, loadImage(imgName));
@@ -89,7 +89,7 @@ public abstract class TileElementImageRecognizer extends TileElementVisitor {
 	}
 	
 	public static BufferedImage getMachineImage(MachineType mtype){
-		String imgName = mtype.getName();
+		String imgName = mtype.getName() + IMG_EXTENSION;
 		
 		if (!machineImages.containsKey(imgName))
 			machineImages.put(imgName, loadImage(imgName));
