@@ -14,7 +14,7 @@ public abstract class EditionTool implements Painter {
 		this.gamePanel = gamePanel;
 		this.game = game;
 	}
-	
+
 	public GamePanel getGamePanel() {
 		return gamePanel;
 	}
@@ -22,8 +22,6 @@ public abstract class EditionTool implements Painter {
 	public Game getGame() {
 		return game;
 	}
-
-	public abstract void cancelOperation();
 
 	public abstract void mouseClicked(Position position);
 

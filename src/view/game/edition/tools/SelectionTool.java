@@ -1,10 +1,8 @@
 package view.game.edition.tools;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 
 import model.game.Game;
-import model.warehouse.EmptyTileElement;
 import model.warehouse.Position;
 import model.warehouse.TileElement;
 import view.game.GamePanel;
@@ -21,10 +19,6 @@ public class SelectionTool extends EditionTool {
 
 		// Weeeeee!
 		groundPanel = getGamePanel().getGroundPanelContainer().getGroundPanel();
-	}
-
-	@Override
-	public void cancelOperation() {
 	}
 
 	@Override

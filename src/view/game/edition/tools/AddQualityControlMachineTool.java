@@ -14,7 +14,7 @@ public class AddQualityControlMachineTool extends AddMachineTool {
 	}
 	
 	@Override
-	protected Machine putMachineAt(Position position) {
+	protected Machine buyAndAddMachine(Position position) {
 		return getGame().buyAndAddQualityControlMachine(getMachineType(), position);
 	}
 

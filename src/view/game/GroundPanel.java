@@ -124,10 +124,6 @@ class NullEditionTool extends EditionTool {
 	}
 
 	@Override
-	public void cancelOperation() {
-	}
-
-	@Override
 	public void paint(Graphics2D graphics) {
 	}
 

@@ -36,7 +36,7 @@ public class EditionActions {
 		return new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				groundPanel.getEditionTool().cancelOperation();
+				groundPanel.getEditionTool().reset();
 			}
 
 			private static final long serialVersionUID = 1L;
