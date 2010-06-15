@@ -66,6 +66,11 @@ public class EditionActions {
 		EditionTool tool = new AddConveyorTool(gamePanel, game);
 		return getActionToSetTool(tool, "Add-Conveyor");
 	}
+	
+	public Action getActionToSetRawMaterialInputTool() {
+		EditionTool tool = new AddConveyorTool(gamePanel, game);
+		return getActionToSetTool(tool, "Add-Conveyor");
+	}
 
 	private static void printToolSelection(String toolName) {
 		out.println("You have selected the " + toolName + " Tool");
