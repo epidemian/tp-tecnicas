@@ -20,7 +20,11 @@ public class ViewUtils {
 			"       C       CCM       ", 
 			"   CCMCC                 ",
 			"                         ", 
-			"                         ", };
+			"                         ",
+                        "                         ",
+                        "                         ",
+                        "                         ",
+                        "                         ",};
 
 	public static Ground creatGroundSample1() {
 

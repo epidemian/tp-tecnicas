@@ -66,7 +66,8 @@ public abstract class AddMachineTool extends EditionTool {
 	public void mouseClicked(Position position) {
 		if (canPutMachineAt(position) && haveEnoughMoney()) {
 			putMachineAt(position);
-			this.getGamePanel().updateBudgetLabel();
+                        int balance = this.getGame().getBudget().getBalance();
+                        this.getGamePanel().getBudgetPanel().setMoneyBalance(balance);
 		}
 	}
 

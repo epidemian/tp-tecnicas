@@ -16,7 +16,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jToolBar1" min="-2" max="-2" attributes="0"/>
+          <Component id="jToolBar1" alignment="0" pref="722" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -35,7 +35,7 @@
       <SubComponents>
         <Component class="javax.swing.JButton" name="lineElementsMarket">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jButton1" postCode="lineElementsMarket.setToolTipText(LINE_ELEMENTS_MARKET);"/>
+            <Property name="text" type="java.lang.String" value="Line market" postCode="lineElementsMarket.setToolTipText(LINE_ELEMENTS_MARKET);"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
@@ -43,7 +43,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="rawMaterialsMarket">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jButton1" postCode="rawMaterialsMarket.setToolTipText(RAW_MATERIALS_MARKET);"/>
+            <Property name="text" type="java.lang.String" value="Raw-Mat Market" postCode="rawMaterialsMarket.setToolTipText(RAW_MATERIALS_MARKET);"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
@@ -51,7 +51,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="validProductionLines">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jButton2" postCode="validProductionLines.setToolTipText(VALID_PRODUCTION_LINES);"/>
+            <Property name="text" type="java.lang.String" value="Valid Prod" postCode="validProductionLines.setToolTipText(VALID_PRODUCTION_LINES);"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
@@ -59,7 +59,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="technologyTree">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jButton3" postCode="technologyTree.setToolTipText(TECHNOLOGY_TREE);"/>
+            <Property name="text" type="java.lang.String" value="Lab" postCode="technologyTree.setToolTipText(TECHNOLOGY_TREE);"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
@@ -67,7 +67,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="sell">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jButton4" postCode="sell.setToolTipText(SELL);"/>
+            <Property name="text" type="java.lang.String" value="Sell" postCode="sell.setToolTipText(SELL);"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
@@ -75,7 +75,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="pause">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jButton5" postCode="pause.setToolTipText(PAUSE);"/>
+            <Property name="text" type="java.lang.String" value="Pause" postCode="pause.setToolTipText(PAUSE);"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
@@ -83,7 +83,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="play">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jButton6" postCode="play.setToolTipText(PLAY);"/>
+            <Property name="text" type="java.lang.String" value="Play" postCode="play.setToolTipText(PLAY);"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
@@ -91,7 +91,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="grounds">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jButton7" postCode="grounds.setToolTipText(GROUNDS);"/>
+            <Property name="text" type="java.lang.String" value="Grounds" postCode="grounds.setToolTipText(GROUNDS);"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
@@ -99,7 +99,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="exit">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jButton8" postCode="exit.setToolTipText(EXIT);"/>
+            <Property name="text" type="java.lang.String" value="Exit" postCode="exit.setToolTipText(EXIT);"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>

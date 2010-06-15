@@ -40,10 +40,11 @@ public class LineElementsMarketPanel extends javax.swing.JPanel {
     }
     
     public void setMachineButtonActionListener(int index, ActionListener action){
-    	// TODO remover los action listeners anteriores.
-    	this.machineButtons.get(index).addActionListener(action);
+    	JButton machineButton = this.machineButtons.get(index);
+        removeActionListenerFromButton(machineButton);
+    	machineButton.addActionListener(action);
     }
-    
+
     public int getMachineButtonsSize(){
     	return this.machineButtons.size();
     }
@@ -75,7 +76,14 @@ public class LineElementsMarketPanel extends javax.swing.JPanel {
     public void setLabelDescriptionImage(BufferedImage image){
         this.descriptionImage.setImage(image);
     }
-    
+
+    // TODO ver si cambiar de lugar! o si hay otra forma de hacerlo!
+    private static void removeActionListenerFromButton(JButton button){
+        ActionListener[] actionListeners = button.getActionListeners();
+        for (int i = 0; i < actionListeners.length; i++)
+            button.removeActionListener(actionListeners[i]);
+    }
+
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -130,11 +138,17 @@ public class LineElementsMarketPanel extends javax.swing.JPanel {
         machineButtonsPanel.add(machine15);
 
         machineNextPreviousPanel.setLayout(new java.awt.GridLayout(1, 2));
+
+        previousMachine.setFont(new java.awt.Font("Purisa", 0, 13));
+        previousMachine.setText("Previous");
         machineNextPreviousPanel.add(previousMachine);
+
+        nextMachine.setFont(new java.awt.Font("Purisa", 0, 13));
+        nextMachine.setText("Next");
         machineNextPreviousPanel.add(nextMachine);
 
         titleLabel.setFont(new java.awt.Font("Purisa", 0, 15));
-        titleLabel.setText("Production Line Elements");
+        titleLabel.setText("Line Elements");
 
         conveyorLabel.setFont(new java.awt.Font("Purisa", 0, 13));
         conveyorLabel.setText("Conveyor");
@@ -155,7 +169,7 @@ public class LineElementsMarketPanel extends javax.swing.JPanel {
         );
         descriptionImageLayout.setVerticalGroup(
             descriptionImageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 128, Short.MAX_VALUE)
+            .addGap(0, 125, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -165,27 +179,27 @@ public class LineElementsMarketPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(machineNextPreviousPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(machineButtonsPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addComponent(descriptionImage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(21, 21, 21)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(titleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(conveyorLabel)
-                                    .addComponent(inputLabel)
-                                    .addComponent(machineLabel))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(input, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(conveyor, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE)))))
+                            .addComponent(conveyorLabel)
+                            .addComponent(inputLabel)
+                            .addComponent(machineLabel))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(input, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(conveyor, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(machineNextPreviousPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)
-                            .addComponent(machineButtonsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(41, 41, 41)
-                        .addComponent(descriptionImage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                        .addGap(52, 52, 52)
+                        .addComponent(titleLabel)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -206,9 +220,9 @@ public class LineElementsMarketPanel extends javax.swing.JPanel {
                 .addComponent(machineButtonsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(machineNextPreviousPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addGap(18, 18, 18)
                 .addComponent(descriptionImage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

@@ -82,63 +82,63 @@ public class ToolBarPanel extends javax.swing.JPanel {
 
         jToolBar1.setRollover(true);
 
-        lineElementsMarket.setText("jButton1");
+        lineElementsMarket.setText("Line market");
         lineElementsMarket.setToolTipText(LINE_ELEMENTS_MARKET);
         lineElementsMarket.setFocusable(false);
         lineElementsMarket.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         lineElementsMarket.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(lineElementsMarket);
 
-        rawMaterialsMarket.setText("jButton1");
+        rawMaterialsMarket.setText("Raw-Mat Market");
         rawMaterialsMarket.setToolTipText(RAW_MATERIALS_MARKET);
         rawMaterialsMarket.setFocusable(false);
         rawMaterialsMarket.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         rawMaterialsMarket.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(rawMaterialsMarket);
 
-        validProductionLines.setText("jButton2");
+        validProductionLines.setText("Valid Prod");
         validProductionLines.setToolTipText(VALID_PRODUCTION_LINES);
         validProductionLines.setFocusable(false);
         validProductionLines.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         validProductionLines.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(validProductionLines);
 
-        technologyTree.setText("jButton3");
+        technologyTree.setText("Lab");
         technologyTree.setToolTipText(TECHNOLOGY_TREE);
         technologyTree.setFocusable(false);
         technologyTree.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         technologyTree.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(technologyTree);
 
-        sell.setText("jButton4");
+        sell.setText("Sell");
         sell.setToolTipText(SELL);
         sell.setFocusable(false);
         sell.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         sell.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(sell);
 
-        pause.setText("jButton5");
+        pause.setText("Pause");
         pause.setToolTipText(PAUSE);
         pause.setFocusable(false);
         pause.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         pause.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(pause);
 
-        play.setText("jButton6");
+        play.setText("Play");
         play.setToolTipText(PLAY);
         play.setFocusable(false);
         play.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         play.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(play);
 
-        grounds.setText("jButton7");
+        grounds.setText("Grounds");
         grounds.setToolTipText(GROUNDS);
         grounds.setFocusable(false);
         grounds.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         grounds.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(grounds);
 
-        exit.setText("jButton8");
+        exit.setText("Exit");
         exit.setToolTipText(EXIT);
         exit.setFocusable(false);
         exit.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -149,7 +149,7 @@ public class ToolBarPanel extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 722, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

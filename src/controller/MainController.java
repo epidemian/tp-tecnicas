@@ -16,7 +16,8 @@ import controller.game.GamePanelController;
 import model.game.Game;
 import view.MainFrame;
 import view.game.GamePanel;
-import view.game.ToolBarPanel;
+import view.game.GroundPanel;
+import view.game.GroundPanelContainer;
 
 public class MainController {
 
@@ -26,6 +27,11 @@ public class MainController {
 	public MainController(Game game, final MainFrame mainFrame) {
 		this.game = game;
 		this.mainFrame = mainFrame;
+
+		setGamePanel();
+                
+		mainFrame.setVisible(true);
+		mainFrame.requestFocus();
 
 		/*
 		 * Main loop. Refresh 20 frames per second. TODO: Sacar main loop de
@@ -47,18 +53,15 @@ public class MainController {
 				mainFrame.getContentPane().requestFocusInWindow();
 			}
 		});
-
-		setGamePanel();
-
-		mainFrame.setVisible(true);
-		mainFrame.requestFocus();
 	}
 
 	private void setGamePanel() {
-		GamePanel gamePanel = new GamePanel(this.game);
-		setMainFramePanel(gamePanel);
-		
+
+                GroundPanelContainer groundPanel
+                    = new GroundPanelContainer(this.game.getGround());
+		GamePanel gamePanel = new GamePanel(groundPanel);
 		new GamePanelController(this.game, gamePanel);
+                setMainFramePanel(gamePanel);
 		
 		// TODO
 //		ToolBarPanel toolbar = gamePanel.getToolbar();
@@ -77,5 +80,4 @@ public class MainController {
 		panel.setOpaque(true);
 		this.mainFrame.setContentPane(panel);
 	}
-
 }

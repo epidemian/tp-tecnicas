@@ -1,5 +1,7 @@
 package controller.game;
 
+import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -20,20 +22,23 @@ import view.game.edition.EditionActions;
 public class LineElementsMarketPanelController {
 
 	private List<Action> machineButtonsActions;
-	private List<BufferedImage> machineButtonsImages;
+	private List<ImageIcon> machineButtonsImages;
 
-	private EditionActions editonActions;
+	private EditionActions editionActions;
 	private LineElementsMarketPanel marketPanel;
 	private int machineTab;
 
 	public LineElementsMarketPanelController(Game game,
 			LineElementsMarketPanel marketPanel, EditionActions editionActions) {
 
-		checkNotNull(this.editonActions, "editionActions");
-		checkNotNull(this.marketPanel, "marketPanel");
+		checkNotNull(editionActions, "editionActions");
+		checkNotNull(marketPanel, "marketPanel");
+
+		this.editionActions = editionActions;
+		this.marketPanel = marketPanel;
 
 		this.machineButtonsActions = new ArrayList<Action>();
-		this.machineButtonsImages = new ArrayList<BufferedImage>();
+		this.machineButtonsImages = new ArrayList<ImageIcon>();
 
 		this.machineTab = 0;
 
@@ -41,11 +46,11 @@ public class LineElementsMarketPanelController {
 		initPreviousMachinesButtonActionListener();
 
 		// Conveyor action.
-		this.marketPanel.addConveyorButtonActionListener(this.editonActions
+		this.marketPanel.addConveyorButtonActionListener(this.editionActions
 				.getActionToSetConveyorTool());
 
 		// Raw materials input action.
-		this.marketPanel.addInputButtonActionListener(this.editonActions
+		this.marketPanel.addInputButtonActionListener(this.editionActions
 				.getActionToSetRawMaterialInputTool());
 
 		initMachineButtonsActionsAndImages(game);
@@ -56,19 +61,31 @@ public class LineElementsMarketPanelController {
 	private void initMachineButtonsActionsAndImages(Game game) {
 		// Production machine buttons actions n' images.
 		for (MachineType mtype : game.getProductionMachinesTypes()) {
-			this.machineButtonsImages.add(TileElementImageRecognizer
+			ImageIcon icon = getScaleImage(TileElementImageRecognizer
 					.getMachineImage(mtype));
-			this.machineButtonsActions.add(this.editonActions
+
+			this.machineButtonsImages.add(icon);
+			this.machineButtonsActions.add(this.editionActions
 					.getActionToSetNewProductionMachineTool(mtype));
 		}
 
 		// Quality control machine buttons actions n' images.
 		for (MachineType mtype : game.getQualityControlMachinesTypes()) {
-			this.machineButtonsImages.add(TileElementImageRecognizer
+			ImageIcon icon = getScaleImage(TileElementImageRecognizer
 					.getMachineImage(mtype));
-			this.machineButtonsActions.add(this.editonActions
+
+			this.machineButtonsImages.add(icon);
+			this.machineButtonsActions.add(this.editionActions
 					.getActionToSetNewQualityControlMachineTool(mtype));
 		}
+	}
+
+	static private ImageIcon getScaleImage(BufferedImage image) {
+		Dimension image_size = new Dimension(50, 35);
+
+		Image scaleImage = new ImageIcon(image).getImage().getScaledInstance(
+				image_size.width, image_size.height, Image.SCALE_SMOOTH);
+		return new ImageIcon(scaleImage);
 	}
 
 	private void initPreviousMachinesButtonActionListener() {
@@ -94,8 +111,8 @@ public class LineElementsMarketPanelController {
 								.increaseMachineTab();
 					}
 				});
-	} 
-	
+	}
+
 	private boolean canIncreseMachineTab() {
 
 		int buttonsSize = this.marketPanel.getMachineButtonsSize();
@@ -140,7 +157,7 @@ public class LineElementsMarketPanelController {
 		int j = 0;
 		for (int i = startIndex; i < lastIndex; i++, j++) {
 			Action action = this.machineButtonsActions.get(i);
-			ImageIcon icon = new ImageIcon(this.machineButtonsImages.get(i));
+			ImageIcon icon = this.machineButtonsImages.get(i);
 
 			this.marketPanel.setMachineButtonActionListener(j, action);
 			this.marketPanel.setMachineButtonIcon(j, icon);

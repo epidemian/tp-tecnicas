@@ -1,13 +1,11 @@
 package model.game;
 
+import java.util.ArrayList;
 import static model.utils.ArgumentUtils.*;
-import java.util.LinkedList;
 import java.util.List;
 
-import model.production.Conveyor;
 import model.production.Machine;
 import model.production.MachineType;
-import model.production.ProductionLineElement;
 import model.production.ProductionMachine;
 import model.production.QualityControlMachine;
 import model.warehouse.Ground;
@@ -16,35 +14,30 @@ import model.warehouse.Position;
 public class Game {
 
 	private Ground ground;
-	private List<ProductionLineElement> lineElements;
+        private List<MachineType> qualityControlMachineType;
+        private List<MachineType> productionMachinesType;
 	private Budget budget;
 
 	public Game(Ground ground) {
 		this.ground = ground;
-		this.lineElements = new LinkedList<ProductionLineElement>();
-		this.budget = new Budget(1000);
-
+                this.qualityControlMachineType = new ArrayList<MachineType>();
+                this.productionMachinesType = new ArrayList<MachineType>();
+                this.budget = new Budget(1000);
+                
 		/*
 		 * TODO hardcoding just for test.
 		 */
-		this.lineElements.add(new ProductionMachine(new MachineType("machine1",
-				1, 1)));
-		this.lineElements.add(new QualityControlMachine(new MachineType(
-				"quality1", 1, 1)));
-		this.lineElements.add(new Conveyor());
+                MachineType prodMachType = new MachineType("productionMachine",3,3,new Position(0, -1), new Position(2, 3),250);
+                this.productionMachinesType.add(prodMachType);
+                this.productionMachinesType.add(prodMachType);
 
-		for (int i = 3; i < 20; i++)
-			this.lineElements.add(new ProductionMachine(new MachineType("" + i,
-					1, 1)));
-
-	}
+                MachineType qualMachType = new MachineType("qualityControlMachine",4,3);
+                this.qualityControlMachineType.add(qualMachType);
+                this.qualityControlMachineType.add(qualMachType);
+        }
 
 	public Ground getGround() {
 		return this.ground;
-	}
-
-	public List<ProductionLineElement> getProductionLineElements() {
-		return this.lineElements;
 	}
 
 	public Budget getBudget() {
@@ -78,12 +71,10 @@ public class Game {
 	}
 
 	public List<MachineType> getProductionMachinesTypes() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+            return this.productionMachinesType;
+        }
 
 	public List<MachineType> getQualityControlMachinesTypes() {
-		// TODO Auto-generated method stub
-		return null;
+            return this.qualityControlMachineType;
 	}
 }
