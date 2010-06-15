@@ -1,24 +1,10 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
- * BackGroundPanel.java
- *
- * Created on 15/06/2010, 14:19:26
- */
-
 package view.game;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import static model.utils.ArgumentUtils.*;
 
-/**
- *
- * @author nicolas
- */
 public class BackGroundPanel extends javax.swing.JPanel {
 
     private BufferedImage image;
@@ -34,8 +20,9 @@ public class BackGroundPanel extends javax.swing.JPanel {
     }
 
     public void setImage(BufferedImage image) {
-        // Check not null.
+        checkNotNull(image, "image");
         this.image = image;
+        this.repaint();
     }
 
     @Override

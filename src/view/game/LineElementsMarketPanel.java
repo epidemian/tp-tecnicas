@@ -73,7 +73,7 @@ public class LineElementsMarketPanel extends javax.swing.JPanel {
     }
     
     public void setLabelDescriptionImage(BufferedImage image){
-        // TODO agregar Panel descriptivo con imagen.
+        this.descriptionImage.setImage(image);
     }
     
     /** This method is called from within the constructor to
@@ -110,6 +110,7 @@ public class LineElementsMarketPanel extends javax.swing.JPanel {
         inputLabel = new javax.swing.JLabel();
         input = new javax.swing.JButton();
         machineLabel = new javax.swing.JLabel();
+        descriptionImage = new view.game.BackGroundPanel();
 
         machineButtonsPanel.setLayout(new java.awt.GridLayout(5, 3));
         machineButtonsPanel.add(machine1);
@@ -132,7 +133,7 @@ public class LineElementsMarketPanel extends javax.swing.JPanel {
         machineNextPreviousPanel.add(previousMachine);
         machineNextPreviousPanel.add(nextMachine);
 
-        titleLabel.setFont(new java.awt.Font("Purisa", 0, 15)); // NOI18N
+        titleLabel.setFont(new java.awt.Font("Purisa", 0, 15));
         titleLabel.setText("Production Line Elements");
 
         conveyorLabel.setFont(new java.awt.Font("Purisa", 0, 13));
@@ -145,6 +146,17 @@ public class LineElementsMarketPanel extends javax.swing.JPanel {
 
         machineLabel.setFont(new java.awt.Font("Purisa", 0, 13));
         machineLabel.setText("Machines");
+
+        javax.swing.GroupLayout descriptionImageLayout = new javax.swing.GroupLayout(descriptionImage);
+        descriptionImage.setLayout(descriptionImageLayout);
+        descriptionImageLayout.setHorizontalGroup(
+            descriptionImageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 159, Short.MAX_VALUE)
+        );
+        descriptionImageLayout.setVerticalGroup(
+            descriptionImageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 128, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -169,7 +181,10 @@ public class LineElementsMarketPanel extends javax.swing.JPanel {
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(machineNextPreviousPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)
-                            .addComponent(machineButtonsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE))))
+                            .addComponent(machineButtonsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(41, 41, 41)
+                        .addComponent(descriptionImage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -191,7 +206,9 @@ public class LineElementsMarketPanel extends javax.swing.JPanel {
                 .addComponent(machineButtonsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(machineNextPreviousPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(181, Short.MAX_VALUE))
+                .addGap(26, 26, 26)
+                .addComponent(descriptionImage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(27, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -201,6 +218,7 @@ public class LineElementsMarketPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton conveyor;
     private javax.swing.JLabel conveyorLabel;
+    private view.game.BackGroundPanel descriptionImage;
     private javax.swing.JButton input;
     private javax.swing.JLabel inputLabel;
     private javax.swing.JButton machine1;
