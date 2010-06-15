@@ -3,6 +3,7 @@ package persistence;
 import java.util.List;
 import java.util.Map;
 
+import model.lab.TechnologyTree;
 import model.lab.technologies.NewProductionSequenceTechnology;
 import model.production.MachineType;
 import model.production.ValidProductionSequences;
@@ -29,7 +30,7 @@ public class XMLFactory extends InputFactory{
 	}
 	
 	@Override
-	public List<NewProductionSequenceTechnology> loadTechnologies
+	public TechnologyTree loadTechnologies
 					(String technologiesPath,ValidProductionSequences 
 							validProductionSequences) 
 							

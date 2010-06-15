@@ -12,9 +12,10 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
-
+@Ignore
 public class ProductionSequenceTechnologyListPersistentTest 
 	extends XMLPersistentTest{
 	
@@ -33,6 +34,7 @@ public class ProductionSequenceTechnologyListPersistentTest
 	}
 
 
+	/*
 	@Test
 	public void validProductionSequenceTechnologyList() 
 				throws DocumentException, InvalidTagException,
@@ -49,4 +51,5 @@ public class ProductionSequenceTechnologyListPersistentTest
 		
 		assertEquals(recovered,list);
 	}
+	*/
 }

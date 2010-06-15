@@ -20,9 +20,11 @@ public class ProductionSequenceTechnologyPersistent {
 	static String TAG_ATR_DESC="desc";
 	static String TAG_ATR_COST="cost";
 	static String TAG_ATR_RESEARCHED="researched";
+	static String TAG_ATR_ID="id";
+	static String TAG_ATR_DEPENDENCIES="dependencies";
 
 	@SuppressWarnings("unchecked")
-	public static NewProductionSequenceTechnology buildFromXML(Element element, 
+	public static TechnologyPersistent buildFromXML(Element element, 
 							ValidProductionSequences validProductionSequences)
 	
 			throws InvalidTagException, ClassNotFoundException, 
@@ -36,8 +38,16 @@ public class ProductionSequenceTechnologyPersistent {
 		String desc=element.attributeValue(TAG_ATR_DESC);
 		int cost = Integer.valueOf((element.attributeValue(TAG_ATR_COST)));
 		
+		int id= Integer.valueOf((element.attributeValue(TAG_ATR_ID)));
+		
 		boolean researched =
 			Boolean.valueOf(element.attributeValue(TAG_ATR_RESEARCHED));
+
+		
+		List<Integer> deps=(element.attributeValue(TAG_ATR_DEPENDENCIES)!=null?
+								recoverDependencies(element.attributeValue(TAG_ATR_DEPENDENCIES)):
+								new ArrayList<Integer>());
+		
 		
 		RawMaterials rawMaterials;
 		List<MachineType> machines;
@@ -64,10 +74,19 @@ public class ProductionSequenceTechnologyPersistent {
 			tech.research();
 		}
 		
-		return tech;
+		return new TechnologyPersistent(tech,id,deps);
 							
 		}
 	
+	private static List<Integer> recoverDependencies(String attributeValue) {
+		List<Integer> list=new ArrayList<Integer>();
+		String[] dependencies=attributeValue.split(",");
+		for(int i=0;i<dependencies.length;i++){
+			list.add(new Integer(dependencies[i]));	
+		}
+		return list;
+	}
+
 	private static RawMaterials recoverRawMaterials(Iterator<Element> iter) 
 			throws InvalidTagException {
 		RawMaterials rawMaterials=new RawMaterials();

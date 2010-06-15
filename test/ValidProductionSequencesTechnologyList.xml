@@ -1,5 +1,5 @@
 <Sequences>	
-	<ProductionSequence cost="10" desc="Weapon mastered by the French (?)" researched="true">
+	<ProductionSequence id="1" cost="10" desc="Weapon mastered by the French (?)" researched="true">
 		<RawMaterials>
 			<rawMaterial id="wood" quantity="75"/>
 			<rawMaterial id="gold" quantity="100"/>
@@ -16,7 +16,7 @@
 			<dependency id="2" />
 		</dependencies>		
 	</ProductionSequence>
-	<ProductionSequence cost="30" desc="Powerful as the excaliburg" researched="true">
+	<ProductionSequence id="2" cost="30" desc="Powerful as the excaliburg" researched="true">
 		<RawMaterials>
 			<rawMaterial id="gold" quantity="500"/>			
 		</RawMaterials>
@@ -25,7 +25,7 @@
 		</MachineList>
 		<ProductType id="Sword"/>
 	</ProductionSequence>
-	<ProductionSequence cost="10" desc="laralala" researched="false">
+	<ProductionSequence id="3" cost="10" desc="laralala" researched="false" dependencies="1,2">
 		<RawMaterials>
 			<rawMaterial id="wood" quantity="75"/>
 			<rawMaterial id="gold" quantity="100"/>

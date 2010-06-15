@@ -17,8 +17,10 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
+@Ignore
 public class ProductionSequenceTechnologyPersistentTest 
 					extends XMLPersistentTest{
 	
@@ -83,7 +85,7 @@ public class ProductionSequenceTechnologyPersistentTest
 	
 	
 	
-	
+	/*
 	@Test
 	public void validProductionSequenceTechnologyAxe()
 		throws DocumentException, InvalidTagException, 
@@ -149,5 +151,5 @@ public class ProductionSequenceTechnologyPersistentTest
 			fail();
 						
 	}
-	
+	*/
 }

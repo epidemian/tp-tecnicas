@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 import model.exception.BusinessLogicException;
+import model.utils.StringUtils;
 
 /**
  * A collection of {@link Technology}'s with dependencies between them. Notice
@@ -154,6 +155,10 @@ public class TechnologyTree {
 		return getAllDependencies(technology).contains(dependency);
 	}
 
+	@Override
+	public String toString() {
+		return StringUtils.join(this.technologies.entrySet(), "\n");
+	}
 }
 
 class CircularDependencyException extends BusinessLogicException {

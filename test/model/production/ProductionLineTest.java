@@ -30,7 +30,7 @@ public class ProductionLineTest {
 	}
 	
 	private ProductionLine createProductionLineProcessingCartonWithOnlyMachines() {
-
+		
 		ProductionLineElement prodLineElement1 = new ProductionMachine(
 				new MachineType("Licuado",1,1));
 		ProductionLineElement prodLineElement2 = new ProductionMachine(

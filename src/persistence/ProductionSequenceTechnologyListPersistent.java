@@ -1,9 +1,14 @@
 package persistence;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
+import model.exception.BusinessLogicException;
+import model.lab.Technology;
+import model.lab.TechnologyTree;
 import model.lab.technologies.NewProductionSequenceTechnology;
 import model.production.ValidProductionSequences;
 
@@ -16,7 +21,7 @@ public class ProductionSequenceTechnologyListPersistent {
 	static String TAG_NAME="Sequences";
 	
 	@SuppressWarnings("unchecked")
-	public static List<NewProductionSequenceTechnology> 
+	public static TechnologyTree 
 						buildFromXML(Element element, ValidProductionSequences 
 								validProductionSequences) 
 			throws InvalidTagException, SecurityException, 
@@ -27,8 +32,11 @@ public class ProductionSequenceTechnologyListPersistent {
 			equals(ProductionSequenceTechnologyListPersistent.TAG_NAME))
 		throw new InvalidTagException();
 	
-	List<NewProductionSequenceTechnology> list=
-		new ArrayList<NewProductionSequenceTechnology>();
+	TechnologyTree tree=new TechnologyTree();
+	
+	
+	List<TechnologyPersistent> list=
+		new ArrayList<TechnologyPersistent>();
 	
 	Iterator<Element> iter=element.elementIterator();
 	
@@ -37,7 +45,26 @@ public class ProductionSequenceTechnologyListPersistent {
 		list.add(ProductionSequenceTechnologyPersistent.buildFromXML(elem, validProductionSequences));
 	}
 	
-	return list;
-
-}
+	Map<Integer,NewProductionSequenceTechnology> mapTechs =
+		new HashMap<Integer, NewProductionSequenceTechnology>();
+	
+	for (TechnologyPersistent technology : list){
+		if (mapTechs.containsKey(technology.getId()))
+			throw new BusinessLogicException();
+		mapTechs.put(technology.getId(),technology.getTechnology());
+		tree.addTechnology(technology.getTechnology());
+	}
+	
+	for (TechnologyPersistent technology : list){
+		for(Integer id :technology.getDependencies()){			
+			//System.out.println(technology);
+			//System.out.println(technology.getTechnology());
+			//System.out.println(mapTechs.get(id));
+			tree.addDependency(technology.getTechnology(), mapTechs.get(id));
+		}
+	}
+	
+	return tree;
+	
+	}
 }
