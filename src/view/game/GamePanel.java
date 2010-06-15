@@ -30,6 +30,11 @@ public class GamePanel extends javax.swing.JPanel {
 	public GroundPanelContainer getGroundPanelContainer() {
 		return ((GroundPanelContainer) this.groundPanel);
 	}
+	
+	public void updateBudgetLabel() {
+		// TODO: This is repeated in initComponents
+		jLabel2.setText(MONEY_SYMBOL + " " + this.game.getBudget().getBalance());
+	}
 
     private void assignKeyActions(EditionActions editionActions) {
     	KeyInputActionMapper mapper = new KeyInputActionMapper(editionActions);

@@ -1,10 +1,14 @@
 package view.game.edition.tools;
 
+import static model.utils.StringUtils.join;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
+import java.util.List;
 
 import model.game.Game;
 import model.production.Direction;
+import model.production.Machine;
 import model.production.MachineType;
 import model.warehouse.Ground;
 import model.warehouse.Position;
@@ -13,18 +17,20 @@ import view.game.GroundPainter;
 import view.game.GroundPanel;
 import view.game.edition.EditionTool;
 
-public class AddMachineTool extends EditionTool {
+public abstract class AddMachineTool extends EditionTool {
 
 	private static final Color OK_COLOR = new Color(0, 1, 0, 0.3F);
 	private static final Color BAD_COLOR = new Color(1, 0, 0, 0.3F);
 	private MachineType machineType;
-	private GroundPanel groundPanel;
 
 	public AddMachineTool(GamePanel gamePanel, Game game,
 			MachineType machineType) {
 		super(gamePanel, game);
 		this.machineType = machineType;
-		groundPanel = getGamePanel().getGroundPanelContainer().getGroundPanel();
+	}
+
+	public MachineType getMachineType() {
+		return machineType;
 	}
 
 	@Override
@@ -32,64 +38,114 @@ public class AddMachineTool extends EditionTool {
 	}
 
 	@Override
+	public void reset() {
+	}
+
+	@Override
 	public void paint(Graphics2D graphics) {
-		Position position = this.groundPanel.getCurrentMousePosition();
-		if (position != null) {
+		Position mousePosition = this.getGroundPanel()
+				.getCurrentMousePosition();
+		if (mousePosition != null) {
 
-			Color color = canPutMachineAt(position) ? OK_COLOR : BAD_COLOR;
-			GroundPainter painter = this.groundPanel.getPainter();
-			int width = this.machineType.getWidth();
-			int height = this.machineType.getHeight();
-			painter.drawRectangle(graphics, position, width, height, color);
+			List<String> warnings = new ArrayList<String>();
+			boolean canPutMachine = canPutMachineAt(mousePosition, warnings);
+			boolean enoughMoney = haveEnoughMoney();
+			Color color = canPutMachine && enoughMoney ? OK_COLOR : BAD_COLOR;
 
-			Position inPos = position.add(this.machineType
-					.getInputRelativePosition());
-			Direction inDir = this.machineType.getInputConnectionDirection();
-			painter.drawInputArrow(inPos, inDir, color, graphics);
+			if (!enoughMoney)
+				warnings.add("Not enough money!");
 
-			Position outPos = position.add(this.machineType
-					.getOutputRelativePosition());
-			Direction outDir = this.machineType.getOutputConnectionDirection();
-			painter.drawOutputArrow(outPos, outDir, color, graphics);
+			drawWarnings(graphics, warnings);
+			drawMachineRectagle(graphics, mousePosition, color);
+			drawInputArrow(graphics, mousePosition, color);
+			drawOutputArrow(graphics, mousePosition, color);
 		}
 	}
 
 	@Override
 	public void mouseClicked(Position position) {
-		if (canPutMachineAt(position)) {
-			boolean enoughMoney = this.getGame().canPurchase(
-					this.machineType.getPrice());
-			if (!enoughMoney) {
-				// TODO: show noy enough money notification.
-			} else {
-				this.getGame().buyAndAddProductionMachine(this.machineType,
-						position);
-				// TODO: habría que avisar a la vista cosa que se actualice...
-				// this.getGamePanel().getTopPanel().setMoneyBalance(budget.getBalance());
-			}
-
+		if (canPutMachineAt(position) && haveEnoughMoney()) {
+			putMachineAt(position);
+			this.getGamePanel().updateBudgetLabel();
 		}
 	}
 
-	private boolean canPutMachineAt(Position position) {
-//		int width = this.machineType.getWidth();
-//		int height = this.machineType.getHeight();
-//		Ground ground = this.getGame().getGround();
-//		Position inPos = position.add(this.machineType
-//				.getInputRelativePosition());
-//		Position outPos = position.add(this.machineType
-//				.getOutputRelativePosition());
-//
-//		boolean canPutMachine = ground.canPutTileElementByDimension(width,
-//				height, position);
-//		boolean canPutInput = ground.canPutTileElementByDimension(1, 1, inPos);
-//		boolean canPutOutput = ground
-//				.canPutTileElementByDimension(1, 1, outPos);
-//		return canPutMachine && canPutInput && canPutOutput;
-		
+	protected abstract Machine putMachineAt(Position position);
+
+	private void drawWarnings(Graphics2D graphics, List<String> warnings) {
+		if (!warnings.isEmpty())
+			getGroundPanel().drawNotificationBesideMouse(join(warnings, " - "),
+					graphics);
+	}
+
+	private void drawMachineRectagle(Graphics2D graphics,
+			Position mousePosition, Color color) {
 		int width = this.machineType.getWidth();
 		int height = this.machineType.getHeight();
-		return this.getGame().getGround().canPutTileElementByDimension(width,
-				height, position);
+		getPainter().drawRectangle(graphics, mousePosition, width, height,
+				color);
+	}
+
+	private void drawInputArrow(Graphics2D graphics, Position mousePosition,
+			Color color) {
+		Position inPos = mousePosition.add(this.machineType
+				.getInputRelativePosition());
+		Direction inDir = this.machineType.getInputConnectionDirection();
+		getPainter().drawInputArrow(inPos, inDir, color, graphics);
+	}
+
+	private void drawOutputArrow(Graphics2D graphics, Position mousePosition,
+			Color color) {
+		Position outPos = mousePosition.add(this.machineType
+				.getOutputRelativePosition());
+		Direction outDir = this.machineType.getOutputConnectionDirection();
+		getPainter().drawOutputArrow(outPos, outDir, color, graphics);
+	}
+
+	private GroundPainter getPainter() {
+		GroundPainter painter = this.getGroundPanel().getPainter();
+		return painter;
+	}
+
+	private boolean haveEnoughMoney() {
+		return this.getGame().canPurchase(this.machineType.getPrice());
+	}
+
+	private boolean canPutMachineAt(Position position) {
+		return canPutMachineAt(position, null);
+	}
+
+	private boolean canPutMachineAt(Position position, List<String> whyNot) {
+		int width = this.machineType.getWidth();
+		int height = this.machineType.getHeight();
+
+		boolean insideBounds = getGround().isAreaInsideBounds(width, height, position);
+		if (!insideBounds && whyNot != null)
+			whyNot.add("Out of bounds");
+
+		boolean canPutMachine = getGround().canPutTileElementByDimension(width, height,
+				position);
+		if (!canPutMachine && insideBounds && whyNot != null)
+			whyNot.add("Area not empty");
+
+		boolean canPutInput = true;
+		
+		
+		boolean canPutOutput = true;
+		return canPutMachine && canPutInput && canPutOutput ;
+	}
+
+	private boolean canPutInput(Position position, List<String> whyNot) {
+		Position inputPosition = position.add(getMachineType().getInputRelativePosition());
+		boolean canPutInput = getGround().canPutTileElementByDimension(1, 1, inputPosition);
+		return canPutInput;
+	}
+
+	private Ground getGround() {
+		return this.getGame().getGround();
+	}
+
+	private GroundPanel getGroundPanel() {
+		return this.getGamePanel().getGroundPanelContainer().getGroundPanel();
 	}
 }

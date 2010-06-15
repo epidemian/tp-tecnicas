@@ -14,6 +14,8 @@ import view.game.GamePanel;
 import view.game.GroundPanel;
 import view.game.edition.tools.AddConveyorTool;
 import view.game.edition.tools.AddMachineTool;
+import view.game.edition.tools.AddProductionMachineTool;
+import view.game.edition.tools.AddQualityControlMachineTool;
 import view.game.edition.tools.SelectionTool;
 
 public class EditionActions {
@@ -41,45 +43,44 @@ public class EditionActions {
 		};
 	}
 
-	public Action getActionToSetNewMachineTool(final MachineType machineType) {
-		return new AbstractAction() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				printToolSelection("Add-Machine");
-				groundPanel.setEditionTool(new AddMachineTool(gamePanel, game, machineType));
-			}
+	public Action getActionToSetNewProductionMachineTool(
+			final MachineType machineType) {
+		EditionTool tool = new AddProductionMachineTool(gamePanel, game,
+				machineType);
+		return getActionToSetTool(tool, "Add-Machine");
+	}
 
-			private static final long serialVersionUID = 1L;
-		};
+	public Action getActionToSetNewQualityControlMachineTool(
+			final MachineType machineType) {
+		EditionTool tool = new AddQualityControlMachineTool(gamePanel, game,
+				machineType);
+		return getActionToSetTool(tool, "Add-Quality-Control-Machine");
 	}
 
 	public Action getActionToSetSelectionTool() {
-		return new AbstractAction() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				printToolSelection("Selection");
-				groundPanel.setEditionTool(new SelectionTool(gamePanel, game));
-			}
-
-			private static final long serialVersionUID = 1L;
-		};
+		EditionTool tool = new SelectionTool(gamePanel, game);
+		return getActionToSetTool(tool, "Selection");
 	}
-	
+
+	public Action getActionToSetConveyorTool() {
+		EditionTool tool = new AddConveyorTool(gamePanel, game);
+		return getActionToSetTool(tool, "Add-Conveyor");
+	}
+
 	private static void printToolSelection(String toolName) {
 		out.println("You have selected the " + toolName + " Tool");
 	}
 
-	public Action getActionToSetConveyorTool() {
+	private Action getActionToSetTool(final EditionTool tool,
+			final String toolName) {
 		return new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				printToolSelection("Add-Conveyor");
-				groundPanel.setEditionTool(new AddConveyorTool(gamePanel, game));
+				printToolSelection(toolName);
+				groundPanel.setEditionTool(tool);
 			}
 
 			private static final long serialVersionUID = 1L;
 		};
 	}
-	
-	
 }

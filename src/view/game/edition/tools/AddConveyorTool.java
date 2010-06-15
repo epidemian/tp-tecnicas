@@ -31,4 +31,10 @@ public class AddConveyorTool extends EditionTool {
 
 	}
 
+	@Override
+	public void reset() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

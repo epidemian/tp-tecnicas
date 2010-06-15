@@ -113,7 +113,7 @@ public class LineElementsMarketPanelController {
 			 */
 			MachineType mtype = this.productionMachines.get(i).getMachineType();
 			this.marketPanel.setMachineButtonActionListener(j,
-					this.editonActions.getActionToSetNewMachineTool(mtype));
+					this.editonActions.getActionToSetNewProductionMachineTool(mtype));
 
 			// TODO escalar imagen.
 			BufferedImage image = TileElementImageRecognizer

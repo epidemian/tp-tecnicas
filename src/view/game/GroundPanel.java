@@ -56,6 +56,7 @@ public class GroundPanel extends JPanel {
 
 	public void setEditionTool(EditionTool tool) {
 		checkNotNull(tool, "edition tool");
+		tool.reset();
 		this.editionTool = tool;
 	}
 
@@ -103,6 +104,16 @@ public class GroundPanel extends JPanel {
 	private Position getPositionFromMousePosition(Point point) {
 		return new Position(point.y / TILE_SIZE, point.x / TILE_SIZE);
 	}
+
+	public void drawNotificationBesideMouse(String notification,
+			Graphics2D graphics) {
+		Point mousePosition = this.getMousePosition();
+		if (mousePosition != null) {
+			int x = mousePosition.x + 20;
+			int y = mousePosition.y - 20;
+			graphics.drawString(notification, x, y);
+		}
+	}
 }
 
 class NullEditionTool extends EditionTool {
@@ -122,6 +133,10 @@ class NullEditionTool extends EditionTool {
 
 	@Override
 	public void mouseClicked(Position position) {
+	}
+
+	@Override
+	public void reset() {
 	}
 
 }

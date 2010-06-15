@@ -44,4 +44,9 @@ public class SelectionTool extends EditionTool {
 		// this.getGamePanel().getInformationPanel().showTileElementInformation(this.selectedTileElement);
 	}
 
+	@Override
+	public void reset() {
+		this.selectedTileElement = null;
+	}
+
 }

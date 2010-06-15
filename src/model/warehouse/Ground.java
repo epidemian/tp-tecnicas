@@ -38,14 +38,18 @@ public class Ground {
 
 	public boolean canPutTileElementByDimension(int width, int height,
 			Position position) {
+		return isAreaInsideBounds(width, height, position)
+				&& isAreaEmpty(position, width, height);
+	}
+
+	public boolean isAreaInsideBounds(int width, int height, Position position) {
 		checkGreaterEqual(width, 0, "width");
 		checkGreaterEqual(height, 0, "height");
 		boolean insideBounds = 0 <= position.getRow()
 				&& position.getRow() + height <= this.getRows()
 				&& 0 <= position.getCol()
 				&& position.getCol() + width <= this.getCols();
-
-		return insideBounds && isAreaEmpty(position, width, height);
+		return insideBounds;
 	}
 
 	public void putTileElement(TileElement element, Position position) {
@@ -65,11 +69,22 @@ public class Ground {
 				getTileElement(row, col).accept(visitor);
 	}
 
+	/**
+	 * Retrieves the tile element at a given position. If position is out of
+	 * ground bounds, this method returns an EmptyTileElement.
+	 * 
+	 * @param position
+	 * @return
+	 */
 	public TileElement getTileElementAt(Position position) {
+		if (!isAreaInsideBounds(1, 1, position))
+			return this.emptyElement;
 		return getTileElement(position.getRow(), position.getCol());
 	}
 
 	private boolean isAreaEmpty(Position position, int width, int height) {
+		checkGreaterEqual(width, 0, "width");
+		checkGreaterEqual(height, 0, "height");
 		Position max = position.add(new Position(height, width));
 
 		for (int row = position.getRow(); row < max.getRow(); row++)

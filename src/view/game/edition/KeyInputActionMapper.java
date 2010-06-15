@@ -11,7 +11,7 @@ public class KeyInputActionMapper {
 
 	// TODO: Delete this...
 	private static final MachineType MACHINE_TYPE = new MachineType(
-			"Big Machine", 3, 2, new Position(0, -1), new Position(1, 3), 50);
+			"Big Machine", 3, 2, new Position(0, -1), new Position(1, 3), 250);
 
 	private static final String ESC_PRESSED = "esc-pressed";
 	private static final String M_PRESSED = "m-pressed";
@@ -32,7 +32,7 @@ public class KeyInputActionMapper {
 
 		actionMap.put(ESC_PRESSED, editionActions.getEscAction());
 		actionMap.put(M_PRESSED, editionActions
-				.getActionToSetNewMachineTool(MACHINE_TYPE));
+				.getActionToSetNewProductionMachineTool(MACHINE_TYPE));
 		actionMap.put(S_PRESSED, editionActions.getActionToSetSelectionTool());
 		actionMap.put(C_PRESSED, editionActions.getActionToSetConveyorTool());
 	}
