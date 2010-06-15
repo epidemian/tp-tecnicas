@@ -96,7 +96,8 @@ public class ProductionSequenceTechnologyPersistentTest
 			Element element=doc.getRootElement();
 			
 			NewProductionSequenceTechnology productionSequenceTechnologyRecovered = 
-				ProductionSequenceTechnologyPersistent.buildFromXML(element);
+				ProductionSequenceTechnologyPersistent.buildFromXML(element,
+						new ValidProductionSequences());
 			
 			
 			assertEquals(productionSequenceTechnologyRecovered,
@@ -118,7 +119,8 @@ public class ProductionSequenceTechnologyPersistentTest
 			Element element=doc.getRootElement();
 			
 			NewProductionSequenceTechnology productionSequenceTechnologyRecovered = 
-				ProductionSequenceTechnologyPersistent.buildFromXML(element);
+				ProductionSequenceTechnologyPersistent.buildFromXML(element,
+						new ValidProductionSequences());
 			
 			
 			assertEquals(productionSequenceTechnologyRecovered,
@@ -140,7 +142,8 @@ public class ProductionSequenceTechnologyPersistentTest
 			
 			@SuppressWarnings("unused")
 			NewProductionSequenceTechnology productionSequenceTechnologyRecovered = 
-				ProductionSequenceTechnologyPersistent.buildFromXML(element);
+				ProductionSequenceTechnologyPersistent.buildFromXML(element,
+						new ValidProductionSequences());
 			
 			// It should had thrown the exception.
 			fail();

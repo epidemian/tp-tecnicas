@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.lab.technologies.NewProductionSequenceTechnology;
+import model.production.ValidProductionSequences;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -43,7 +44,8 @@ public class ProductionSequenceTechnologyListPersistentTest
 		Element element=doc.getRootElement();
 		
 		List<NewProductionSequenceTechnology> recovered=
-			ProductionSequenceTechnologyListPersistent.buildFromXML(element);
+			ProductionSequenceTechnologyListPersistent.buildFromXML(element,
+					new ValidProductionSequences());
 		
 		assertEquals(recovered,list);
 	}

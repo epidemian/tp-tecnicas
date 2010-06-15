@@ -11,6 +11,10 @@
 			<MachineType id="Forge" width="3" height="4"/>
 		</MachineList>
 		<ProductType id="Axe"/>
+		<dependencies>
+			<dependency id="1" />
+			<dependency id="2" />
+		</dependencies>		
 	</ProductionSequence>
 	<ProductionSequence cost="30" desc="Powerful as the excaliburg" researched="true">
 		<RawMaterials>
@@ -20,5 +24,17 @@
 			<MachineType id="Forge" width="3" height="4"/>
 		</MachineList>
 		<ProductType id="Sword"/>
+	</ProductionSequence>
+	<ProductionSequence cost="10" desc="laralala" researched="false">
+		<RawMaterials>
+			<rawMaterial id="wood" quantity="75"/>
+			<rawMaterial id="gold" quantity="100"/>
+			<rawMaterial id="stone" quantity="200"/>
+		</RawMaterials>
+		<MachineList>
+			<MachineType id="LumberProcess" width="3" height="4"/>
+			<MachineType id="Forge" width="3" height="4"/>
+		</MachineList>
+		<ProductType id="Bow"/>
 	</ProductionSequence>
 </Sequences>

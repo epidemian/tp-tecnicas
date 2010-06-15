@@ -1,4 +1,4 @@
-<ProductionSequence cost="30" desc="Powerful as the excaliburg">
+<ProductionSequence cost="30" desc="Powerful as the excaliburg" researched="true">
 		<RawMaterials>
 			<rawMaterial id="gold" quantity="500"/>			
 		</RawMaterials>

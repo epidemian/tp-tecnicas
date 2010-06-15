@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import model.lab.technologies.NewProductionSequenceTechnology;
+import model.production.ValidProductionSequences;
 
 import org.dom4j.Element;
 
@@ -16,7 +17,8 @@ public class ProductionSequenceTechnologyListPersistent {
 	
 	@SuppressWarnings("unchecked")
 	public static List<NewProductionSequenceTechnology> 
-						buildFromXML(Element element) 
+						buildFromXML(Element element, ValidProductionSequences 
+								validProductionSequences) 
 			throws InvalidTagException, SecurityException, 
 			ClassNotFoundException, NoSuchMethodException, 
 			NoProductTypeDefinedInSequenceException{
@@ -32,7 +34,7 @@ public class ProductionSequenceTechnologyListPersistent {
 	
 	while(iter.hasNext()){
 		Element elem = iter.next();
-		list.add(ProductionSequenceTechnologyPersistent.buildFromXML(elem));
+		list.add(ProductionSequenceTechnologyPersistent.buildFromXML(elem, validProductionSequences));
 	}
 	
 	return list;

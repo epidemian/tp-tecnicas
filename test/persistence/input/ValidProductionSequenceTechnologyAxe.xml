@@ -1,4 +1,4 @@
-<ProductionSequence cost="10" desc="Weapon mastered by the French (?)">
+<ProductionSequence cost="10" desc="Weapon mastered by the French (?)" researched="true">
 	<RawMaterials>
 		<rawMaterial id="wood" quantity="75"/>
 		<rawMaterial id="gold" quantity="100"/>

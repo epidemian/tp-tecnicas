@@ -1,7 +1,7 @@
 package persistence;
 
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
+
 import model.warehouse.Ground;
 import model.warehouse.Position;
 import model.warehouse.Wall;
@@ -10,7 +10,6 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class GroundPersistentTest extends XMLPersistentTest {
@@ -38,8 +37,6 @@ public class GroundPersistentTest extends XMLPersistentTest {
 		
 	}
 	
-	// TODO Refactorize Position Caculation (?) 
-	// TODO reimplement equals of ground...
 	@Test
 	public void validGroundWithWalls() 
 			throws DocumentException, InvalidTagException{

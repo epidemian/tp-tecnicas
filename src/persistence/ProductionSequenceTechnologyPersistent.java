@@ -19,9 +19,12 @@ public class ProductionSequenceTechnologyPersistent {
 	static String TAG_NAME="ProductionSequence";
 	static String TAG_ATR_DESC="desc";
 	static String TAG_ATR_COST="cost";
+	static String TAG_ATR_RESEARCHED="researched";
 
 	@SuppressWarnings("unchecked")
-	public static NewProductionSequenceTechnology buildFromXML(Element element) 
+	public static NewProductionSequenceTechnology buildFromXML(Element element, 
+							ValidProductionSequences validProductionSequences)
+	
 			throws InvalidTagException, ClassNotFoundException, 
 					SecurityException, NoSuchMethodException,
 					NoProductTypeDefinedInSequenceException{
@@ -33,6 +36,9 @@ public class ProductionSequenceTechnologyPersistent {
 		String desc=element.attributeValue(TAG_ATR_DESC);
 		int cost = Integer.valueOf((element.attributeValue(TAG_ATR_COST)));
 		
+		boolean researched =
+			Boolean.valueOf(element.attributeValue(TAG_ATR_RESEARCHED));
+		
 		RawMaterials rawMaterials;
 		List<MachineType> machines;
 		ProductType productType;
@@ -40,7 +46,6 @@ public class ProductionSequenceTechnologyPersistent {
 		List<Element> childs = element.elements();
 		Iterator<Element> iter=childs.iterator();
 		rawMaterials=recoverRawMaterials(iter);
-
 			
 		iter=childs.iterator();
 		machines=recoverMachines(iter);		
@@ -51,8 +56,16 @@ public class ProductionSequenceTechnologyPersistent {
 		ProductionSequence prodSequence =
 			 new ProductionSequence(machines,rawMaterials);
 		
-		return new NewProductionSequenceTechnology(prodSequence,
-				productType, new ValidProductionSequences(), desc, cost);					
+		NewProductionSequenceTechnology tech= 
+			new NewProductionSequenceTechnology(prodSequence,productType, 
+					validProductionSequences, desc, cost);
+		
+		if (researched){
+			tech.research();
+		}
+		
+		return tech;
+							
 		}
 	
 	private static RawMaterials recoverRawMaterials(Iterator<Element> iter) 

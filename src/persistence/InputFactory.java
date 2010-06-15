@@ -5,11 +5,13 @@ import java.util.Map;
 
 import model.lab.technologies.NewProductionSequenceTechnology;
 import model.production.MachineType;
+import model.production.ValidProductionSequences;
 import model.warehouse.Ground;
 
 public abstract class InputFactory {
 	public abstract List<NewProductionSequenceTechnology> 
-				loadTechnologies(String path) 
+				loadTechnologies(String path,
+							ValidProductionSequences validSequences) 
 			throws Exception;
 	
 	public abstract List<Ground>  loadGrounds(String path) 

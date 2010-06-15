@@ -41,8 +41,7 @@ public abstract class Technology {
 	 * Researches the technology.
 	 * @throws BusinessLogicException If technology was already researched.
 	 */
-	// Note: package visibility and final modifier are on purpose.
-	final void research() {
+	public final void research() {
 		if (isResearched())
 			throw new BusinessLogicException("Tecnology already researched");
 		onResearch();

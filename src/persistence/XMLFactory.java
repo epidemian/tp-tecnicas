@@ -5,6 +5,7 @@ import java.util.Map;
 
 import model.lab.technologies.NewProductionSequenceTechnology;
 import model.production.MachineType;
+import model.production.ValidProductionSequences;
 import model.warehouse.Ground;
 
 import org.dom4j.Document;
@@ -29,16 +30,20 @@ public class XMLFactory extends InputFactory{
 	
 	@Override
 	public List<NewProductionSequenceTechnology> loadTechnologies
-					(String technologiesPath) throws DocumentException, 
-					SecurityException, InvalidTagException, 
-					ClassNotFoundException, NoSuchMethodException, 
-					NoProductTypeDefinedInSequenceException {
+					(String technologiesPath,ValidProductionSequences 
+							validProductionSequences) 
+							
+					throws DocumentException,SecurityException, 
+						InvalidTagException, ClassNotFoundException, 
+						NoSuchMethodException, 
+						NoProductTypeDefinedInSequenceException {
 		
 		document= reader.read(technologiesPath);		
 		Element element=document.getRootElement();
 		
 		return ProductionSequenceTechnologyListPersistent.
-												buildFromXML(element);
+												buildFromXML(element, 
+														validProductionSequences);
 	}
 
 	@Override
