@@ -77,13 +77,13 @@ public class Game {
 		getGround().putTileElement(machine, position);
 	}
 
-	public List<ProductionMachine> getProductionMachines() {
-		// TODO Generado para que compile. Terminar!
+	public List<MachineType> getProductionMachinesTypes() {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public List<QualityControlMachine> getQualityControlMachines() {
-		// TODO Generado para que compile. Terminar!
+	public List<MachineType> getQualityControlMachinesTypes() {
+		// TODO Auto-generated method stub
 		return null;
 	}
 }

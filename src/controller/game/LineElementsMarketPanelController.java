@@ -3,14 +3,15 @@ package controller.game;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.Action;
 import javax.swing.ImageIcon;
 
 import model.game.Game;
+import static model.utils.ArgumentUtils.*;
 import model.production.MachineType;
-import model.production.ProductionMachine;
-import model.production.QualityControlMachine;
 
 import view.game.LineElementsMarketPanel;
 import view.game.TileElementImageRecognizer;
@@ -18,8 +19,8 @@ import view.game.edition.EditionActions;
 
 public class LineElementsMarketPanelController {
 
-	private List<ProductionMachine> productionMachines;
-	private List<QualityControlMachine> qualityControlMachines;
+	private List<Action> machineButtonsActions;
+	private List<BufferedImage> machineButtonsImages;
 
 	private EditionActions editonActions;
 	private LineElementsMarketPanel marketPanel;
@@ -28,24 +29,49 @@ public class LineElementsMarketPanelController {
 	public LineElementsMarketPanelController(Game game,
 			LineElementsMarketPanel marketPanel, EditionActions editionActions) {
 
-		this.productionMachines = game.getProductionMachines();
-		this.qualityControlMachines = game.getQualityControlMachines();
+		checkNotNull(this.editonActions, "editionActions");
+		checkNotNull(this.marketPanel, "marketPanel");
 
-		// TODO check not null.
-		this.editonActions = editionActions;
-		this.marketPanel = marketPanel;
+		this.machineButtonsActions = new ArrayList<Action>();
+		this.machineButtonsImages = new ArrayList<BufferedImage>();
+
 		this.machineTab = 0;
 
-		this.marketPanel
-				.addNextMachinesButtonActionListener(new ActionListener() {
+		initNextMachinesButtonActionListener();
+		initPreviousMachinesButtonActionListener();
 
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						LineElementsMarketPanelController.this
-								.increaseMachineTab();
-					}
-				});
+		// Conveyor action.
+		this.marketPanel.addConveyorButtonActionListener(this.editonActions
+				.getActionToSetConveyorTool());
 
+		// Raw materials input action.
+		this.marketPanel.addInputButtonActionListener(this.editonActions
+				.getActionToSetRawMaterialInputTool());
+
+		initMachineButtonsActionsAndImages(game);
+
+		this.setUpButtons();
+	}
+
+	private void initMachineButtonsActionsAndImages(Game game) {
+		// Production machine buttons actions n' images.
+		for (MachineType mtype : game.getProductionMachinesTypes()) {
+			this.machineButtonsImages.add(TileElementImageRecognizer
+					.getMachineImage(mtype));
+			this.machineButtonsActions.add(this.editonActions
+					.getActionToSetNewProductionMachineTool(mtype));
+		}
+
+		// Quality control machine buttons actions n' images.
+		for (MachineType mtype : game.getQualityControlMachinesTypes()) {
+			this.machineButtonsImages.add(TileElementImageRecognizer
+					.getMachineImage(mtype));
+			this.machineButtonsActions.add(this.editonActions
+					.getActionToSetNewQualityControlMachineTool(mtype));
+		}
+	}
+
+	private void initPreviousMachinesButtonActionListener() {
 		this.marketPanel
 				.addPreviousMachinesButtonActionListener(new ActionListener() {
 
@@ -56,76 +82,70 @@ public class LineElementsMarketPanelController {
 
 					}
 				});
+	}
 
-		this.marketPanel.addConveyorButtonActionListener(this.editonActions
-				.getActionToSetConveyorTool());
+	private void initNextMachinesButtonActionListener() {
+		this.marketPanel
+				.addNextMachinesButtonActionListener(new ActionListener() {
 
-		// TODO edition tool para input.
-		
-		this.setUpMachineButtons();
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						LineElementsMarketPanelController.this
+								.increaseMachineTab();
+					}
+				});
+	} 
+	
+	private boolean canIncreseMachineTab() {
+
+		int buttonsSize = this.marketPanel.getMachineButtonsSize();
+		int machinesSize = this.machineButtonsImages.size();
+
+		return machinesSize / buttonsSize >= this.machineTab + 1;
+	}
+
+	private boolean canDecreseMachineTab() {
+		return this.machineTab - 1 >= 0;
 	}
 
 	private void increaseMachineTab() {
-		int buttonsSize = this.marketPanel.getMachineButtonsSize();
-		int machinesSize = this.productionMachines.size()
-				+ this.qualityControlMachines.size();
-
-		if (machinesSize / buttonsSize >= this.machineTab + 1)
-			this.machineTab++;
-
-		this.setUpMachineButtons();
+		this.machineTab++;
+		this.setUpButtons();
 	}
 
 	private void decreseMachineTab() {
-		if (this.machineTab - 1 >= 0) {
-			this.machineTab--;
-		}
-		this.setUpMachineButtons();
+		this.machineTab--;
+		this.setUpButtons();
 	}
 
 	/**
 	 * Determines the buttons that has to be shown on the panel.
 	 */
-	private void setUpMachineButtons() {
+	private void setUpButtons() {
+
+		// Next-Previous machine buttons.
+		this.marketPanel.setNextMachineButtonEnabled(this
+				.canIncreseMachineTab());
+		this.marketPanel.setPreviousMachineButtonEnabled(this
+				.canDecreseMachineTab());
+
+		// Machine buttons.
 		int buttonsSize = this.marketPanel.getMachineButtonsSize();
-		int prodMachinesSize = this.productionMachines.size();
-		int qualMachinesSize = this.qualityControlMachines.size();
-		int machinesSize = prodMachinesSize + qualMachinesSize;
+		int machinesSize = this.machineButtonsImages.size();
 
 		int startIndex = buttonsSize * this.machineTab;
 		int lastIndex = machinesSize >= startIndex + buttonsSize ? startIndex
 				+ buttonsSize : machinesSize;
 
-		// TODO terminar!
-		int startIndexProdMachine = 0;
-		int lastIndexProdMachine = 0;
-
-		int startIndexQualMachine = 0;
-		int lastIndexQualMachine = 0;
-
 		int j = 0;
-		for (int i = startIndexProdMachine; i < lastIndexProdMachine; i++, j++) {
+		for (int i = startIndex; i < lastIndex; i++, j++) {
+			Action action = this.machineButtonsActions.get(i);
+			ImageIcon icon = new ImageIcon(this.machineButtonsImages.get(i));
 
-			/*
-			 * TODO encapsular comportamiento en un método aparte ya q
-			 * probablemente haya codigo repetido para la quality control
-			 * machine.
-			 */
-			MachineType mtype = this.productionMachines.get(i).getMachineType();
-			this.marketPanel.setMachineButtonActionListener(j,
-					this.editonActions.getActionToSetNewProductionMachineTool(mtype));
-
-			// TODO escalar imagen.
-			BufferedImage image = TileElementImageRecognizer
-					.getMachineImage(mtype);
+			this.marketPanel.setMachineButtonActionListener(j, action);
+			this.marketPanel.setMachineButtonIcon(j, icon);
 			this.marketPanel.setMachineButtonVisible(j, true);
-			this.marketPanel.setMachineButtonIcon(j, new ImageIcon(image));
 		}
-
-		for (int i = startIndexQualMachine; i < lastIndexQualMachine; i++, j++) {
-			// TODO ver edition tools para quality control machine.
-		}
-
 		for (; j < buttonsSize; j++) {
 			this.marketPanel.setMachineButtonVisible(j, false);
 		}

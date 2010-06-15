@@ -52,8 +52,16 @@ public class LineElementsMarketPanel extends javax.swing.JPanel {
     	this.nextMachine.addActionListener(action);
     }
     
+    public void setNextMachineButtonEnabled(boolean aFlag){
+    	this.nextMachine.setEnabled(aFlag);
+    }
+    
     public void addPreviousMachinesButtonActionListener(ActionListener action){
     	this.previousMachine.addActionListener(action);
+    }
+    
+    public void setPreviousMachineButtonEnabled(boolean aFlag){
+    	this.previousMachine.setEnabled(aFlag);
     }
     
     public void addConveyorButtonActionListener(ActionListener action){
