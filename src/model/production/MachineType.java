@@ -2,8 +2,6 @@ package model.production;
 
 import static model.utils.ArgumentUtils.*;
 
-import com.sun.xml.internal.bind.v2.runtime.RuntimeUtil.ToStringAdapter;
-
 import model.exception.BusinessLogicException;
 import model.warehouse.Position;
 

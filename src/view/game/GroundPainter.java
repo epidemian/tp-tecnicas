@@ -20,7 +20,6 @@ import model.warehouse.Position;
 import model.warehouse.TileElement;
 import model.warehouse.TileElementVisitor;
 import model.warehouse.Wall;
-import sun.java2d.loops.DrawRect;
 import view.Painter;
 
 public class GroundPainter implements Painter {
