@@ -62,4 +62,14 @@ public class Game {
 		getGround().putTileElement(new ProductionMachine(machineType), position);
 		getBudget().decrement(price);
 	}
+
+	public List<ProductionMachine> getProductionMachines() {
+		// TODO Generado para que compile. Terminar!
+		return null;
+	}
+
+	public List<QualityControlMachine> getQualityControlMachines() {
+		// TODO Generado para que compile. Terminar!
+		return null;
+	}
 }
