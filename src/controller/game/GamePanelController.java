@@ -21,6 +21,6 @@ public class GamePanelController {
 
             gamePanel.getBudgetPanel().setMoneyBalance(game.getBudget().getBalance());
             gamePanel.setToolPanel(this.lineElementsMarketPanel);
-	}
+        }
 
 }

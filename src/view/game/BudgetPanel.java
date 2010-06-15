@@ -16,52 +16,34 @@ public class BudgetPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        moneyLabel = new javax.swing.JLabel();
         budgetBalanceLabel = new javax.swing.JLabel();
-
-        moneyLabel.setFont(new java.awt.Font("Purisa", 0, 24)); // NOI18N
-        moneyLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        moneyLabel.setText(MONEY);
 
         budgetBalanceLabel.setFont(new java.awt.Font("Purisa", 0, 18)); // NOI18N
         budgetBalanceLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         budgetBalanceLabel.setText("jLabel1");
+        budgetBalanceLabel.setBorder(null);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(budgetBalanceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
-                        .addGap(20, 20, 20))
-                    .addComponent(moneyLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+            .addComponent(budgetBalanceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(moneyLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(budgetBalanceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(budgetBalanceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private static final String MONEY = "Money:";
+    private static final String MONEY = "Money";
     private static final String MONEY_SYMBOL = "$";
 
     public void setMoneyBalance(int balance){
-        this.budgetBalanceLabel.setText(MONEY_SYMBOL + " " + balance);
+        this.budgetBalanceLabel.setText(MONEY + ": " + MONEY_SYMBOL + " " + balance);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel budgetBalanceLabel;
-    private javax.swing.JLabel moneyLabel;
     // End of variables declaration//GEN-END:variables
 
 }
