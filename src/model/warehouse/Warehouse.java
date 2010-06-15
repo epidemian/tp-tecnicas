@@ -40,28 +40,14 @@ public abstract class Warehouse implements MonthlyUpdatable{
 		productionLines = creator.createFromGround(this.ground);
 	}
 
-	// TODO: sellMachines() no debería deshacerse de las máquinas?
-	private void sellMachines(){		
-		int price = 0;
-		
+	private void sellMachines(){			
 		if (this.productionLines != null) {
 			for (ProductionLine productionLine : this.productionLines) {
 				for (ProductionLineElement element : productionLine) {
-					// TODO: Evitar el instanceof.
-					if (element instanceof Machine) {
-						// TODO: Verificar el estado de las m�quinas...
-						price += ((Machine) element).getPrice();
-					}
+					element.sell(budget);
 				}
 			}
 		}
-
-		/*
-		 * TODO: Sacar constante hard-codeada. Preferentemente parametrizar este
-		 * porcentaje para después poder configurarlo facilmente desde un
-		 * archivo de entrada o algo
-		 */
-		budget.increment((int) (0.5 * price));
 	}	
 	
 	public int getPriceGround(){
