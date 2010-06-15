@@ -1,6 +1,7 @@
 package model.production;
 
 import static model.utils.ArgumentUtils.checkNotNull;
+import model.production.machineState.MachineState;
 import model.warehouse.TileElementVisitor;
 
 public class QualityControlMachine extends Machine {
@@ -9,13 +10,13 @@ public class QualityControlMachine extends Machine {
 		super(machineType);
 	}
 
-	/**
+	/* DEPRECATED
 	 * Represents the number of defective products until one product become
 	 * non-defective.
 	 */
-	private int discardDamagedFrequency;
-	private int defectiveProducts;
-
+	//private int discardDamagedFrequency;
+	//private int defectiveProducts;
+	/*
 	@Override
 	public void treatProduct(Product input) {
 		checkNotNull(input, "input product");
@@ -23,6 +24,24 @@ public class QualityControlMachine extends Machine {
 			this.defectiveProducts++;
 			if (this.discardDamagedFrequency == this.defectiveProducts)
 				input = null;
+		}
+	}
+	*/
+	
+	@Override
+	/*
+	 * Uses machine coefficient. The bigger it is, the worse it is.
+	 * Therefore the bigger it is, it will discard less defective products.    
+	 */
+	public void treatProduct(Product input) {
+		checkNotNull(input, "input product");
+		if (input.isDamaged()) {
+			//if it is damaged, it will analyze the probs...
+			double randomNum = Math.random();
+			if (randomNum>this.getCurrentCoef()){
+				//Discards!!
+				input = null;
+			}		
 		}
 	}
 

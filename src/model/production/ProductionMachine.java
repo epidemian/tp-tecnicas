@@ -13,16 +13,16 @@ public class ProductionMachine extends Machine {
 	*/
 	public ProductionMachine(MachineType machineType){
 		super(machineType);
-		this.productsProcess = 0;
+		//this.productsProcess = 0;
 	}
 
-	/**
+	/* DEPRECATED
 	 * Represents the number of products until one product become defective. If
 	 * the product is defective is remains defective.
 	 */
-	private int damagedProductFrequency;
-	private int productsProcess;
-
+	//private int damagedProductFrequency;
+	//private int productsProcess;
+	/*
 	@Override
 	public void treatProduct(Product input) {
 		checkNotNull(input, "input product");
@@ -33,6 +33,22 @@ public class ProductionMachine extends Machine {
 		}
 
 		input.addMachineTypeToHistory(this.getMachineType());
+	}
+	*/
+	
+	@Override
+	/*
+	 * Uses machine coefficient. The bigger it is, the worse it is.
+	 * Therefore the bigger it is, more defective products will be made!    
+	 */
+	public void treatProduct(Product input) {
+		checkNotNull(input, "input product");
+		double randomNum = Math.random();
+		if (randomNum<this.getCurrentCoef()){
+			input.setDefective();
+		}
+		input.addMachineTypeToHistory(this.getMachineType());
+		
 	}
 
 	@Override
