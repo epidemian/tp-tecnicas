@@ -1,12 +1,12 @@
-package view.warehouse;
+package view.game;
 
 import java.util.LinkedList;
 import java.util.List;
 
 import model.game.Game;
 import model.production.ProductionLineElement;
-import view.warehouse.edition.EditionActions;
-import view.warehouse.edition.KeyInputActionMapper;
+import view.game.edition.EditionActions;
+import view.game.edition.KeyInputActionMapper;
 
 public class GamePanel extends javax.swing.JPanel {
     

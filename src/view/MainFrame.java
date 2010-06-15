@@ -1,4 +1,4 @@
-package view.warehouse;
+package view;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -13,24 +13,17 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import view.game.GamePanel;
+
 import model.game.Game;
 
 public class MainFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
-	private JPanel contentPane;
-
-	public MainFrame(Game game) {
+	public MainFrame() {
 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-		/*
-		 * Creates and sets up the content pane.
-		 */
-		this.contentPane = new GamePanel(game);
-		this.contentPane.setOpaque(true);
-		this.setContentPane(contentPane);
 
 		// Display the window.
 		this.setVisible(true);
@@ -38,14 +31,7 @@ public class MainFrame extends JFrame {
 		this.setSize(new Dimension(850, 650));
 		// this.setLocationRelativeTo(null);
 		this.maximize();
-		
-		// Give focus to GamePanel when selected.
-		this.addWindowFocusListener(new WindowAdapter() {
-			@Override
-			public void windowGainedFocus(WindowEvent e) {
-				MainFrame.this.contentPane.requestFocusInWindow();
-			}
-		});
+
 	}
 
 	public void maximize() {

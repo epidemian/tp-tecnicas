@@ -1,4 +1,4 @@
-package view.warehouse;
+package view.game;
 
 import java.awt.image.BufferedImage;
 import java.net.URL;

@@ -1,4 +1,4 @@
-package view.warehouse.edition;
+package view.game.edition;
 
 import static java.lang.System.out;
 import static model.utils.ArgumentUtils.checkNotNull;
@@ -10,11 +10,11 @@ import javax.swing.Action;
 
 import model.game.Game;
 import model.production.MachineType;
-import view.warehouse.GamePanel;
-import view.warehouse.GroundPanel;
-import view.warehouse.edition.tools.AddConveyorTool;
-import view.warehouse.edition.tools.AddMachineTool;
-import view.warehouse.edition.tools.SelectionTool;
+import view.game.GamePanel;
+import view.game.GroundPanel;
+import view.game.edition.tools.AddConveyorTool;
+import view.game.edition.tools.AddMachineTool;
+import view.game.edition.tools.SelectionTool;
 
 public class EditionActions {
 

@@ -1,4 +1,4 @@
-package view.warehouse;
+package view.game;
 
 import java.awt.Dimension;
 import java.awt.Image;

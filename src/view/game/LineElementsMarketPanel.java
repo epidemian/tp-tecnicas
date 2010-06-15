@@ -9,7 +9,7 @@
  * Created on 14/06/2010, 14:29:13
  */
 
-package view.warehouse;
+package view.game;
 
 import java.awt.Dimension;
 import java.awt.Image;
@@ -22,7 +22,7 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import model.production.MachineType;
-import view.warehouse.edition.EditionActions;
+import view.game.edition.EditionActions;
 
 /**
  *
@@ -174,7 +174,7 @@ public class LineElementsMarketPanel extends javax.swing.JPanel {
         machineNextPreviousPanel = new javax.swing.JPanel();
         previousMachine = new javax.swing.JButton();
         nextMachine = new javax.swing.JButton();
-        backGroundPanel1 = new view.warehouse.BackGroundPanel();
+        backGroundPanel1 = new view.game.BackGroundPanel();
         tittleLabel = new javax.swing.JLabel();
         conveyorLabel = new javax.swing.JLabel();
         conveyor = new javax.swing.JButton();
@@ -296,7 +296,7 @@ public class LineElementsMarketPanel extends javax.swing.JPanel {
     private List<Action> machineButtonsActions;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private view.warehouse.BackGroundPanel backGroundPanel1;
+    private view.game.BackGroundPanel backGroundPanel1;
     private javax.swing.JButton conveyor;
     private javax.swing.JLabel conveyorLabel;
     private javax.swing.JButton input;

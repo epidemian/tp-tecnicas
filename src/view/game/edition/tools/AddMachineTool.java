@@ -1,4 +1,4 @@
-package view.warehouse.edition.tools;
+package view.game.edition.tools;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -8,10 +8,10 @@ import model.production.Direction;
 import model.production.MachineType;
 import model.warehouse.Ground;
 import model.warehouse.Position;
-import view.warehouse.GamePanel;
-import view.warehouse.GroundPainter;
-import view.warehouse.GroundPanel;
-import view.warehouse.edition.EditionTool;
+import view.game.GamePanel;
+import view.game.GroundPainter;
+import view.game.GroundPanel;
+import view.game.edition.EditionTool;
 
 public class AddMachineTool extends EditionTool {
 
@@ -72,19 +72,24 @@ public class AddMachineTool extends EditionTool {
 	}
 
 	private boolean canPutMachineAt(Position position) {
+//		int width = this.machineType.getWidth();
+//		int height = this.machineType.getHeight();
+//		Ground ground = this.getGame().getGround();
+//		Position inPos = position.add(this.machineType
+//				.getInputRelativePosition());
+//		Position outPos = position.add(this.machineType
+//				.getOutputRelativePosition());
+//
+//		boolean canPutMachine = ground.canPutTileElementByDimension(width,
+//				height, position);
+//		boolean canPutInput = ground.canPutTileElementByDimension(1, 1, inPos);
+//		boolean canPutOutput = ground
+//				.canPutTileElementByDimension(1, 1, outPos);
+//		return canPutMachine && canPutInput && canPutOutput;
+		
 		int width = this.machineType.getWidth();
 		int height = this.machineType.getHeight();
-		Ground ground = this.getGame().getGround();
-		Position inPos = position.add(this.machineType
-				.getInputRelativePosition());
-		Position outPos = position.add(this.machineType
-				.getOutputRelativePosition());
-
-		boolean canPutMachine = ground.canPutTileElementByDimension(width,
+		return this.getGame().getGround().canPutTileElementByDimension(width,
 				height, position);
-		boolean canPutInput = ground.canPutTileElementByDimension(1, 1, inPos);
-		boolean canPutOutput = ground
-				.canPutTileElementByDimension(1, 1, outPos);
-		return canPutMachine && canPutInput && canPutOutput;
 	}
 }

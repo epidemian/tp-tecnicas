@@ -1,7 +1,7 @@
-package view.warehouse;
+package view.game;
 
 import static model.utils.ArgumentUtils.checkNotNull;
-import static view.warehouse.GroundPainter.TILE_SIZE;
+import static view.game.GroundPainter.TILE_SIZE;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 
 import model.warehouse.Ground;
 import model.warehouse.Position;
-import view.warehouse.edition.EditionTool;
+import view.game.edition.EditionTool;
 
 public class GroundPanel extends JPanel {
 

@@ -1,9 +1,9 @@
-package view.warehouse.edition;
+package view.game.edition;
 
 import model.game.Game;
 import model.warehouse.Position;
 import view.Painter;
-import view.warehouse.GamePanel;
+import view.game.GamePanel;
 
 public abstract class EditionTool implements Painter {
 

@@ -1,11 +1,11 @@
-package view.warehouse.edition.tools;
+package view.game.edition.tools;
 
 import java.awt.Graphics2D;
 
 import model.game.Game;
 import model.warehouse.Position;
-import view.warehouse.GamePanel;
-import view.warehouse.edition.EditionTool;
+import view.game.GamePanel;
+import view.game.edition.EditionTool;
 
 public class AddConveyorTool extends EditionTool {
 

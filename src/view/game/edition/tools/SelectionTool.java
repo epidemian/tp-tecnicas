@@ -1,4 +1,4 @@
-package view.warehouse.edition.tools;
+package view.game.edition.tools;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -7,9 +7,9 @@ import model.game.Game;
 import model.warehouse.EmptyTileElement;
 import model.warehouse.Position;
 import model.warehouse.TileElement;
-import view.warehouse.GamePanel;
-import view.warehouse.GroundPanel;
-import view.warehouse.edition.EditionTool;
+import view.game.GamePanel;
+import view.game.GroundPanel;
+import view.game.edition.EditionTool;
 
 public class SelectionTool extends EditionTool {
 	

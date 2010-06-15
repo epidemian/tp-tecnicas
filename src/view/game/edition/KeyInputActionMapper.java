@@ -1,4 +1,4 @@
-package view.warehouse.edition;
+package view.game.edition;
 
 import javax.swing.ActionMap;
 import javax.swing.InputMap;

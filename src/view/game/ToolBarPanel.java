@@ -9,7 +9,7 @@
  * Created on 14/06/2010, 15:30:01
  */
 
-package view.warehouse;
+package view.game;
 
 import java.awt.event.ActionListener;
 
