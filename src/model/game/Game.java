@@ -1,6 +1,7 @@
 package model.game;
 
 import java.util.ArrayList;
+import model.production.StorageArea;
 import static model.utils.ArgumentUtils.*;
 import java.util.List;
 
@@ -77,4 +78,8 @@ public class Game {
 	public List<MachineType> getQualityControlMachinesTypes() {
             return this.qualityControlMachineType;
 	}
+
+    public StorageArea getStorageArea() {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
 }

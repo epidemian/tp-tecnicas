@@ -1,5 +1,7 @@
 package view.game;
 
+import static view.game.MoneyConstants.*;
+
 public class BudgetPanel extends javax.swing.JPanel {
 
     /** Creates new form BudgetPanel */
@@ -34,10 +36,6 @@ public class BudgetPanel extends javax.swing.JPanel {
             .addComponent(budgetBalanceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private static final String MONEY = "Money";
-    private static final String MONEY_SYMBOL = "$";
-
     public void setMoneyBalance(int balance){
         this.budgetBalanceLabel.setText(MONEY + ": " + MONEY_SYMBOL + " " + balance);
     }
