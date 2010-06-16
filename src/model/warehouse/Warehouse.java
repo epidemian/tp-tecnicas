@@ -2,6 +2,7 @@ package model.warehouse;
 
 import static model.utils.ArgumentUtils.checkNotNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import model.game.Budget;
@@ -61,8 +62,8 @@ public abstract class Warehouse implements MonthlyUpdatable, DailyUpdatable{
 		this.priceMap=map;
 		this.totalDefectiveProductsMade=0;
 		this.totalProductsMade=0;
-		this.storageArea=new StorageArea(new RawMaterials(),
-											sequences);
+		this.storageArea=new StorageArea(new RawMaterials(),sequences);
+		this.productionLines=new ArrayList<ProductionLine>();
 	}
 	
 	public void createProductionLines(){

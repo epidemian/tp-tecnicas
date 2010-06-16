@@ -11,11 +11,8 @@
 			<MachineType id="Forge" width="3" height="4"/>
 		</MachineList>
 		<ProductType id="Axe"/>
-		<dependencies>
-			<dependency id="1" />
-			<dependency id="2" />
-		</dependencies>		
 	</ProductionSequence>
+	
 	<ProductionSequence id="2" cost="30" desc="Powerful as the excaliburg" researched="true">
 		<RawMaterials>
 			<rawMaterial id="gold" quantity="500"/>			
@@ -36,5 +33,17 @@
 			<MachineType id="Forge" width="3" height="4"/>
 		</MachineList>
 		<ProductType id="Bow"/>
+	</ProductionSequence>
+	<ProductionSequence id="4" cost="0" desc="Flail" researched="true">
+		<RawMaterials>
+			<rawMaterial id="wood" quantity="100"/>
+			<rawMaterial id="gold" quantity="100"/>
+			<rawMaterial id="stone" quantity="100"/>
+		</RawMaterials>
+		<MachineList>
+			<MachineType id="Oven" width="3" height="4"/>
+			<MachineType id="Forge" width="3" height="4"/>
+		</MachineList>
+		<ProductType id="Flail"/>
 	</ProductionSequence>
 </Sequences>

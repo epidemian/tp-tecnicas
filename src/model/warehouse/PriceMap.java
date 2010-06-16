@@ -25,4 +25,8 @@ public class PriceMap {
 			throw new PriceProductDoesNotExistException();
 		}
 	}
+	
+	public void setMap(Map<String,Integer> map){
+		this.map=map;
+	}
 }

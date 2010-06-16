@@ -4,6 +4,7 @@ import java.util.List;
 
 import static model.production.elements.ProductionLineElement.connectLineElements;
 import model.game.Budget;
+import model.game.time.UpdateScheduler;
 import model.lab.ResearchLab;
 import model.lab.TechnologyTree;
 import model.production.RawMaterials;
@@ -52,6 +53,8 @@ public class GlobalTest {
 	private TechnologyTree tree;
 	private ResearchLab lab;
 	
+	private UpdateScheduler scheduler=new UpdateScheduler(24,3,10);
+	
 	@Before
 	public void setUp() throws Exception{
 
@@ -95,21 +98,36 @@ public class GlobalTest {
 	
 	
 	
-	public ProductionLine createLineProcessingCarton(){
+	public ProductionLine createLineProcessingFlail(){
 		ProductionLineElement prodLineElement1 = new ProductionMachine(
-				new MachineType("Licuado",1,1));
-		ProductionLineElement prodLineElement2 = new Conveyor();
-		ProductionLineElement prodLineElement3 = new ProductionMachine(
-				new MachineType("Horno",1,1));
-		ProductionLineElement prodLineElement4 = 
+				new MachineType("Oven",3,4));
+		ProductionLineElement prodLineElement2 = new ProductionMachine(
+				new MachineType("Forge",3,4));
+		ProductionLineElement prodLineElement3 = 
 				new OutputProductionLineElement();
 
 		connectLineElements(prodLineElement1, prodLineElement2);
+		
 		connectLineElements(prodLineElement2, prodLineElement3);
-		connectLineElements(prodLineElement3, prodLineElement4);
 		
+		RawMaterials rawMaterialConfiguration = new RawMaterials();
 		
+		return ProductionLine.createValidProductionLine(prodLineElement1,
+				this.warehouse.getStorageArea(),rawMaterialConfiguration);
+	}
+	
+	public ProductionLine createLineProcessingNothing(){
+		ProductionLineElement prodLineElement1 = new ProductionMachine(
+				new MachineType("Oven",3,4));
+		ProductionLineElement prodLineElement2 = new ProductionMachine(
+				new MachineType("Doesnt Exist",3,4));
+		ProductionLineElement prodLineElement3 = 
+				new OutputProductionLineElement();
 
+		connectLineElements(prodLineElement1, prodLineElement2);
+		
+		connectLineElements(prodLineElement2, prodLineElement3);
+		
 		RawMaterials rawMaterialConfiguration = new RawMaterials();
 		
 		return ProductionLine.createValidProductionLine(prodLineElement1,
@@ -119,16 +137,37 @@ public class GlobalTest {
 	@Test
 	public void overallDay() throws Exception{
 		System.out.println(this.validSequences);
-		System.out.println();
-		System.out.println(tree);
+	//	System.out.println();
+	//	System.out.println(tree);
 		
+		/*
 		for(int i=0;i<4;i++)
 			this.changePrices(i);
+		*/
 		
+		ProductionLine line=this.createLineProcessingFlail();
+		//ProductionLine lineNothing=this.createLineProcessingNothing();
+		
+		scheduler.subscribeTickUpdatable(line);
+		
+		for(int i=0;i<scheduler.getTicksPerDay();i++){
+			scheduler.updateTick();
+		}
+		
+		
+		System.out.println("Warehouse products:"+this.warehouse.getStorageArea().
+				getProductsProduced().size());
+		System.out.println("Line flail products:"+line.getDailyProduction());
+
+		System.out.println("Balance before sell:"+this.budget.getBalance());
+			warehouse.sell();
+		System.out.println("Balance after sell:"+this.budget.getBalance());
+		
+		System.out.println(warehouse.getProductionLines().size());
 	}
 	
 	private void changePrices(int weekNumber) throws Exception {
 		int number= weekNumber % this.pricesPaths.length;
-		this.priceMap= new PriceMap(inputFactory.loadPrices(pricesPaths[number]));
+		priceMap.setMap(inputFactory.loadPrices(pricesPaths[number]));
 	}
 } 

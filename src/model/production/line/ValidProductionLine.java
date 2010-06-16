@@ -33,7 +33,6 @@ class ValidProductionLine extends ProductionLine {
 
 	@Override
 	public void updateTick() {
-
 		Iterator<ProductionLineElement> iterator = this.iterator();
 		Product product = this.getStorageArea().createProduct(
 				this.configuration);

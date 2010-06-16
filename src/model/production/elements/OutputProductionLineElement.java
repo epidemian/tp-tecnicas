@@ -43,8 +43,7 @@ public class OutputProductionLineElement extends ProductionLineElement{
 
 	@Override
 	public void accept(TileElementVisitor visitor) {
-		// TODO Auto-generated method stub
-		
+		 visitor.visitOutputProductionLineElement(this);
 	}
 
 	@Override
