@@ -52,6 +52,10 @@ public class Position implements Cloneable {
 
 	@Override
 	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
 		if (getClass() != obj.getClass())
 			return false;
 		Position other = (Position) obj;
@@ -66,6 +70,8 @@ public class Position implements Cloneable {
 	public String toString() {
 		return "Position [row=" + row + ", col=" + col + "]";
 	}
+
+
 
 	public int squareDistance(Position other) {
 		return this.subtract(other).squareNorm();
