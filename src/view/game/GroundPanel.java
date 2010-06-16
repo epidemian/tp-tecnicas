@@ -111,6 +111,7 @@ public class GroundPanel extends JPanel {
 		if (mousePosition != null) {
 			int x = mousePosition.x + 20;
 			int y = mousePosition.y - 20;
+			graphics.setColor(Color.BLACK);
 			graphics.drawString(notification, x, y);
 		}
 	}

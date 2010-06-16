@@ -1,8 +1,13 @@
 package view.game.edition.tools;
 
+import static model.utils.StringUtils.join;
+import static view.game.edition.tools.Colors.*;
 import static model.production.ProductionLineElement.connectLineElements;
+
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -47,11 +52,15 @@ public class AddConveyorTool extends EditionTool {
 
 	private void clickedOverLineElement(ProductionLineElement element,
 			Position mousePosition) {
+		System.out.println("Clicked over line element");
 		if (isBuilding()) {
+			System.out.println("is building...");
 			Position lastPosition = computeLastPosition(element, mousePosition);
 			boolean couldAddSegment = addNewConveyorSegment(lastPosition);
-			if (couldAddSegment)
+			if (couldAddSegment) {
 				finishBuildingConveyor(element);
+				reset();
+			}
 		} else
 			startBuildingConveyorIfPossible(element, mousePosition);
 	}
@@ -70,6 +79,13 @@ public class AddConveyorTool extends EditionTool {
 
 		Position prevThanFirstPosition = getPreviousPositionThanOutput(firstElement);
 		Position nextThanLastPosition = getNextPositionThanInput(lastElement);
+		System.out.println("elements: " + firstElement + "  " + lastElement);
+		System.out.println("prev than first " + prevThanFirstPosition);
+		System.out.println("next than last " + nextThanLastPosition);
+		System.out
+				.println("in pos " + lastElement.getInputConnectionPosition());
+		System.out.println("out pos "
+				+ lastElement.getOutputConnectionPosition());
 
 		Conveyor prevConveyor = null;
 		int nConveyors = this.conveyorPositions.size();
@@ -103,6 +119,8 @@ public class AddConveyorTool extends EditionTool {
 
 	private Conveyor createConveyor(Position currPos, Position prevPos,
 			Position nextPos) {
+		System.out.println("Create conveyor curr: " + currPos + " prev + "
+				+ prevPos + " nextPos " + nextPos);
 		Position prevDiff = prevPos.subtract(currPos);
 		Position nextDiff = nextPos.subtract(currPos);
 		Direction inputDir = Direction.getDirectionByPosition(prevDiff);
@@ -113,13 +131,13 @@ public class AddConveyorTool extends EditionTool {
 	private Position getPreviousPositionThanOutput(
 			ProductionLineElement firstElement) {
 		Direction outputDir = firstElement.getOutputConnectionDirection();
-		return firstElement.getPosition().subtract(
+		return firstElement.getOutputConnectionPosition().subtract(
 				outputDir.getAssociatedPosition());
 	}
 
 	private Position getNextPositionThanInput(ProductionLineElement lastElement) {
 		Direction inputDir = lastElement.getInputConnectionDirection();
-		return lastElement.getPosition().subtract(
+		return lastElement.getInputConnectionPosition().subtract(
 				inputDir.getAssociatedPosition());
 	}
 
@@ -136,8 +154,10 @@ public class AddConveyorTool extends EditionTool {
 
 	private void startBuildingConveyorIfPossible(ProductionLineElement element,
 			Position mousePosition) {
+		System.out.println("Start building conveyor if possible");
 		EdgeType from = getNearestAvailableConnectionEdgeType(element,
 				mousePosition);
+		System.out.println("from: " + from);
 		if (from != null) {
 			Position firstPos = getConnectionPositionByEdgeType(element, from);
 			this.conveyorPositions.add(firstPos);
@@ -153,11 +173,21 @@ public class AddConveyorTool extends EditionTool {
 
 	private boolean addNewConveyorSegment(Position position) {
 		List<Position> newPositions = createPositionsTo(position);
-		if (areAllTilesEmpty(newPositions)) {
+		boolean canAdd = canAddConveyorPositions(newPositions);
+		if (canAdd)
 			this.conveyorPositions.addAll(newPositions);
-			return true;
-		} else
-			return false;
+		return canAdd;
+	}
+
+	private boolean canAddConveyorPositions(List<Position> positions) {
+		for (Position pos : positions)
+			if (!canAddConveyorPosition(pos))
+				return false;
+		return true;
+	}
+
+	private boolean canAddConveyorPosition(Position pos) {
+		return isTileEmpty(pos) && !this.conveyorPositions.contains(pos);
 	}
 
 	private Position getConnectionPositionByEdgeType(
@@ -176,7 +206,8 @@ public class AddConveyorTool extends EditionTool {
 			ProductionLineElement element, Position mousePos) {
 		boolean inputAvailable = isInputAvailable(element);
 		boolean outputAvailable = isOutputAvailable(element);
-
+		System.out.println("in out available: " + inputAvailable + " "
+				+ outputAvailable);
 		EdgeType edgeType;
 		if (inputAvailable && outputAvailable)
 			edgeType = getNearestConnectionEdgeType(element, mousePos);
@@ -192,12 +223,15 @@ public class AddConveyorTool extends EditionTool {
 
 	private boolean isInputAvailable(ProductionLineElement element) {
 		return !element.hasPreviousLineElement()
-				&& !isTileEmpty(element.getInputConnectionPosition());
+				&& isTileEmpty(element.getInputConnectionPosition());
 	}
 
 	private boolean isOutputAvailable(ProductionLineElement element) {
+		System.out.println(" has next " + element.hasNextLineElement());
+		System.out.println(" isTileEmpty "
+				+ isTileEmpty(element.getOutputConnectionPosition()));
 		return !element.hasNextLineElement()
-				&& !isTileEmpty(element.getOutputConnectionPosition());
+				&& isTileEmpty(element.getOutputConnectionPosition());
 	}
 
 	private EdgeType getNearestConnectionEdgeType(
@@ -206,16 +240,10 @@ public class AddConveyorTool extends EditionTool {
 		Position outputPos = element.getOutputConnectionPosition();
 		int inputDistance = mousePos.squareDistance(inputPos);
 		int outputDistance = mousePos.squareDistance(outputPos);
-
+		System.out.println("distances, in: " + inputDistance + " out: "
+				+ outputDistance);
 		return inputDistance < outputDistance ? EdgeType.INPUT
 				: EdgeType.OUTPUT;
-	}
-
-	private boolean areAllTilesEmpty(List<Position> positions) {
-		for (Position pos : positions)
-			if (!isTileEmpty(pos))
-				return false;
-		return true;
 	}
 
 	private List<Position> createPositionsTo(Position position) {
@@ -224,14 +252,22 @@ public class AddConveyorTool extends EditionTool {
 
 		int deltaRow = (int) Math.signum(diff.getRow());
 		int deltaCol = (int) Math.signum(diff.getCol());
+		int absRowDiff = Math.abs(diff.getRow());
+		int absColDiff = Math.abs(diff.getCol());
 
 		List<Position> positions = new ArrayList<Position>();
-		for (int row = last.getRow(); row != position.getRow(); row += deltaRow)
-			positions.add(new Position(row, last.getCol()));
 
-		last = positions.get(positions.size() - 1);
-		for (int col = last.getCol(); col != position.getCol(); col += deltaCol)
-			positions.add(new Position(last.getRow(), col));
+		int row = last.getRow();
+		int col = last.getCol();
+
+		for (int i = 1; i <= absRowDiff; i++) {
+			row += deltaRow;
+			positions.add(new Position(row, col));
+		}
+		for (int i = 1; i <= absColDiff; i++) {
+			col += deltaCol;
+			positions.add(new Position(row, col));
+		}
 
 		return positions;
 	}
@@ -242,8 +278,71 @@ public class AddConveyorTool extends EditionTool {
 
 	@Override
 	public void paint(Graphics2D graphics) {
-		// TODO Auto-generated method stub
+		drawAllConveyorPositions(graphics);
 
+		Position mousePosition = getGroundPanel().getCurrentMousePosition();
+		if (mousePosition == null)
+			return;
+		
+		ProductionLineElement element = getLineElementAt(mousePosition);
+
+		List<Position> newPositions;
+		List<String> warnings = new ArrayList<String>();
+		if (element != null)
+			newPositions = getNewPositionsWhenOverLineElement(mousePosition,
+					element);
+		else
+			newPositions = getNewPositionsWhenOverNonLineElement(mousePosition);
+
+		boolean canAddAllConveyors = true;
+		for (Position pos : newPositions) {
+			boolean canAddConveyor = canAddConveyorPosition(pos);
+			Color color = canAddConveyor ? OK_COLOR : BAD_COLOR;
+			drawConveyorRectangle(pos, color, graphics);
+			if (!canAddConveyor && canAddAllConveyors)
+				canAddAllConveyors = false;
+		}
+		if (!canAddAllConveyors)
+			warnings.add("Bocked path");
+
+		if (!warnings.isEmpty()) {
+			warnings.add("ESC to cancel");
+			String warningStr = join(warnings, " - ");
+			getGroundPanel().drawNotificationBesideMouse(warningStr, graphics);
+		}
+	}
+
+	private List<Position> getNewPositionsWhenOverLineElement(
+			Position mousePosition, ProductionLineElement element) {
+
+		if (isBuilding()) {
+			Position lastPosition = computeLastPosition(element, mousePosition);
+			return createPositionsTo(lastPosition);
+		} else {
+			EdgeType edgeType = getNearestAvailableConnectionEdgeType(element,
+					mousePosition);
+			Position firstPosition = edgeType == null ? mousePosition
+					: getConnectionPositionByEdgeType(element, edgeType);
+			return Arrays.asList(firstPosition);
+		}
+	}
+
+	private List<Position> getNewPositionsWhenOverNonLineElement(
+			Position mousePosition) {
+		if (isBuilding())
+			return createPositionsTo(mousePosition);
+		else
+			return Arrays.asList(mousePosition);
+	}
+
+	private void drawConveyorRectangle(Position position, Color color,
+			Graphics2D graphics) {
+		getPainter().drawRectangle(graphics, position, 1, 1, color);
+	}
+
+	private void drawAllConveyorPositions(Graphics2D graphics) {
+		for (Position pos : this.conveyorPositions)
+			drawConveyorRectangle(pos, OK_COLOR, graphics);
 	}
 
 	@Override

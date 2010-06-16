@@ -1,5 +1,6 @@
 package view.game.edition.tools;
 
+import static view.game.edition.tools.Colors.*;
 import static model.production.ProductionLineElement.connectLineElements;
 import static model.utils.StringUtils.join;
 import java.awt.Color;
@@ -23,8 +24,6 @@ import view.game.edition.EditionTool;
 
 public abstract class AddMachineTool extends EditionTool {
 
-	private static final Color OK_COLOR = new Color(0, 1, 0, 0.3F);
-	private static final Color BAD_COLOR = new Color(1, 0, 0, 0.3F);
 	private MachineType machineType;
 
 	public AddMachineTool(GamePanel gamePanel, Game game,
