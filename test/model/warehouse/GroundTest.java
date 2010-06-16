@@ -1,5 +1,7 @@
 package model.warehouse;
 
+import static model.production.TestUtils.*;
+
 import static org.junit.Assert.*;
 import model.exception.BusinessLogicException;
 import model.production.elements.ProductionLineElement;
@@ -38,7 +40,7 @@ public class GroundTest {
 	}
 
 	private ProductionLineElement createProdLineElement2x2() {
-		MachineType type = new MachineType("testingMachine", 2, 2);
+		MachineType type = createMachineType("testingMachine", 2, 2);
 		return new ProductionMachine(type);
 	}
 

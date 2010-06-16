@@ -48,10 +48,10 @@ public class Game {
             /*
              * TODO hardcoding just for test.
              */
-            MachineType prodMachType = new MachineType("productionMachine", 3, 3, new Position(0, -1), new Position(2, 3), 0.05f, 0.015f, 250);
+            MachineType prodMachType = new MachineType.Builder("productionMachine", 3, 3).price(250).build();
             this.productionMachinesType.add(prodMachType);
             this.productionMachinesType.add(prodMachType);
-            MachineType qualMachType = new MachineType("qualityControlMachine", 4, 3);
+            MachineType qualMachType = new MachineType.Builder("qualityControlMachine", 4, 3).build();
             this.qualityControlMachineType.add(qualMachType);
             this.qualityControlMachineType.add(qualMachType);
             RawMaterialType rawMatType = new RawMaterialType("rawMaterial1");

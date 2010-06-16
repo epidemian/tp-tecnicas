@@ -1,5 +1,7 @@
 package persistence;
 
+import static model.production.TestUtils.*;
+
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
@@ -48,9 +50,9 @@ public class ProductionSequenceTechnologyPersistentTest
 		
 		List<MachineType> list=new ArrayList<MachineType>();
 		
-		list.add(new MachineType("LumberProcess",3,4));
-		list.add(new MachineType("Oven",3,4));
-		list.add(new MachineType("Forge",3,4));
+		list.add(createMachineType("LumberProcess",3,4));
+		list.add(createMachineType("Oven",3,4));
+		list.add(createMachineType("Forge",3,4));
 		
 		ProductType prodType=new ProductType("Axe");
 		
@@ -71,7 +73,7 @@ public class ProductionSequenceTechnologyPersistentTest
 		
 		List<MachineType> list=new ArrayList<MachineType>();
 		
-		list.add(new MachineType("Forge",3,4));
+		list.add(createMachineType("Forge",3,4));
 		
 		ProductType prodType=new ProductType("Sword");
 		

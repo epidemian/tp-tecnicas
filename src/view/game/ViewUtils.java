@@ -12,21 +12,13 @@ import model.warehouse.Wall;
 public class ViewUtils {
 
 	private static final String[] GROUND_CONFIG = {
-			"WWWWWWWWWWWWWWWWWWWWWWWWW", 
-			"W             WWWWWWWWWWW",
-			"W             WWWWWWWWWWW", 
-			"W             WWWWWWWWWWW",
-			"W                       W", 
-			"W                    OO W",
-			"W                    OO W", 
-			"W                    OO W",
-			"W                    OO W", 
-			"W                    OO W",
-            "W                    OO W",
-            "W                    OO W",
-            "W                       W",
-            "WWWWWWWWWWWWWWWWWWWWWWWWW",
-            };
+			"WWWWWWWWWWWWWWWWWWWWWWWWW", "W             WWWWWWWWWWW",
+			"W             WWWWWWWWWWW", "W             WWWWWWWWWWW",
+			"W                       W", "W                    OO W",
+			"W                    OO W", "W                    OO W",
+			"W                    OO W", "W                    OO W",
+			"W                    OO W", "W                    OO W",
+			"W                       W", "WWWWWWWWWWWWWWWWWWWWWWWWW", };
 
 	public static Ground creatGroundSample1() {
 
@@ -45,8 +37,9 @@ public class ViewUtils {
 					element = new Conveyor();
 					break;
 				case 'M':
-					element = new ProductionMachine(new MachineType(
-							"Machine at " + pos, 1, 1));
+					MachineType type = new MachineType.Builder("Machine at "
+							+ pos, 1, 1).build();
+					element = new ProductionMachine(type);
 					break;
 				case 'W':
 					element = new Wall(1, 1);

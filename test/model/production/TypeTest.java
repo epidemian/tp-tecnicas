@@ -1,10 +1,12 @@
 package model.production;
 
+import static model.production.TestUtils.*;
 import static org.junit.Assert.*;
 import model.exception.BusinessLogicException;
 import model.production.elements.machine.MachineType;
 
 import org.junit.Test;
+
 
 public class TypeTest {
 
@@ -15,7 +17,7 @@ public class TypeTest {
 	
 	@Test(expected = BusinessLogicException.class)
 	public void createMachineTypeWithNullName(){
-		new MachineType(null);
+		createMachineType(null);
 	}
 	
 	@Test(expected = BusinessLogicException.class)

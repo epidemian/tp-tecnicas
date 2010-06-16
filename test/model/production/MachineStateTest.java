@@ -1,5 +1,6 @@
 package model.production;
 
+import static model.production.TestUtils.*;
 import static org.junit.Assert.assertEquals;
 
 import model.game.Budget;
@@ -25,7 +26,7 @@ public class MachineStateTest {
 	@Before
 	public void setUp() {
 
-		machine = new MachineMock(new MachineType("TestingMachine",1,1));
+		machine = new MachineMock(createMachineType("TestingMachine"));
 		line = ProductionLine.createValidProductionLine(machine,
 				new StorageArea(new RawMaterials(),
 						new ValidProductionSequences()), new RawMaterials());

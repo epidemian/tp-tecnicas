@@ -142,7 +142,7 @@ public abstract class Warehouse implements MonthlyUpdatable, DailyUpdatable {
 	}
 
 	private double getDefectivePercentage() {
-		return (this.totalProductsMade != 0 ? this.totalDefectiveProductsMade
+		return (this.totalProductsMade != 0 ? (double) this.totalDefectiveProductsMade
 				/ this.totalProductsMade : 0);
 	}
 

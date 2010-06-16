@@ -52,7 +52,7 @@ public class TestUtils {
 		
 		for (int i = startMachineTypeIndex; i < size 
 			+ startMachineTypeIndex; i++){
-			list.add(new MachineType(machineName + i));
+			list.add(createMachineType(machineName + i));
 		}
 		return list;
 	}
@@ -92,7 +92,16 @@ public class TestUtils {
 		List<MachineType> machineTypes = new ArrayList<MachineType>(
 				names.length);
 		for (String name : names)
-			machineTypes.add(new MachineType(name));
+			machineTypes.add(createMachineType(name));
 		return machineTypes;
 	}
+	
+	static public MachineType createMachineType(String name) {
+		return createMachineType(name, 1, 1);
+	}
+	
+	static public MachineType createMachineType(String name, int width, int height) {
+		return new MachineType.Builder(name, width, height).build();
+	}
+	
 }

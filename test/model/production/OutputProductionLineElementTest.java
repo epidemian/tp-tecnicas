@@ -1,5 +1,6 @@
 package model.production;
 
+import static model.production.TestUtils.*;
 import static model.production.elements.ProductionLineElement.connectLineElements;
 import static org.junit.Assert.*;
 import model.production.elements.Conveyor;
@@ -26,10 +27,10 @@ public class OutputProductionLineElementTest {
 	
 	public ProductionLine createLineProcessingCarton(){
 		ProductionLineElement prodLineElement1 = new ProductionMachine(
-				new MachineType("Licuado",1,1));
+				createMachineType("Licuado"));
 		ProductionLineElement prodLineElement2 = new Conveyor();
 		ProductionLineElement prodLineElement3 = new ProductionMachine(
-				new MachineType("Horno",1,1));
+				createMachineType("Horno"));
 		ProductionLineElement prodLineElement4 = 
 				new OutputProductionLineElement();
 

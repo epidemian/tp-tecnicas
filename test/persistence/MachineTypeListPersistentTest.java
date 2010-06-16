@@ -1,11 +1,14 @@
 package persistence;
 
+import static model.production.TestUtils.*;
+
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import model.production.elements.machine.MachineType;
+import model.production.elements.machine.MachineType.Builder;
 import model.warehouse.Position;
 
 import org.dom4j.Document;
@@ -14,51 +17,55 @@ import org.dom4j.Element;
 import org.junit.Before;
 import org.junit.Test;
 
-public class MachineTypeListPersistentTest extends XMLPersistentTest{
+public class MachineTypeListPersistentTest extends XMLPersistentTest {
 
 	List<MachineType> list;
-	
+
 	@Before
-	public void setUp(){
+	public void setUp() {
 		super.setUp();
-		list=new ArrayList<MachineType>();
-		list.add(new MachineType("LumberProcess",2,3,new Position(1,-1),
-									new Position(1,2),0.15f,0.05f,10));
-		list.add(new MachineType("Oven",2,3,new Position(1,-1),
-									new Position(1,2),0.15f,0.05f,20));
-		list.add(new MachineType("Forge",2,3,new Position(1,-1),
-									new Position(1,2),0.15f,0.05f,30));
+		list = new ArrayList<MachineType>();
+		Position inputPos = new Position(1, -1);
+		Position outputPos = new Position(1, 2);
+		Builder typeBuilder = new MachineType.Builder("LumberProcess", 2, 3)
+				.inputRelativePosition(inputPos).outputRelativePosition(
+						outputPos);
+
+		MachineType type1 = typeBuilder.price(10).build();
+		MachineType type2 = typeBuilder.name("Oven").price(20).build();
+		MachineType type3 = typeBuilder.name("Forge").price(30).build();
+		list.add(type1);
+		list.add(type2);
+		list.add(type3);
 	}
-	
+
 	@Test
-	public void validMachineTypeList()
-		throws DocumentException, InvalidTagException{		
-		
-		Document doc= 
-			reader.read("test/persistence/input/ValidMachineList.xml");
-		Element element=doc.getRootElement();
-		
-		List<MachineType> recovered=
-			MachineTypeListPersistent.buildFromXML(element);
-		
-		
-		assertEquals(recovered,list);
-		
+	public void validMachineTypeList() throws DocumentException,
+			InvalidTagException {
+
+		Document doc = reader
+				.read("test/persistence/input/ValidMachineList.xml");
+		Element element = doc.getRootElement();
+
+		List<MachineType> recovered = MachineTypeListPersistent
+				.buildFromXML(element);
+
+		assertEquals(recovered, list);
+
 	}
-	
+
 	@Test
-	public void MachineTypeListWithDifferentPrices()
-		throws DocumentException, InvalidTagException{		
-		
-		Document doc= 
-			reader.read("test/persistence/input/" +
-					"MachineTypeListWithDifferentPrices.xml");
-		Element element=doc.getRootElement();
-		
-		List<MachineType> recovered=
-			MachineTypeListPersistent.buildFromXML(element);
-		
+	public void MachineTypeListWithDifferentPrices() throws DocumentException,
+			InvalidTagException {
+
+		Document doc = reader.read("test/persistence/input/"
+				+ "MachineTypeListWithDifferentPrices.xml");
+		Element element = doc.getRootElement();
+
+		List<MachineType> recovered = MachineTypeListPersistent
+				.buildFromXML(element);
+
 		assertFalse(recovered.equals(list));
-		
+
 	}
 }

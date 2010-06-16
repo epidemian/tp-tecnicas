@@ -1,5 +1,6 @@
 package model.production;
 
+import static model.production.TestUtils.*;
 import static model.production.elements.ProductionLineElement.connectLineElements;
 import static org.junit.Assert.*;
 
@@ -39,11 +40,11 @@ public class ProductionLineTest {
 	private ProductionLine createProductionLineProcessingCartonWithOnlyMachines() {
 
 		ProductionLineElement prodLineElement1 = new ProductionMachine(
-				new MachineType("Licuado", 1, 1));
+				createMachineType("Licuado", 1, 1));
 		ProductionLineElement prodLineElement2 = new ProductionMachine(
-				new MachineType("Haz", 1, 1));
+				createMachineType("Haz", 1, 1));
 		ProductionLineElement prodLineElement3 = new ProductionMachine(
-				new MachineType("Horno", 1, 1));
+				createMachineType("Horno", 1, 1));
 
 		connectLineElements(prodLineElement1, prodLineElement2);
 		connectLineElements(prodLineElement2, prodLineElement3);
@@ -56,11 +57,11 @@ public class ProductionLineTest {
 	private ProductionLine createProductionLineProcessingCartonWithConveyor() {
 
 		ProductionLineElement prodLineElement1 = new ProductionMachine(
-				new MachineType("Licuado", 1, 1));
+				createMachineType("Licuado", 1, 1));
 		ProductionLineElement prodLineElement2 = new Conveyor();
 
 		ProductionLineElement prodLineElement3 = new ProductionMachine(
-				new MachineType("Horno", 1, 1));
+				createMachineType("Horno", 1, 1));
 
 		connectLineElements(prodLineElement1, prodLineElement2);
 		connectLineElements(prodLineElement2, prodLineElement3);
@@ -99,13 +100,9 @@ public class ProductionLineTest {
 	private List<MachineMock> createListConnectedMachineMocks() {
 		List<MachineMock> list = new ArrayList<MachineMock>();
 
-		MachineMock machineMock1 = new MachineMock(new MachineType("Licuado",
-				1, 1, new Position(0, -1), new Position(0, 1), 0.15f, 0.05f,
-				100));
-		MachineMock machineMock2 = new MachineMock(new MachineType("Haz", 1, 1,
-				new Position(0, -1), new Position(0, 1), 0.15f, 0.05f, 100));
-		MachineMock machineMock3 = new MachineMock(new MachineType("Horno", 1,
-				1, new Position(0, -1), new Position(0, 1), 0.15f, 0.05f, 100));
+		MachineMock machineMock1 = new MachineMock(createMachineType("Licuado"));
+		MachineMock machineMock2 = new MachineMock(createMachineType("Haz"));
+		MachineMock machineMock3 = new MachineMock(createMachineType("Horno"));
 
 		connectLineElements(machineMock1, machineMock2);
 		connectLineElements(machineMock2, machineMock3);

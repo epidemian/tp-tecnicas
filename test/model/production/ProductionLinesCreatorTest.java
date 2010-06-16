@@ -1,5 +1,6 @@
 package model.production;
 
+import static model.production.TestUtils.*;
 import static model.production.elements.ProductionLineElement.connectLineElements;
 import static org.junit.Assert.assertEquals;
 
@@ -105,7 +106,7 @@ public class ProductionLinesCreatorTest {
 	}
 
 	private ProductionLineElement createProductionMachine(String typeName) {
-		return new ProductionMachine(new MachineType(typeName,1,1));
+		return new ProductionMachine(createMachineType(typeName,1,1));
 	}
 
 	@Test

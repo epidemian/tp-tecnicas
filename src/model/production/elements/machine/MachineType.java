@@ -23,24 +23,7 @@ public class MachineType extends AbstractType {
 	private final float breakChance;
 	private final float damageChance;
 
-	/*
-	 * TODO borrar!
-	 */
-	@Deprecated
-	public MachineType(String name) {
-		this(name, 1, 1);
-	}
-
-	/*
-	 * TODO borrar!
-	 */
-	public MachineType(String name, int width, int height) {
-		this(name, width, height, new Position(0, -1), new Position(0, width),
-				Builder.DEFAULT_BREAK_MACHINE_CHANCE, Builder.DEFAULT_DAMAGE_MACHINE_CHANCE,
-				Builder.DEFAULT_MACHINE_PRICE);
-	}
-
-	public MachineType(String name, int width, int height,
+	private MachineType(String name, int width, int height,
 			Position inputRelativePosition, Position outputRelativePosition,
 			float breakChance, float damageChance, int price) {
 		super(name);
@@ -238,7 +221,22 @@ public class MachineType extends AbstractType {
 			this.inputRelativePosition = new Position(0, -1); 
 			this.outputRelativePosition = new Position(0, width);
 		}
+		
+		public Builder name(String name) {
+			this.name = name;
+			return this;
+		}
 
+		public Builder width(int width) {
+			this.width = width;
+			return this;
+		}
+		
+		public Builder height(int height) {
+			this.height = height;
+			return this;
+		}
+		
 		public Builder price(int price) {
 			this.price = price;
 			return this;

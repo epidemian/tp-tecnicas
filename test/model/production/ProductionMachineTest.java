@@ -1,5 +1,6 @@
 package model.production;
 
+import static model.production.TestUtils.*;
 import static org.junit.Assert.*;
 
 import model.production.elements.machine.Machine;
@@ -18,7 +19,7 @@ public class ProductionMachineTest {
 		Product product1 = new Product(new RawMaterials());
 		Product product2 = new Product(new RawMaterials());
 
-		Machine machine = new ProductionMachine(new MachineType("m1",1,1));
+		Machine machine = new ProductionMachine(createMachineType("m1",1,1));
 
 		Product productProcessed1 = machine.process(product1);
 		assertNull(productProcessed1);
@@ -32,13 +33,13 @@ public class ProductionMachineTest {
 
 		ProductionSequence historyExpected1 = new ProductionSequence(
 				new RawMaterials());
-		historyExpected1.addMachineType(new MachineType("m1"));
+		historyExpected1.addMachineType(createMachineType("m1"));
 
 		assertEquals(historyExpected1, history1);
 
 		ProductionSequence historyExpected2 = new ProductionSequence(
 				new RawMaterials());
-		historyExpected2.addMachineType(new MachineType("m1"));
+		historyExpected2.addMachineType(createMachineType("m1"));
 
 		assertEquals(historyExpected2, history2);
 	}

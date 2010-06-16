@@ -100,27 +100,9 @@ public class GlobalTest {
 	
 	public ProductionLine createLineProcessingFlail(){
 		ProductionLineElement prodLineElement1 = new ProductionMachine(
-				new MachineType("Oven",3,4));
+				new MachineType.Builder("Oven",3,4).build());
 		ProductionLineElement prodLineElement2 = new ProductionMachine(
-				new MachineType("Forge",3,4));
-		ProductionLineElement prodLineElement3 = 
-				new OutputProductionLineElement();
-
-		connectLineElements(prodLineElement1, prodLineElement2);
-		
-		connectLineElements(prodLineElement2, prodLineElement3);
-		
-		RawMaterials rawMaterialConfiguration = new RawMaterials();
-		
-		return ProductionLine.createValidProductionLine(prodLineElement1,
-				this.warehouse.getStorageArea(),rawMaterialConfiguration);
-	}
-	
-	public ProductionLine createLineProcessingNothing(){
-		ProductionLineElement prodLineElement1 = new ProductionMachine(
-				new MachineType("Oven",3,4));
-		ProductionLineElement prodLineElement2 = new ProductionMachine(
-				new MachineType("Doesnt Exist",3,4));
+				new MachineType.Builder("Forge",3,4).build());
 		ProductionLineElement prodLineElement3 = 
 				new OutputProductionLineElement();
 
