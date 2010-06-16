@@ -7,7 +7,7 @@ import model.warehouse.TileElementVisitor;
 
 public class Conveyor extends ProductionLineElement {
 
-	private static final int PRICE = 10;
+	public static final int PRICE = 10;
 	
 	private final Direction inputConnectionDirection;
 	private final Direction outputConnectionDirection;

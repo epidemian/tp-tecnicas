@@ -138,8 +138,7 @@ public class GroundPainter implements Painter {
 			private void visitProductionLineElement(
 					ProductionLineElement lineElement) {
 				drawHighlightRectangle();
-				drawProductionLineElementArrows(lineElement, graphics,
-						HIGHLIGHT_ARROWS_COLOR);
+				drawProductionLineElementArrows(lineElement, graphics);
 			}
 
 			private void drawHighlightRectangle() {
@@ -148,17 +147,18 @@ public class GroundPainter implements Painter {
 			}
 		});
 	}
+	
+	public void drawProductionLineElementArrows(
+			ProductionLineElement lineElement, Graphics2D graphics) {
+		drawProductionLineElementArrows(lineElement, graphics, HIGHLIGHT_ARROWS_COLOR);
+	}
 
-	private void drawProductionLineElementArrows(
+	public void drawProductionLineElementArrows(
 			ProductionLineElement lineElement, Graphics2D graphics, Color color) {
 		drawInputArrow(lineElement.getInputConnectionPosition(), lineElement
 				.getInputConnectionDirection(), color, graphics);
 		drawOutputArrow(lineElement.getOutputConnectionPosition(), lineElement
 				.getOutputConnectionDirection(), color, graphics);
-
-		AffineTransform transform = graphics.getTransform();
-
-		graphics.setTransform(transform);
 	}
 
 	public void drawInputArrow(Position position, Direction direction,

@@ -10,8 +10,4 @@ public class Wall extends TileElement {
 	public void accept(TileElementVisitor visitor) {
 		visitor.visitWall(this);
 	}
-
-	public boolean equals(Object obj){		
-		return (getClass() == obj.getClass());
-	}
 }

@@ -220,7 +220,7 @@ public abstract class AddMachineTool extends EditionTool {
 	}
 
 	private boolean haveEnoughMoney() {
-		return this.getGame().canPurchase(this.machineType.getPrice());
+		return this.getGame().canAfford(this.machineType.getPrice());
 	}
 
 	private GroundPainter getPainter() {

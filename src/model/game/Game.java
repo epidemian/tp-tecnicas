@@ -49,14 +49,14 @@ public class Game {
 		return this.budget;
 	}
 
-	public boolean canPurchase(int amount) {
+	public boolean canAfford(int amount) {
 		return getBudget().canPurchase(amount);
 	}
 	
 	public void buyAndAddProductionLineElement(ProductionLineElement element,
 			Position position) {
 		int price = element.getPrice();
-		checkArgCondition(price, canPurchase(price));
+		checkArgCondition(price, canAfford(price));
 
 		getBudget().decrement(price);
 		getGround().putTileElement(element, position);

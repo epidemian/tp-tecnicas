@@ -15,9 +15,5 @@ public class EmptyTileElement extends TileElement {
 	public String toString() {
 		return "Empty";
 	}
-	
-	public boolean equals(Object obj){		
-		return (getClass() == obj.getClass());
-	}
 
 }

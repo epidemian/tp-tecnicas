@@ -57,4 +57,14 @@ abstract public class TileElement {
 		this.position = position;
 	}
 
+	@Override
+	public final boolean equals(Object obj) {
+		return super.equals(obj);
+	}
+
+	@Override
+	public final int hashCode() {
+		return super.hashCode();
+	}
+	
 }
