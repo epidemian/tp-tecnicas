@@ -2,6 +2,8 @@ package model.game;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.production.RawMaterialType;
 import model.production.StorageArea;
 import static model.utils.ArgumentUtils.*;
@@ -17,10 +19,14 @@ import model.production.elements.machine.ProductionMachine;
 import model.production.elements.machine.QualityControlMachine;
 import model.warehouse.Ground;
 import model.warehouse.Position;
+import model.warehouse.Warehouse;
+import persistence.InputFactory;
+import persistence.XMLFactory;
 
 public class Game {
 
 	private Ground ground;
+        private List<Ground> grounds;
 	private List<MachineType> qualityControlMachineType;
 	private List<MachineType> productionMachinesType;
 	private Map<RawMaterialType, Integer> rawMaterialPrices;
@@ -28,47 +34,52 @@ public class Game {
 	private Budget budget;
 	private StorageArea storageArea;
 	private String playerName;
+        private Warehouse warehouse;
 
 	public Game(Ground ground) {
-		this.ground = ground;
-		this.qualityControlMachineType = new ArrayList<MachineType>();
-		this.productionMachinesType = new ArrayList<MachineType>();
-		this.rawMaterialPrices = new HashMap<RawMaterialType, Integer>();
-		this.rawMaterialTypes = new ArrayList<RawMaterialType>();
-		this.budget = new Budget(1000);
 
-		/*
-		 * TODO hardcoding just for test.
-		 */
-		MachineType prodMachType = new MachineType("productionMachine", 3, 3,
-				new Position(0, -1), new Position(2, 3), 0.05f, 0.015f, 250);
-		this.productionMachinesType.add(prodMachType);
-		this.productionMachinesType.add(prodMachType);
+            this.ground = ground;
+            this.qualityControlMachineType = new ArrayList<MachineType>();
+            this.productionMachinesType = new ArrayList<MachineType>();
+            this.rawMaterialPrices = new HashMap<RawMaterialType, Integer>();
+            this.rawMaterialTypes = new ArrayList<RawMaterialType>();
+            this.budget = new Budget(1000);
+            this.grounds = new ArrayList<Ground>();
+            /*
+             * TODO hardcoding just for test.
+             */
+            MachineType prodMachType = new MachineType("productionMachine", 3, 3, new Position(0, -1), new Position(2, 3), 0.05f, 0.015f, 250);
+            this.productionMachinesType.add(prodMachType);
+            this.productionMachinesType.add(prodMachType);
+            MachineType qualMachType = new MachineType("qualityControlMachine", 4, 3);
+            this.qualityControlMachineType.add(qualMachType);
+            this.qualityControlMachineType.add(qualMachType);
+            RawMaterialType rawMatType = new RawMaterialType("rawMaterial1");
+            RawMaterialType rawMatType2 = new RawMaterialType("rawMaterial2");
+            this.rawMaterialPrices.put(rawMatType, 100);
+            this.rawMaterialPrices.put(rawMatType2, 200);
+            this.rawMaterialTypes.add(rawMatType);
+            this.rawMaterialTypes.add(rawMatType2);
+            RawMaterials rawMaterials = new RawMaterials();
+            rawMaterials.store(rawMatType, 100);
+            rawMaterials.store(rawMatType2, 300);
+            this.storageArea = new StorageArea(rawMaterials, new ValidProductionSequences());
 
-		MachineType qualMachType = new MachineType("qualityControlMachine", 4,
-				3);
-		this.qualityControlMachineType.add(qualMachType);
-		this.qualityControlMachineType.add(qualMachType);
-
-		RawMaterialType rawMatType = new RawMaterialType("rawMaterial1");
-		RawMaterialType rawMatType2 = new RawMaterialType("rawMaterial2");
-		this.rawMaterialPrices.put(rawMatType, 100);
-		this.rawMaterialPrices.put(rawMatType2, 200);
-		this.rawMaterialTypes.add(rawMatType);
-		this.rawMaterialTypes.add(rawMatType2);
-
-		RawMaterials rawMaterials = new RawMaterials();
-		rawMaterials.store(rawMatType, 100);
-		rawMaterials.store(rawMatType2, 300);
-
-		this.storageArea = new StorageArea(rawMaterials,
-				new ValidProductionSequences());
-
-	}
+            try {
+                InputFactory input = new XMLFactory();
+                this.grounds = input.loadGrounds("test/persistence/input/ValidGroundList.xml");
+            } catch (Exception ex) {
+                Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
 
 	public Ground getGround() {
 		return this.ground;
 	}
+
+        public void setGround(Ground ground){
+            this.ground = ground;
+        }
 
 	public Budget getBudget() {
 		return this.budget;
@@ -144,4 +155,16 @@ public class Game {
 	public String getPlayerName(){
 		return this.playerName;
 	}
+
+         public List<Ground> getGrounds() {
+           return this.grounds;
+        }
+
+         public Warehouse getWarehouse(){
+             return this.warehouse;
+         }
+
+         public void setWarehouse(Warehouse warehouse){
+             this.warehouse = warehouse;
+         }
 }
