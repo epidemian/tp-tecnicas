@@ -4,32 +4,35 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.beans.PropertyChangeListener;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import controller.game.GamePanelController;
+import javax.swing.JComboBox;
+import javax.swing.JTextField;
 
 import model.game.Game;
 import view.MainFrame;
 import view.game.GamePanel;
-import view.game.GroundPanel;
 import view.game.GroundPanelContainer;
+import view.game.MainPanel;
 
 public class MainController {
 
 	private Game game;
 	private MainFrame mainFrame;
 
+        private static final String[] difficultyLevels = { "Easy", "Normal", "Hard" };
+        private static final int[] initialMoney = {10000,15000,20000};
+
 	public MainController(Game game, final MainFrame mainFrame) {
 		this.game = game;
 		this.mainFrame = mainFrame;
 
-		setGamePanel();
-                
+		//setGamePanel();
+                setMainPanel();
+
 		mainFrame.setVisible(true);
 		mainFrame.requestFocus();
 
@@ -75,6 +78,37 @@ public class MainController {
 //		});
 		
 	}
+
+        private void setMainPanel(){
+           MainPanel mainPanel = new MainPanel();
+
+           final JComboBox difficultyCombo = mainPanel.getDifficultyCombo();
+           final JTextField nameTextField = mainPanel.getPlayerNameTextArea();
+
+           // Init combo.
+           difficultyCombo.removeAllItems();
+           for (int i = 0; i < difficultyLevels.length; i++) {
+                difficultyCombo.addItem(difficultyLevels[i]);
+           }
+
+           mainPanel.addStartActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+
+                 int selectedItem = difficultyCombo.getSelectedIndex();
+                 int money = initialMoney[selectedItem];
+
+                 String name = nameTextField.getText();
+                 // TODO chequear que el nombre no sea vacio.
+
+                 MainController.this.setGamePanel();
+            }
+
+            });
+
+            this.setMainFramePanel(mainPanel);
+        }
 
 	private void setMainFramePanel(JPanel panel) {
 		panel.setOpaque(true);

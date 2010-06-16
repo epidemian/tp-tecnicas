@@ -6,6 +6,14 @@ public class Budget {
 	public Budget(int initialBalance) {
 		this.balance = initialBalance;
 	}
+
+        public Budget() {
+            this(0);
+        }
+
+        public void setBalance(int balance){
+            this.balance = balance;
+        }
 	
 	public int getBalance() {
 		return balance;
