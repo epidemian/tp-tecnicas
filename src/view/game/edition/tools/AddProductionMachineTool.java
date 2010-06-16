@@ -3,7 +3,7 @@ package view.game.edition.tools;
 import model.game.Game;
 import model.production.Machine;
 import model.production.MachineType;
-import model.warehouse.Position;
+import model.production.ProductionMachine;
 import view.game.GamePanel;
 
 public class AddProductionMachineTool extends AddMachineTool {
@@ -14,8 +14,8 @@ public class AddProductionMachineTool extends AddMachineTool {
 	}
 
 	@Override
-	protected Machine buyAndAddMachine(Position position) {
-		return getGame().buyAndAddProductionMachine(getMachineType(), position);
+	protected Machine createMachine() {
+		return new ProductionMachine(getMachineType());
 	}
 
 }

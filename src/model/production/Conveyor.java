@@ -7,6 +7,8 @@ import model.warehouse.TileElementVisitor;
 
 public class Conveyor extends ProductionLineElement {
 
+	private static final int PRICE = 10;
+	
 	private final Direction inputConnectionDirection;
 	private final Direction outputConnectionDirection;
 
@@ -59,4 +61,11 @@ public class Conveyor extends ProductionLineElement {
 		return this.getPosition().add(
 				this.getOutputConnectionDirection().getAssociatedPosition());
 	}
+
+	@Override
+	public int getPrice() {
+		return PRICE;
+	}
+	
+	
 }

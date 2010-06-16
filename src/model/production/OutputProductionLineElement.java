@@ -37,6 +37,11 @@ public class OutputProductionLineElement extends ProductionLineElement{
 	public void accept(TileElementVisitor visitor) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public int getPrice() {
+		return 0;
 	}	
 
 }

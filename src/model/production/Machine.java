@@ -65,7 +65,8 @@ public abstract class Machine extends ProductionLineElement implements
 	public void setMachineState(MachineState newState) {
 		this.machineState = newState;
 	}
-
+	
+	@Override
 	public int getPrice() {
 		return this.machineType.getPrice();
 	}

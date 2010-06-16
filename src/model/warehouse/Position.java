@@ -67,4 +67,12 @@ public class Position implements Cloneable {
 		return "Position [row=" + row + ", col=" + col + "]";
 	}
 
+	public int squareDistance(Position other) {
+		return this.subtract(other).squareNorm();
+	}
+
+	public int squareNorm() {
+		return row * row + col * col;
+	}
+
 }

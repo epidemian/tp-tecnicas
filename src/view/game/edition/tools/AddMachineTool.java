@@ -65,16 +65,21 @@ public abstract class AddMachineTool extends EditionTool {
 	@Override
 	public void mouseClicked(Position position) {
 		if (canPutMachineAt(position) && haveEnoughMoney()) {
-			Machine machine = buyAndAddMachine(position);
-                        int balance = this.getGame().getBudget().getBalance();
-                        this.getGamePanel().getBudgetPanel().setMoneyBalance(balance);
+			Machine machine = createMachine();
+			getGame().buyAndAddProductionLineElement(machine, position);
+			updateBudgetView();
 
 			tryConnectInput(machine);
 			tryConnectOutput(machine);
 		}
 	}
 
-	protected abstract Machine buyAndAddMachine(Position position);
+	private void updateBudgetView() {
+		int balance = this.getGame().getBudget().getBalance();
+		this.getGamePanel().getBudgetPanel().setMoneyBalance(balance);
+	}
+
+	protected abstract Machine createMachine();
 
 	private void drawWarnings(Graphics2D graphics, List<String> warnings) {
 		if (!warnings.isEmpty())

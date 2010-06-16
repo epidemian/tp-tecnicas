@@ -64,6 +64,7 @@ abstract public class ProductionLineElement extends TileElement {
 
 	public static void connectLineElements(ProductionLineElement previous,
 			ProductionLineElement next) {
+		System.out.println("Connect line elements: " + previous + " and " + next);
 		previous.nextLineElement = next;
 		next.previousLineElement = previous;
 	}
@@ -82,5 +83,7 @@ abstract public class ProductionLineElement extends TileElement {
 	public void breakUp(){}
 
 	public void sell(Budget budget) {}
+
+	public abstract int getPrice();
 	
 }

@@ -1,11 +1,15 @@
 package view.game.edition.tools;
 
+import static model.production.ProductionLineElement.connectLineElements;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import model.exception.BusinessLogicException;
 import model.game.Game;
 import model.production.Conveyor;
+import model.production.Direction;
 import model.production.ProductionLineElement;
 import model.production.ProductionMachine;
 import model.production.QualityControlMachine;
@@ -25,7 +29,8 @@ public class AddConveyorTool extends EditionTool {
 	}
 
 	private List<Position> conveyorPositions = new ArrayList<Position>();
-	EdgeType from;
+	EdgeType initialEdgeType = null;
+	ProductionLineElement initialElement = null;
 
 	public AddConveyorTool(GamePanel gamePanel, Game game) {
 		super(gamePanel, game);
@@ -43,18 +48,167 @@ public class AddConveyorTool extends EditionTool {
 	private void clickedOverLineElement(ProductionLineElement element,
 			Position mousePosition) {
 		if (isBuilding()) {
+			Position lastPosition = computeLastPosition(element, mousePosition);
+			boolean couldAddSegment = addNewConveyorSegment(lastPosition);
+			if (couldAddSegment)
+				finishBuildingConveyor(element);
+		} else
+			startBuildingConveyorIfPossible(element, mousePosition);
+	}
 
-		} else if (isTileEmpty(mousePosition)) {
-			
+	private void finishBuildingConveyor(ProductionLineElement lastElement) {
+
+		ProductionLineElement firstElement = this.initialElement;
+
+		// Orders the positions and alters the first and last elements so the
+		// position list goes from an output to an input.
+		if (this.initialEdgeType == EdgeType.INPUT) {
+			firstElement = lastElement;
+			lastElement = this.initialElement;
+			Collections.reverse(this.conveyorPositions);
+		}
+
+		Position prevThanFirstPosition = getPreviousPositionThanOutput(firstElement);
+		Position nextThanLastPosition = getNextPositionThanInput(lastElement);
+
+		Conveyor prevConveyor = null;
+		int nConveyors = this.conveyorPositions.size();
+		for (int i = 0; i < nConveyors; i++) {
+			Position currPos = this.conveyorPositions.get(i);
+			Position prevPos = i == 0 ? prevThanFirstPosition
+					: this.conveyorPositions.get(i - 1);
+			Position nextPos = i == nConveyors - 1 ? nextThanLastPosition
+					: this.conveyorPositions.get(i + 1);
+			ProductionLineElement prevElement = i == 0 ? firstElement
+					: prevConveyor;
+
+			Conveyor conveyor = createConveyor(currPos, prevPos, nextPos);
+			connectLineElements(prevElement, conveyor);
+			buyAndAddConveyor(conveyor, currPos);
+
+			prevConveyor = conveyor;
+		}
+		connectLineElements(prevConveyor, lastElement);
+		updateBudgetView();
+	}
+
+	private void updateBudgetView() {
+		int balance = this.getGame().getBudget().getBalance();
+		this.getGamePanel().getBudgetPanel().setMoneyBalance(balance);
+	}
+
+	private void buyAndAddConveyor(Conveyor conveyor, Position position) {
+		this.getGame().buyAndAddProductionLineElement(conveyor, position);
+	}
+
+	private Conveyor createConveyor(Position currPos, Position prevPos,
+			Position nextPos) {
+		Position prevDiff = prevPos.subtract(currPos);
+		Position nextDiff = nextPos.subtract(currPos);
+		Direction inputDir = Direction.getDirectionByPosition(prevDiff);
+		Direction outputDir = Direction.getDirectionByPosition(nextDiff);
+		return new Conveyor(inputDir, outputDir);
+	}
+
+	private Position getPreviousPositionThanOutput(
+			ProductionLineElement firstElement) {
+		Direction outputDir = firstElement.getOutputConnectionDirection();
+		return firstElement.getPosition().subtract(
+				outputDir.getAssociatedPosition());
+	}
+
+	private Position getNextPositionThanInput(ProductionLineElement lastElement) {
+		Direction inputDir = lastElement.getInputConnectionDirection();
+		return lastElement.getPosition().subtract(
+				inputDir.getAssociatedPosition());
+	}
+
+	private Position computeLastPosition(ProductionLineElement element,
+			Position defaultPosition) {
+		Position lastPosition = defaultPosition;
+		if (initialEdgeType == EdgeType.INPUT && isOutputAvailable(element))
+			lastPosition = element.getOutputConnectionPosition();
+		else if (initialEdgeType == EdgeType.OUTPUT
+				&& isInputAvailable(element))
+			lastPosition = element.getInputConnectionPosition();
+		return lastPosition;
+	}
+
+	private void startBuildingConveyorIfPossible(ProductionLineElement element,
+			Position mousePosition) {
+		EdgeType from = getNearestAvailableConnectionEdgeType(element,
+				mousePosition);
+		if (from != null) {
+			Position firstPos = getConnectionPositionByEdgeType(element, from);
+			this.conveyorPositions.add(firstPos);
+			this.initialEdgeType = from;
+			this.initialElement = element;
 		}
 	}
 
 	private void clickedOverNonLineElement(Position mousePosition) {
-		if (isBuilding()) {
-			List<Position> newPositions = createPositionsTo(mousePosition);
-			if (areAllTilesEmpty(newPositions))
-				this.conveyorPositions.addAll(newPositions);
+		if (isBuilding())
+			addNewConveyorSegment(mousePosition);
+	}
+
+	private boolean addNewConveyorSegment(Position position) {
+		List<Position> newPositions = createPositionsTo(position);
+		if (areAllTilesEmpty(newPositions)) {
+			this.conveyorPositions.addAll(newPositions);
+			return true;
+		} else
+			return false;
+	}
+
+	private Position getConnectionPositionByEdgeType(
+			ProductionLineElement element, EdgeType edgeType) {
+		switch (edgeType) {
+		case INPUT:
+			return element.getInputConnectionPosition();
+		case OUTPUT:
+			return element.getOutputConnectionPosition();
+		default:
+			throw new BusinessLogicException("Invalid edge type");
 		}
+	}
+
+	private EdgeType getNearestAvailableConnectionEdgeType(
+			ProductionLineElement element, Position mousePos) {
+		boolean inputAvailable = isInputAvailable(element);
+		boolean outputAvailable = isOutputAvailable(element);
+
+		EdgeType edgeType;
+		if (inputAvailable && outputAvailable)
+			edgeType = getNearestConnectionEdgeType(element, mousePos);
+		else if (inputAvailable)
+			edgeType = EdgeType.INPUT;
+		else if (outputAvailable)
+			edgeType = EdgeType.OUTPUT;
+		else
+			edgeType = null;
+
+		return edgeType;
+	}
+
+	private boolean isInputAvailable(ProductionLineElement element) {
+		return !element.hasPreviousLineElement()
+				&& !isTileEmpty(element.getInputConnectionPosition());
+	}
+
+	private boolean isOutputAvailable(ProductionLineElement element) {
+		return !element.hasNextLineElement()
+				&& !isTileEmpty(element.getOutputConnectionPosition());
+	}
+
+	private EdgeType getNearestConnectionEdgeType(
+			ProductionLineElement element, Position mousePos) {
+		Position inputPos = element.getInputConnectionPosition();
+		Position outputPos = element.getOutputConnectionPosition();
+		int inputDistance = mousePos.squareDistance(inputPos);
+		int outputDistance = mousePos.squareDistance(outputPos);
+
+		return inputDistance < outputDistance ? EdgeType.INPUT
+				: EdgeType.OUTPUT;
 	}
 
 	private boolean areAllTilesEmpty(List<Position> positions) {
@@ -95,7 +249,8 @@ public class AddConveyorTool extends EditionTool {
 	@Override
 	public void reset() {
 		this.conveyorPositions.clear();
-		this.from = null;
+		this.initialEdgeType = null;
+		this.initialElement = null;
 	}
 
 	private boolean isTileEmpty(Position position) {
