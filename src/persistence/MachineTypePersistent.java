@@ -3,6 +3,9 @@ package persistence;
 
 
 import model.production.MachineType;
+import model.production.machineState.BrokenMachineState;
+import model.production.machineState.DamagedMachineState;
+import model.production.machineState.HealthyMachineState;
 import model.warehouse.Position;
 
 import org.dom4j.Element;
@@ -16,6 +19,8 @@ public class MachineTypePersistent  {
 	static String TAG_ATR_PRICE="price";
 	static String TAG_CHILD_INPUT="Input";
 	static String TAG_CHILD_OUTPUT="Output";
+	static String TAG_ATR_DAMAGE_CHANCE="damageChance";
+	static String TAG_ATR_BREAK_CHANCE="breakChance";
 	
 	public static MachineType buildFromXML(Element element) 
 		throws InvalidTagException{
@@ -30,6 +35,14 @@ public class MachineTypePersistent  {
 		
 		Position input=null;
 		Position output=null;
+		
+		float damageCoef=(element.element(TAG_ATR_DAMAGE_CHANCE)!=null ?
+				Float.valueOf(element.attributeValue(TAG_ATR_DAMAGE_CHANCE)):
+					DamagedMachineState.DEFECT_DAMAGE_CHANCE);
+		
+		float breakCoef=(element.element(TAG_ATR_BREAK_CHANCE)!=null ?
+				Float.valueOf(element.attributeValue(TAG_ATR_BREAK_CHANCE)):
+					BrokenMachineState.DEFECT_BREAK_CHANCE);
 		
 		
 		input=(element.element(TAG_CHILD_INPUT)!=null ?
@@ -53,7 +66,8 @@ public class MachineTypePersistent  {
 							MachineType.DEFECT_MACHINE_PRICE
 			);
 
-		return new MachineType(name,width,height,input,output,price);
+		return new MachineType(name,width,height,input,output, 
+				breakCoef,damageCoef, price);
 	}
 	
 }

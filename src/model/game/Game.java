@@ -31,7 +31,7 @@ public class Game {
 		 * TODO hardcoding just for test.
 		 */
 		MachineType prodMachType = new MachineType("productionMachine", 3, 3,
-				new Position(0, -1), new Position(2, 3), 250);
+				new Position(0, -1), new Position(2, 3), 0.15f,0.05f,250);
 		this.productionMachinesType.add(prodMachType);
 		this.productionMachinesType.add(prodMachType);
 

@@ -4,9 +4,9 @@ import model.production.Machine;
 
 public abstract class MachineState {
 
-	//generic coefficients for brokenMachineState and DamagedMachineState
-	public static double damagedCoef=0.15;
-	public static double healthyCoef=0.05;
+	// probability of making the product defective when being on each state.
+	public static final double DAMAGED_DEFECTIVE_COEF=0.15;
+	public static final double HEALTH_DEFECTIVE_COEF=0.05;
 	
 	
 	public abstract void repair(Machine machine) throws CannotRepairHealthyMachineException;

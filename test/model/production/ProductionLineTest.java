@@ -95,14 +95,14 @@ public class ProductionLineTest {
 		List<MachineMock> list=new ArrayList<MachineMock>();
 		
 		MachineMock machineMock1 = 
-			new MachineMock(new MachineType
-					("Licuado",1,1,new Position(0,-1),new Position(0,1),100));
+			new MachineMock(new MachineType("Licuado",1,1,
+					new Position(0,-1),new Position(0,1),0.15f,0.05f,100));
 		MachineMock machineMock2 = 
-			new MachineMock(new MachineType
-					("Haz",1,1,new Position(0,-1),new Position(0,1),100));
+			new MachineMock(new MachineType("Haz",1,1,
+					new Position(0,-1),new Position(0,1),0.15f,0.05f,100));
 		MachineMock machineMock3 = 
-			new MachineMock(new MachineType
-					("Horno",1,1,new Position(0,-1),new Position(0,1),100));
+			new MachineMock(new MachineType("Horno",1,1,
+					new Position(0,-1),new Position(0,1),0.15f,0.05f,100));
 		
 		connectLineElements(machineMock1, machineMock2);
 		connectLineElements(machineMock2, machineMock3);

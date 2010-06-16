@@ -40,7 +40,8 @@ public class GlobalTest {
 	private PriceMap priceMap;
 	private ValidProductionSequences validSequences;
 	private ValidRawMaterialTypes validRawMaterials;
-	private ValidMachineTypes validMachineTypes;
+	private ValidMachineTypes validProductionMachineTypes;
+	private ValidMachineTypes validQualityControlMachineTypes;
 	
 	//not needed in game
 	private TechnologyTree tree;
@@ -72,8 +73,13 @@ public class GlobalTest {
 		
 		//this.validRawMaterials
 		
-		this.validMachineTypes=new ValidMachineTypes(inputFactory.
-				loadMachines("test/ValidMachineList.xml"));
+		this.validProductionMachineTypes=new ValidMachineTypes(inputFactory.
+				loadProductionMachines("test/ValidProductionMachineList.xml"));
+		
+		this.validQualityControlMachineTypes=new ValidMachineTypes(inputFactory.
+				loadProductionMachines("test/" +
+						"ValidQualityControlMachineList.xml"));
+		
 		
 		this.validRawMaterials=new ValidRawMaterialTypes(inputFactory.
 				loadRawMaterialTypes("test/ValidRawMaterialTypeList.xml"));
@@ -98,8 +104,10 @@ public class GlobalTest {
 		
 		
 
+		RawMaterials rawMaterialConfiguration = new RawMaterials();
+		
 		return ProductionLine.createValidProductionLine(prodLineElement1,
-				this.warehouse.getStorageArea(),new RawMaterials());
+				this.warehouse.getStorageArea(),rawMaterialConfiguration);
 	}
 	
 	@Test

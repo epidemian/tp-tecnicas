@@ -22,12 +22,12 @@ public class MachineTypeListPersistentTest extends XMLPersistentTest{
 	public void setUp(){
 		super.setUp();
 		list=new ArrayList<MachineType>();
-		list.add(new MachineType("LumberProcess",2,3,
-									new Position(1,-1),new Position(1,2),10));
-		list.add(new MachineType("Oven",2,3,
-									new Position(1,-1),new Position(1,2),20));
-		list.add(new MachineType("Forge",2,3,
-									new Position(1,-1),new Position(1,2),30));
+		list.add(new MachineType("LumberProcess",2,3,new Position(1,-1),
+									new Position(1,2),0.15f,0.05f,10));
+		list.add(new MachineType("Oven",2,3,new Position(1,-1),
+									new Position(1,2),0.15f,0.05f,20));
+		list.add(new MachineType("Forge",2,3,new Position(1,-1),
+									new Position(1,2),0.15f,0.05f,30));
 	}
 	
 	@Test

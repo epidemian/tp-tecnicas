@@ -7,6 +7,7 @@ import model.production.Machine;
  * defective production rate.
  */
 public class HealthyMachineState extends MachineState{
+
 	public void repair(Machine machine) throws CannotRepairHealthyMachineException{
 		throw new CannotRepairHealthyMachineException();
 	}
@@ -18,7 +19,7 @@ public class HealthyMachineState extends MachineState{
 	
 	public void damage(Machine machine){
 		machine.setMachineState(new DamagedMachineState());
-		machine.setCurrentCoef(MachineState.damagedCoef);
+		machine.setCurrentCoef(MachineState.DAMAGED_DEFECTIVE_COEF);
 	}
 
 	@Override

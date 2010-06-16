@@ -11,9 +11,11 @@ import model.warehouse.Position;
 public abstract class Machine extends ProductionLineElement implements
 		MachineObservable {
 
-	private static final double BREAK_CHANCE = 0.05;
-	private static final double DAMAGE_CHANCE = 0.15;
-	public static final float PRICE_REPAIR_COEF = (float) 0.05;
+	
+	//Represent the chance of the machine of breaking or damaging after processing
+	//private static final float BREAK_CHANCE = 0.05f;
+	//private static final float DAMAGE_CHANCE = 0.15f;
+	public static final float PRICE_REPAIR_COEF = 0.05f;
 
 	private MachineState machineState;
 	private MachineType machineType;
@@ -104,9 +106,9 @@ public abstract class Machine extends ProductionLineElement implements
 	 */
 	private void processMachineDeterioration() {
 		double number = Math.random();
-		if (number < DAMAGE_CHANCE) {
+		if (number < this.machineType.getDamageChance()) {
 			this.damage();
-		} else if (number > 1 - BREAK_CHANCE) {
+		} else if (number > this.getMachineType().getBreakChance()) {
 			this.breakUp();
 		}
 	}

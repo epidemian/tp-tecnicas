@@ -3,6 +3,8 @@ package model.production;
 import static model.utils.ArgumentUtils.*;
 
 import model.exception.BusinessLogicException;
+import model.production.machineState.BrokenMachineState;
+import model.production.machineState.DamagedMachineState;
 import model.warehouse.Position;
 
 public class MachineType extends AbstractType {
@@ -14,11 +16,16 @@ public class MachineType extends AbstractType {
 	private Position inputRelativePosition;
 	private Position outputRelativePosition;
 
+	//the probability that the machine will be damaged or broken after processing 
+	private final float BREAK_CHANCE;
+	private final float DAMAGE_CHANCE;
+	
 	public static final int DEFECT_MACHINE_PRICE = 0;
 
 	/*
 	 * TODO borrar!
 	 */
+	@Deprecated
 	public MachineType(String name) {
 		this(name, 1, 1);
 	}
@@ -28,12 +35,14 @@ public class MachineType extends AbstractType {
 	 */
 	public MachineType(String name, int width, int height) {
 		this(name, width, height, new Position(0, -1), new Position(0, width),
+				BrokenMachineState.DEFECT_BREAK_CHANCE,
+				DamagedMachineState.DEFECT_DAMAGE_CHANCE,
 				MachineType.DEFECT_MACHINE_PRICE);
 	}
 
 	public MachineType(String name, int width, int height,
-			Position inputRelativePosition, Position outputRelativePosition,
-			int price) {
+			Position inputRelativePosition, Position outputRelativePosition, 
+			float breakChance,float damageChance,int price) {
 		super(name);
 		this.height = height;
 		this.width = width;
@@ -45,6 +54,9 @@ public class MachineType extends AbstractType {
 				outputRelativePosition);
 		this.inputRelativePosition = inputRelativePosition;
 		this.outputRelativePosition = outputRelativePosition;
+		
+		this.BREAK_CHANCE=breakChance;
+		this.DAMAGE_CHANCE=damageChance;
 	}
 
 	private void checkInputAndOutputPositions(Position inputPosition,
@@ -189,5 +201,15 @@ public class MachineType extends AbstractType {
 			return Direction.EAST;
 		throw new BusinessLogicException("Invalid position");
 	}
+	
+	public float getBreakChance() {
+		return BREAK_CHANCE;
+	}
+
+	public float getDamageChance() {
+		return DAMAGE_CHANCE;
+	}
+
+
 
 }

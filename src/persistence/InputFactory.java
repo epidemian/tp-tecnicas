@@ -22,11 +22,15 @@ public abstract class InputFactory {
 	public abstract Map<String,Integer> loadPrices(String weekNr) 
 			throws Exception;
 	
-	public abstract List<MachineType> loadMachines(String availableMachines)
-			throws Exception;;
-		
+	public abstract List<MachineType> loadProductionMachines(String availableMachines)
+			throws Exception;
+	
+	public abstract List<MachineType> loadQualityControlMachines(String availableMachines)
+	throws Exception;
+	
 	public abstract List<RawMaterialType> loadRawMaterialTypes
 												(String availableRaw)
 			throws Exception;
 			
+	
 }

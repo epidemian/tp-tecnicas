@@ -10,11 +10,11 @@ import model.production.Machine;
  */
 public class BrokenMachineState extends MachineState{
 
-	
+	public static final Float DEFECT_BREAK_CHANCE = 0.02f;
 	
 	public void repair(Machine machine){
 		machine.setMachineState(new HealthyMachineState());
-		machine.setCurrentCoef(MachineState.healthyCoef);
+		machine.setCurrentCoef(MachineState.HEALTH_DEFECTIVE_COEF);
 		machine.notifyBrokenMachineRepair();
 	}
 

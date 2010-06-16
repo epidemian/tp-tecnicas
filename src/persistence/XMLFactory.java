@@ -19,9 +19,6 @@ import org.dom4j.io.SAXReader;
 public class XMLFactory extends InputFactory{
 
 	// Reader from the XML file
-	/**
-	 * TODO: See if Reader suits better as it could be placed in InputFactory
-	 */
 	protected SAXReader reader;
 	
 	//Document where is placed what is read from the file
@@ -69,12 +66,9 @@ public class XMLFactory extends InputFactory{
 	}
 
 	@Override
-	public List<MachineType> loadMachines(String availableMachines) 
-				throws InvalidTagException, DocumentException {
-			document= reader.read(availableMachines);		
-			Element element=document.getRootElement();
-		
-		return MachineTypeListPersistent.buildFromXML(element); 
+	public List<MachineType> loadProductionMachines(String availableMachines) 
+						throws DocumentException, InvalidTagException{ 
+		return this.loadMachines(availableMachines); 
 	}
 
 	@Override
@@ -89,7 +83,21 @@ public class XMLFactory extends InputFactory{
 			
 		return list;
 	}
+
+	@Override
+	public List<MachineType> loadQualityControlMachines(String availableMachines)
+			throws Exception {
+		return this.loadMachines(availableMachines);
+	}
+
 	
+	private List<MachineType> loadMachines(String availableMachines) 
+							throws DocumentException, InvalidTagException{
+		document= reader.read(availableMachines);		
+		Element element=document.getRootElement();
+	
+		return MachineTypeListPersistent.buildFromXML(element);
+	}
 	
 	
 	
