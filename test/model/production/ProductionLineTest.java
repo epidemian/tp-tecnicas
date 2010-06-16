@@ -13,6 +13,7 @@ import model.production.elements.ProductionLineElement;
 import model.production.elements.machine.Machine;
 import model.production.elements.machine.MachineType;
 import model.production.elements.machine.ProductionMachine;
+import model.production.elements.machine.MachineType.Builder;
 import model.production.elements.machine.states.CannotRepairHealthyMachineException;
 import model.production.line.ProductionLine;
 import model.warehouse.Position;
@@ -98,11 +99,17 @@ public class ProductionLineTest {
 	}
 
 	private List<MachineMock> createListConnectedMachineMocks() {
+		return createListConnectedMachineMocks(0); 
+	}
+	
+	private List<MachineMock> createListConnectedMachineMocks(int price) {
 		List<MachineMock> list = new ArrayList<MachineMock>();
 
-		MachineMock machineMock1 = new MachineMock(createMachineType("Licuado"));
-		MachineMock machineMock2 = new MachineMock(createMachineType("Haz"));
-		MachineMock machineMock3 = new MachineMock(createMachineType("Horno"));
+		Builder builder = new MachineType.Builder("Licuado", 1, 1).price(price);
+		
+		MachineMock machineMock1 = new MachineMock(builder.build());
+		MachineMock machineMock2 = new MachineMock(builder.name("Haz").build());
+		MachineMock machineMock3 = new MachineMock(builder.name("Horno").build());
 
 		connectLineElements(machineMock1, machineMock2);
 		connectLineElements(machineMock2, machineMock3);
@@ -188,7 +195,9 @@ public class ProductionLineTest {
 	public void sellMachinesWhenNotBroken() {
 		int initialBudget = this.budget.getBalance();
 
-		List<MachineMock> machines = createListConnectedMachineMocks();
+		int price = 100;
+		int nMachines = 3;
+		List<MachineMock> machines = createListConnectedMachineMocks(price);
 
 		ProductionLine line = ProductionLine.createValidProductionLine(machines
 				.get(0), new StorageArea(new RawMaterials(),
@@ -196,14 +205,16 @@ public class ProductionLineTest {
 
 		line.sell(budget);
 
-		assertEquals(initialBudget + 150, budget.getBalance());
+		int expected = initialBudget + (price / 2) * nMachines;
+		assertEquals(expected, budget.getBalance());
 	}
 
 	@Test
 	public void sellMachinesWhenOneBrokenAndOneDamaged() {
 		int initialBudget = this.budget.getBalance();
 
-		List<MachineMock> machines = createListConnectedMachineMocks();
+		int price = 100;
+		List<MachineMock> machines = createListConnectedMachineMocks(price);
 
 		ProductionLine line = ProductionLine.createValidProductionLine(machines
 				.get(0), new StorageArea(new RawMaterials(),
@@ -215,7 +226,7 @@ public class ProductionLineTest {
 
 		line.sell(budget);
 
-		assertEquals(initialBudget + 100, budget.getBalance());
+		assertEquals(initialBudget + (price / 2) * 2 , budget.getBalance());
 	}
 
 	@Test
