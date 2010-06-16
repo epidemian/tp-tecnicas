@@ -1,4 +1,4 @@
-
+package global;
 
 import static model.production.ProductionLineElement.connectLineElements;
 
@@ -33,6 +33,13 @@ public class GlobalTest {
 
 	private Warehouse warehouse;
 	
+	private String[] pricesPaths = {
+		"test/global/prices/prices0.xml",
+		"test/global/prices/prices1.xml",
+		"test/global/prices/prices2.xml",
+		"test/global/prices/prices3.xml",
+	};
+	
 	//not needed in game
 	private Ground ground;
 	private Budget budget;
@@ -54,17 +61,17 @@ public class GlobalTest {
 		inputFactory = new XMLFactory();
 		
 		List<Ground> listGrounds = inputFactory.loadGrounds(
-				"test/ValidGroundList.xml");
+				"test/global/ValidGroundList.xml");
 		
 		priceMap = new PriceMap(inputFactory.loadPrices(
-				"test/ValidPriceList.xml"));
+				"test/global/ValidPriceList.xml"));
 		
 		//We pick an arbitrary ground
 		ground=listGrounds.get(0);
 		
 		this.validSequences=new ValidProductionSequences();
 		
-		this.tree=inputFactory.loadTechnologies("test/" +
+		this.tree=inputFactory.loadTechnologies("test/global/" +
 				"ValidProductionSequencesTechnologyList.xml",validSequences);
 		
 		this.lab =new ResearchLab(tree,10,budget);
@@ -74,15 +81,16 @@ public class GlobalTest {
 		//this.validRawMaterials
 		
 		this.validProductionMachineTypes=new ValidMachineTypes(inputFactory.
-				loadProductionMachines("test/ValidProductionMachineList.xml"));
+				loadProductionMachines("test/global/" +
+						"ValidProductionMachineList.xml"));
 		
 		this.validQualityControlMachineTypes=new ValidMachineTypes(inputFactory.
-				loadProductionMachines("test/" +
+				loadProductionMachines("test/global/" +
 						"ValidQualityControlMachineList.xml"));
 		
 		
 		this.validRawMaterials=new ValidRawMaterialTypes(inputFactory.
-				loadRawMaterialTypes("test/ValidRawMaterialTypeList.xml"));
+				loadRawMaterialTypes("test/global/ValidRawMaterialTypeList.xml"));
 	
 		
 	}
@@ -111,11 +119,18 @@ public class GlobalTest {
 	}
 	
 	@Test
-	public void overallDay(){
+	public void overallDay() throws Exception{
 		System.out.println(this.validSequences);
 		System.out.println();
 		System.out.println(tree);
 		
+		for(int i=0;i<4;i++)
+			this.changePrices(i);
 		
+	}
+	
+	private void changePrices(int weekNumber) throws Exception {
+		int number= weekNumber % this.pricesPaths.length;
+		this.priceMap= new PriceMap(inputFactory.loadPrices(pricesPaths[number]));
 	}
 } 
