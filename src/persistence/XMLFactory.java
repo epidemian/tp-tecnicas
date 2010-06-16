@@ -4,8 +4,10 @@ import java.util.List;
 import java.util.Map;
 
 import model.lab.TechnologyTree;
-import model.lab.technologies.NewProductionSequenceTechnology;
+
 import model.production.MachineType;
+import model.production.RawMaterialType;
+
 import model.production.ValidProductionSequences;
 import model.warehouse.Ground;
 
@@ -73,6 +75,19 @@ public class XMLFactory extends InputFactory{
 			Element element=document.getRootElement();
 		
 		return MachineTypeListPersistent.buildFromXML(element); 
+	}
+
+	@Override
+	public List<RawMaterialType> loadRawMaterialTypes(String availableRaw)
+			throws Exception {
+			
+			document=reader.read(availableRaw);
+			Element element=document.getRootElement();
+			
+			List<RawMaterialType> list=RawMaterialTypeListPersistent.
+										buildFromXML(element);
+			
+		return list;
 	}
 	
 	
