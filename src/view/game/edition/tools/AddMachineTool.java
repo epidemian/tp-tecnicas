@@ -1,8 +1,9 @@
 package view.game.edition.tools;
 
-import static view.game.edition.tools.Colors.*;
 import static model.production.elements.ProductionLineElement.connectLineElements;
 import static model.utils.StringUtils.join;
+import static view.game.edition.tools.Colors.*;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
@@ -13,13 +14,10 @@ import model.production.Direction;
 import model.production.elements.Conveyor;
 import model.production.elements.machine.Machine;
 import model.production.elements.machine.MachineType;
-import model.warehouse.Ground;
 import model.warehouse.Position;
 import model.warehouse.TileElement;
 import model.warehouse.TileElementVisitor;
 import view.game.GamePanel;
-import view.game.GroundPainter;
-import view.game.GroundPanel;
 import view.game.edition.EditionTool;
 
 public abstract class AddMachineTool extends EditionTool {
@@ -193,7 +191,9 @@ public abstract class AddMachineTool extends EditionTool {
 			Direction inputDir) {
 		TileElement element = getGround().getTileElementAt(inputPosition);
 		Conveyor conveyor = recognizeConveyor(element);
-		if (conveyor != null && !conveyor.hasNextLineElement()) {
+		if (conveyor == null || conveyor.hasNextLineElement()) {
+			conveyor = null;
+		} else {
 			Position expectedConveyorOutputPos = inputPosition
 					.subtract(inputDir.getAssociatedPosition());
 			boolean canConnect = conveyor.getOutputConnectionPosition().equals(
@@ -208,7 +208,9 @@ public abstract class AddMachineTool extends EditionTool {
 			Direction outputDir) {
 		TileElement element = getGround().getTileElementAt(outputPosition);
 		Conveyor conveyor = recognizeConveyor(element);
-		if (conveyor != null && !conveyor.hasPreviousLineElement()) {
+		if (conveyor == null || conveyor.hasPreviousLineElement()) {
+			conveyor = null;
+		} else {
 			Position expectedConveyorInputPos = outputPosition
 					.subtract(outputDir.getAssociatedPosition());
 			boolean canConnect = conveyor.getInputConnectionPosition().equals(

@@ -64,10 +64,15 @@ public class Ground {
 
 		element.setPosition(position);
 	}
-	
-	public void removeTileElement(ProductionLineElement element) {
-		// TODO Auto-generated method stub
+
+	public void removeTileElement(TileElement element) {
+		checkNotNull(element, "tile element");
+		Position position = element.getPosition();
+		checkArgCondition(element, getTileElementAt(position).equals(element),
+				"element is not in ground");
 		
+		fillAreaWithEmptySpace(position, element.getWidth(), element.getHeight());
+		element.setPosition(TileElement.NOWHERE);
 	}
 
 	public void visitElements(TileElementVisitor visitor) {

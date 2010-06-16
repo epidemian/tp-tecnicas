@@ -58,7 +58,8 @@ public class DeleteTool extends EditionTool {
 		public void tryDelete(TileElement element) {
 			this.reset();
 			element.accept(this);
-			deleteLineElement(deletableElement);
+			if (this.deletableElement != null)
+				deleteLineElement(deletableElement);
 		}
 
 		private void reset() {

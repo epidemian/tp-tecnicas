@@ -28,6 +28,7 @@ public class KeyInputActionMapper {
 		actionMap.put(ESC_PRESSED, editionActions.getEscAction());
 		actionMap.put(S_PRESSED, editionActions.getActionToSetSelectionTool());
 		actionMap.put(C_PRESSED, editionActions.getActionToSetConveyorTool());
+		actionMap.put(D_PRESSED, editionActions.getActionToSetDeleteTool());
 		actionMap.put(M_PRESSED, editionActions.getActionToSetMoveTool());
 	}
 
