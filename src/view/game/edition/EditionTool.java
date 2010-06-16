@@ -39,6 +39,10 @@ public abstract class EditionTool implements Painter {
 		return this.getGamePanel().getGroundPanelContainer().getGroundPanel();
 	}
 
+	protected boolean isTileEmpty(Position position) {
+		return this.getGround().canAddTileElementByDimension(1, 1, position);
+	}
+	
 	public abstract void mouseClicked(Position mousePosition);
 
 	public abstract void reset();

@@ -357,10 +357,6 @@ public class AddConveyorTool extends EditionTool {
 		this.initialElement = null;
 	}
 
-	private boolean isTileEmpty(Position position) {
-		return this.getGround().canAddTileElementByDimension(1, 1, position);
-	}
-
 	private boolean isBuilding() {
 		return !this.conveyorPositions.isEmpty();
 	}
