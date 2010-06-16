@@ -3,7 +3,6 @@ package persistence;
 
 import java.util.List;
 
-import model.lab.NewProductionSequenceTechnologyTest;
 import model.lab.technologies.NewProductionSequenceTechnology;
 
 
