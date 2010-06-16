@@ -18,12 +18,12 @@ public class RawMaterialsMarketPanel extends javax.swing.JPanel {
         return this.rawMaterialsStockTable;
     }
 
-    public JComboBox getRawMaterialBuyCombo(){
-        return this.rawMaterialBuyCombo;
+    public JComboBox getBuyCombo(){
+        return this.buyCombo;
     }
 
-    public JSpinner getRawMaterialSizeSpinner(){
-        return this.rawMaterialSizeSpinner;
+    public JSpinner getQuantitySpinner(){
+        return this.quantitySpinner;
     }
     
     public void setRawMaterialPrice(int price){
@@ -48,10 +48,12 @@ public class RawMaterialsMarketPanel extends javax.swing.JPanel {
         storageAreaLabel = new javax.swing.JLabel();
         rawMaterialsStockLabel = new javax.swing.JLabel();
         rawMaterialsMarketLabel = new javax.swing.JLabel();
-        rawMaterialBuyCombo = new javax.swing.JComboBox();
-        rawMaterialSizeSpinner = new javax.swing.JSpinner();
+        buyCombo = new javax.swing.JComboBox();
+        quantitySpinner = new javax.swing.JSpinner();
         rawMaterialPriceLabel = new javax.swing.JLabel();
         buyButton = new javax.swing.JButton();
+
+        setPreferredSize(new java.awt.Dimension(218, 569));
 
         rawMaterialsStockTable.setFont(new java.awt.Font("Purisa", 0, 13)); // NOI18N
         rawMaterialsStockTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -65,25 +67,26 @@ public class RawMaterialsMarketPanel extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        rawMaterialsStockTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         jScrollPane1.setViewportView(rawMaterialsStockTable);
 
-        storageAreaLabel.setFont(new java.awt.Font("Purisa", 0, 18)); // NOI18N
+        storageAreaLabel.setFont(new java.awt.Font("Purisa", 0, 18));
         storageAreaLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         storageAreaLabel.setText("Storage Area");
 
-        rawMaterialsStockLabel.setFont(new java.awt.Font("Purisa", 0, 13)); // NOI18N
+        rawMaterialsStockLabel.setFont(new java.awt.Font("Purisa", 0, 13));
         rawMaterialsStockLabel.setText("Raw materials in stock:");
 
-        rawMaterialsMarketLabel.setFont(new java.awt.Font("Purisa", 0, 13)); // NOI18N
+        rawMaterialsMarketLabel.setFont(new java.awt.Font("Purisa", 0, 13));
         rawMaterialsMarketLabel.setText("Raw materials market:");
 
-        rawMaterialBuyCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        buyCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        rawMaterialPriceLabel.setFont(new java.awt.Font("Purisa", 0, 13)); // NOI18N
+        rawMaterialPriceLabel.setFont(new java.awt.Font("Purisa", 0, 18)); // NOI18N
         rawMaterialPriceLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         rawMaterialPriceLabel.setText("jLabel3");
 
-        buyButton.setFont(new java.awt.Font("Purisa", 0, 13)); // NOI18N
+        buyButton.setFont(new java.awt.Font("Purisa", 0, 13));
         buyButton.setText("Buy");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -94,28 +97,30 @@ public class RawMaterialsMarketPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(storageAreaLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
+                        .addComponent(storageAreaLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
                         .addGap(12, 12, 12))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(rawMaterialSizeSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(quantitySpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(rawMaterialPriceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
+                        .addComponent(rawMaterialPriceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
                         .addGap(18, 18, 18))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(rawMaterialBuyCombo, 0, 185, Short.MAX_VALUE)
+                        .addComponent(buyCombo, 0, 194, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(rawMaterialsMarketLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
+                        .addComponent(rawMaterialsMarketLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
-                            .addComponent(rawMaterialsStockLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE))
+                        .addComponent(rawMaterialsStockLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
                         .addContainerGap())))
             .addGroup(layout.createSequentialGroup()
                 .addGap(47, 47, 47)
                 .addComponent(buyButton, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(48, Short.MAX_VALUE))
+                .addContainerGap(57, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -124,15 +129,15 @@ public class RawMaterialsMarketPanel extends javax.swing.JPanel {
                 .addComponent(storageAreaLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(rawMaterialsStockLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(rawMaterialsMarketLabel)
                 .addGap(18, 18, 18)
-                .addComponent(rawMaterialBuyCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(buyCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rawMaterialSizeSpinner)
+                    .addComponent(quantitySpinner)
                     .addComponent(rawMaterialPriceLabel))
                 .addGap(18, 18, 18)
                 .addComponent(buyButton)
@@ -143,10 +148,10 @@ public class RawMaterialsMarketPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buyButton;
+    private javax.swing.JComboBox buyCombo;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JComboBox rawMaterialBuyCombo;
+    private javax.swing.JSpinner quantitySpinner;
     private javax.swing.JLabel rawMaterialPriceLabel;
-    private javax.swing.JSpinner rawMaterialSizeSpinner;
     private javax.swing.JLabel rawMaterialsMarketLabel;
     private javax.swing.JLabel rawMaterialsStockLabel;
     private javax.swing.JTable rawMaterialsStockTable;

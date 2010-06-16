@@ -1,22 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
- * ToolBarPanel.java
- *
- * Created on 14/06/2010, 15:30:01
- */
-
 package view.game;
 
 import java.awt.event.ActionListener;
 
-/**
- *
- * @author nicolas
- */
 public class ToolBarPanel extends javax.swing.JPanel {
 
     /** Creates new form ToolBarPanel */

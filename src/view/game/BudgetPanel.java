@@ -1,8 +1,12 @@
 package view.game;
 
+import java.awt.Color;
 import static view.game.MoneyConstants.*;
 
 public class BudgetPanel extends javax.swing.JPanel {
+
+    private static final Color OK_COLOR = new Color(0, 0, 0, 1.0F);
+    private static final Color BAD_COLOR = new Color(1, 0, 0, 1.0F);
 
     /** Creates new form BudgetPanel */
     public BudgetPanel() {
@@ -37,6 +41,11 @@ public class BudgetPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
     public void setMoneyBalance(int balance){
+       if (balance > 0)
+           this.budgetBalanceLabel.setForeground(OK_COLOR);
+       else
+           this.budgetBalanceLabel.setForeground(BAD_COLOR);
+
         this.budgetBalanceLabel.setText(MONEY + ": " + MONEY_SYMBOL + " " + balance);
     }
 
