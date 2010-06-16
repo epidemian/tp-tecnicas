@@ -1,9 +1,9 @@
 package view.game;
 
-import model.production.Conveyor;
-import model.production.MachineType;
-import model.production.ProductionLineElement;
-import model.production.ProductionMachine;
+import model.production.elements.Conveyor;
+import model.production.elements.ProductionLineElement;
+import model.production.elements.machine.MachineType;
+import model.production.elements.machine.ProductionMachine;
 import model.warehouse.Ground;
 import model.warehouse.Position;
 import model.warehouse.TileElement;

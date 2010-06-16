@@ -2,6 +2,8 @@ package model.production;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.production.elements.machine.MachineType;
+
 public class ValidMachineTypes {
 
 	List<MachineType> machineList;

@@ -1,11 +1,15 @@
 package model.production;
 
-import static model.production.ProductionLineElement.connectLineElements;
+import static model.production.elements.ProductionLineElement.connectLineElements;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import model.production.elements.Conveyor;
+import model.production.elements.ProductionLineElement;
+import model.production.elements.machine.MachineType;
+import model.production.elements.machine.ProductionMachine;
 import model.production.line.ProductionLine;
 import model.warehouse.Ground;
 import model.warehouse.Position;

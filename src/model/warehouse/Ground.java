@@ -4,7 +4,7 @@ import static model.utils.ArgumentUtils.*;
 
 import java.util.Arrays;
 
-import model.production.ProductionLineElement;
+import model.production.elements.ProductionLineElement;
 
 public class Ground {
 	private int price;

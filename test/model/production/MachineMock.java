@@ -1,5 +1,8 @@
 package model.production;
 
+import model.production.elements.machine.MachineType;
+import model.production.elements.machine.ProductionMachine;
+
 /**
  * Internal class of tests created to avoid problems caused by the probability 
  * when trying repair/break problems.

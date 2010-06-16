@@ -2,6 +2,10 @@ package model.production;
 
 import static org.junit.Assert.*;
 
+import model.production.elements.machine.Machine;
+import model.production.elements.machine.MachineType;
+import model.production.elements.machine.ProductionMachine;
+
 import org.junit.Ignore;
 import org.junit.Test;
 

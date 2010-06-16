@@ -10,13 +10,13 @@ import java.util.List;
 import model.game.Budget;
 import model.game.time.DailyUpdatable;
 import model.game.time.TickUpdatable;
-import model.production.Machine;
 import model.production.Product;
-import model.production.ProductionLineElement;
-import model.production.ProductionLineElementObserver;
 import model.production.RawMaterials;
 import model.production.StorageArea;
-import model.production.machineState.CannotRepairHealthyMachineException;
+import model.production.elements.ProductionLineElement;
+import model.production.elements.ProductionLineElementObserver;
+import model.production.elements.machine.Machine;
+import model.production.elements.machine.states.CannotRepairHealthyMachineException;
 
 public abstract class ProductionLine implements TickUpdatable, DailyUpdatable,
 		Iterable<ProductionLineElement>, ProductionLineElementObserver {

@@ -1,10 +1,12 @@
-package model.production;
+package model.production.elements.machine;
 
 import static model.utils.ArgumentUtils.*;
 
 import model.exception.BusinessLogicException;
-import model.production.machineState.BrokenMachineState;
-import model.production.machineState.DamagedMachineState;
+import model.production.AbstractType;
+import model.production.Direction;
+import model.production.elements.machine.states.BrokenMachineState;
+import model.production.elements.machine.states.DamagedMachineState;
 import model.warehouse.Position;
 
 public class MachineType extends AbstractType {

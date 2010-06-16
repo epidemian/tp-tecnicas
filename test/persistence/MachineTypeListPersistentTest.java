@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.production.MachineType;
+import model.production.elements.machine.MachineType;
 import model.warehouse.Position;
 
 import org.dom4j.Document;

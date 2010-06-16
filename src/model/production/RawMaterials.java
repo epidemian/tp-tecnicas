@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import model.production.exception.NotEnoughRawMaterialException;
+
 /**
  * Representation of the raw materials that can be used to create products.
  */

@@ -6,13 +6,13 @@ import java.util.List;
 
 import model.exception.BusinessLogicException;
 import model.lab.technologies.NewProductionSequenceTechnology;
-import model.production.MachineType;
 import model.production.ProductType;
 import model.production.ProductionSequence;
 import model.production.RawMaterialType;
 import model.production.RawMaterials;
 import model.production.TestUtils;
 import model.production.ValidProductionSequences;
+import model.production.elements.machine.MachineType;
 
 import org.junit.Before;
 import org.junit.Test;

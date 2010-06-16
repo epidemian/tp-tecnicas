@@ -2,6 +2,7 @@ package model.production;
 
 import static org.junit.Assert.*;
 import model.exception.BusinessLogicException;
+import model.production.elements.machine.MachineType;
 
 import org.junit.Test;
 

@@ -1,6 +1,6 @@
-package model.production.machineState;
+package model.production.elements.machine.states;
 
-import model.production.Machine;
+import model.production.elements.machine.Machine;
 
 public abstract class MachineState {
 

@@ -1,9 +1,9 @@
 package view.game.edition.tools;
 
 import model.game.Game;
-import model.production.Machine;
-import model.production.MachineType;
-import model.production.ProductionMachine;
+import model.production.elements.machine.Machine;
+import model.production.elements.machine.MachineType;
+import model.production.elements.machine.ProductionMachine;
 import view.game.GamePanel;
 
 public class AddProductionMachineTool extends AddMachineTool {

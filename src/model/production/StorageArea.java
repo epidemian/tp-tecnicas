@@ -5,6 +5,8 @@ import static model.utils.ArgumentUtils.checkNotNull;
 import java.util.LinkedList;
 import java.util.List;
 
+import model.production.exception.NotEnoughRawMaterialException;
+
 public class StorageArea {
 
 	private List<Product> productsProduced;

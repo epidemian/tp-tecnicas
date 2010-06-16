@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.util.LinkedList;
 
 import model.exception.BusinessLogicException;
+import model.production.elements.machine.MachineType;
 
 import org.junit.Test;
 

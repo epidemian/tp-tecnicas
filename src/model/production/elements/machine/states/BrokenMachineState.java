@@ -1,6 +1,6 @@
-package model.production.machineState;
+package model.production.elements.machine.states;
 
-import model.production.Machine;
+import model.production.elements.machine.Machine;
 
 /**
  * Represents the state in which the Machine makes the production line not to

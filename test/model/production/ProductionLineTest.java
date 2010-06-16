@@ -1,14 +1,19 @@
 package model.production;
 
-import static model.production.ProductionLineElement.connectLineElements;
+import static model.production.elements.ProductionLineElement.connectLineElements;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import model.game.Budget;
+import model.production.elements.Conveyor;
+import model.production.elements.ProductionLineElement;
+import model.production.elements.machine.Machine;
+import model.production.elements.machine.MachineType;
+import model.production.elements.machine.ProductionMachine;
+import model.production.elements.machine.states.CannotRepairHealthyMachineException;
 import model.production.line.ProductionLine;
-import model.production.machineState.CannotRepairHealthyMachineException;
 import model.warehouse.Position;
 
 import org.junit.Before;

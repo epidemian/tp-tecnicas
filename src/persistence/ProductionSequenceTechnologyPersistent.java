@@ -6,11 +6,11 @@ import java.util.Iterator;
 import java.util.List;
 
 import model.lab.technologies.NewProductionSequenceTechnology;
-import model.production.MachineType;
 import model.production.ProductType;
 import model.production.ProductionSequence;
 import model.production.RawMaterials;
 import model.production.ValidProductionSequences;
+import model.production.elements.machine.MachineType;
 
 import org.dom4j.Element;
 

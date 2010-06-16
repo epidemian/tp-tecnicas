@@ -1,5 +1,6 @@
-package model.production;
+package model.production.elements;
 
+import model.production.Direction;
 import model.warehouse.Position;
 import model.warehouse.TileElementVisitor;
 

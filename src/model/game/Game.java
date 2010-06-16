@@ -8,13 +8,13 @@ import static model.utils.ArgumentUtils.*;
 import java.util.List;
 import java.util.Map;
 
-import model.production.Machine;
-import model.production.MachineType;
-import model.production.ProductionLineElement;
-import model.production.ProductionMachine;
-import model.production.QualityControlMachine;
 import model.production.RawMaterials;
 import model.production.ValidProductionSequences;
+import model.production.elements.ProductionLineElement;
+import model.production.elements.machine.Machine;
+import model.production.elements.machine.MachineType;
+import model.production.elements.machine.ProductionMachine;
+import model.production.elements.machine.QualityControlMachine;
 import model.warehouse.Ground;
 import model.warehouse.Position;
 

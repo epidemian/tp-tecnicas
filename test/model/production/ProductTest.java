@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.util.List;
 
 import model.exception.BusinessLogicException;
+import model.production.elements.machine.MachineType;
 
 import org.junit.Before;
 import org.junit.Test;

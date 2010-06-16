@@ -13,7 +13,7 @@ import javax.swing.ImageIcon;
 
 import model.game.Game;
 import static model.utils.ArgumentUtils.*;
-import model.production.MachineType;
+import model.production.elements.machine.MachineType;
 
 import view.game.LineElementsMarketPanel;
 import view.game.TileElementImageRecognizer;

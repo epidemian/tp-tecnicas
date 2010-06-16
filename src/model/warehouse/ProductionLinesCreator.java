@@ -6,12 +6,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import model.production.Conveyor;
-import model.production.ProductionLineElement;
-import model.production.ProductionMachine;
-import model.production.QualityControlMachine;
 import model.production.RawMaterials;
 import model.production.StorageArea;
+import model.production.elements.Conveyor;
+import model.production.elements.ProductionLineElement;
+import model.production.elements.machine.ProductionMachine;
+import model.production.elements.machine.QualityControlMachine;
 import model.production.line.ProductionLine;
 
 public class ProductionLinesCreator {

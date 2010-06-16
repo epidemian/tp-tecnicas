@@ -2,9 +2,9 @@ package model.warehouse;
 
 import static org.junit.Assert.*;
 import model.exception.BusinessLogicException;
-import model.production.MachineType;
-import model.production.ProductionLineElement;
-import model.production.ProductionMachine;
+import model.production.elements.ProductionLineElement;
+import model.production.elements.machine.MachineType;
+import model.production.elements.machine.ProductionMachine;
 
 import org.junit.Before;
 import org.junit.Test;

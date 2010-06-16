@@ -2,6 +2,7 @@ package model.production;
 
 import static model.utils.ArgumentUtils.checkNotNull;
 import model.exception.BusinessLogicException;
+import model.production.elements.machine.MachineType;
 
 /**
  * Representation of a product that can be created in the assembly plant.

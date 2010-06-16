@@ -1,7 +1,8 @@
-package model.production;
+package model.production.elements;
 
 import static model.utils.ArgumentUtils.checkNotNull;
 import model.exception.BusinessLogicException;
+import model.production.Direction;
 import model.warehouse.Position;
 import model.warehouse.TileElementVisitor;
 

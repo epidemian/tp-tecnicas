@@ -1,7 +1,8 @@
-package model.production;
+package model.production.elements.machine;
 
 import static model.utils.ArgumentUtils.checkNotNull;
-import model.production.machineState.MachineState;
+import model.production.Product;
+import model.production.elements.machine.states.MachineState;
 import model.warehouse.TileElementVisitor;
 
 public class QualityControlMachine extends Machine {

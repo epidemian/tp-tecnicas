@@ -1,6 +1,6 @@
 package view.game.edition.tools;
 
-import static model.production.ProductionLineElement.connectLineElements;
+import static model.production.elements.ProductionLineElement.connectLineElements;
 import static model.utils.StringUtils.join;
 import static view.game.MoneyConstants.getMoneyString;
 import static view.game.edition.tools.Colors.*;
@@ -14,11 +14,11 @@ import java.util.List;
 
 import model.exception.BusinessLogicException;
 import model.game.Game;
-import model.production.Conveyor;
 import model.production.Direction;
-import model.production.ProductionLineElement;
-import model.production.ProductionMachine;
-import model.production.QualityControlMachine;
+import model.production.elements.Conveyor;
+import model.production.elements.ProductionLineElement;
+import model.production.elements.machine.ProductionMachine;
+import model.production.elements.machine.QualityControlMachine;
 import model.warehouse.Position;
 import model.warehouse.TileElement;
 import model.warehouse.TileElementVisitor;

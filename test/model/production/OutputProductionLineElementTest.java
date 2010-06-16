@@ -1,7 +1,12 @@
 package model.production;
 
-import static model.production.ProductionLineElement.connectLineElements;
+import static model.production.elements.ProductionLineElement.connectLineElements;
 import static org.junit.Assert.*;
+import model.production.elements.Conveyor;
+import model.production.elements.OutputProductionLineElement;
+import model.production.elements.ProductionLineElement;
+import model.production.elements.machine.MachineType;
+import model.production.elements.machine.ProductionMachine;
 import model.production.line.ProductionLine;
 
 import org.junit.Before;

@@ -1,6 +1,6 @@
 package persistence;
 
-import model.production.OutputProductionLineElement;
+import model.production.elements.OutputProductionLineElement;
 import model.warehouse.Position;
 
 public class OutputProductionLineElementPositioned {

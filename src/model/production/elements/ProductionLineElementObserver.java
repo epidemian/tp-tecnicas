@@ -1,4 +1,7 @@
-package model.production;
+package model.production.elements;
+
+import model.production.elements.machine.Machine;
+
 
 public interface ProductionLineElementObserver {
 	

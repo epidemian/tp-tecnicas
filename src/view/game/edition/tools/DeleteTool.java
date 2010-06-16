@@ -1,6 +1,6 @@
 package view.game.edition.tools;
 
-import static model.production.ProductionLineElement.*;
+import static model.production.elements.ProductionLineElement.*;
 import static view.game.MoneyConstants.*;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
@@ -8,10 +8,10 @@ import java.util.List;
 
 import model.game.Budget;
 import model.game.Game;
-import model.production.Conveyor;
-import model.production.ProductionLineElement;
-import model.production.ProductionMachine;
-import model.production.QualityControlMachine;
+import model.production.elements.Conveyor;
+import model.production.elements.ProductionLineElement;
+import model.production.elements.machine.ProductionMachine;
+import model.production.elements.machine.QualityControlMachine;
 import model.warehouse.EmptyTileElement;
 import model.warehouse.Position;
 import model.warehouse.TileElement;

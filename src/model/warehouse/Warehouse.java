@@ -7,12 +7,12 @@ import java.util.Collection;
 import model.game.Budget;
 import model.game.time.DailyUpdatable;
 import model.game.time.MonthlyUpdatable;
-import model.production.Machine;
 import model.production.Product;
-import model.production.ProductionLineElement;
 import model.production.RawMaterials;
 import model.production.StorageArea;
 import model.production.ValidProductionSequences;
+import model.production.elements.ProductionLineElement;
+import model.production.elements.machine.Machine;
 import model.production.line.ProductionLine;
 
 public abstract class Warehouse implements MonthlyUpdatable, DailyUpdatable{

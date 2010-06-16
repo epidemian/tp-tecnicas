@@ -3,7 +3,7 @@ package persistence;
 
 
 import static org.junit.Assert.*;
-import model.production.MachineType;
+import model.production.elements.machine.MachineType;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;

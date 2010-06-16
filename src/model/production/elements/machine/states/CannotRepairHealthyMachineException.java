@@ -1,4 +1,4 @@
-package model.production.machineState;
+package model.production.elements.machine.states;
 
 public class CannotRepairHealthyMachineException extends Exception{
 

@@ -2,10 +2,10 @@ package persistence;
 
 
 
-import model.production.MachineType;
-import model.production.machineState.BrokenMachineState;
-import model.production.machineState.DamagedMachineState;
-import model.production.machineState.HealthyMachineState;
+import model.production.elements.machine.MachineType;
+import model.production.elements.machine.states.BrokenMachineState;
+import model.production.elements.machine.states.DamagedMachineState;
+import model.production.elements.machine.states.HealthyMachineState;
 import model.warehouse.Position;
 
 import org.dom4j.Element;

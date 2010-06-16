@@ -1,4 +1,4 @@
-package model.production;
+package model.production.exception;
 
 public class NotEnoughRawMaterialException extends Exception {
 

@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 import model.lab.TechnologyTree;
-import model.production.MachineType;
 import model.production.RawMaterialType;
 import model.production.ValidProductionSequences;
+import model.production.elements.machine.MachineType;
 import model.warehouse.Ground;
 
 public abstract class InputFactory {

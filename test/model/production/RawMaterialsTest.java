@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import model.exception.BusinessLogicException;
+import model.production.exception.NotEnoughRawMaterialException;
 
 import org.junit.Before;
 import org.junit.Test;

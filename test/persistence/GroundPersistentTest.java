@@ -4,7 +4,7 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
 import model.production.Direction;
-import model.production.OutputProductionLineElement;
+import model.production.elements.OutputProductionLineElement;
 import model.warehouse.Ground;
 import model.warehouse.Position;
 import model.warehouse.TileElement;

@@ -6,6 +6,8 @@ import static model.utils.StringUtils.join;
 import java.util.LinkedList;
 import java.util.List;
 
+import model.production.elements.machine.MachineType;
+
 public class ProductionSequence {
 	
 	/**

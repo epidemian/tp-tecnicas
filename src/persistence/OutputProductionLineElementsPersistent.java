@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import model.production.Direction;
-import model.production.OutputProductionLineElement;
+import model.production.elements.OutputProductionLineElement;
 import model.utils.StringUtils;
 import model.warehouse.Position;
 import model.warehouse.Wall;

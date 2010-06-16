@@ -6,6 +6,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import model.production.elements.machine.MachineType;
+
 public class TestUtils {
 
 	public static Map<RawMaterialType,Integer> createRawMaterialMap(

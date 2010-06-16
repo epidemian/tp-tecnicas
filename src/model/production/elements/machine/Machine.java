@@ -1,11 +1,14 @@
-package model.production;
+package model.production.elements.machine;
 
 import static model.utils.ArgumentUtils.checkNotNull;
 import model.exception.BusinessLogicException;
 import model.game.Budget;
-import model.production.machineState.CannotRepairHealthyMachineException;
-import model.production.machineState.HealthyMachineState;
-import model.production.machineState.MachineState;
+import model.production.Direction;
+import model.production.Product;
+import model.production.elements.ProductionLineElement;
+import model.production.elements.machine.states.CannotRepairHealthyMachineException;
+import model.production.elements.machine.states.HealthyMachineState;
+import model.production.elements.machine.states.MachineState;
 import model.warehouse.Position;
 import model.warehouse.TileElementVisitor;
 

@@ -4,9 +4,9 @@ import static model.utils.ArgumentUtils.checkNotNull;
 
 import java.util.List;
 
-import model.production.ProductionLineElement;
 import model.production.RawMaterials;
 import model.production.StorageArea;
+import model.production.elements.ProductionLineElement;
 
 class CircularProductionLine extends ProductionLine {
 

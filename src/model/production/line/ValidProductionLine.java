@@ -7,9 +7,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 import model.production.Product;
-import model.production.ProductionLineElement;
 import model.production.RawMaterials;
 import model.production.StorageArea;
+import model.production.elements.ProductionLineElement;
 
 class ValidProductionLine extends ProductionLine {
 	

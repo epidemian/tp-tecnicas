@@ -9,7 +9,7 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 
 import model.game.Game;
-import model.production.MachineType;
+import model.production.elements.machine.MachineType;
 import view.game.GamePanel;
 import view.game.GroundPanel;
 import view.game.edition.tools.AddConveyorTool;

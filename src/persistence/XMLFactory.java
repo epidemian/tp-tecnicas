@@ -5,10 +5,10 @@ import java.util.Map;
 
 import model.lab.TechnologyTree;
 
-import model.production.MachineType;
 import model.production.RawMaterialType;
 
 import model.production.ValidProductionSequences;
+import model.production.elements.machine.MachineType;
 import model.warehouse.Ground;
 
 import org.dom4j.Document;

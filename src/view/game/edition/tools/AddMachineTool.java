@@ -1,7 +1,7 @@
 package view.game.edition.tools;
 
 import static view.game.edition.tools.Colors.*;
-import static model.production.ProductionLineElement.connectLineElements;
+import static model.production.elements.ProductionLineElement.connectLineElements;
 import static model.utils.StringUtils.join;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -9,10 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.game.Game;
-import model.production.Conveyor;
 import model.production.Direction;
-import model.production.Machine;
-import model.production.MachineType;
+import model.production.elements.Conveyor;
+import model.production.elements.machine.Machine;
+import model.production.elements.machine.MachineType;
 import model.warehouse.Ground;
 import model.warehouse.Position;
 import model.warehouse.TileElement;

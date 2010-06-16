@@ -1,6 +1,7 @@
-package model.production;
+package model.production.elements.machine;
 
 import static model.utils.ArgumentUtils.checkNotNull;
+import model.production.Product;
 import model.warehouse.TileElementVisitor;
 
 public class ProductionMachine extends Machine {

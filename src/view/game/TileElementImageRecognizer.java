@@ -2,10 +2,10 @@ package view.game;
 
 import java.awt.image.BufferedImage;
 
-import model.production.Conveyor;
-import model.production.MachineType;
-import model.production.ProductionMachine;
-import model.production.QualityControlMachine;
+import model.production.elements.Conveyor;
+import model.production.elements.machine.MachineType;
+import model.production.elements.machine.ProductionMachine;
+import model.production.elements.machine.QualityControlMachine;
 import model.warehouse.TileElement;
 import model.warehouse.TileElementVisitor;
 import model.warehouse.Wall;

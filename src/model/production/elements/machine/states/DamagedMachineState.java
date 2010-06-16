@@ -1,6 +1,6 @@
-package model.production.machineState;
+package model.production.elements.machine.states;
 
-import model.production.Machine;
+import model.production.elements.machine.Machine;
 
 /**
  * Represents the state of a machine which has a higher rate of defective

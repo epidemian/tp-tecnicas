@@ -1,22 +1,20 @@
 package global;
 
-import static model.production.ProductionLineElement.connectLineElements;
-
 import java.util.List;
 
+import static model.production.elements.ProductionLineElement.connectLineElements;
 import model.game.Budget;
 import model.lab.ResearchLab;
 import model.lab.TechnologyTree;
-import model.lab.technologies.NewProductionSequenceTechnology;
-import model.production.Conveyor;
-import model.production.MachineType;
-import model.production.OutputProductionLineElement;
-import model.production.ProductionLineElement;
-import model.production.ProductionMachine;
 import model.production.RawMaterials;
 import model.production.ValidMachineTypes;
 import model.production.ValidProductionSequences;
 import model.production.ValidRawMaterialTypes;
+import model.production.elements.Conveyor;
+import model.production.elements.OutputProductionLineElement;
+import model.production.elements.ProductionLineElement;
+import model.production.elements.machine.MachineType;
+import model.production.elements.machine.ProductionMachine;
 import model.production.line.ProductionLine;
 import model.warehouse.Ground;
 import model.warehouse.PriceMap;
