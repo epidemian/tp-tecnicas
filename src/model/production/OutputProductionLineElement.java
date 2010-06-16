@@ -47,7 +47,12 @@ public class OutputProductionLineElement extends ProductionLineElement{
 	}
 
 	@Override
-	public int getPrice() {
+	public int getPurchasePrice() {
+		return 0;
+	}
+
+	@Override
+	public int getSalePrice() {
 		return 0;
 	}	
 

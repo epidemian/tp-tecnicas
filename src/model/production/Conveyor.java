@@ -7,7 +7,8 @@ import model.warehouse.TileElementVisitor;
 
 public class Conveyor extends ProductionLineElement {
 
-	public static final int PRICE = 10;
+	public static final int PURCHASE_PRICE = 10;
+	public static final int SALE_PRICE = 0;
 	
 	private final Direction inputConnectionDirection;
 	private final Direction outputConnectionDirection;
@@ -63,8 +64,13 @@ public class Conveyor extends ProductionLineElement {
 	}
 
 	@Override
-	public int getPrice() {
-		return PRICE;
+	public int getPurchasePrice() {
+		return PURCHASE_PRICE;
+	}
+
+	@Override
+	public int getSalePrice() {
+		return SALE_PRICE;
 	}
 	
 	

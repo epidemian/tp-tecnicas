@@ -90,11 +90,11 @@ public class Game {
 	}
 
 	private void buyAndAddMachine(Machine machine, Position position) {
-		int price = machine.getPrice();
+		int price = machine.getPurchasePrice();
 		checkArgCondition(price, canPurchase(price));
 
 		getBudget().decrement(price);
-		getGround().putTileElement(machine, position);
+		getGround().addTileElement(machine, position);
 	}
 
 	public List<MachineType> getProductionMachinesTypes() {
@@ -123,10 +123,10 @@ public class Game {
 	
 	public void buyAndAddProductionLineElement(ProductionLineElement element,
 			Position position) {
-		int price = element.getPrice();
+		int price = element.getPurchasePrice();
 		checkArgCondition(price, canAfford(price));
 
 		getBudget().decrement(price);
-		getGround().putTileElement(element, position);
+		getGround().addTileElement(element, position);
 	}
 }

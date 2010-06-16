@@ -64,9 +64,19 @@ abstract public class ProductionLineElement extends TileElement {
 
 	public static void connectLineElements(ProductionLineElement previous,
 			ProductionLineElement next) {
-		System.out.println("Connect line elements: " + previous + " and " + next);
 		previous.nextLineElement = next;
 		next.previousLineElement = previous;
+	}
+	
+	public static void disconnectLineElement(ProductionLineElement element) {
+		if (element.hasPreviousLineElement()) {
+			element.previousLineElement.nextLineElement = null;
+			element.previousLineElement = null;
+		}
+		if (element.hasNextLineElement()) {
+			element.nextLineElement.previousLineElement = null;
+			element.nextLineElement = null;
+		}
 	}
 
 	public abstract Position getInputConnectionPosition();
@@ -82,8 +92,12 @@ abstract public class ProductionLineElement extends TileElement {
 	
 	public void breakUp(){}
 
-	public void sell(Budget budget) {}
+	public final void sell(Budget budget) {
+		budget.increment(this.getSalePrice());
+	}
 
-	public abstract int getPrice();
+	public abstract int getPurchasePrice();
+
+	public abstract int getSalePrice();
 	
 }

@@ -53,7 +53,7 @@ public class ViewUtils {
 					break;
 				}
 				if (element != null)
-					ground.putTileElement(element, pos);
+					ground.addTileElement(element, pos);
 			}
 		}
 		return ground;
@@ -66,7 +66,7 @@ public class ViewUtils {
 		// Wall upperWall=new Wall(10,1);
 		Wall lowerWall = new Wall(16, 1);
 
-		ground.putTileElement(lowerWall, new Position(1, 1));
+		ground.addTileElement(lowerWall, new Position(1, 1));
 		// ground.addTileElement(upperWall,new Position(5,1));
 
 		return ground;

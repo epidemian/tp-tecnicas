@@ -38,7 +38,7 @@ public class GroundPersistent{
 					new ArrayList<WallItem>());	
 		
 		for(WallItem wallItem : walls ){
-			ground.putTileElement(wallItem.getWall(),wallItem.getPos());
+			ground.addTileElement(wallItem.getWall(),wallItem.getPos());
 		}
 		
 		List<OutputProductionLineElementPositioned> outputs =
@@ -50,7 +50,7 @@ public class GroundPersistent{
 		
 		
 		for(OutputProductionLineElementPositioned output : outputs){
-			ground.putTileElement(output.getOutput(),output.getPosition());
+			ground.addTileElement(output.getOutput(),output.getPosition());
 		}
 
 		return ground;

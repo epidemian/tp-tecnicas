@@ -48,8 +48,8 @@ public class GroundPersistentTest extends XMLPersistentTest {
 		Wall upperWall = new Wall(10, 1);
 		Wall lowerWall = new Wall(10, 1);
 
-		ground.putTileElement(lowerWall, new Position(1, 1));
-		ground.putTileElement(upperWall, new Position(11, 1));
+		ground.addTileElement(lowerWall, new Position(1, 1));
+		ground.addTileElement(upperWall, new Position(11, 1));
 
 		Document doc = reader.read("test/persistence/input/"
 				+ "ValidGroundWithWalls.xml");
@@ -78,16 +78,16 @@ public class GroundPersistentTest extends XMLPersistentTest {
 		Wall upperWall = new Wall(10, 1);
 		Wall lowerWall = new Wall(10, 1);
 
-		ground.putTileElement(lowerWall, new Position(1, 1));
-		ground.putTileElement(upperWall, new Position(11, 1));
+		ground.addTileElement(lowerWall, new Position(1, 1));
+		ground.addTileElement(upperWall, new Position(11, 1));
 
 		OutputProductionLineElement prodLineElement1=
 			new OutputProductionLineElement(Direction.NORTH);
 		OutputProductionLineElement prodLineElement2=
 			new OutputProductionLineElement(Direction.SOUTH);
 		
-		ground.putTileElement(prodLineElement1, new Position(5,6));
-		ground.putTileElement(prodLineElement2, new Position(8,7));
+		ground.addTileElement(prodLineElement1, new Position(5,6));
+		ground.addTileElement(prodLineElement2, new Position(8,7));
 		
 		Document doc = reader.read("test/persistence/input/"
 				+ "ValidGroundWithWallsAndOutputs.xml");

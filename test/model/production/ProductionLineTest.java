@@ -183,7 +183,7 @@ public class ProductionLineTest {
 		line.repairAllMachines(this.budget);
 		
 		assertEquals(this.budget.getBalance(), initialBudget - 
-				Math.round(machines.get(0).getPrice()*Machine.PRICE_REPAIR_COEF));
+				Math.round(machines.get(0).getPurchasePrice()*Machine.PRICE_REPAIR_COEF));
 	}
 	
 	@Test

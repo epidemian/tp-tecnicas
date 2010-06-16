@@ -7,6 +7,7 @@ import model.production.machineState.CannotRepairHealthyMachineException;
 import model.production.machineState.HealthyMachineState;
 import model.production.machineState.MachineState;
 import model.warehouse.Position;
+import model.warehouse.TileElementVisitor;
 
 public abstract class Machine extends ProductionLineElement implements
 		MachineObservable {
@@ -69,7 +70,7 @@ public abstract class Machine extends ProductionLineElement implements
 	}
 	
 	@Override
-	public int getPrice() {
+	public int getPurchasePrice() {
 		return this.machineType.getPrice();
 	}
 
@@ -148,8 +149,10 @@ public abstract class Machine extends ProductionLineElement implements
 	public double getCurrentCoef() {
 		return currentCoef;
 	}
-	
-	public void sell(Budget budget){
-		budget.increment(this.machineState.sell(this));
+
+	@Override
+	public int getSalePrice() {
+		return this.machineState.getSalePrice(this);
 	}
+	
 }

@@ -2,7 +2,7 @@ package view.game.edition.tools;
 
 import static model.production.ProductionLineElement.connectLineElements;
 import static model.utils.StringUtils.join;
-import static view.game.MoneyConstants.MONEY_SYMBOL;
+import static view.game.MoneyConstants.getMoneyString;
 import static view.game.edition.tools.Colors.*;
 
 import java.awt.Color;
@@ -19,13 +19,10 @@ import model.production.Direction;
 import model.production.ProductionLineElement;
 import model.production.ProductionMachine;
 import model.production.QualityControlMachine;
-import model.warehouse.Ground;
 import model.warehouse.Position;
 import model.warehouse.TileElement;
 import model.warehouse.TileElementVisitor;
 import view.game.GamePanel;
-import view.game.GroundPainter;
-import view.game.GroundPanel;
 import view.game.edition.EditionTool;
 
 public class AddConveyorTool extends EditionTool {
@@ -274,15 +271,18 @@ public class AddConveyorTool extends EditionTool {
 			return;
 
 		ProductionLineElement element = getLineElementAt(mousePosition);
+		boolean isOverLineElement = element != null;
 
 		List<Position> newPositions;
 		List<String> warnings = new ArrayList<String>();
-		if (element != null) {
+		boolean isOverNothingAndNotBuilding = false;
+		if (isOverLineElement) {
 			newPositions = getNewPositionsWhenOverLineElement(mousePosition,
 					element);
 			getPainter().drawProductionLineElementArrows(element, graphics);
 		} else {
 			newPositions = getNewPositionsWhenOverNonLineElement(mousePosition);
+			isOverNothingAndNotBuilding = !isBuilding();
 		}
 
 		int priceAccum = getPriceByQuantity(this.conveyorPositions.size());
@@ -294,7 +294,9 @@ public class AddConveyorTool extends EditionTool {
 			enoughMoney = getGame().canAfford(priceAccum);
 			boolean canAddConveyor = canAddConveyorPosition(pos);
 
-			Color color = canAddConveyor && enoughMoney ? OK_COLOR : BAD_COLOR;
+			boolean ok = canAddConveyor && enoughMoney
+					&& !isOverNothingAndNotBuilding;
+			Color color = ok ? OK_COLOR : BAD_COLOR;
 			drawConveyorRectangle(pos, color, graphics);
 			if (!canAddConveyor && canAddAllConveyors)
 				canAddAllConveyors = false;
@@ -303,13 +305,15 @@ public class AddConveyorTool extends EditionTool {
 			warnings.add("Bocked path");
 		if (!enoughMoney)
 			warnings.add("Not enough money!");
+		if (isOverNothingAndNotBuilding)
+			warnings.add("Must start from line element");
 
-		if (!warnings.isEmpty())
+		if (!warnings.isEmpty() && isBuilding())
 			warnings.add("ESC to cancel");
-		
+
 		String notification = join(warnings, " - ");
-		if (isBuilding()) 
-			notification = MONEY_SYMBOL + priceAccum + " - " + notification;
+		if (isBuilding())
+			notification = getMoneyString(priceAccum) + " - " + notification;
 		getGroundPanel().drawNotificationBesideMouse(notification, graphics);
 	}
 
@@ -354,7 +358,7 @@ public class AddConveyorTool extends EditionTool {
 	}
 
 	private boolean isTileEmpty(Position position) {
-		return this.getGround().canPutTileElementByDimension(1, 1, position);
+		return this.getGround().canAddTileElementByDimension(1, 1, position);
 	}
 
 	private boolean isBuilding() {
@@ -362,25 +366,12 @@ public class AddConveyorTool extends EditionTool {
 	}
 
 	private int getPriceByQuantity(int nConveyors) {
-		return nConveyors * Conveyor.PRICE;
+		return nConveyors * Conveyor.PURCHASE_PRICE;
 	}
 
 	private boolean canAfford(int size) {
 		int price = getPriceByQuantity(size);
 		return getGame().canAfford(price);
-	}
-
-	private GroundPainter getPainter() {
-		GroundPainter painter = this.getGroundPanel().getPainter();
-		return painter;
-	}
-
-	private Ground getGround() {
-		return this.getGame().getGround();
-	}
-
-	private GroundPanel getGroundPanel() {
-		return this.getGamePanel().getGroundPanelContainer().getGroundPanel();
 	}
 
 	private ProductionLineElement getLineElementAt(Position mousePosition) {

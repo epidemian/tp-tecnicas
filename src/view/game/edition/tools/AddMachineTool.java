@@ -139,7 +139,7 @@ public abstract class AddMachineTool extends EditionTool {
 		if (!insideBounds && whyNot != null)
 			whyNot.add("Out of bounds");
 
-		boolean canPutMachine = getGround().canPutTileElementByDimension(width,
+		boolean canPutMachine = getGround().canAddTileElementByDimension(width,
 				height, position);
 		if (!canPutMachine && insideBounds && whyNot != null)
 			whyNot.add("Area not empty");
@@ -151,7 +151,7 @@ public abstract class AddMachineTool extends EditionTool {
 	private boolean canPutInput(Position position, List<String> whyNot) {
 		Position inputPos = position.add(getMachineType()
 				.getInputRelativePosition());
-		boolean emptyArea = getGround().canPutTileElementByDimension(1, 1,
+		boolean emptyArea = getGround().canAddTileElementByDimension(1, 1,
 				inputPos);
 
 		Direction inputDir = getMachineType().getInputConnectionDirection();
@@ -167,7 +167,7 @@ public abstract class AddMachineTool extends EditionTool {
 	private boolean canPutOutput(Position position, List<String> whyNot) {
 		Position outputPos = position.add(getMachineType()
 				.getOutputRelativePosition());
-		boolean emptyArea = getGround().canPutTileElementByDimension(1, 1,
+		boolean emptyArea = getGround().canAddTileElementByDimension(1, 1,
 				outputPos);
 
 		Direction outputDir = getMachineType().getOutputConnectionDirection();
@@ -221,19 +221,6 @@ public abstract class AddMachineTool extends EditionTool {
 
 	private boolean haveEnoughMoney() {
 		return this.getGame().canAfford(this.machineType.getPrice());
-	}
-
-	private GroundPainter getPainter() {
-		GroundPainter painter = this.getGroundPanel().getPainter();
-		return painter;
-	}
-
-	private Ground getGround() {
-		return this.getGame().getGround();
-	}
-
-	private GroundPanel getGroundPanel() {
-		return this.getGamePanel().getGroundPanelContainer().getGroundPanel();
 	}
 
 	private static Conveyor recognizeConveyor(TileElement element) {

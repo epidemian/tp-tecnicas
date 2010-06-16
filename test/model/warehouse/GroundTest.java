@@ -21,20 +21,20 @@ public class GroundTest {
 	}
 
 	@Test
-	public void canPutTileElementByDimensionWithGroundDimensions() {
-		assertTrue(ground.canPutTileElementByDimension(WIDTH, HEIGHT,
+	public void canAddTileElementByDimensionWithGroundDimensions() {
+		assertTrue(ground.canAddTileElementByDimension(WIDTH, HEIGHT,
 				Position.ZERO));
 
 	}
 
 	@Test
-	public void canPutTileElementByDimensionWithOutOfBoundDimensions() {
+	public void canAddTileElementByDimensionWithOutOfBoundDimensions() {
 		Position[] invalidPositions = { new Position(-1, 0),
 				new Position(0, -1), new Position(0, WIDTH),
 				new Position(HEIGHT, 0) };
 
 		for (Position invalidPos : invalidPositions)
-			assertFalse(ground.canPutTileElementByDimension(1, 1, invalidPos));
+			assertFalse(ground.canAddTileElementByDimension(1, 1, invalidPos));
 	}
 
 	private ProductionLineElement createProdLineElement2x2() {
@@ -43,26 +43,26 @@ public class GroundTest {
 	}
 
 	@Test
-	public void canPutTileElementWhenAreaIsEmpty() {
-		assertTrue(ground.canPutTileElement(createProdLineElement2x2(),
+	public void canAddTileElementWhenAreaIsEmpty() {
+		assertTrue(ground.canAddTileElement(createProdLineElement2x2(),
 				new Position(5, 5)));
 	}
 
 	@Test
-	public void canPutTileElementWhenAreaIsNotEmpty() {
+	public void canAddTileElementWhenAreaIsNotEmpty() {
 
 		// Tile starts with no machines
 		// One line element is placed on the ground
 		ProductionLineElement lineElement = createProdLineElement2x2();
 		Position pos = new Position(5, 5);
-		ground.putTileElement(lineElement, pos);
+		ground.addTileElement(lineElement, pos);
 
 		// Check all the tiles occupied by the machine
-		assertFalse(ground.canPutTileElement(lineElement, pos));
+		assertFalse(ground.canAddTileElement(lineElement, pos));
 
 		// Checks when only some of the tiles are occupied
 		Position pos2 = pos.add(new Position(1, 1));
-		assertFalse(ground.canPutTileElement(lineElement, pos2));
+		assertFalse(ground.canAddTileElement(lineElement, pos2));
 
 	}
 
@@ -71,6 +71,6 @@ public class GroundTest {
 
 		ProductionLineElement lineElement = createProdLineElement2x2();
 		Position pos = new Position(HEIGHT - 1, WIDTH -1);
-		ground.putTileElement(lineElement, pos);
+		ground.addTileElement(lineElement, pos);
 	}
 }

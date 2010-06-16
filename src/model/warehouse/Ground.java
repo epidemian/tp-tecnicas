@@ -4,6 +4,8 @@ import static model.utils.ArgumentUtils.*;
 
 import java.util.Arrays;
 
+import model.production.ProductionLineElement;
+
 public class Ground {
 	private int price;
 	private TileElement tileElements[][];
@@ -31,12 +33,12 @@ public class Ground {
 		return this.tileElements[0].length;
 	}
 
-	public boolean canPutTileElement(TileElement element, Position position) {
-		return canPutTileElementByDimension(element.getWidth(), element
+	public boolean canAddTileElement(TileElement element, Position position) {
+		return canAddTileElementByDimension(element.getWidth(), element
 				.getHeight(), position);
 	}
 
-	public boolean canPutTileElementByDimension(int width, int height,
+	public boolean canAddTileElementByDimension(int width, int height,
 			Position position) {
 		return isAreaInsideBounds(width, height, position)
 				&& isAreaEmpty(position, width, height);
@@ -52,15 +54,20 @@ public class Ground {
 		return insideBounds;
 	}
 
-	public void putTileElement(TileElement element, Position position) {
+	public void addTileElement(TileElement element, Position position) {
 		checkNotNull(element, "tile element");
-		checkArgCondition(element, canPutTileElement(element, position),
-				"cannot put element at given position " + position);
+		checkArgCondition(element, canAddTileElement(element, position),
+				"cannot add element at given position " + position);
 
 		fillAreaWithElement(element, position, element.getWidth(), element
 				.getHeight());
 
 		element.setPosition(position);
+	}
+	
+	public void removeTileElement(ProductionLineElement element) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	public void visitElements(TileElementVisitor visitor) {
