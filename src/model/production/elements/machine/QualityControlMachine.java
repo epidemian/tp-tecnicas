@@ -1,5 +1,6 @@
 package model.production.elements.machine;
 
+import static model.utils.RandomUtils.*;
 import static model.utils.ArgumentUtils.checkNotNull;
 import model.production.Product;
 import model.production.elements.machine.states.MachineState;
@@ -24,21 +25,22 @@ public class QualityControlMachine extends Machine {
 	 * }
 	 */
 
-	@Override
 	/*
 	 * Uses machine coefficient. The bigger it is, the worse it is. Therefore
 	 * the bigger it is, it will discard less defective products.
 	 */
-	public void treatProduct(Product input) {
+	@Override
+	public Product treatProduct(Product input) {
 		checkNotNull(input, "input product");
-		if (input.isDamaged()) {
-			// if it is damaged, it will analyze the probs...
-			double randomNum = Math.random();
-			if (randomNum > this.getMakeDefectiveProductChance()) {
-				// Discards!!
-				input = null;
-			}
-		}
+		
+		boolean discard;
+		boolean controlFail = randomBoolean(this.getFailProductProcessChance());
+		if (controlFail)
+			discard = !input.isDamaged();
+		else
+			discard = input.isDamaged();
+		
+		return discard ? null : input;
 	}
 
 	@Override

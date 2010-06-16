@@ -20,7 +20,7 @@ public class BrokenMachineState extends MachineState {
 	}
 
 	@Override
-	public double getMakeDefectiveProductChance(Machine machine) {
+	public double getFailProductProcessChance(Machine machine) {
 		throw new BusinessLogicException(
 				"Cannot get defective chance if machine is broken");
 	}

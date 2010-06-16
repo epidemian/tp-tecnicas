@@ -1,5 +1,6 @@
 package model.production.elements.machine;
 
+import static model.utils.RandomUtils.*;
 import static model.utils.ArgumentUtils.checkNotNull;
 import model.exception.BusinessLogicException;
 import model.game.Budget;
@@ -15,10 +16,10 @@ import model.warehouse.TileElementVisitor;
 public abstract class Machine extends ProductionLineElement implements
 		MachineObservable {
 
-	
-	//Represent the chance of the machine of breaking or damaging after processing
-	//private static final float BREAK_CHANCE = 0.05f;
-	//private static final float DAMAGE_CHANCE = 0.15f;
+	// Represent the chance of the machine of breaking or damaging after
+	// processing
+	// private static final float BREAK_CHANCE = 0.05f;
+	// private static final float DAMAGE_CHANCE = 0.15f;
 	public static final float PRICE_REPAIR_COEF = 0.05f;
 
 	private MachineState machineState;
@@ -53,8 +54,9 @@ public abstract class Machine extends ProductionLineElement implements
 	 * setDefective a product, and a QualityControlMachine can discard it.
 	 * 
 	 * @param input
+	 * @return TODO
 	 */
-	public abstract void treatProduct(Product input);
+	public abstract Product treatProduct(Product input);
 
 	public void repair(Budget budget)
 			throws CannotRepairHealthyMachineException {
@@ -70,7 +72,7 @@ public abstract class Machine extends ProductionLineElement implements
 	public void setMachineState(MachineState newState) {
 		this.machineState = newState;
 	}
-	
+
 	@Override
 	public int getPurchasePrice() {
 		return this.machineType.getPrice();
@@ -108,12 +110,10 @@ public abstract class Machine extends ProductionLineElement implements
 	 * damaged or broken.
 	 */
 	private void processMachineDeterioration() {
-		double number = Math.random();
-		if (number < this.machineType.getDamageChance()) {
+		if (randomBoolean(this.machineType.getDamageChance()))
 			this.damage();
-		} else if (number > this.getMachineType().getBreakChance()) {
+		if (randomBoolean(this.getMachineType().getBreakChance()))
 			this.breakUp();
-		}
 	}
 
 	protected void damage() {
@@ -123,9 +123,9 @@ public abstract class Machine extends ProductionLineElement implements
 	public void breakUp() {
 		this.getMachineState().breakUp(this);
 	}
-	
-	protected double getMakeDefectiveProductChance() {
-		return this.machineState.getMakeDefectiveProductChance(this);
+
+	protected double getFailProductProcessChance() {
+		return this.machineState.getFailProductProcessChance(this);
 	}
 
 	@Override
@@ -148,10 +148,9 @@ public abstract class Machine extends ProductionLineElement implements
 		return this.getPosition().add(machineType.getOutputRelativePosition());
 	}
 
-
 	@Override
 	public int getSalePrice() {
 		return this.machineState.getSalePrice(this);
 	}
-	
+
 }

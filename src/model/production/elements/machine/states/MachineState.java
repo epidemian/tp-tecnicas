@@ -20,6 +20,6 @@ public abstract class MachineState {
 		return this.getClass().equals(((MachineState) anotherObj).getClass());
 	}
 
-	public abstract double getMakeDefectiveProductChance(Machine machine);
+	public abstract double getFailProductProcessChance(Machine machine);
 
 }

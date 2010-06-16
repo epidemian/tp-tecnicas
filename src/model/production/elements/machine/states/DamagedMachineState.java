@@ -25,7 +25,7 @@ public class DamagedMachineState extends MachineState {
 	}
 
 	@Override
-	public double getMakeDefectiveProductChance(Machine machine) {
+	public double getFailProductProcessChance(Machine machine) {
 		return DEFECTIVE_PRODUCT_CHANCE;
 	}
 }

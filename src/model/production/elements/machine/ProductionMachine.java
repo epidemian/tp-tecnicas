@@ -1,5 +1,6 @@
 package model.production.elements.machine;
 
+import static model.utils.RandomUtils.*;
 import static model.utils.ArgumentUtils.checkNotNull;
 import model.production.Product;
 import model.warehouse.TileElementVisitor;
@@ -7,49 +8,41 @@ import model.warehouse.TileElementVisitor;
 public class ProductionMachine extends Machine {
 
 	/*
-	public ProductionMachine(MachineType machineType, int width, int height) {
-		super(machineType, width, height);
-		this.productsProcess = 0;
-	}
-	*/
-	public ProductionMachine(MachineType machineType){
+	 * public ProductionMachine(MachineType machineType, int width, int height)
+	 * { super(machineType, width, height); this.productsProcess = 0; }
+	 */
+	public ProductionMachine(MachineType machineType) {
 		super(machineType);
-		//this.productsProcess = 0;
+		// this.productsProcess = 0;
 	}
 
-	/* DEPRECATED
-	 * Represents the number of products until one product become defective. If
-	 * the product is defective is remains defective.
-	 */
-	//private int damagedProductFrequency;
-	//private int productsProcess;
 	/*
-	@Override
-	public void treatProduct(Product input) {
-		checkNotNull(input, "input product");
-		this.productsProcess++;
-		if (this.damagedProductFrequency == this.productsProcess) {
-			input.setDefective();
-			this.productsProcess = 0;
-		}
+	 * DEPRECATED Represents the number of products until one product become
+	 * defective. If the product is defective is remains defective.
+	 */
+	// private int damagedProductFrequency;
+	// private int productsProcess;
+	/*
+	 * @Override public void treatProduct(Product input) { checkNotNull(input,
+	 * "input product"); this.productsProcess++; if
+	 * (this.damagedProductFrequency == this.productsProcess) {
+	 * input.setDefective(); this.productsProcess = 0; }
+	 * 
+	 * input.addMachineTypeToHistory(this.getMachineType()); }
+	 */
 
-		input.addMachineTypeToHistory(this.getMachineType());
-	}
-	*/
-	
 	@Override
 	/*
-	 * Uses machine coefficient. The bigger it is, the worse it is.
-	 * Therefore the bigger it is, more defective products will be made!    
+	 * Uses machine coefficient. The bigger it is, the worse it is. Therefore
+	 * the bigger it is, more defective products will be made!
 	 */
-	public void treatProduct(Product input) {
+	public Product treatProduct(Product input) {
 		checkNotNull(input, "input product");
-		double randomNum = Math.random();
-		if (randomNum<this.getMakeDefectiveProductChance()){
+		if (randomBoolean(this.getFailProductProcessChance())) {
 			input.setDefective();
 		}
 		input.addMachineTypeToHistory(this.getMachineType());
-		
+		return input;
 	}
 
 	@Override
