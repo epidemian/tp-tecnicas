@@ -11,18 +11,17 @@ import model.warehouse.Position;
 
 public class MachineType extends AbstractType {
 
-	private int height;
-	private int width;
-	private int price;
+	private final int height;
+	private final int width;
+	private final int price;
 
-	private Position inputRelativePosition;
-	private Position outputRelativePosition;
+	private final Position inputRelativePosition;
+	private final Position outputRelativePosition;
 
-	//the probability that the machine will be damaged or broken after processing 
-	private final float BREAK_CHANCE;
-	private final float DAMAGE_CHANCE;
-	
-	public static final int DEFECT_MACHINE_PRICE = 0;
+	// the probability that the machine will be damaged or broken after
+	// processing
+	private final float breakChance;
+	private final float damageChance;
 
 	/*
 	 * TODO borrar!
@@ -37,14 +36,13 @@ public class MachineType extends AbstractType {
 	 */
 	public MachineType(String name, int width, int height) {
 		this(name, width, height, new Position(0, -1), new Position(0, width),
-				BrokenMachineState.DEFECT_BREAK_CHANCE,
-				DamagedMachineState.DEFECT_DAMAGE_CHANCE,
-				MachineType.DEFECT_MACHINE_PRICE);
+				Builder.DEFAULT_BREAK_MACHINE_CHANCE, Builder.DEFAULT_DAMAGE_MACHINE_CHANCE,
+				Builder.DEFAULT_MACHINE_PRICE);
 	}
 
 	public MachineType(String name, int width, int height,
-			Position inputRelativePosition, Position outputRelativePosition, 
-			float breakChance,float damageChance,int price) {
+			Position inputRelativePosition, Position outputRelativePosition,
+			float breakChance, float damageChance, int price) {
 		super(name);
 		this.height = height;
 		this.width = width;
@@ -56,9 +54,9 @@ public class MachineType extends AbstractType {
 				outputRelativePosition);
 		this.inputRelativePosition = inputRelativePosition;
 		this.outputRelativePosition = outputRelativePosition;
-		
-		this.BREAK_CHANCE=breakChance;
-		this.DAMAGE_CHANCE=damageChance;
+
+		this.breakChance = breakChance;
+		this.damageChance = damageChance;
 	}
 
 	private void checkInputAndOutputPositions(Position inputPosition,
@@ -191,7 +189,7 @@ public class MachineType extends AbstractType {
 	public Direction getOutputConnectionDirection() {
 		return getInOutDirectionByPosition(this.getOutputRelativePosition());
 	}
-	
+
 	private Direction getInOutDirectionByPosition(Position position) {
 		if (position.getRow() == -1)
 			return Direction.NORTH;
@@ -203,15 +201,73 @@ public class MachineType extends AbstractType {
 			return Direction.EAST;
 		throw new BusinessLogicException("Invalid position");
 	}
-	
+
 	public float getBreakChance() {
-		return BREAK_CHANCE;
+		return breakChance;
 	}
 
 	public float getDamageChance() {
-		return DAMAGE_CHANCE;
+		return damageChance;
 	}
 
+	public static class Builder {
+		
+		private static final int DEFAULT_MACHINE_PRICE = 0;
+		private static final float DEFAULT_BREAK_MACHINE_CHANCE = 0.02f;
+		private static final float DEFAULT_DAMAGE_MACHINE_CHANCE = 0.02f;
+		
+		private String name;
+		private int width;
+		private int height;
+		private int price;
+		
+		private Position inputRelativePosition;
+		private Position outputRelativePosition;
 
+		private float breakChance;
+		private float damageChance;
+
+		public Builder(String name, int width, int height) {
+			this.name = name;
+			this.width = width;
+			this.height = height;
+			
+			this.price = DEFAULT_MACHINE_PRICE;
+			this.breakChance = DEFAULT_BREAK_MACHINE_CHANCE;
+			this.damageChance = DEFAULT_DAMAGE_MACHINE_CHANCE;
+			this.inputRelativePosition = new Position(0, -1); 
+			this.outputRelativePosition = new Position(0, width);
+		}
+
+		public Builder price(int price) {
+			this.price = price;
+			return this;
+		}
+
+		public Builder inputRelativePosition(Position inputRelativePosition) {
+			this.inputRelativePosition = inputRelativePosition;
+			return this;
+		}
+
+		public Builder outputRelativePosition(Position outputRelativePosition) {
+			this.outputRelativePosition = outputRelativePosition;
+			return this;
+		}
+
+		public Builder breakChance(float breakChance) {
+			this.breakChance = breakChance;
+			return this;
+		}
+
+		public Builder damageChance(float damageChance) {
+			this.damageChance = damageChance;
+			return this;
+		}
+
+		public MachineType build() {
+			return new MachineType(name, width, height, inputRelativePosition,
+					outputRelativePosition, breakChance, damageChance, price);
+		}
+	}
 
 }

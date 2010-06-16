@@ -8,8 +8,9 @@ import model.production.elements.machine.Machine;
  */
 public class HealthyMachineState extends MachineState {
 
-	public static final double SALE_PRICE_COEF = 0.5;
-
+	private static final double SALE_PRICE_COEF = 0.5;
+	private static final double DEFECTIVE_PRODUCT_CHANCE = 0.05;
+	
 	public void repair(Machine machine)
 			throws CannotRepairHealthyMachineException {
 		throw new CannotRepairHealthyMachineException();
@@ -22,11 +23,15 @@ public class HealthyMachineState extends MachineState {
 
 	public void damage(Machine machine) {
 		machine.setMachineState(new DamagedMachineState());
-		machine.setCurrentCoef(MachineState.DAMAGED_DEFECTIVE_COEF);
 	}
 
 	@Override
 	public int getSalePrice(Machine machine) {
 		return (int) (Math.round(machine.getPurchasePrice() * SALE_PRICE_COEF));
+	}
+
+	@Override
+	public double getMakeDefectiveProductChance(Machine machine) {
+		return DEFECTIVE_PRODUCT_CHANCE;
 	}
 }

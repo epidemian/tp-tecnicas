@@ -45,7 +45,7 @@ public class ProductionMachine extends Machine {
 	public void treatProduct(Product input) {
 		checkNotNull(input, "input product");
 		double randomNum = Math.random();
-		if (randomNum<this.getCurrentCoef()){
+		if (randomNum<this.getMakeDefectiveProductChance()){
 			input.setDefective();
 		}
 		input.addMachineTypeToHistory(this.getMachineType());

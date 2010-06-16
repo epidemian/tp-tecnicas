@@ -1,5 +1,6 @@
 package model.warehouse;
 
+import static model.utils.ArgumentUtils.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,6 +28,7 @@ public class PriceMap {
 	}
 	
 	public void setMap(Map<String,Integer> map){
+		checkNotNull(map, "price map");
 		this.map=map;
 	}
 }

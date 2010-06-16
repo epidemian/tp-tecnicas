@@ -12,20 +12,20 @@ import model.production.StorageArea;
 import model.production.elements.ProductionLineElement;
 
 class ValidProductionLine extends ProductionLine {
-	
+
 	// TODO: Pedir al último elemento, el output element, o lo que sea...
 	private int dailyProduction;
 
 	private StorageArea storageArea;
 	private List<Integer> productionHistory;
-	
+
 	// TODO: Pedir al input line element
 	private RawMaterials configuration;
-	
+
 	protected ValidProductionLine(ProductionLineElement firstLineElement,
 			StorageArea storageArea, RawMaterials rawMaterialsConfiguration) {
 		super(firstLineElement);
-		
+
 		this.setStorageArea(storageArea);
 		this.setRawMaterialConfiguration(rawMaterialsConfiguration);
 		this.productionHistory = new LinkedList<Integer>();
@@ -33,22 +33,24 @@ class ValidProductionLine extends ProductionLine {
 
 	@Override
 	public void updateTick() {
-		Iterator<ProductionLineElement> iterator = this.iterator();
-		Product product = this.getStorageArea().createProduct(
-				this.configuration);
+		if (isWorking()) {
+			Iterator<ProductionLineElement> iterator = this.iterator();
+			Product product = this.getStorageArea().createProduct(
+					this.configuration);
 
-		while (iterator.hasNext()) {
-			ProductionLineElement next = iterator.next();
-			product = next.process(product);
-		}
+			while (iterator.hasNext()) {
+				ProductionLineElement next = iterator.next();
+				product = next.process(product);
+			}
 
-		// TODO check not null?
-		if (product != null) {
-			this.storageArea.addProduct(product);
-			this.dailyProduction++;
+			// TODO check not null?
+			if (product != null) {
+				this.storageArea.addProduct(product);
+				this.dailyProduction++;
+			}
 		}
 	}
-	
+
 	public void setRawMaterialConfiguration(
 			RawMaterials rawMaterialsConfiguracion) {
 		checkNotNull(rawMaterialsConfiguracion, "rawMaterialsConfiguracion");
@@ -74,7 +76,7 @@ class ValidProductionLine extends ProductionLine {
 	public List<Integer> getProductionHistory() {
 		return this.productionHistory;
 	}
-	
+
 	public StorageArea getStorageArea() {
 		return storageArea;
 	}

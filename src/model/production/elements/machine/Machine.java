@@ -23,7 +23,6 @@ public abstract class Machine extends ProductionLineElement implements
 
 	private MachineState machineState;
 	private MachineType machineType;
-	private double currentCoef;
 
 	/*
 	 * public Machine(MachineType machineType, int width, int height) {
@@ -124,6 +123,10 @@ public abstract class Machine extends ProductionLineElement implements
 	public void breakUp() {
 		this.getMachineState().breakUp(this);
 	}
+	
+	protected double getMakeDefectiveProductChance() {
+		return this.machineState.getMakeDefectiveProductChance(this);
+	}
 
 	@Override
 	public Direction getInputConnectionDirection() {
@@ -145,13 +148,6 @@ public abstract class Machine extends ProductionLineElement implements
 		return this.getPosition().add(machineType.getOutputRelativePosition());
 	}
 
-	public void setCurrentCoef(double currentCoef) {
-		this.currentCoef = currentCoef;
-	}
-
-	public double getCurrentCoef() {
-		return currentCoef;
-	}
 
 	@Override
 	public int getSalePrice() {

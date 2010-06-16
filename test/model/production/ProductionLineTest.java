@@ -23,25 +23,27 @@ import org.junit.Test;
 public class ProductionLineTest {
 
 	private ProductionLine productionLine;
-	
-	//At runtime a controller will assign a specific budget from where the line/
-	//machine will extract from repair.
+
+	// At runtime a controller will assign a specific budget from where the
+	// line/
+	// machine will extract from repair.
 	private Budget budget;
 
 	@Before
 	public void setUp() {
-		this.productionLine = this.createProductionLineProcessingCartonWithOnlyMachines();
-		this.budget=new Budget(10000);
+		this.productionLine = this
+				.createProductionLineProcessingCartonWithOnlyMachines();
+		this.budget = new Budget(10000);
 	}
-	
+
 	private ProductionLine createProductionLineProcessingCartonWithOnlyMachines() {
-		
+
 		ProductionLineElement prodLineElement1 = new ProductionMachine(
-				new MachineType("Licuado",1,1));
+				new MachineType("Licuado", 1, 1));
 		ProductionLineElement prodLineElement2 = new ProductionMachine(
-				new MachineType("Haz",1,1));
+				new MachineType("Haz", 1, 1));
 		ProductionLineElement prodLineElement3 = new ProductionMachine(
-				new MachineType("Horno",1,1));
+				new MachineType("Horno", 1, 1));
 
 		connectLineElements(prodLineElement1, prodLineElement2);
 		connectLineElements(prodLineElement2, prodLineElement3);
@@ -50,15 +52,15 @@ public class ProductionLineTest {
 				new StorageArea(new RawMaterials(),
 						new ValidProductionSequences()), new RawMaterials());
 	}
-	
-	private ProductionLine createProductionLineProcessingCartonWithConveyor(){
+
+	private ProductionLine createProductionLineProcessingCartonWithConveyor() {
 
 		ProductionLineElement prodLineElement1 = new ProductionMachine(
-				new MachineType("Licuado",1,1));
+				new MachineType("Licuado", 1, 1));
 		ProductionLineElement prodLineElement2 = new Conveyor();
-		
+
 		ProductionLineElement prodLineElement3 = new ProductionMachine(
-				new MachineType("Horno",1,1));
+				new MachineType("Horno", 1, 1));
 
 		connectLineElements(prodLineElement1, prodLineElement2);
 		connectLineElements(prodLineElement2, prodLineElement3);
@@ -67,7 +69,6 @@ public class ProductionLineTest {
 				new StorageArea(new RawMaterials(),
 						new ValidProductionSequences()), new RawMaterials());
 	}
-
 
 	@Test
 	public void dailyProduction() {
@@ -80,8 +81,9 @@ public class ProductionLineTest {
 
 		int dailyProduction = this.productionLine.getDailyProduction();
 
-		assertEquals(dailyProduction, ticksInADay
-				- this.productionLine.productionLineSize());
+		int expectedProduction = ticksInADay
+				- this.productionLine.productionLineSize();
+		assertEquals(expectedProduction, dailyProduction);
 
 		this.productionLine.updateDay();
 
@@ -89,54 +91,48 @@ public class ProductionLineTest {
 				.getProductionHistory();
 
 		assertEquals(dailyProductionList.get(dailyProductionList.size() - 1)
-				.intValue(), ticksInADay
-				- this.productionLine.productionLineSize());
+				.intValue(), expectedProduction);
 
 		assertEquals(0, this.productionLine.getDailyProduction());
 	}
 
+	private List<MachineMock> createListConnectedMachineMocks() {
+		List<MachineMock> list = new ArrayList<MachineMock>();
 
-	private List<MachineMock> createListConnectedMachineMocks(){
-		List<MachineMock> list=new ArrayList<MachineMock>();
-		
-		MachineMock machineMock1 = 
-			new MachineMock(new MachineType("Licuado",1,1,
-					new Position(0,-1),new Position(0,1),0.15f,0.05f,100));
-		MachineMock machineMock2 = 
-			new MachineMock(new MachineType("Haz",1,1,
-					new Position(0,-1),new Position(0,1),0.15f,0.05f,100));
-		MachineMock machineMock3 = 
-			new MachineMock(new MachineType("Horno",1,1,
-					new Position(0,-1),new Position(0,1),0.15f,0.05f,100));
-		
+		MachineMock machineMock1 = new MachineMock(new MachineType("Licuado",
+				1, 1, new Position(0, -1), new Position(0, 1), 0.15f, 0.05f,
+				100));
+		MachineMock machineMock2 = new MachineMock(new MachineType("Haz", 1, 1,
+				new Position(0, -1), new Position(0, 1), 0.15f, 0.05f, 100));
+		MachineMock machineMock3 = new MachineMock(new MachineType("Horno", 1,
+				1, new Position(0, -1), new Position(0, 1), 0.15f, 0.05f, 100));
+
 		connectLineElements(machineMock1, machineMock2);
 		connectLineElements(machineMock2, machineMock3);
-		
+
 		list.add(machineMock1);
 		list.add(machineMock2);
 		list.add(machineMock3);
-	
-		
+
 		return list;
 	}
-	
+
 	@Test
 	public void LineWithThreeNonBrokenMachinesRepairedFromMachines()
 			throws CannotRepairHealthyMachineException {
 
-		List<MachineMock> machines= createListConnectedMachineMocks();
+		List<MachineMock> machines = createListConnectedMachineMocks();
 
-		ProductionLine line = ProductionLine.createValidProductionLine(
-				machines.get(0), new StorageArea(new RawMaterials(),
-						new ValidProductionSequences()), new RawMaterials());
+		ProductionLine line = ProductionLine.createValidProductionLine(machines
+				.get(0), new StorageArea(new RawMaterials(),
+				new ValidProductionSequences()), new RawMaterials());
 
 		machines.get(0).breakUp();
 		machines.get(1).breakUp();
-		
-	
+
 		// Should be false because two machines are broken
 		assertFalse(line.isWorking());
-		
+
 		machines.get(0).repair(this.budget);
 
 		// Should be false because one machine is broken
@@ -146,95 +142,94 @@ public class ProductionLineTest {
 
 		// All machines are now repaired!
 		assertTrue(line.isWorking());
-		
+
 	}
-	
+
 	@Test
 	public void LineWithThreeNonBrokenMachinesRepairedFromLine()
 			throws CannotRepairHealthyMachineException {
 
-		List<MachineMock> machines= createListConnectedMachineMocks();
+		List<MachineMock> machines = createListConnectedMachineMocks();
 
-		ProductionLine line = ProductionLine.createValidProductionLine(
-				machines.get(0), new StorageArea(new RawMaterials(),
-						new ValidProductionSequences()), new RawMaterials());
+		ProductionLine line = ProductionLine.createValidProductionLine(machines
+				.get(0), new StorageArea(new RawMaterials(),
+				new ValidProductionSequences()), new RawMaterials());
 
 		machines.get(0).breakUp();
 		machines.get(1).breakUp();
-		
+
 		line.repairAllMachines(budget);
 
 		// All machines are now repaired!
 		assertTrue(line.isWorking());
-		
-	}
-	
-	
-	@Test
-	public void debitFromBudgetWhenRepairingLine() 
-							throws CannotRepairHealthyMachineException{
-		int initialBudget=this.budget.getBalance();
-		
-		List<MachineMock> machines= createListConnectedMachineMocks();
 
-		ProductionLine line = ProductionLine.createValidProductionLine(
-				machines.get(0), new StorageArea(new RawMaterials(),
-						new ValidProductionSequences()), new RawMaterials());
-		
-		//One machine will be broken and the line will be repaired.
+	}
+
+	@Test
+	public void debitFromBudgetWhenRepairingLine()
+			throws CannotRepairHealthyMachineException {
+		int initialBudget = this.budget.getBalance();
+
+		List<MachineMock> machines = createListConnectedMachineMocks();
+
+		ProductionLine line = ProductionLine.createValidProductionLine(machines
+				.get(0), new StorageArea(new RawMaterials(),
+				new ValidProductionSequences()), new RawMaterials());
+
+		// One machine will be broken and the line will be repaired.
 		machines.get(0).breakUp();
 		assertFalse(line.isWorking());
-		
+
 		line.repairAllMachines(this.budget);
-		
-		assertEquals(this.budget.getBalance(), initialBudget - 
-				Math.round(machines.get(0).getPurchasePrice()*Machine.PRICE_REPAIR_COEF));
+
+		assertEquals(this.budget.getBalance(), initialBudget
+				- Math.round(machines.get(0).getPurchasePrice()
+						* Machine.PRICE_REPAIR_COEF));
 	}
-	
+
 	@Test
-	public void sellMachinesWhenNotBroken(){
-		int initialBudget=this.budget.getBalance();
-		
-		List<MachineMock> machines= createListConnectedMachineMocks();
-		
-		ProductionLine line = ProductionLine.createValidProductionLine(
-				machines.get(0), new StorageArea(new RawMaterials(),
-						new ValidProductionSequences()), new RawMaterials());
-		
+	public void sellMachinesWhenNotBroken() {
+		int initialBudget = this.budget.getBalance();
+
+		List<MachineMock> machines = createListConnectedMachineMocks();
+
+		ProductionLine line = ProductionLine.createValidProductionLine(machines
+				.get(0), new StorageArea(new RawMaterials(),
+				new ValidProductionSequences()), new RawMaterials());
+
 		line.sell(budget);
-		
-		assertEquals(initialBudget+150,budget.getBalance());
+
+		assertEquals(initialBudget + 150, budget.getBalance());
 	}
-	
+
 	@Test
-	public void sellMachinesWhenOneBrokenAndOneDamaged(){
-		int initialBudget=this.budget.getBalance();
-		
-		List<MachineMock> machines= createListConnectedMachineMocks();
-		
-		ProductionLine line = ProductionLine.createValidProductionLine(
-				machines.get(0), new StorageArea(new RawMaterials(),
-						new ValidProductionSequences()), new RawMaterials());
-		
+	public void sellMachinesWhenOneBrokenAndOneDamaged() {
+		int initialBudget = this.budget.getBalance();
+
+		List<MachineMock> machines = createListConnectedMachineMocks();
+
+		ProductionLine line = ProductionLine.createValidProductionLine(machines
+				.get(0), new StorageArea(new RawMaterials(),
+				new ValidProductionSequences()), new RawMaterials());
+
 		machines.get(0).damage();
-		//machines.get(0).breakUp();
+		// machines.get(0).breakUp();
 		machines.get(1).breakUp();
-		
-		
+
 		line.sell(budget);
-		
-		assertEquals(initialBudget+100,budget.getBalance());
+
+		assertEquals(initialBudget + 100, budget.getBalance());
 	}
-	
+
 	@Test
-	public void breakAllMachinesInATwoMachineLine(){
-		ProductionLine line= 
-			this.createProductionLineProcessingCartonWithConveyor();
-		
+	public void breakAllMachinesInATwoMachineLine() {
+		ProductionLine line = this
+				.createProductionLineProcessingCartonWithConveyor();
+
 		line.breakAllMachines();
-		
-		assertEquals(line.getBrokenMachines().size(),2);
-	
+
+		assertEquals(line.getBrokenMachines().size(), 2);
+
 	}
-	
+
 }

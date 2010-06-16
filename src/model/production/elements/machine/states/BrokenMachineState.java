@@ -1,5 +1,6 @@
 package model.production.elements.machine.states;
 
+import model.exception.BusinessLogicException;
 import model.production.elements.machine.Machine;
 
 /**
@@ -9,15 +10,18 @@ import model.production.elements.machine.Machine;
  */
 public class BrokenMachineState extends MachineState {
 
-	public static final Float DEFECT_BREAK_CHANCE = 0.02f;
-
 	public void repair(Machine machine) {
 		machine.setMachineState(new HealthyMachineState());
-		machine.setCurrentCoef(MachineState.HEALTH_DEFECTIVE_COEF);
 		machine.notifyBrokenMachineRepair();
 	}
 
 	public int getSalePrice(Machine machine) {
 		return 0;
+	}
+
+	@Override
+	public double getMakeDefectiveProductChance(Machine machine) {
+		throw new BusinessLogicException(
+				"Cannot get defective chance if machine is broken");
 	}
 }
