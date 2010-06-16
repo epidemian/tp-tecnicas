@@ -8,6 +8,10 @@ import java.util.List;
 public class StorageArea {
 
 	private List<Product> productsProduced;
+	public List<Product> getProductsProduced() {
+		return productsProduced;
+	}
+
 	private ValidProductionSequences validProductionSequences;
 	
 	/**
