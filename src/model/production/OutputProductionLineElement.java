@@ -5,14 +5,21 @@ import model.warehouse.TileElementVisitor;
 
 public class OutputProductionLineElement extends ProductionLineElement{
 		
+	private final Direction inputConnectionDirection;
+	
 	public OutputProductionLineElement() {
 		super(1,1);
+		inputConnectionDirection=Direction.NORTH;
+	}
+	
+	public OutputProductionLineElement(Direction direction) {
+		super(1,1);
+		inputConnectionDirection=direction;
 	}
 
 	@Override
 	public Direction getInputConnectionDirection() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.inputConnectionDirection;
 	}
 
 	@Override

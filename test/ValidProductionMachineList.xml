@@ -1,10 +1,10 @@
 <MachineList>
-			<MachineType id="LumberProcess" width="2" height="3" price="10" damageChance="0.10" breakChance="0.03>
+			<MachineType id="LumberProcess" width="2" height="3" price="10" damageChance="0.10" breakChance="0.03">
 				<Input  rows="1" cols="-1"/>
 				<Output rows="1" cols="2"/>
 			</MachineType>
 				
-			<MachineType id="Oven" width="2" height="3" price="20" damageChance="0.10" breakChance="0.03>
+			<MachineType id="Oven" width="2" height="3" price="20" damageChance="0.10" breakChance="0.03">
 					<Input  rows="1" cols="-1"/>
 					<Output rows="1" cols="2"/>
 			</MachineType>

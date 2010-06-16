@@ -47,6 +47,8 @@ public class GroundPersistent{
 					(element.element(TAG_CHILD_OUTPUTS)):
 						new ArrayList<OutputProductionLineElementPositioned>());
 		
+		
+		
 		for(OutputProductionLineElementPositioned output : outputs){
 			ground.putTileElement(output.getOutput(),output.getPosition());
 		}

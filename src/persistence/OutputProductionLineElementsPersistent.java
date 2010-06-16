@@ -4,19 +4,25 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import model.production.Direction;
 import model.production.OutputProductionLineElement;
+import model.utils.StringUtils;
 import model.warehouse.Position;
 import model.warehouse.Wall;
 
 import org.dom4j.Element;
 
+import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
+
 public class OutputProductionLineElementsPersistent {
 
 	static String TAG_NAME="Outputs";
 	static String TAG_INNER="OutputElement";
-	static String TAG_CHILD_ATR_ROWS="rows";
-	static String TAG_CHILD_ATR_COLS="cols";
+	static String TAG_ATR_ROWS="rows";
+	static String TAG_ATR_COLS="cols";
+	static String TAG_ATR_DIRECTION="direction";
 	
+	@SuppressWarnings("unchecked")
 	static public List<OutputProductionLineElementPositioned> buildFromXML(Element element)
 	throws InvalidTagException{
 		
@@ -35,12 +41,23 @@ public class OutputProductionLineElementsPersistent {
 				throw new InvalidTagException();
 			}
 			
+
+			
+			
+			Direction direction= (element.attribute(TAG_ATR_DIRECTION)!=null?
+					Direction.getDirectionByString(StringUtils.
+							toChar(element.attributeValue(TAG_ATR_DIRECTION))):
+					Direction.NORTH);
+			
+			OutputProductionLineElement outputElement = 
+				new OutputProductionLineElement(direction);	
+			
 			list.add(new OutputProductionLineElementPositioned(
 						new Position(Integer.valueOf(elem.attributeValue(
 									WallsPersistent.TAG_CHILD_ATR_ROWS)),
 									Integer.valueOf(elem.attributeValue(
 											WallsPersistent.TAG_CHILD_ATR_COLS)))
-						,new OutputProductionLineElement()));
+						,outputElement));
 			
 		}
 		

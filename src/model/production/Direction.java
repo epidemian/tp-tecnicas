@@ -41,4 +41,12 @@ public enum Direction {
 		throw new BusinessLogicException(
 				"No direction with associated position: " + position);
 	}
+	
+	public static Direction getDirectionByString(Character character) {
+		for (Direction dir : Direction.values())
+			if ((new Character(dir.getSymbol())).equals(character))
+				return dir;
+		throw new BusinessLogicException(
+				"No direction with associated string: " + character);
+	}
 }

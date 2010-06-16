@@ -4,7 +4,7 @@
 		<Wall rows="11" cols="1" width="10" height="1"/>
 	</Walls>
 	<Outputs>
-		<OutputElement rows="5" cols="6"/>
-		<OutputElement rows="8" cols="7"/>
+		<OutputElement rows="5" cols="6" direction="N" />
+		<OutputElement rows="8" cols="7" direction="W" />
 	</Outputs>
 </Ground>
