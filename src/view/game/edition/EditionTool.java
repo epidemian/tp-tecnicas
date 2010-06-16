@@ -23,7 +23,7 @@ public abstract class EditionTool implements Painter {
 		return game;
 	}
 
-	public abstract void mouseClicked(Position position);
+	public abstract void mouseClicked(Position mousePosition);
 
 	public abstract void reset();
 }

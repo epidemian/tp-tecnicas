@@ -57,6 +57,7 @@ public class GroundPanel extends JPanel {
 	public void setEditionTool(EditionTool tool) {
 		checkNotNull(tool, "edition tool");
 		tool.reset();
+		this.editionTool.reset();
 		this.editionTool = tool;
 	}
 

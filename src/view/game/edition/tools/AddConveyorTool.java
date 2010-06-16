@@ -1,8 +1,9 @@
 package view.game.edition.tools;
 
-import static model.utils.StringUtils.join;
-import static view.game.edition.tools.Colors.*;
 import static model.production.ProductionLineElement.connectLineElements;
+import static model.utils.StringUtils.join;
+import static view.game.MoneyConstants.MONEY_SYMBOL;
+import static view.game.edition.tools.Colors.*;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -303,11 +304,13 @@ public class AddConveyorTool extends EditionTool {
 		if (!enoughMoney)
 			warnings.add("Not enough money!");
 
-		if (!warnings.isEmpty()) {
+		if (!warnings.isEmpty())
 			warnings.add("ESC to cancel");
-			String warningStr = join(warnings, " - ");
-			getGroundPanel().drawNotificationBesideMouse(warningStr, graphics);
-		}
+		
+		String notification = join(warnings, " - ");
+		if (isBuilding()) 
+			notification = MONEY_SYMBOL + priceAccum + " - " + notification;
+		getGroundPanel().drawNotificationBesideMouse(notification, graphics);
 	}
 
 	private List<Position> getNewPositionsWhenOverLineElement(

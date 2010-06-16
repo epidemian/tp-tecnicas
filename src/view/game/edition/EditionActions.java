@@ -16,6 +16,8 @@ import view.game.edition.tools.AddConveyorTool;
 import view.game.edition.tools.AddMachineTool;
 import view.game.edition.tools.AddProductionMachineTool;
 import view.game.edition.tools.AddQualityControlMachineTool;
+import view.game.edition.tools.DeleteTool;
+import view.game.edition.tools.MoveTool;
 import view.game.edition.tools.SelectionTool;
 
 public class EditionActions {
@@ -71,6 +73,16 @@ public class EditionActions {
 		EditionTool tool = new AddConveyorTool(gamePanel, game);
 		return getActionToSetTool(tool, "Add-Conveyor");
 	}
+	
+	public Action getActionToSetDeleteTool() {
+		EditionTool tool = new DeleteTool(gamePanel, game);
+		return getActionToSetTool(tool, "Delete");
+	}
+	
+	public Action getActionToSetMoveTool() {
+		EditionTool tool = new MoveTool(gamePanel, game);
+		return getActionToSetTool(tool, "Delete");
+	}
 
 	private static void printToolSelection(String toolName) {
 		out.println("You have selected the " + toolName + " Tool");
@@ -88,4 +100,6 @@ public class EditionActions {
 			private static final long serialVersionUID = 1L;
 		};
 	}
+
+	
 }
