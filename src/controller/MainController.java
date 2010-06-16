@@ -1,14 +1,17 @@
 package controller;
 
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import controller.game.GamePanelController;
+import java.awt.Dimension;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 
@@ -25,6 +28,8 @@ public class MainController {
 
         private static final String[] difficultyLevels = { "Easy", "Normal", "Hard" };
         private static final int[] initialMoney = {10000,15000,20000};
+
+        private static Dimension MainPanelSize = new Dimension(640, 480);
 
 	public MainController(Game game, final MainFrame mainFrame) {
 		this.game = game;
@@ -60,7 +65,7 @@ public class MainController {
 
 	private void setGamePanel() {
 
-                GroundPanelContainer groundPanel
+        GroundPanelContainer groundPanel
                     = new GroundPanelContainer(this.game.getGround());
 		GamePanel gamePanel = new GamePanel(groundPanel);
 		new GamePanelController(this.game, gamePanel);
@@ -91,23 +96,32 @@ public class MainController {
                 difficultyCombo.addItem(difficultyLevels[i]);
            }
 
-           mainPanel.addStartActionListener(new ActionListener() {
+           ActionListener al = new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
+                int selectedItem = difficultyCombo.getSelectedIndex();
+                int money = initialMoney[selectedItem];
+                String name = nameTextField.getText();
 
-                 int selectedItem = difficultyCombo.getSelectedIndex();
-                 int money = initialMoney[selectedItem];
+                if (!name.isEmpty()) {
+                    MainController.this.game.setInitialMoney(money);
+                    MainController.this.game.setPlayerName(name);
+                    MainController.this.setGamePanel();
+                } else
+                      JOptionPane.showMessageDialog(MainController.this.mainFrame,
+                              "Please insert you name", "Empty name",
+                              JOptionPane.ERROR_MESSAGE);
+                }
+            };
 
-                 String name = nameTextField.getText();
-                 // TODO chequear que el nombre no sea vacio.
+           mainPanel.addStartActionListener(al);
+           nameTextField.addActionListener(al);
 
-                 MainController.this.setGamePanel();
-            }
-
-            });
-
-            this.setMainFramePanel(mainPanel);
+           this.mainFrame.setResizable(false);
+           this.mainFrame.setSize(MainPanelSize);
+           this.mainFrame.setLocationRelativeTo(null);
+           this.setMainFramePanel(mainPanel);
         }
 
 	private void setMainFramePanel(JPanel panel) {

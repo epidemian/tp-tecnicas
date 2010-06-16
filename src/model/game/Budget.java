@@ -7,13 +7,13 @@ public class Budget {
 		this.balance = initialBalance;
 	}
 
-        public Budget() {
-            this(0);
-        }
+    public Budget() {
+        this(0);
+    }
 
-        public void setBalance(int balance){
-            this.balance = balance;
-        }
+    public void setBalance(int balance){
+        this.balance = balance;
+    }
 	
 	public int getBalance() {
 		return balance;

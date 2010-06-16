@@ -21,47 +21,50 @@ import model.warehouse.Position;
 public class Game {
 
 	private Ground ground;
-        private List<MachineType> qualityControlMachineType;
-        private List<MachineType> productionMachinesType;
-        private Map<RawMaterialType,Integer> rawMaterialPrices;
-        private List<RawMaterialType> rawMaterialTypes;
+	private List<MachineType> qualityControlMachineType;
+	private List<MachineType> productionMachinesType;
+	private Map<RawMaterialType, Integer> rawMaterialPrices;
+	private List<RawMaterialType> rawMaterialTypes;
 	private Budget budget;
-        private StorageArea storageArea;
+	private StorageArea storageArea;
+	private String playerName;
 
 	public Game(Ground ground) {
 		this.ground = ground;
-                this.qualityControlMachineType = new ArrayList<MachineType>();
-                this.productionMachinesType = new ArrayList<MachineType>();
-                this.rawMaterialPrices = new HashMap<RawMaterialType, Integer>();
-                this.rawMaterialTypes = new ArrayList<RawMaterialType>();
-                this.budget = new Budget(1000);
-                
+		this.qualityControlMachineType = new ArrayList<MachineType>();
+		this.productionMachinesType = new ArrayList<MachineType>();
+		this.rawMaterialPrices = new HashMap<RawMaterialType, Integer>();
+		this.rawMaterialTypes = new ArrayList<RawMaterialType>();
+		this.budget = new Budget(1000);
+
 		/*
 		 * TODO hardcoding just for test.
 		 */
-                MachineType prodMachType = new MachineType("productionMachine",3,3,new Position(0, -1), new Position(2, 3),0.05f,0.015f,250);
-                this.productionMachinesType.add(prodMachType);
-                this.productionMachinesType.add(prodMachType);
+		MachineType prodMachType = new MachineType("productionMachine", 3, 3,
+				new Position(0, -1), new Position(2, 3), 0.05f, 0.015f, 250);
+		this.productionMachinesType.add(prodMachType);
+		this.productionMachinesType.add(prodMachType);
 
-                MachineType qualMachType = new MachineType("qualityControlMachine",4,3);
-                this.qualityControlMachineType.add(qualMachType);
-                this.qualityControlMachineType.add(qualMachType);
+		MachineType qualMachType = new MachineType("qualityControlMachine", 4,
+				3);
+		this.qualityControlMachineType.add(qualMachType);
+		this.qualityControlMachineType.add(qualMachType);
 
+		RawMaterialType rawMatType = new RawMaterialType("rawMaterial1");
+		RawMaterialType rawMatType2 = new RawMaterialType("rawMaterial2");
+		this.rawMaterialPrices.put(rawMatType, 100);
+		this.rawMaterialPrices.put(rawMatType2, 200);
+		this.rawMaterialTypes.add(rawMatType);
+		this.rawMaterialTypes.add(rawMatType2);
 
-                RawMaterialType rawMatType = new RawMaterialType("rawMaterial1");
-                RawMaterialType rawMatType2 = new RawMaterialType("rawMaterial2");
-                this.rawMaterialPrices.put(rawMatType, 100);
-                this.rawMaterialPrices.put(rawMatType2, 200);
-                this.rawMaterialTypes.add(rawMatType);
-                this.rawMaterialTypes.add(rawMatType2);
+		RawMaterials rawMaterials = new RawMaterials();
+		rawMaterials.store(rawMatType, 100);
+		rawMaterials.store(rawMatType2, 300);
 
-                RawMaterials rawMaterials = new RawMaterials();
-                rawMaterials.store(rawMatType, 100);
-                rawMaterials.store(rawMatType2, 300);
-                
-                this.storageArea = new StorageArea(rawMaterials, new ValidProductionSequences());
+		this.storageArea = new StorageArea(rawMaterials,
+				new ValidProductionSequences());
 
-        }
+	}
 
 	public Ground getGround() {
 		return this.ground;
@@ -98,29 +101,29 @@ public class Game {
 	}
 
 	public List<MachineType> getProductionMachinesTypes() {
-            return this.productionMachinesType;
-        }
-
-	public List<MachineType> getQualityControlMachinesTypes() {
-            return this.qualityControlMachineType;
+		return this.productionMachinesType;
 	}
 
-    public StorageArea getStorageArea() {
-        return this.storageArea;
-    }
+	public List<MachineType> getQualityControlMachinesTypes() {
+		return this.qualityControlMachineType;
+	}
 
-    public List<RawMaterialType> getRawMaterialTypes() {
-        return this.rawMaterialTypes;
-    }
+	public StorageArea getStorageArea() {
+		return this.storageArea;
+	}
 
-    public Map<RawMaterialType, Integer> getRawMaterialPrices() {
-        return this.rawMaterialPrices;
-    }
-    
+	public List<RawMaterialType> getRawMaterialTypes() {
+		return this.rawMaterialTypes;
+	}
+
+	public Map<RawMaterialType, Integer> getRawMaterialPrices() {
+		return this.rawMaterialPrices;
+	}
+
 	public boolean canAfford(int amount) {
 		return getBudget().canPurchase(amount);
 	}
-	
+
 	public void buyAndAddProductionLineElement(ProductionLineElement element,
 			Position position) {
 		int price = element.getPurchasePrice();
@@ -128,5 +131,17 @@ public class Game {
 
 		getBudget().decrement(price);
 		getGround().addTileElement(element, position);
+	}
+
+	public void setPlayerName(String playerName) {
+		this.playerName = playerName;
+	}
+
+	public void setInitialMoney(int money) {
+		this.budget.setBalance(money);
+	}
+	
+	public String getPlayerName(){
+		return this.playerName;
 	}
 }

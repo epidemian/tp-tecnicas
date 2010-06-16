@@ -43,50 +43,64 @@ public class MainPanel extends javax.swing.JPanel {
         playerNameTextArea = new javax.swing.JTextField();
         startButton = new javax.swing.JButton();
 
-        jLabel1.setFont(new java.awt.Font("Purisa", 0, 15));
+        jLabel1.setBackground(java.awt.Color.darkGray);
+        jLabel1.setFont(new java.awt.Font("Purisa", 0, 15)); // NOI18N
+        jLabel1.setForeground(java.awt.Color.white);
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Player name:");
+        jLabel1.setBorder(new javax.swing.border.LineBorder(java.awt.Color.gray, 3, true));
+        jLabel1.setOpaque(true);
 
-        jLabel2.setFont(new java.awt.Font("Purisa", 0, 15));
+        jLabel2.setBackground(java.awt.Color.darkGray);
+        jLabel2.setFont(new java.awt.Font("Purisa", 0, 15)); // NOI18N
+        jLabel2.setForeground(java.awt.Color.white);
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Difficulty:");
+        jLabel2.setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.Color.gray, 3));
+        jLabel2.setOpaque(true);
 
         difficultyCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " " }));
 
-        startButton.setFont(new java.awt.Font("Purisa", 0, 15)); // NOI18N
+        startButton.setFont(new java.awt.Font("Purisa", 0, 18)); // NOI18N
         startButton.setText("Start");
 
         javax.swing.GroupLayout backGroundPanel1Layout = new javax.swing.GroupLayout(backGroundPanel1);
         backGroundPanel1.setLayout(backGroundPanel1Layout);
         backGroundPanel1Layout.setHorizontalGroup(
             backGroundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(backGroundPanel1Layout.createSequentialGroup()
-                .addGap(120, 120, 120)
-                .addGroup(backGroundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backGroundPanel1Layout.createSequentialGroup()
+                .addGap(147, 147, 147)
                 .addGroup(backGroundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(difficultyCombo, 0, 147, Short.MAX_VALUE)
-                    .addComponent(playerNameTextArea, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE))
-                .addGap(170, 170, 170))
-            .addGroup(backGroundPanel1Layout.createSequentialGroup()
-                .addGap(230, 230, 230)
-                .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(246, Short.MAX_VALUE))
+                    .addGroup(backGroundPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(playerNameTextArea, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE))
+                    .addGroup(backGroundPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(difficultyCombo, 0, 148, Short.MAX_VALUE))
+                    .addGroup(backGroundPanel1Layout.createSequentialGroup()
+                        .addGap(94, 94, 94)
+                        .addComponent(startButton, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
+                        .addGap(93, 93, 93)))
+                .addGap(165, 165, 165))
         );
         backGroundPanel1Layout.setVerticalGroup(
             backGroundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(backGroundPanel1Layout.createSequentialGroup()
-                .addGap(126, 126, 126)
+                .addGap(125, 125, 125)
                 .addGroup(backGroundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(playerNameTextArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(backGroundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(playerNameTextArea, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE))
+                .addGap(6, 6, 6)
+                .addGroup(backGroundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(difficultyCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGroup(backGroundPanel1Layout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(difficultyCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(22, 22, 22)
                 .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(130, Short.MAX_VALUE))
+                .addGap(131, 131, 131))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
