@@ -6,6 +6,7 @@
 \usepackage{float}
 \usepackage{amsmath}
 \usepackage{color}
+\usepackage{pdfpages}
 
 
 \usepackage[latin1]{inputenc}
@@ -19,14 +20,15 @@
 
 \author{	Bruno, Tomás ; \textit{Padrón Nro. 88.449}                     \\
             \texttt{ tbruno88@gmail.com }                                              \\
-			Ferreiro, Demian ; \textit{Padrón Nro. }                     \\
+			Ferreiro, Demian ; \textit{Padrón Nro. 88443}               						      \\
             \texttt{ epidemian@gmail.com }                                              \\	
 			Leguizamo, Matías ; \textit{Padrón Nro. }                     \\
             \texttt{ matias.leguizamo@gmail.com }                                              \\	
             Mouso, Nicolás ; \textit{Padrón Nro. 88.528}                     \\
             \texttt{ nicolasgnr@gmail.com }                                              \\[2.5ex]
-            \normalsize{1er. Cuatrimestre de 2010}                       \\
-            \normalsize{75.10 Tecnicas de Diseño}                             \\
+            \normalsize{Ayudante: Emiliano Ritiro}                       \\
+			\normalsize{1er. Cuatrimestre de 2010}                       \\
+            \normalsize{75.10 Tecnicas de Diseño}                    	\\
             \normalsize{Facultad de Ingeniería, Universidad de Buenos Aires}            \\
        }
 \date{}
@@ -42,29 +44,45 @@
 \thispagestyle{empty}
 
 
+
+\includepdf[pages={1,2,3,4}]{enunciado.pdf}
+
 \clearpage
 \tableofcontents
+\setcounter{page}{5}
 
 \clearpage
 \section{Hipotésis}
+
 	\begin{enumerate}
 		\item Las máquinas se pueden reparar por separado o se puede reparar toda una línea al mismo tiempo
-		\item Se pueden romper tanto las máquinas de control de calidad como las que son 
-			exclusivamente para la producción.
-		\item Las maquinas pueden levantarse o no con una entrada y una salida determinada. 
-			En caso de que no tengan una establecida entonces se les genera una por defecto.
-		\item Tanto los precios de la materia prima como los de los productos varían todas las 
-			semanas. El resto de los precios se mantiene invariante en el tiempo
-		\item Las paredes no pueden ser borradas del terreno adquirido.
+		\item Se pueden romper tanto las máquinas de control de calidad como las que son exclusivamente para la producción.
+		\item Tanto los precios de la materia prima como los de los productos varían todas las semanas. El resto de los precios se mantiene invariante en el tiempo
+		\item Las paredes no pueden ser borradas ni vendidas del terreno adquirido.
+		\item Los productos son construidos a partir de distintos tipos de materias primas y de cantidades de cada una de estas. 
+			Pueden suceder que existan dos l\'ineas de producci\'on que pese a tener una misma secuencia de producci\'on, tengan como resultado productos distintos como consecuencia de tener una entrada de materia prima distinta.
+		\item Para poder producir, cada l\'inea de producci\'on debe estar conectada a una salida de la fabrica.
+		\item El precio de alquiler de la fabrica es proporcional al precio del terreno.
+		\item Las maquinas pueden no contener una entrada y una salida determinada en el archivo XML. En caso de que no tengan una establecida entonces se les genera una por defecto.
+		\item Tanto las salidas como las paredes de las fabricas se encuentran declaradas en el archivo XML correspodiente a los distintos terrenos.
 	\end{enumerate}
 
 \clearpage
 \section{Vista Lógica}
 	\subsection{Producción}
 		
-		%La estructura de la producción es el esqueleto de todo el juego. 
+		La forma en la cual el juego simula la producci\'on es el n'\'ucleo del modelo. 
+
+		La primer decisi\'on de relevancia fue si en el juego cada producto iba a ser un objeto que fuera circulando por cada m\'aquina o si simplemente al final del d\'ia se discretizar\''ia la producci\'on diaria. Decidimos optar por la primer alternativa porque consideramos que la segunda alternativa no representaba correctamente al negocio. Aunque se podr\'ian modelizar las funcionalidades solicitadas en el presente, cada futuro cambio llevar\'ia a nuevos parches con peligro de tener que desechar el n\'ucleo del modelo por completo en caso de que no quedara otra alternativa.  
 		
-		\textcolor{red}{Explicacion acerca de: raw materials, product guarda history. Hace falta describir una a una las clases?}	
+		Una vez decidido acerca de la existencia fisica de cada producto, se abrieron distintos interrogantes. Un ejemplo fue la forma en la cual se identificar\'ia el producto luego de ser procesado por las distintas m\'aquinas.
+		
+		La primera alternativa que se considero fue que cada l\'inea fuera la encargada de identificar el tipo de producto que produc\'ia. Esto parec\'ia l\'ogico ya que la l\'inea sabe las m\'aquinas que tiene. Sin embargo, identificamos una limitaci\'on en esta soluci\'on. Esta limitaci\'on surg\'ia de que cada vez que modificaramos las m\'aquinas de la l\'inea, los productos que estuvieran siendo procesados en ese momento en la l\'inea ...
+		%TODO . 
+		
+		En consecuencia, decidimos que cada producto lleve un historial de las m\'aquinas por las que pasaba. Al final de ser procesado por todas las m\'aquinas, se analizaba cual era el producto final.
+			
+		Con el objetivo de aumentar el interes al momento de jugarlo, decidimos tomar como hipot\'esis que el producto puede necesitar distintas materias primas y cantidades de cada una de ellas. 
 		
 		\begin{figure}[H]
 		\centering
@@ -77,8 +95,17 @@
 		\includegraphics[scale=0.3]{diagramas/productionSequenceDiagram.jpg}
 		\caption{Diagrama de Secuencia de la lógica de producción}
 		\end{figure}		
-				
-	\subsection{Tecnología }
+
+	\subsection{Discretizaci\'on Temporal }		
+		%TODO
+		Como se pod\'ia observar en el grafico , existe un metodo en la l\'nea de producci\'on que dispara la circulaci\'on del producto a trav\'es de las m\'aquinas. En cada ``tick'', un producto pasa de una m\'aquina a la siguiente.
+		De la misma forma, existen otras entidades que se suscriben a una entidad que se encarga de actualizar el paso del tiempo en todos los objetos que esten suscriptos a ella.
+		Cada d\'ia esta formado por una cantidad especificada de ticks. 
+A su vez, la cantidad de d\'ias por semana y d\'ias por mes tamb\'ien se encuentra parametizada.
+		
+	\subsection{Laboratorio de Tecnologías}
+		
+		
 		
 		\begin{figure}[H]
 		\centering
@@ -86,14 +113,22 @@
 		\caption{Diagrama de Clases de la lógica del desarrollo de Tecnologías}
 		\end{figure}	
 		
+	\subsection{Arquitectura General}
+		
+		\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.5]{diagramas/generalArchitecture.jpg}
+		\caption{Diagrama de Paqutes general de la Arquitectura}
+		\end{figure}	
+		
+		La arquitectura sigue al tradicional patr\'on de arquitectura, \emph{MVC}. El modelo no depende de nada m\'as que si mismo, Los controladores utilizan al modelo y a la vista y la vista necesita del modelo. La capa de persistencia tambi\'en esta desacoplada completamente del modelo.
+		
 \clearpage
 \section{Vista de Procesos}
 	\textcolor{red}{mmm... la bibliografia dice de usar diagrama de actividades, o de estados. Pero...}	
 
 \clearpage
 \section{Vista de Desarrollo}
-				
-	
 	
 	\begin{figure}[H]
 	\centering
@@ -101,22 +136,24 @@
 	\caption{Diagrama de Componentes}
 	\end{figure}
 	
-	\subsection{Componentes}
+		En la implementaci\'on de la capa de recuperaci\'on de datos a la que llamamos persistencia por una posible futura extensi\'on, se utiliz\'o un componente para facilitar la recuperaci\'on.   
 		
-	\textcolor{red}{Breve descripcion acerca de cada componente}	
+		El componente que utilizamos es la libreria Dom4j. La utilizaci\'on de esta libreria nos permitio desligarnos de la necesidad de hacer un parser de XML.
+		
+		Otro componente que utilizamos durante el desarrollo fue el framework JUnit. La utilizaci\'on de este framework facilito la construcci\'on de pruebas que nos sirvieron en primer lugar para ir probando los distintos modulos que se iban implementando y en segundo lugar, para poder refactorizarlos sin miedo a meter nuevos huecos en el programa. 
 	
 \clearpage
 \section{Vista Física}
 	\begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.5]{diagramas/deployment.jpg}
-	\caption{Diagrama de Emplazamiento }
+	\caption{Diagrama de Despliegue }
 	\end{figure}
+	
+	El diagrama de \emph{deployment} es muy simple ya que la aplicaci\'on no es una aplicaci\'on  o que este desplegada en m\'as de un sistema. Por lo tanto, todos los componentes existentes estan contenidos en el \'unico nodo del sistema.
 	
 \clearpage
 \section{Escenarios}
-	
-	\textcolor{red}{Completar CUs}	
 
 	\begin{figure}[H]
 	\centering
@@ -126,15 +163,45 @@
 	
 	\subsection{Funcionalidades}
 	
-		\textcolor{red}{Breve descripcion acerca de cada CU}	
-	
 		\begin{enumerate}
-			\item{\emph{ :}}
-			\item{\emph{ :}}
-			\item{\emph{ :}}
-			\item{\emph{ :}}
-			\item{\emph{ :}}
+			
+			\item{\emph{ Purchase Machine:}} El jugador puede comprar m\'aquinas y ubicarlas en la fabrica.
+			
+			\item{\emph{ Purchase Conveyor:}}  El jugador puede colocar segmentos de cintas transportadoras. Una vez conectadas las cintas transportadoras con otros elementos de la l\'inea, la cinta muestra la direcci\'on que seguira el producto. Acci\'on ejecutada desde el modo construcci\'on.
+			
+			\item{\emph{ Sell Warehouse:}} El jugador puede vender la fabrica y volver a la selecci\'on de terrenos.
+			
+			\item{\emph{ Sell Machine:}} El jugador puede vender la m\'aquina y recibir a cambio un valor proporcional de su precio consecuencia de la depreciaci\'on sufrida.
+			
+			\item{\emph{ Move Machine:}}  El jugador puede reubicar m\'aquinas ya compradas en las distintas ubicaciones disponibles de la fabrica. La m\'aquina queda ubicada en la fabrica con su respectiva entrada y salida. 
+		
+			\item{\emph{ Configure Input of Raw Materials:}} El jugador selecciona la materia prima que se usara para la producci\'on en la l\'inea. 
+		
+			\item{\emph{ Repair Production Line Machines:}} El jugador selecciona la linea de producci\'on cuyas m\'aquinas desea reparar. La reparaci\'on tiene un costo proporcional al precio de la m\'aquina. Acci\'on ejecutada desde el modo construcci\'on.
+			
+			\item{\emph{ Repair Machine:}} El jugador repara una m\'aquina que selecciona. La reparaci\'on tiene un costo proporcional al precio de la m\'aquina. Acci\'on ejecutada desde el modo construcci\'on.
+			
+			\item{\emph{ Play:}} El jugador pasa a modo continuo.
+			
+			\item{\emph{ Pause:}} El jugador pasa a modo construcci\'on. Desde el modo construcci\'on. 
+			
+			\item{\emph{ Process prices change:}} Semanalmente cambian todos los precios de los productos y las materias primas.
+			
+			\item{\emph{ Sell Products:}} Al final de cada d\'ia, la producci\'on es vendida con los precios correspondientes a esa semana.
+			
+			\item{\emph{ Buy Raw Materials:}}  El jugador compra la materia prima que quiera. Acci\'on ejecutada desde el modo construcci\'on.
+			
+			\item{\emph{ Research Technology:}} El jugador decide cual ser\'a la pr\'oxima tecnolog\'ia que sera desarrollada
+			
+			\item{\emph{ Change Technology Daily Funding:}} El jugador establece cuanta plata invertir\'a en el desarrollo de nuevas tecnolog\'ias.
+		
 		\end{enumerate}
+	
+\clearpage	
+\section{Conclusi\'on}	
+	La primer conclusi\'on a la que llegamos fue que en reiteradas ocasiones tomamos decisiones que aumentaban la complejidad del sistema sin hacer un an\'alisis completo de si pod\'iamos llegar a implementarlas a tiempo.
+	
+	Una segunda conclusi\'on es que es preferible tomarse el tiempo necesario para dise\~narlo bien el sistema antes de empezar a escribir el c\'odigo. No hacerlo puede resultar en perder mucho tiempo en caso de que como consecuencia de un requisito que no se hab\'ia contemplado o una idea que no se hab\'ia terminado de cerrar, sea necesario replantearse el problema. 
 	
 \clearpage
 \begin{thebibliography}{9}
