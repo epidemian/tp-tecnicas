@@ -51,7 +51,7 @@ public class LineElementsMarketPanelController {
 
 		// Raw materials input action.
 		this.marketPanel.addInputButtonActionListener(this.editionActions
-				.getActionToSetRawMaterialInputTool());
+				.getActionToSetInputLineElementTool());
 
 		initMachineButtonsActionsAndImages(game);
 

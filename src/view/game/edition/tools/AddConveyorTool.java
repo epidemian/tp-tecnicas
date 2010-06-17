@@ -16,6 +16,8 @@ import model.exception.BusinessLogicException;
 import model.game.Game;
 import model.production.Direction;
 import model.production.elements.Conveyor;
+import model.production.elements.InputProductionLineElement;
+import model.production.elements.OutputProductionLineElement;
 import model.production.elements.ProductionLineElement;
 import model.production.elements.machine.ProductionMachine;
 import model.production.elements.machine.QualityControlMachine;
@@ -212,12 +214,12 @@ public class AddConveyorTool extends EditionTool {
 	}
 
 	private boolean isInputAvailable(ProductionLineElement element) {
-		return !element.hasPreviousLineElement()
+		return element.canHavePreviousLineElement() && !element.hasPreviousLineElement()
 				&& isTileEmpty(element.getInputConnectionPosition());
 	}
 
 	private boolean isOutputAvailable(ProductionLineElement element) {
-		return !element.hasNextLineElement()
+		return element.canHaveNextLineElement() && !element.hasNextLineElement()
 				&& isTileEmpty(element.getOutputConnectionPosition());
 	}
 
@@ -411,4 +413,17 @@ class LineElementRecognizer extends TileElementVisitor {
 		this.lineElement = machine;
 	}
 
+	@Override
+	public void visitInputProductionLineElement(
+			InputProductionLineElement inputLineElement) {
+		this.lineElement = inputLineElement;
+	}
+
+	@Override
+	public void visitOutputProductionLineElement(
+			OutputProductionLineElement outputLineElement) {
+		this.lineElement = outputLineElement;
+	}
+
+	
 }

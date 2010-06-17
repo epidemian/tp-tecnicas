@@ -13,6 +13,7 @@ import model.production.elements.machine.MachineType;
 import view.game.GamePanel;
 import view.game.GroundPanel;
 import view.game.edition.tools.AddConveyorTool;
+import view.game.edition.tools.AddInputLineElementTool;
 import view.game.edition.tools.AddMachineTool;
 import view.game.edition.tools.AddProductionMachineTool;
 import view.game.edition.tools.AddQualityControlMachineTool;
@@ -69,8 +70,8 @@ public class EditionActions {
 		return getActionToSetTool(tool, "Add-Conveyor");
 	}
 	
-	public Action getActionToSetRawMaterialInputTool() {
-		EditionTool tool = new AddConveyorTool(gamePanel, game);
+	public Action getActionToSetInputLineElementTool() {
+		EditionTool tool = new AddInputLineElementTool(gamePanel, game);
 		return getActionToSetTool(tool, "Add-Conveyor");
 	}
 	

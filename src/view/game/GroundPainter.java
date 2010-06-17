@@ -13,6 +13,8 @@ import java.util.List;
 
 import model.production.Direction;
 import model.production.elements.Conveyor;
+import model.production.elements.InputProductionLineElement;
+import model.production.elements.OutputProductionLineElement;
 import model.production.elements.ProductionLineElement;
 import model.production.elements.machine.ProductionMachine;
 import model.production.elements.machine.QualityControlMachine;
@@ -92,20 +94,21 @@ public class GroundPainter implements Painter {
 
 			@Override
 			public void visitWall(Wall wall) {
-				
+
 				Position from = wall.getPosition();
-				Position to = from.add(new Position(wall.getHeight(), wall.getWidth()));
+				Position to = from.add(new Position(wall.getHeight(), wall
+						.getWidth()));
 				Image image = ImageLoader.getImage(IMG_WALL);
-				
+
 				for (int row = from.getRow(); row < to.getRow(); row++) {
 					for (int col = from.getCol(); col < to.getCol(); col++) {
 						int x = col * tileSize;
 						int y = row * tileSize;
-						graphics.drawImage(image, x, y, tileSize, tileSize, null);
-						
+						graphics.drawImage(image, x, y, tileSize, tileSize,
+								null);
+
 					}
 				}
-				
 
 			}
 		};
@@ -145,6 +148,18 @@ public class GroundPainter implements Painter {
 				drawHighlightRectangle();
 			}
 
+			@Override
+			public void visitInputProductionLineElement(
+					InputProductionLineElement inputLineElement) {
+				visitProductionLineElement(inputLineElement);
+			}
+
+			@Override
+			public void visitOutputProductionLineElement(
+					OutputProductionLineElement outputLineElement) {
+				visitProductionLineElement(outputLineElement);
+			}
+
 			private void visitProductionLineElement(
 					ProductionLineElement lineElement) {
 				drawHighlightRectangle();
@@ -166,10 +181,12 @@ public class GroundPainter implements Painter {
 
 	public void drawProductionLineElementArrows(
 			ProductionLineElement lineElement, Graphics2D graphics, Color color) {
-		drawInputArrow(lineElement.getInputConnectionPosition(), lineElement
-				.getInputConnectionDirection(), color, graphics);
-		drawOutputArrow(lineElement.getOutputConnectionPosition(), lineElement
-				.getOutputConnectionDirection(), color, graphics);
+		if (lineElement.canHavePreviousLineElement())
+			drawInputArrow(lineElement.getInputConnectionPosition(),
+					lineElement.getInputConnectionDirection(), color, graphics);
+		if (lineElement.canHaveNextLineElement())
+			drawOutputArrow(lineElement.getOutputConnectionPosition(),
+					lineElement.getOutputConnectionDirection(), color, graphics);
 	}
 
 	public void drawInputArrow(Position position, Direction direction,

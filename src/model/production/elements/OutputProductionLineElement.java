@@ -1,5 +1,6 @@
 package model.production.elements;
 
+import model.exception.BusinessLogicException;
 import model.production.Direction;
 import model.production.Product;
 import model.warehouse.Position;
@@ -48,12 +49,12 @@ public class OutputProductionLineElement extends ProductionLineElement {
 
 	@Override
 	public Direction getOutputConnectionDirection() {
-		return null;
+		throw new BusinessLogicException("Illegal operation");
 	}
 
 	@Override
 	public Position getOutputConnectionPosition() {
-		return null;
+		throw new BusinessLogicException("Illegal operation");
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package model.production.elements;
 
+import model.exception.BusinessLogicException;
 import model.production.Direction;
 import model.production.RawMaterials;
 import model.warehouse.Position;
@@ -7,6 +8,8 @@ import model.warehouse.TileElementVisitor;
 
 public class InputProductionLineElement extends ProductionLineElement {
 
+	public static final int PURCHASE_PRICE = 0;
+	private static final int SALE_PRICE = 0;
 	private final Direction outputConnectionDirection;
 	private RawMaterials configuration = new RawMaterials();
 
@@ -28,12 +31,12 @@ public class InputProductionLineElement extends ProductionLineElement {
 
 	@Override
 	public Direction getInputConnectionDirection() {
-		return null;
+		throw new BusinessLogicException("Illegal operation");
 	}
 
 	@Override
 	public Position getInputConnectionPosition() {
-		return null;
+		throw new BusinessLogicException("Illegal operation");
 	}
 
 	@Override
@@ -49,12 +52,12 @@ public class InputProductionLineElement extends ProductionLineElement {
 
 	@Override
 	public int getPurchasePrice() {
-		return 0;
+		return PURCHASE_PRICE;
 	}
 
 	@Override
 	public int getSalePrice() {
-		return 0;
+		return SALE_PRICE;
 	}
 
 	@Override

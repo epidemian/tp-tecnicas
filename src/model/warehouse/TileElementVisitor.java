@@ -28,10 +28,10 @@ public abstract class TileElementVisitor {
 	}
 
 	public void visitOutputProductionLineElement(
-			OutputProductionLineElement outputProductionLineElement) {
+			OutputProductionLineElement outputLineElement) {
 	}
 
 	public void visitInputProductionLineElement(
-			InputProductionLineElement inputProductionLineElement) {
+			InputProductionLineElement inputLineElement) {
 	}
 }
