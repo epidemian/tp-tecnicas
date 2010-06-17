@@ -1,10 +1,11 @@
 package model.warehouse;
 
-import static model.utils.ArgumentUtils.checkNotNull;
+import static model.utils.ArgumentUtils.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
+import model.exception.BusinessLogicException;
 import model.game.Budget;
 import model.game.time.DailyUpdatable;
 import model.game.time.MonthlyUpdatable;
@@ -13,82 +14,97 @@ import model.production.RawMaterials;
 import model.production.StorageArea;
 import model.production.ValidProductionSequences;
 import model.production.elements.ProductionLineElement;
-import model.production.elements.machine.Machine;
 import model.production.line.ProductionLine;
 
-public abstract class Warehouse implements MonthlyUpdatable, DailyUpdatable {
-	protected Budget budget;
-	protected Ground ground;
-
-	/**
-	 * Contains the raw material and the products already finished
-	 */
+public class Warehouse implements MonthlyUpdatable, DailyUpdatable {
+	
+	private static final double RENT = 0.01f; 
+	
+	private Budget budget;
+	private Ground ground;
 	private StorageArea storageArea;
-
 	private PriceMap priceMap;
-
 	private int totalProductsMade;
 	private int totalDefectiveProductsMade;
-
+	private int salePrice;
+	private int rentPrice;
 	private Collection<ProductionLine> productionLines = new ArrayList<ProductionLine>();
-
-	public Collection<ProductionLine> getProductionLines() {
-		return productionLines;
-	}
-
-	// TODO remove (?)
-	@Deprecated
-	public Warehouse(Ground ground, Budget budget) {
-		checkNotNull(ground, "ground");
-		checkNotNull(budget, "budget");
-
-		this.ground = ground;
-		this.budget = budget;
-		this.totalDefectiveProductsMade = 0;
-		this.totalProductsMade = 0;
-	}
-
-	public Warehouse(Ground ground, Budget budget, PriceMap map,
-			ValidProductionSequences sequences) {
+	
+	private Warehouse(Ground ground, Budget budget, PriceMap map,
+			ValidProductionSequences sequences, int salePrice, int rentPrice) {
+		
 		checkNotNull(ground, "ground");
 		checkNotNull(budget, "budget");
 		checkNotNull(map, "map");
+		
 		this.ground = ground;
 		this.budget = budget;
 		this.priceMap = map;
 		this.totalDefectiveProductsMade = 0;
 		this.totalProductsMade = 0;
 		this.storageArea = new StorageArea(new RawMaterials(), sequences);
+		this.setRentPrice(rentPrice);
+		this.setSalePrice(salePrice);
 	}
-
+	
+	public static Warehouse createPurchasedWarehouse(Ground ground, Budget budget, PriceMap map,
+			ValidProductionSequences sequences){
+		return new Warehouse(ground,budget,map,sequences,ground.getPrice(),0);
+	}
+	
+	public static Warehouse createRentedWarehouse(Ground ground, Budget budget, PriceMap map,
+			ValidProductionSequences sequences){
+		return new Warehouse(ground,budget,map,sequences,0, (int)(RENT * ground.getPrice()));
+	}
+	
 	public void createProductionLines() {
 
 		ProductionLinesCreator creator = new ProductionLinesCreator(
 				this.storageArea);
-		productionLines = creator.createFromGround(this.ground);
+		this.productionLines = creator.createFromGround(this.ground);
+	}
+
+	public void sell() {
+		sellGround();
+		sellMachines();
 	}
 
 	private void sellMachines() {
 		if (this.productionLines != null) {
 			for (ProductionLine productionLine : this.productionLines) {
 				for (ProductionLineElement element : productionLine) {
-					element.sell(budget);
+					element.sell(this.budget);
 				}
 			}
 		}
 	}
 
-	public int getPriceGround() {
-		checkNotNull(ground, "ground");
-		return ground.getPrice();
+	public void sellGround() {
+		budget.increment((int)(0.8 * this.salePrice));
 	}
 
-	protected abstract void sellGround();
+	private void sellProducts() {
+		double partial = 0;
+		int productPrice = 0;
 
-	public void sell() {
-		sellGround();
-		sellMachines();
+		try {
+
+			for (Product prod : this.storageArea.getProductsProduced()) {
+				productPrice = this.priceMap.getPrice(prod);
+				partial += Math.pow(1 - this.getDefectivePercentage(), 2)
+						* productPrice;
+			}
+
+		} catch (PriceProductDoesNotExistException e) {
+			throw new BusinessLogicException("Price product does not exist");
+		}
+
+		this.budget.increment((int) Math.round(partial));
 	}
+
+	public void updateMonth() {
+		budget.decrement(this.rentPrice);
+	}	
 
 	public void updateDay() {
 
@@ -101,40 +117,14 @@ public abstract class Warehouse implements MonthlyUpdatable, DailyUpdatable {
 				+ this.storageArea.getProductsProduced().size());
 
 		this.storageArea.getProductsProduced().clear();
-
 	}
 
-	private void sellProducts() {
-		double partial = 0;
-		int productPrice = 0;
-
-		// TODO ver como se resuelve esta excepcion...
-		try {
-
-			for (Product prod : this.storageArea.getProductsProduced()) {
-				productPrice = this.priceMap.getPrice(prod);
-				partial += Math.pow(1 - this.getDefectivePercentage(), 2)
-						* productPrice;
-			}
-
-		} catch (PriceProductDoesNotExistException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		this.budget.increment((int) Math.round(partial));
-	}
-
-	private void setTotalProductsMade(int totalProductsMade) {
-		this.totalProductsMade = totalProductsMade;
+	public Collection<ProductionLine> getProductionLines() {
+		return productionLines;
 	}
 
 	public int getTotalProductsMade() {
 		return totalProductsMade;
-	}
-
-	private void setTotalDefectiveProductsMade(int totalDefectiveProductsMade) {
-		this.totalDefectiveProductsMade = totalDefectiveProductsMade;
 	}
 
 	public int getTotalDefectiveProductsMade() {
@@ -145,9 +135,38 @@ public abstract class Warehouse implements MonthlyUpdatable, DailyUpdatable {
 		return (this.totalProductsMade != 0 ? (double) this.totalDefectiveProductsMade
 				/ this.totalProductsMade : 0);
 	}
+	
+	public Ground getGround(){
+		return this.ground;
+	}
 
 	public StorageArea getStorageArea() {
 		return storageArea;
 	}
 
+	public int getSalePrice(){
+		return this.salePrice;
+	}
+	
+	public int getRentPrice(){
+		return this.rentPrice;
+	}
+	
+	private void setSalePrice(int salePrice){
+		checkGreaterEqual(salePrice, 0);
+		this.salePrice = salePrice;
+	}
+	
+	private void setRentPrice(int rentPrice){
+		checkGreaterEqual(rentPrice, 0);
+		this.rentPrice = rentPrice;
+	}
+	
+	private void setTotalProductsMade(int totalProductsMade) {
+		this.totalProductsMade = totalProductsMade;
+	}
+
+	private void setTotalDefectiveProductsMade(int totalDefectiveProductsMade) {
+		this.totalDefectiveProductsMade = totalDefectiveProductsMade;
+	}
 }
