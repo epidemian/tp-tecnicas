@@ -56,7 +56,7 @@ public abstract class Machine extends ProductionLineElement implements
 	 * @param input
 	 * @return TODO
 	 */
-	public abstract Product treatProduct(Product input);
+	protected abstract Product treatProduct(Product input);
 
 	public void repair(Budget budget)
 			throws CannotRepairHealthyMachineException {
@@ -70,6 +70,7 @@ public abstract class Machine extends ProductionLineElement implements
 	}
 
 	public void setMachineState(MachineState newState) {
+		checkNotNull(newState, "machine state");
 		this.machineState = newState;
 	}
 
@@ -92,7 +93,7 @@ public abstract class Machine extends ProductionLineElement implements
 	}
 
 	private void setMachineType(MachineType machineType) {
-		checkNotNull(machineType, "machineType");
+		checkNotNull(machineType, "machine type");
 		this.machineType = machineType;
 	}
 
@@ -105,21 +106,30 @@ public abstract class Machine extends ProductionLineElement implements
 	//		
 	// }
 
-	/*
-	 * Analizes whether after processing the product, the machine becomes
+	/**
+	 * Analyzes whether after processing the product, the machine becomes
 	 * damaged or broken.
 	 */
 	private void processMachineDeterioration() {
-		if (randomBoolean(this.machineType.getDamageChance()))
+		if (willBecomeDamage())
 			this.damage();
-		if (randomBoolean(this.getMachineType().getBreakChance()))
+		if (willBreakUp())
 			this.breakUp();
 	}
+	
+	protected boolean willBecomeDamage() {
+		return randomBoolean(this.getMachineType().getDamageChance());
+	}
 
-	protected void damage() {
+	protected boolean willBreakUp() {
+		return randomBoolean(this.getMachineType().getBreakChance());
+	}
+
+	private void damage() {
 		this.getMachineState().damage(this);
 	}
 
+	@Override
 	public void breakUp() {
 		this.getMachineState().breakUp(this);
 	}

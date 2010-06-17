@@ -4,7 +4,9 @@ import static model.production.TestUtils.*;
 import static org.junit.Assert.assertEquals;
 
 import model.game.Budget;
+import model.production.elements.machine.Machine;
 import model.production.elements.machine.MachineType;
+import model.production.elements.machine.ProductionMachine;
 import model.production.elements.machine.states.BrokenMachineState;
 import model.production.elements.machine.states.CannotRepairHealthyMachineException;
 import model.production.elements.machine.states.DamagedMachineState;
@@ -16,7 +18,7 @@ import org.junit.Test;
 
 public class MachineStateTest {
 	
-	private MachineMock machine;
+	private Machine machine;
 	private ProductionLine line;
 
 	//At runtime a controller will assign a specific budget from where the line/
@@ -26,7 +28,7 @@ public class MachineStateTest {
 	@Before
 	public void setUp() {
 
-		machine = new MachineMock(createMachineType("TestingMachine"));
+		machine = new ProductionMachine(createMachineType("TestingMachine"));
 		line = ProductionLine.createValidProductionLine(machine,
 				new StorageArea(new RawMaterials(),
 						new ValidProductionSequences()), new RawMaterials());

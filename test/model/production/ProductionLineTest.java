@@ -1,6 +1,6 @@
 package model.production;
 
-import static model.production.TestUtils.*;
+import static model.production.TestUtils.createMachineType;
 import static model.production.elements.ProductionLineElement.connectLineElements;
 import static org.junit.Assert.*;
 
@@ -16,15 +16,19 @@ import model.production.elements.machine.ProductionMachine;
 import model.production.elements.machine.MachineType.Builder;
 import model.production.elements.machine.states.CannotRepairHealthyMachineException;
 import model.production.line.ProductionLine;
-import model.warehouse.Position;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class ProductionLineTest {
 
+	private static final int MACHINE_PRICE = 100;
+
+	private static final int INITIAL_BUDGET = 10000;
+
 	private ProductionLine productionLine;
+	
+	List<Machine> machines;
 
 	// At runtime a controller will assign a specific budget from where the
 	// line/
@@ -33,48 +37,54 @@ public class ProductionLineTest {
 
 	@Before
 	public void setUp() {
-		this.productionLine = this
-				.createProductionLineProcessingCartonWithOnlyMachines();
-		this.budget = new Budget(10000);
+		this.machines = new ArrayList<Machine>();
+		this.budget = new Budget(INITIAL_BUDGET);
 	}
 
-	private ProductionLine createProductionLineProcessingCartonWithOnlyMachines() {
+	private void setUpProductionLineProcessingCartonWithOnlyMachines() {
 
-		ProductionLineElement prodLineElement1 = new ProductionMachine(
-				createMachineType("Licuado", 1, 1));
-		ProductionLineElement prodLineElement2 = new ProductionMachine(
-				createMachineType("Haz", 1, 1));
-		ProductionLineElement prodLineElement3 = new ProductionMachine(
-				createMachineType("Horno", 1, 1));
+		Builder builder = new MachineType.Builder("Licuado", 1, 1).price(MACHINE_PRICE);
 
-		connectLineElements(prodLineElement1, prodLineElement2);
-		connectLineElements(prodLineElement2, prodLineElement3);
+		Machine machine1 = new MachineThatNeverBreaks(builder.build());
+		Machine machine2 = new MachineThatNeverBreaks(builder.name("Haz")
+				.build());
+		Machine machine3 = new MachineThatNeverBreaks(builder.name("Horno")
+				.build());
 
-		return ProductionLine.createValidProductionLine(prodLineElement1,
+		connectLineElements(machine1, machine2);
+		connectLineElements(machine2, machine3);
+		
+		this.machines.add(machine1);
+		this.machines.add(machine2);
+		this.machines.add(machine3);
+
+		this.productionLine = ProductionLine.createValidProductionLine(machine1,
 				new StorageArea(new RawMaterials(),
 						new ValidProductionSequences()), new RawMaterials());
 	}
 
-	private ProductionLine createProductionLineProcessingCartonWithConveyor() {
+	private void setUpProductionLineProcessingCartonWithConveyor() {
 
-		ProductionLineElement prodLineElement1 = new ProductionMachine(
+		ProductionLineElement prodLineElement1 = new MachineThatNeverBreaks(
 				createMachineType("Licuado", 1, 1));
 		ProductionLineElement prodLineElement2 = new Conveyor();
 
-		ProductionLineElement prodLineElement3 = new ProductionMachine(
+		ProductionLineElement prodLineElement3 = new MachineThatNeverBreaks(
 				createMachineType("Horno", 1, 1));
 
 		connectLineElements(prodLineElement1, prodLineElement2);
 		connectLineElements(prodLineElement2, prodLineElement3);
 
-		return ProductionLine.createValidProductionLine(prodLineElement1,
+		this.productionLine = ProductionLine.createValidProductionLine(prodLineElement1,
 				new StorageArea(new RawMaterials(),
 						new ValidProductionSequences()), new RawMaterials());
 	}
-
+	
 	@Test
 	public void dailyProduction() {
 
+		setUpProductionLineProcessingCartonWithOnlyMachines();
+		
 		int ticksInADay = 500;
 
 		for (int ticks = 0; ticks < ticksInADay; ticks++) {
@@ -92,152 +102,124 @@ public class ProductionLineTest {
 		List<Integer> dailyProductionList = this.productionLine
 				.getProductionHistory();
 
-		assertEquals(dailyProductionList.get(dailyProductionList.size() - 1)
-				.intValue(), expectedProduction);
+		assertEquals(expectedProduction, dailyProductionList.get(
+				dailyProductionList.size() - 1).intValue());
 
 		assertEquals(0, this.productionLine.getDailyProduction());
 	}
 
-	private List<MachineMock> createListConnectedMachineMocks() {
-		return createListConnectedMachineMocks(0); 
-	}
-	
-	private List<MachineMock> createListConnectedMachineMocks(int price) {
-		List<MachineMock> list = new ArrayList<MachineMock>();
+//	private List<Machine> createListConnectedMachines() {
+//		return createListConnectedMachines(0);
+//	}
 
-		Builder builder = new MachineType.Builder("Licuado", 1, 1).price(price);
-		
-		MachineMock machineMock1 = new MachineMock(builder.build());
-		MachineMock machineMock2 = new MachineMock(builder.name("Haz").build());
-		MachineMock machineMock3 = new MachineMock(builder.name("Horno").build());
 
-		connectLineElements(machineMock1, machineMock2);
-		connectLineElements(machineMock2, machineMock3);
-
-		list.add(machineMock1);
-		list.add(machineMock2);
-		list.add(machineMock3);
-
-		return list;
-	}
 
 	@Test
-	public void LineWithThreeNonBrokenMachinesRepairedFromMachines()
+	public void lineWithThreeNonBrokenMachinesRepairedFromMachines()
 			throws CannotRepairHealthyMachineException {
 
-		List<MachineMock> machines = createListConnectedMachineMocks();
-
-		ProductionLine line = ProductionLine.createValidProductionLine(machines
-				.get(0), new StorageArea(new RawMaterials(),
-				new ValidProductionSequences()), new RawMaterials());
+		setUpProductionLineProcessingCartonWithOnlyMachines();
 
 		machines.get(0).breakUp();
 		machines.get(1).breakUp();
 
 		// Should be false because two machines are broken
-		assertFalse(line.isWorking());
+		assertFalse(this.productionLine.isWorking());
 
 		machines.get(0).repair(this.budget);
 
 		// Should be false because one machine is broken
-		assertFalse(line.isWorking());
+		assertFalse(this.productionLine.isWorking());
 
 		machines.get(1).repair(this.budget);
 
 		// All machines are now repaired!
-		assertTrue(line.isWorking());
+		assertTrue(this.productionLine.isWorking());
 
 	}
 
 	@Test
-	public void LineWithThreeNonBrokenMachinesRepairedFromLine()
+	public void lineWithThreeNonBrokenMachinesRepairedFromLine()
 			throws CannotRepairHealthyMachineException {
 
-		List<MachineMock> machines = createListConnectedMachineMocks();
-
-		ProductionLine line = ProductionLine.createValidProductionLine(machines
-				.get(0), new StorageArea(new RawMaterials(),
-				new ValidProductionSequences()), new RawMaterials());
+		setUpProductionLineProcessingCartonWithOnlyMachines();
 
 		machines.get(0).breakUp();
 		machines.get(1).breakUp();
 
-		line.repairAllMachines(budget);
+		this.productionLine.repairAllMachines(budget);
 
 		// All machines are now repaired!
-		assertTrue(line.isWorking());
+		assertTrue(this.productionLine.isWorking());
 
 	}
 
 	@Test
 	public void debitFromBudgetWhenRepairingLine()
 			throws CannotRepairHealthyMachineException {
-		int initialBudget = this.budget.getBalance();
 
-		List<MachineMock> machines = createListConnectedMachineMocks();
-
-		ProductionLine line = ProductionLine.createValidProductionLine(machines
-				.get(0), new StorageArea(new RawMaterials(),
-				new ValidProductionSequences()), new RawMaterials());
+		setUpProductionLineProcessingCartonWithOnlyMachines();
 
 		// One machine will be broken and the line will be repaired.
 		machines.get(0).breakUp();
-		assertFalse(line.isWorking());
+		assertFalse(this.productionLine.isWorking());
 
-		line.repairAllMachines(this.budget);
+		this.productionLine.repairAllMachines(this.budget);
 
-		assertEquals(this.budget.getBalance(), initialBudget
+		int expectedBalance = INITIAL_BUDGET
 				- Math.round(machines.get(0).getPurchasePrice()
-						* Machine.PRICE_REPAIR_COEF));
+						* Machine.PRICE_REPAIR_COEF);
+		
+		assertEquals(expectedBalance, this.budget.getBalance());
 	}
 
 	@Test
 	public void sellMachinesWhenNotBroken() {
-		int initialBudget = this.budget.getBalance();
-
-		int price = 100;
+		int price = MACHINE_PRICE;
 		int nMachines = 3;
-		List<MachineMock> machines = createListConnectedMachineMocks(price);
+		setUpProductionLineProcessingCartonWithOnlyMachines();
 
-		ProductionLine line = ProductionLine.createValidProductionLine(machines
-				.get(0), new StorageArea(new RawMaterials(),
-				new ValidProductionSequences()), new RawMaterials());
+		this.productionLine.sell(budget);
 
-		line.sell(budget);
-
-		int expected = initialBudget + (price / 2) * nMachines;
-		assertEquals(expected, budget.getBalance());
+		int expectedBalance = INITIAL_BUDGET + (price / 2) * nMachines;
+		assertEquals(expectedBalance, budget.getBalance());
 	}
 
 	@Test
-	public void sellMachinesWhenOneBrokenAndOneDamaged() {
-		int initialBudget = this.budget.getBalance();
-
+	public void sellMachinesWithOneBroken() {
 		int price = 100;
-		List<MachineMock> machines = createListConnectedMachineMocks(price);
+		setUpProductionLineProcessingCartonWithOnlyMachines();
 
-		ProductionLine line = ProductionLine.createValidProductionLine(machines
-				.get(0), new StorageArea(new RawMaterials(),
-				new ValidProductionSequences()), new RawMaterials());
-
-		machines.get(0).damage();
+		//machines.get(0).damage();
 		// machines.get(0).breakUp();
 		machines.get(1).breakUp();
 
-		line.sell(budget);
+		this.productionLine.sell(budget);
 
-		assertEquals(initialBudget + (price / 2) * 2 , budget.getBalance());
+		int expectedBalance = INITIAL_BUDGET + (price / 2) * 2;
+		assertEquals(expectedBalance, budget.getBalance());
 	}
 
 	@Test
 	public void breakAllMachinesInATwoMachineLine() {
-		ProductionLine line = this
-				.createProductionLineProcessingCartonWithConveyor();
+		setUpProductionLineProcessingCartonWithConveyor();
 
-		line.breakAllMachines();
+		this.productionLine.breakAllMachines();
 
-		assertEquals(line.getBrokenMachines().size(), 2);
+		assertEquals(2, this.productionLine.getBrokenMachines().size());
 
 	}
 
+}
+
+class MachineThatNeverBreaks extends ProductionMachine {
+
+	public MachineThatNeverBreaks(MachineType machineType) {
+		super(machineType);
+	}
+
+	@Override
+	protected boolean willBreakUp() {
+		return false;
+	}
 }
