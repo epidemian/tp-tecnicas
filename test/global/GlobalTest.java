@@ -109,8 +109,6 @@ public class GlobalTest {
 		connectLineElements(prodLineElement1, prodLineElement2);
 		connectLineElements(prodLineElement2, prodLineElement3);
 
-		RawMaterials rawMaterialConfiguration = new RawMaterials();
-
 		return ProductionLine.createFunctionalProductionLine(this.warehouse
 				.getStorageArea(), prodLineElement0, prodLineElement3);
 	}
