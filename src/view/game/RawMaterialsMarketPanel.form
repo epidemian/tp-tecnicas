@@ -64,26 +64,29 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Component id="storageAreaLabel" pref="32" max="32767" attributes="0"/>
+              <Component id="storageAreaLabel" pref="48" max="32767" attributes="0"/>
               <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
-              <Component id="rawMaterialsStockLabel" pref="24" max="32767" attributes="0"/>
+              <Component id="rawMaterialsStockLabel" pref="40" max="32767" attributes="0"/>
               <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Component id="jScrollPane1" min="-2" pref="164" max="-2" attributes="0"/>
+              <Component id="jScrollPane1" pref="161" max="32767" attributes="0"/>
               <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Component id="rawMaterialsMarketLabel" pref="24" max="32767" attributes="0"/>
+              <Component id="rawMaterialsMarketLabel" pref="41" max="32767" attributes="0"/>
               <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
-              <Component id="buyCombo" pref="27" max="32767" attributes="0"/>
-              <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Group type="102" alignment="3" attributes="0">
+              <Component id="buyCombo" pref="43" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="4" pref="4" max="4" attributes="0"/>
-                      <Component id="quantitySpinner" max="32767" attributes="2"/>
+                      <Component id="quantitySpinner" pref="47" max="32767" attributes="2"/>
                   </Group>
-                  <Component id="rawMaterialPriceLabel" alignment="3" min="-2" max="-2" attributes="2"/>
+                  <Group type="102" alignment="3" attributes="0">
+                      <EmptySpace min="19" pref="19" max="19" attributes="0"/>
+                      <Component id="rawMaterialPriceLabel" min="-2" max="-2" attributes="2"/>
+                  </Group>
               </Group>
               <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
-              <Component id="buyButton" max="32767" attributes="0"/>
-              <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+              <Component id="buyButton" pref="52" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
