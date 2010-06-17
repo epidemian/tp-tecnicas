@@ -15,9 +15,8 @@ public class Main {
 
 		setOSLookAndFeel();
 
-		Game game = createModel();
 		MainFrame mainFrame = new MainFrame();
-		new MainController(game, mainFrame);
+		new MainController(mainFrame);
 	}
 
 	private static void setOSLookAndFeel() {
@@ -29,9 +28,4 @@ public class Main {
 		}
 	}
 
-	private static Game createModel() {
-		Ground ground = ViewUtils.creatGroundSample1();
-		Game game = new Game(ground);
-		return game;
-	}
 }

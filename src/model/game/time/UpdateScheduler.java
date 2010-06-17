@@ -139,4 +139,8 @@ public class UpdateScheduler implements TickUpdatable {
 	private int getTicksPerWeek() {
 		return getTicksPerDay() * getDaysPerWeek();
 	}
+
+	public int getWeekNumber() {
+		return this.tickCount / getTicksPerWeek();
+	}
 }

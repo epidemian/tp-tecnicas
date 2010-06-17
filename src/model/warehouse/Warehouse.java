@@ -4,22 +4,27 @@ import static model.utils.ArgumentUtils.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
 import model.exception.BusinessLogicException;
 import model.game.Budget;
+import model.game.WeeklyPrices;
 import model.game.time.DailyUpdatable;
 import model.game.time.MonthlyUpdatable;
+import model.game.time.WeeklyUpdatable;
 import model.production.Product;
+import model.production.RawMaterialType;
 import model.production.RawMaterials;
 import model.production.StorageArea;
 import model.production.ValidProductionSequences;
 import model.production.elements.ProductionLineElement;
 import model.production.line.ProductionLine;
 
-public class Warehouse implements MonthlyUpdatable, DailyUpdatable {
-	
-	private static final double RENT = 0.01f; 
-	
+public class Warehouse implements MonthlyUpdatable, DailyUpdatable,
+		WeeklyUpdatable {
+
+	private static final double RENT = 0.01f;
+
 	private Budget budget;
 	private Ground ground;
 	private StorageArea storageArea;
@@ -29,34 +34,42 @@ public class Warehouse implements MonthlyUpdatable, DailyUpdatable {
 	private int salePrice;
 	private int rentPrice;
 	private Collection<ProductionLine> productionLines = new ArrayList<ProductionLine>();
-	
+
+	private WeeklyPrices weeklyPrices;
+
 	private Warehouse(Ground ground, Budget budget, PriceMap map,
-			ValidProductionSequences sequences, int salePrice, int rentPrice) {
-		
+			ValidProductionSequences sequences, int salePrice, int rentPrice,
+			WeeklyPrices weeklyPrices) {
+
 		checkNotNull(ground, "ground");
 		checkNotNull(budget, "budget");
 		checkNotNull(map, "map");
-		
+
 		this.ground = ground;
 		this.budget = budget;
 		this.priceMap = map;
 		this.totalDefectiveProductsMade = 0;
 		this.totalProductsMade = 0;
+		this.weeklyPrices = weeklyPrices;
 		this.storageArea = new StorageArea(new RawMaterials(), sequences);
 		this.setRentPrice(rentPrice);
 		this.setSalePrice(salePrice);
 	}
-	
-	public static Warehouse createPurchasedWarehouse(Ground ground, Budget budget, PriceMap map,
-			ValidProductionSequences sequences){
-		return new Warehouse(ground,budget,map,sequences,ground.getPrice(),0);
+
+	public static Warehouse createPurchasedWarehouse(Ground ground,
+			Budget budget, PriceMap map, ValidProductionSequences sequences,
+			WeeklyPrices weeklyPrices) {
+		return new Warehouse(ground, budget, map, sequences, ground.getPrice(),
+				0, weeklyPrices);
 	}
-	
-	public static Warehouse createRentedWarehouse(Ground ground, Budget budget, PriceMap map,
-			ValidProductionSequences sequences){
-		return new Warehouse(ground,budget,map,sequences,0, (int)(RENT * ground.getPrice()));
+
+	public static Warehouse createRentedWarehouse(Ground ground, Budget budget,
+			PriceMap map, ValidProductionSequences sequences,
+			WeeklyPrices weeklyPrices) {
+		return new Warehouse(ground, budget, map, sequences, 0,
+				(int) (RENT * ground.getPrice()), weeklyPrices);
 	}
-	
+
 	public void createProductionLines() {
 
 		ProductionLinesCreator creator = new ProductionLinesCreator(
@@ -80,23 +93,17 @@ public class Warehouse implements MonthlyUpdatable, DailyUpdatable {
 	}
 
 	public void sellGround() {
-		budget.increment((int)(0.8 * this.salePrice));
+		budget.increment((int) (0.8 * this.salePrice));
 	}
 
 	private void sellProducts() {
 		double partial = 0;
 		int productPrice = 0;
 
-		try {
-
-			for (Product prod : this.storageArea.getProductsProduced()) {
-				productPrice = this.priceMap.getPrice(prod);
-				partial += Math.pow(1 - this.getDefectivePercentage(), 2)
-						* productPrice;
-			}
-
-		} catch (PriceProductDoesNotExistException e) {
-			throw new BusinessLogicException("Price product does not exist");
+		for (Product prod : this.storageArea.getProductsProduced()) {
+			productPrice = this.priceMap.getPrice(prod);
+			partial += Math.pow(1 - this.getDefectivePercentage(), 2)
+					* productPrice;
 		}
 
 		this.budget.increment((int) Math.round(partial));
@@ -104,7 +111,7 @@ public class Warehouse implements MonthlyUpdatable, DailyUpdatable {
 
 	public void updateMonth() {
 		budget.decrement(this.rentPrice);
-	}	
+	}
 
 	public void updateDay() {
 
@@ -133,10 +140,11 @@ public class Warehouse implements MonthlyUpdatable, DailyUpdatable {
 
 	private double getDefectivePercentage() {
 		return (this.totalProductsMade != 0 ? (double) this.totalDefectiveProductsMade
-				/ this.totalProductsMade : 0);
+				/ this.totalProductsMade
+				: 0);
 	}
-	
-	public Ground getGround(){
+
+	public Ground getGround() {
 		return this.ground;
 	}
 
@@ -144,29 +152,42 @@ public class Warehouse implements MonthlyUpdatable, DailyUpdatable {
 		return storageArea;
 	}
 
-	public int getSalePrice(){
+	public int getSalePrice() {
 		return this.salePrice;
 	}
-	
-	public int getRentPrice(){
+
+	public int getRentPrice() {
 		return this.rentPrice;
 	}
-	
-	private void setSalePrice(int salePrice){
+
+	private void setSalePrice(int salePrice) {
 		checkGreaterEqual(salePrice, 0);
 		this.salePrice = salePrice;
 	}
-	
-	private void setRentPrice(int rentPrice){
+
+	private void setRentPrice(int rentPrice) {
 		checkGreaterEqual(rentPrice, 0);
 		this.rentPrice = rentPrice;
 	}
-	
+
 	private void setTotalProductsMade(int totalProductsMade) {
 		this.totalProductsMade = totalProductsMade;
 	}
 
 	private void setTotalDefectiveProductsMade(int totalDefectiveProductsMade) {
 		this.totalDefectiveProductsMade = totalDefectiveProductsMade;
+	}
+
+	@Override
+	public void updateWeek() {
+		if (this.weeklyPrices != null) {
+			Map<String, Integer> prices = this.weeklyPrices.getWeeklyPrices();
+			this.priceMap.setMap(prices);
+			this.weeklyPrices.nextWeek();
+		}
+	}
+
+	public PriceMap getPriceMap() {
+		return this.priceMap;
 	}
 }

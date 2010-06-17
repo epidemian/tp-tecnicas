@@ -31,7 +31,7 @@ public class GamePanelController {
 		return gamePanelRemovedListener;
 	}
 
-	public GamePanelController(Game game, final GamePanel gamePanel,
+	public GamePanelController(final Game game, final GamePanel gamePanel,
 			final MainController mainController) {
 
 		this.gamePanel = gamePanel;
@@ -91,7 +91,7 @@ public class GamePanelController {
 			public void actionPerformed(ActionEvent e) {
 				if (MainController.showDialog("Sell", "Are you sure?")) {
 					// MainController.this.game.getWarehouse().sell();
-					mainController.setGroundSelectionPanel();
+					mainController.setGroundSelectionPanel(game.getPlayer());
 				}
 			}
 		});

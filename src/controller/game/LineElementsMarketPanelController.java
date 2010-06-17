@@ -60,7 +60,7 @@ public class LineElementsMarketPanelController {
 
 	private void initMachineButtonsActionsAndImages(Game game) {
 		// Production machine buttons actions n' images.
-		for (MachineType mtype : game.getProductionMachinesTypes()) {
+		for (MachineType mtype : game.getValidProductionMachineTypes()) {
 			ImageIcon icon = getScaleImage(TileElementImageRecognizer
 					.getMachineImage(mtype));
 
@@ -70,7 +70,7 @@ public class LineElementsMarketPanelController {
 		}
 
 		// Quality control machine buttons actions n' images.
-		for (MachineType mtype : game.getQualityControlMachinesTypes()) {
+		for (MachineType mtype : game.getValidQualityControlMachineTypes()) {
 			ImageIcon icon = getScaleImage(TileElementImageRecognizer
 					.getMachineImage(mtype));
 

@@ -25,6 +25,7 @@ import model.game.Game;
 import model.production.RawMaterialType;
 import static model.utils.ArgumentUtils.*;
 import model.production.StorageArea;
+import model.warehouse.PriceMap;
 import view.game.GamePanel;
 import view.game.RawMaterialsMarketPanel;
 
@@ -35,7 +36,7 @@ public class RawMaterialsMarketPanelController {
 	private RawMaterialsMarketPanel marketPanel;
 	private StorageArea storageArea;
 	private List<RawMaterialType> rawMaterialTypes;
-	private Map<RawMaterialType, Integer> rawMaterialPrices;
+	private PriceMap rawMaterialPrices;
 
 	// Buying info.
 	private RawMaterialType rawMaterialType;
@@ -52,7 +53,7 @@ public class RawMaterialsMarketPanelController {
 		checkNotNull(gamePanel, "gamePanel");
 
 		this.storageArea = game.getStorageArea();
-		this.rawMaterialTypes = game.getRawMaterialTypes();
+		this.rawMaterialTypes = game.getValidRawMaterialTypes();
 		this.rawMaterialPrices = game.getRawMaterialPrices();
 		this.marketPanel = marketPanel;
 		this.budget = game.getBudget();
@@ -110,7 +111,7 @@ public class RawMaterialsMarketPanelController {
 		int buyComboSelectedIndex = buyCombo.getSelectedIndex();
 		this.rawMaterialType = this.rawMaterialTypes.get(buyComboSelectedIndex);
 		this.rawMaterialPrice = this.rawMaterialPrices
-				.get(this.rawMaterialType);
+				.getPriceByName(this.rawMaterialType.getName());
 		this.marketPanel.setRawMaterialPrice(getRawMaterialPrice());
 	}
 

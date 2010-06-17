@@ -4,6 +4,7 @@ import static model.utils.ArgumentUtils.*;
 import java.util.HashMap;
 import java.util.Map;
 
+import model.exception.BusinessLogicException;
 import model.production.Product;
 
 public class PriceMap {
@@ -18,12 +19,17 @@ public class PriceMap {
 		this.map=map;
 	}
 	
-	public int getPrice(Product prod) throws PriceProductDoesNotExistException{
-		if(map.containsKey(prod.getProductType().getName())){
-			return map.get(prod.getProductType().getName()).intValue();
+	public int getPrice(Product prod) {
+		String name = prod.getProductType().getName();
+		return getPriceByName(name);
+	}
+	
+	public int getPriceByName(String name) {
+		if(map.containsKey(name)){
+			return map.get(name).intValue();
 		}
 		else{
-			throw new PriceProductDoesNotExistException();
+			throw new BusinessLogicException("Product " + name + " does not exist");
 		}
 	}
 	

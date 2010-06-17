@@ -29,9 +29,22 @@ import java.util.List;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 
+import org.dom4j.DocumentException;
+
+import persistence.InvalidTagException;
+import persistence.XMLFactory;
+
 import model.exception.BusinessLogicException;
+import model.game.Budget;
 import model.game.Game;
+import model.game.Player;
+import model.lab.TechnologyTree;
+import model.production.RawMaterialType;
+import model.production.ValidProductionSequences;
+import model.production.elements.machine.MachineType;
 import model.warehouse.Ground;
+import model.warehouse.PriceMap;
+import model.warehouse.Warehouse;
 import view.MainFrame;
 import view.game.GamePanel;
 import view.game.GroundPanelContainer;
@@ -45,7 +58,6 @@ import view.game.edition.KeyInputActionMapper;
 
 public class MainController {
 
-	private Game game;
 	private MainFrame mainFrame;
 
 	private static final String GROUND_PREFIX = "Ground ";
@@ -58,14 +70,14 @@ public class MainController {
 	private static final Dimension MAIN_PANEL_SIZE = new Dimension(640, 480);
 	private static final Dimension GROUND_SELECTION_PANEL_SIZE = new Dimension(
 			320, 670);
+	protected static final float WIN_VALUE = 50000;
 
-	public MainController(Game game, final MainFrame mainFrame) {
-		this.game = game;
+	public MainController(final MainFrame mainFrame) {
 		this.mainFrame = mainFrame;
 
 		// setGamePanel();
-		// setMainPanel();
-		setGroundSelectionPanel();
+		setMainPanel();
+		// setGroundSelectionPanel();
 
 		mainFrame.setVisible(true);
 		mainFrame.requestFocus();
@@ -79,9 +91,9 @@ public class MainController {
 		});
 	}
 
-	private void setGamePanel() {
+	private void setGamePanel(Game game) {
 
-		GroundPanelContainer groundPanel = new GroundPanelContainer(this.game
+		GroundPanelContainer groundPanel = new GroundPanelContainer(game
 				.getGround());
 		final GamePanel gamePanel = new GamePanel(groundPanel);
 
@@ -90,7 +102,7 @@ public class MainController {
 		this.setMainFramePanel(gamePanel);
 
 		GamePanelController gamePanelController = new GamePanelController(
-				this.game, gamePanel, this);
+				game, gamePanel, this);
 		System.out.println("is enabled " + this.mainFrame.isEnabled());
 		this.mainFrame.addContainerListener(gamePanelController
 				.getGamePanelRemovedListener());
@@ -117,9 +129,9 @@ public class MainController {
 				String name = nameTextField.getText();
 
 				if (!name.isEmpty()) {
-					MainController.this.game.setInitialMoney(money);
-					MainController.this.game.setPlayerName(name);
-					MainController.this.setGroundSelectionPanel();
+					Budget budget = new Budget(money);
+					Player player = new Player(name, budget);
+					MainController.this.setGroundSelectionPanel(player);
 				} else
 					JOptionPane.showMessageDialog(
 							MainController.this.mainFrame,
@@ -137,9 +149,9 @@ public class MainController {
 		this.setMainFramePanel(mainPanel);
 	}
 
-	public void setGroundSelectionPanel() {
+	public void setGroundSelectionPanel(Player player) {
 
-		final List<Ground> grounds = this.game.getGrounds();
+		final List<Ground> grounds = loadAllGrounds();
 
 		if (grounds.isEmpty())
 			throw new BusinessLogicException("Empty grounds list");
@@ -147,9 +159,9 @@ public class MainController {
 		GroundSelectionPanel selectionPanel = new GroundSelectionPanel();
 
 		this.initBuyComboFromGroundSelectionPanel(grounds, selectionPanel);
-		this.initGroundSelectionPanelButtons(selectionPanel);
+		this.initGroundSelectionPanelButtons(selectionPanel, player);
 
-		int balance = this.game.getBudget().getBalance();
+		int balance = player.getBudget().getBalance();
 		selectionPanel.getBudgetPanel().setMoneyBalance(balance);
 
 		// Frame configuration.
@@ -157,6 +169,15 @@ public class MainController {
 		this.mainFrame.setSize(GROUND_SELECTION_PANEL_SIZE);
 		this.mainFrame.setLocationRelativeTo(null);
 		this.setMainFramePanel(selectionPanel);
+	}
+
+	private List<Ground> loadAllGrounds() {
+		try {
+			return new XMLFactory()
+					.loadGrounds("inputXMLs/ValidGroundList.xml");
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	private void initBuyComboFromGroundSelectionPanel(
@@ -193,7 +214,6 @@ public class MainController {
 		// Set ground in ground panel container and show prices.
 		GroundPanelContainer groundPanelContainer = new GroundPanelContainer(
 				ground);
-		MainController.this.game.setGround(ground);
 
 		selectionPanel.setGroundPanelContainer(groundPanelContainer);
 		selectionPanel.setPurchasePrice(ground.getPrice());
@@ -201,7 +221,7 @@ public class MainController {
 	}
 
 	private void initGroundSelectionPanelButtons(
-			final GroundSelectionPanel selectionPanel) {
+			final GroundSelectionPanel selectionPanel, final Player player) {
 
 		selectionPanel.addBuyButtonActionListener(new ActionListener() {
 
@@ -210,11 +230,11 @@ public class MainController {
 
 				Ground ground = selectionPanel.getGroundPanelContainer()
 						.getGroundPanel().getGround();
-				// Crear Purchase Warehouse!
-				MainController.this.game.setGround(ground);
-				MainController.this.game.getBudget().decrement(
-						ground.getPrice());
-				MainController.this.setGamePanel();
+
+				player.getBudget().decrement(ground.getPrice());
+				Game game = createGameByBuyingGround(ground, player);
+
+				MainController.this.setGamePanel(game);
 			}
 		});
 
@@ -225,11 +245,8 @@ public class MainController {
 
 				Ground ground = selectionPanel.getGroundPanelContainer()
 						.getGroundPanel().getGround();
-				// Crear Rent Warehouse!
-				MainController.this.game.setGround(ground);
-				MainController.this.game.getBudget().decrement(
-						(int) (ground.getPrice() * RENT_FACTOR));
-				MainController.this.setGamePanel();
+				Game game = createGameByRentingGround(ground, player);
+				MainController.this.setGamePanel(game);
 			}
 		});
 
@@ -240,6 +257,65 @@ public class MainController {
 				MainController.this.setMainPanel();
 			}
 		});
+	}
+
+	protected Game createGameByRentingGround(Ground ground, Player player) {
+		XMLFactory xmlFactory = new XMLFactory();
+
+		ValidProductionSequences validProductionSequences = new ValidProductionSequences();
+		try {
+			TechnologyTree technologyTree = xmlFactory.loadTechnologies(
+					"inputXMLs/ValidProductionSequencesTechnologyList.xml",
+					validProductionSequences);
+			List<MachineType> validProductionMachineTypes = xmlFactory
+					.loadProductionMachines("inputXMLs/ValidProductionMachineList.xml");
+			List<MachineType> validQualityControlMachineTypes = xmlFactory
+					.loadQualityControlMachines("inputXMLs/ValidQualityControlMachineList.xml");
+			List<RawMaterialType> validRawMaterialTypes = xmlFactory
+					.loadRawMaterialTypes("inputXMLs/ValidRawMaterialTypeList.xml");
+
+			// TODO: ver priceMap y el null
+			Warehouse warehouse = Warehouse.createRentedWarehouse(ground,
+					player.getBudget(), new PriceMap(),
+					validProductionSequences, null);
+
+			return new Game(player, validProductionSequences,
+					validProductionMachineTypes,
+					validQualityControlMachineTypes, validRawMaterialTypes,
+					warehouse, technologyTree);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+		
+	}
+
+	private Game createGameByBuyingGround(Ground ground, Player player) {
+		XMLFactory xmlFactory = new XMLFactory();
+
+		ValidProductionSequences validProductionSequences = new ValidProductionSequences();
+		try {
+			TechnologyTree technologyTree = xmlFactory.loadTechnologies(
+					"inputXMLs/ValidProductionSequencesTechnologyList.xml",
+					validProductionSequences);
+			List<MachineType> validProductionMachineTypes = xmlFactory
+					.loadProductionMachines("inputXMLs/ValidProductionMachineList.xml");
+			List<MachineType> validQualityControlMachineTypes = xmlFactory
+					.loadQualityControlMachines("inputXMLs/ValidQualityControlMachineList.xml");
+			List<RawMaterialType> validRawMaterialTypes = xmlFactory
+					.loadRawMaterialTypes("inputXMLs/ValidRawMaterialTypeList.xml");
+
+			// TODO: ver priceMap y el null
+			Warehouse warehouse = Warehouse.createPurchasedWarehouse(ground,
+					player.getBudget(), new PriceMap(),
+					validProductionSequences, null);
+
+			return new Game(player, validProductionSequences,
+					validProductionMachineTypes,
+					validQualityControlMachineTypes, validRawMaterialTypes,
+					warehouse, technologyTree);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	private void setMainFramePanel(JPanel panel) {
