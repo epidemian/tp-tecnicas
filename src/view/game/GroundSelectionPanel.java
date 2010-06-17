@@ -5,14 +5,19 @@ import javax.swing.JComboBox;
 
 public class GroundSelectionPanel extends javax.swing.JPanel {
 
-    private GroundPanelContainer groundPanelContainer;
+	private static final long serialVersionUID = 1L;
+	private GroundPanelContainer groundPanelContainer;
 
-    public GroundSelectionPanel(GroundPanelContainer groundPanelContainer) {
-        // TODO check not null.
-        this.groundPanelContainer = groundPanelContainer;
-        initComponents();
+    public GroundSelectionPanel(){
+    	initComponents();
     }
-
+    
+    public GroundSelectionPanel(GroundPanelContainer groundPanelContainer) {
+        initComponents();
+        // TODO check not null.
+        this.setGroundPanelContainer(groundPanelContainer);
+    }
+    
     public JComboBox getGroundCombo(){
         return this.groundCombo;
     }
@@ -21,8 +26,17 @@ public class GroundSelectionPanel extends javax.swing.JPanel {
         return this.budgetPanel;
     }
 
-    public GroundPanelContainer getGroundPanel(){
+    public GroundPanelContainer getGroundPanelContainer(){
         return this.groundPanelContainer;
+    }
+    
+    public void setGroundPanelContainer(GroundPanelContainer gamePanel){
+    	this.groundPanelContainer = gamePanel;
+        this.groundPanel.removeAll();
+        this.groundScrollPane = this.groundPanelContainer;
+        this.groundPanel.add(this.groundScrollPane);
+        this.groundPanel.revalidate();
+        System.out.println("Llegaa!");
     }
 
     public void addRentButtonActionListener(ActionListener al){
@@ -53,51 +67,63 @@ public class GroundSelectionPanel extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         tittleLabel = new javax.swing.JLabel();
+        groundSelectionElements = new javax.swing.JPanel();
         groundCombo = new javax.swing.JComboBox();
         buttonsPanel = new javax.swing.JPanel();
         buyButton = new javax.swing.JButton();
         rentButton = new javax.swing.JButton();
         backButton = new javax.swing.JButton();
-        groundPanel = this.groundPanelContainer;
         budgetPanel = new view.game.BudgetPanel();
         labelsPanel = new javax.swing.JPanel();
         purchasePriceLabel2 = new javax.swing.JLabel();
         purchasePriceLabel = new javax.swing.JLabel();
         rentPriceLabel2 = new javax.swing.JLabel();
         rentPriceLabel = new javax.swing.JLabel();
+        groundPanel = new javax.swing.JPanel();
+        groundScrollPane = new javax.swing.JScrollPane();
 
-        tittleLabel.setFont(new java.awt.Font("Purisa", 0, 26)); // NOI18N
+        setLayout(new java.awt.GridBagLayout());
+
+        tittleLabel.setFont(new java.awt.Font("Purisa", 0, 26));
         tittleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         tittleLabel.setText("Ground Selection");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 38;
+        gridBagConstraints.insets = new java.awt.Insets(12, 12, 0, 12);
+        add(tittleLabel, gridBagConstraints);
 
-        buttonsPanel.setLayout(new java.awt.GridLayout());
+        buttonsPanel.setLayout(new java.awt.GridLayout(1, 0));
 
-        buyButton.setFont(new java.awt.Font("Purisa", 0, 13)); // NOI18N
+        buyButton.setFont(new java.awt.Font("Purisa", 0, 13));
         buyButton.setText("Buy");
         buttonsPanel.add(buyButton);
 
-        rentButton.setFont(new java.awt.Font("Purisa", 0, 13)); // NOI18N
+        rentButton.setFont(new java.awt.Font("Purisa", 0, 13));
         rentButton.setText("Rent");
         buttonsPanel.add(rentButton);
 
-        backButton.setFont(new java.awt.Font("Purisa", 0, 13)); // NOI18N
+        backButton.setFont(new java.awt.Font("Purisa", 0, 13));
         backButton.setText("Back");
         buttonsPanel.add(backButton);
 
         labelsPanel.setLayout(new java.awt.GridLayout(2, 2));
 
-        purchasePriceLabel2.setFont(new java.awt.Font("Purisa", 0, 13)); // NOI18N
+        purchasePriceLabel2.setFont(new java.awt.Font("Purisa", 0, 13));
         purchasePriceLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         purchasePriceLabel2.setText("Purchase price:");
         labelsPanel.add(purchasePriceLabel2);
 
-        purchasePriceLabel.setFont(new java.awt.Font("Purisa", 0, 13)); // NOI18N
+        purchasePriceLabel.setFont(new java.awt.Font("Purisa", 0, 13));
         purchasePriceLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelsPanel.add(purchasePriceLabel);
 
-        rentPriceLabel2.setFont(new java.awt.Font("Purisa", 0, 13)); // NOI18N
+        rentPriceLabel2.setFont(new java.awt.Font("Purisa", 0, 13));
         rentPriceLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         rentPriceLabel2.setText("Rent price:");
         labelsPanel.add(rentPriceLabel2);
@@ -105,40 +131,48 @@ public class GroundSelectionPanel extends javax.swing.JPanel {
         rentPriceLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelsPanel.add(rentPriceLabel);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(groundPanel)
-                    .addComponent(groundCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(tittleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE)
-                    .addComponent(budgetPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(labelsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(buttonsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        javax.swing.GroupLayout groundSelectionElementsLayout = new javax.swing.GroupLayout(groundSelectionElements);
+        groundSelectionElements.setLayout(groundSelectionElementsLayout);
+        groundSelectionElementsLayout.setHorizontalGroup(
+            groundSelectionElementsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(groundCombo, 0, 279, Short.MAX_VALUE)
+            .addComponent(budgetPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
+            .addComponent(buttonsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
+            .addComponent(labelsPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+        groundSelectionElementsLayout.setVerticalGroup(
+            groundSelectionElementsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(groundSelectionElementsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tittleLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(groundPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(groundCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(budgetPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 118, Short.MAX_VALUE)
+                .addComponent(labelsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(buttonsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.ipadx = 67;
+        gridBagConstraints.insets = new java.awt.Insets(6, 12, 12, 12);
+        add(groundSelectionElements, gridBagConstraints);
+
+        groundScrollPane.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        groundPanel.add(groundScrollPane);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 245;
+        gridBagConstraints.ipady = 234;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
+        gridBagConstraints.insets = new java.awt.Insets(6, 12, 0, 12);
+        add(groundPanel, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
 
@@ -148,7 +182,9 @@ public class GroundSelectionPanel extends javax.swing.JPanel {
     private javax.swing.JPanel buttonsPanel;
     private javax.swing.JButton buyButton;
     private javax.swing.JComboBox groundCombo;
-    private javax.swing.JScrollPane groundPanel;
+    private javax.swing.JPanel groundPanel;
+    private javax.swing.JScrollPane groundScrollPane;
+    private javax.swing.JPanel groundSelectionElements;
     private javax.swing.JPanel labelsPanel;
     private javax.swing.JLabel purchasePriceLabel;
     private javax.swing.JLabel purchasePriceLabel2;

@@ -67,7 +67,7 @@ public class Game {
 
             try {
                 InputFactory input = new XMLFactory();
-                this.grounds = input.loadGrounds("test/persistence/input/ValidGroundList.xml");
+                this.grounds = input.loadGrounds("test/global/ValidGroundList.xml");
             } catch (Exception ex) {
                 Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
             }

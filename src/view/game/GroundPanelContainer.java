@@ -8,7 +8,7 @@ public class GroundPanelContainer extends JScrollPane {
 
 	private static final long serialVersionUID = 1L;
 	private GroundPanel groundPanel;
-
+	
 	public GroundPanelContainer(Ground ground) {
 
 		/*
@@ -21,7 +21,7 @@ public class GroundPanelContainer extends JScrollPane {
 		this.groundPanel = new GroundPanel(ground);
 		this.setViewportView(this.groundPanel);
 	}
-
+	
 	public GroundPanel getGroundPanel() {
 		return groundPanel;
 	}
