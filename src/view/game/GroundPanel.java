@@ -29,7 +29,7 @@ public class GroundPanel extends JPanel {
 	public GroundPanel(Ground ground) {
 		this(ground, DEFAULT_TILE_SIZE);
 	}
-	
+
 	public GroundPanel(Ground ground, int tileSize) {
 		super();
 
@@ -102,7 +102,7 @@ public class GroundPanel extends JPanel {
 			}
 		});
 	}
-	
+
 	private Position getPositionFromMousePosition(Point point) {
 		return new Position(point.y / getTileSize(), point.x / getTileSize());
 	}

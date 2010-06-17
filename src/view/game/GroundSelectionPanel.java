@@ -3,6 +3,8 @@ package view.game;
 import java.awt.event.ActionListener;
 import javax.swing.JComboBox;
 
+import static model.utils.ArgumentUtils.*;
+
 public class GroundSelectionPanel extends javax.swing.JPanel {
 
 	private static final long serialVersionUID = 1L;
@@ -14,7 +16,7 @@ public class GroundSelectionPanel extends javax.swing.JPanel {
     
     public GroundSelectionPanel(GroundPanelContainer groundPanelContainer) {
         initComponents();
-        // TODO check not null.
+        checkNotNull(groundPanelContainer, "groundPanelContainer");
         this.setGroundPanelContainer(groundPanelContainer);
     }
     
@@ -36,7 +38,6 @@ public class GroundSelectionPanel extends javax.swing.JPanel {
         this.groundScrollPane = this.groundPanelContainer;
         this.groundPanel.add(this.groundScrollPane);
         this.groundPanel.revalidate();
-        System.out.println("Llegaa!");
     }
 
     public void addRentButtonActionListener(ActionListener al){
@@ -93,8 +94,9 @@ public class GroundSelectionPanel extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.ipadx = 38;
+        gridBagConstraints.weighty = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(12, 12, 0, 12);
         add(tittleLabel, gridBagConstraints);
 
@@ -161,8 +163,10 @@ public class GroundSelectionPanel extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(6, 12, 12, 12);
         add(groundSelectionElements, gridBagConstraints);
 
+        groundPanel.setLayout(new java.awt.BorderLayout());
+
         groundScrollPane.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-        groundPanel.add(groundScrollPane);
+        groundPanel.add(groundScrollPane, java.awt.BorderLayout.CENTER);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;

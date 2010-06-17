@@ -12,12 +12,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-import controller.game.GamePanelController;
 import controller.game.LineElementsMarketPanelController;
 import controller.game.RawMaterialsMarketPanelController;
 
 import java.awt.Dimension;
 import java.awt.event.ItemListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.List;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
@@ -47,10 +48,10 @@ public class MainController {
 	private static final int[] INITIAL_MONEY = { 10000, 15000, 20000 };
 	private static final float RENT_FACTOR = 0.01f;
 
-	private static final Dimension DIALOG_SIZE = new Dimension(100,300);
+	private static final Dimension DIALOG_SIZE = new Dimension(350, 150);
 	private static final Dimension MAIN_PANEL_SIZE = new Dimension(640, 480);
 	private static final Dimension GROUND_SELECTION_PANEL_SIZE = new Dimension(
-			350, 670);
+			320, 670);
 
 	public MainController(Game game, final MainFrame mainFrame) {
 		this.game = game;
@@ -92,69 +93,57 @@ public class MainController {
 		final GamePanel gamePanel = new GamePanel(groundPanel);
 
 		EditionActions editionActions = new EditionActions(gamePanel, this.game);
-        KeyInputActionMapper mapper = new KeyInputActionMapper(editionActions);
-        mapper.mapActions(gamePanel.getInputMap(), gamePanel.getActionMap());
-        
-        final LineElementsMarketPanel lineElementsMarketPanel = new LineElementsMarketPanel();
-        new LineElementsMarketPanelController(this.game, lineElementsMarketPanel, editionActions);
-        
-        final RawMaterialsMarketPanel rawMaterialsMarketPanel = new RawMaterialsMarketPanel();
-        new RawMaterialsMarketPanelController(this.game, rawMaterialsMarketPanel,gamePanel);
+		KeyInputActionMapper mapper = new KeyInputActionMapper(editionActions);
+		mapper.mapActions(gamePanel.getInputMap(), gamePanel.getActionMap());
 
-        int balance = this.game.getBudget().getBalance();
-        gamePanel.getBudgetPanel().setMoneyBalance(balance);
+		final LineElementsMarketPanel lineElementsMarketPanel = new LineElementsMarketPanel();
+		new LineElementsMarketPanelController(this.game,
+				lineElementsMarketPanel, editionActions);
 
-        ToolBarPanel toolBar = gamePanel.getToolBarPanel();
-        
-        toolBar.addLineElementsMarketActionListener(new ActionListener() {
+		final RawMaterialsMarketPanel rawMaterialsMarketPanel = new RawMaterialsMarketPanel();
+		new RawMaterialsMarketPanelController(this.game,
+				rawMaterialsMarketPanel, gamePanel);
 
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                gamePanel.setToolPanel(lineElementsMarketPanel);
-            }
-        });
-        toolBar.addRawMaterialsMarketActionListener(new ActionListener() {
+		int balance = this.game.getBudget().getBalance();
+		gamePanel.getBudgetPanel().setMoneyBalance(balance);
 
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                gamePanel.setToolPanel(rawMaterialsMarketPanel);
-            }
-        });
-        
-        toolBar.addExitActionListener(new ActionListener() {
-			
+		ToolBarPanel toolBar = gamePanel.getToolBarPanel();
+
+		toolBar.addLineElementsMarketActionListener(new ActionListener() {
+
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-				System.out.println("Exit");
-				
-				final JOptionPane optionPane = new JOptionPane(
-		                "Are you sure?",
-		                JOptionPane.QUESTION_MESSAGE,
-		                JOptionPane.YES_NO_OPTION);
-
-				final JDialog dialog = new JDialog((JFrame)null, "", true);
-				dialog.setContentPane(optionPane);
-				dialog.setSize(DIALOG_SIZE);
-				dialog.setLocationRelativeTo(null);
-				dialog.setVisible(true);
-		
-				
+			public void actionPerformed(ActionEvent ae) {
+				gamePanel.setToolPanel(lineElementsMarketPanel);
 			}
 		});
-        
-        
-		
-		// TODO
-		// ToolBarPanel toolbar = gamePanel.getToolbar();
-		// toolbar.addSellActionListener(new ActionListener() {
-		//			
-		// @Override
-		// public void actionPerformed(ActionEvent e) {
-		// // TODO
-		// //game.sellGround();
-		// }
-		// });
+		toolBar.addRawMaterialsMarketActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent ae) {
+				gamePanel.setToolPanel(rawMaterialsMarketPanel);
+			}
+		});
+
+		toolBar.addExitActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				if (MainController.showDialog("Exit", "Are you sure?"))
+					System.exit(0);
+			}
+		});
+
+		toolBar.addSellActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (MainController.showDialog("Sell", "Are you sure?")) {
+					// MainController.this.game.getWarehouse().sell();
+					MainController.this.setGroundSelectionPanel();
+				}
+			}
+		});
 
 		this.mainFrame.setResizable(true);
 		this.mainFrame.maximize();
@@ -213,8 +202,8 @@ public class MainController {
 
 		this.initBuyComboFromGroundSelectionPanel(grounds, selectionPanel);
 		this.initGroundSelectionPanelButtons(selectionPanel);
-		
-		int balance = this.game.getBudget().getBalance(); 
+
+		int balance = this.game.getBudget().getBalance();
 		selectionPanel.getBudgetPanel().setMoneyBalance(balance);
 
 		// Frame configuration.
@@ -310,5 +299,33 @@ public class MainController {
 	private void setMainFramePanel(JPanel panel) {
 		panel.setOpaque(true);
 		this.mainFrame.setContentPane(panel);
+		this.mainFrame.invalidate();
+		this.mainFrame.validate();
+	}
+
+	private static boolean showDialog(String title, String message) {
+		final JDialog dialog = new JDialog((JFrame) null, title, true);
+		final JOptionPane optionPane = new JOptionPane(message,
+				JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION);
+
+		optionPane.addPropertyChangeListener(new PropertyChangeListener() {
+
+			@Override
+			public void propertyChange(PropertyChangeEvent e) {
+				String prop = e.getPropertyName();
+
+				if (dialog.isVisible() && (e.getSource() == optionPane)
+						&& (prop.equals(JOptionPane.VALUE_PROPERTY))) {
+					dialog.setVisible(false);
+				}
+			}
+		});
+
+		dialog.setContentPane(optionPane);
+		dialog.setSize(DIALOG_SIZE);
+		dialog.setLocationRelativeTo(null);
+		dialog.setVisible(true);
+
+		return ((Integer) optionPane.getValue()).intValue() == JOptionPane.YES_OPTION;
 	}
 }
