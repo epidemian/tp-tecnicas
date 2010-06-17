@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import model.production.elements.ProductionLineElement;
-
 public class Ground {
 	private int price;
 	private TileElement tileElements[][];
