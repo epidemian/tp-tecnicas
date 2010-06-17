@@ -19,62 +19,77 @@
           <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="machineNextPreviousPanel" alignment="0" max="32767" attributes="1"/>
-                          <Component id="machineButtonsPanel" alignment="0" pref="194" max="32767" attributes="1"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="machineNextPreviousPanel" alignment="0" pref="194" max="32767" attributes="2"/>
+                          <Component id="machineButtonsPanel" alignment="0" pref="194" max="32767" attributes="2"/>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
-                      <Component id="descriptionImage" min="-2" max="-2" attributes="0"/>
+                      <Component id="descriptionImage" max="32767" attributes="0"/>
+                      <EmptySpace min="13" pref="13" max="13" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="conveyorLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="inputLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="machineLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="conveyorLabel" alignment="0" max="32767" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="inputLabel" max="32767" attributes="0"/>
+                              <EmptySpace min="23" pref="23" max="23" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="machineLabel" max="32767" attributes="0"/>
+                              <EmptySpace min="7" pref="7" max="7" attributes="0"/>
+                          </Group>
                       </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="input" max="32767" attributes="1"/>
-                          <Component id="conveyor" alignment="0" pref="78" max="32767" attributes="1"/>
+                      <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="input" pref="78" max="32767" attributes="2"/>
+                          <Component id="conveyor" alignment="0" pref="78" max="32767" attributes="2"/>
                       </Group>
+                      <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
-                      <Component id="titleLabel" min="-2" max="-2" attributes="0"/>
+                      <Component id="titleLabel" max="32767" attributes="0"/>
+                      <EmptySpace min="43" pref="43" max="43" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="titleLabel" min="-2" pref="31" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Component id="titleLabel" pref="31" max="32767" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="conveyorLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="conveyor" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
+                  <Group type="102" alignment="3" attributes="0">
+                      <EmptySpace min="13" pref="13" max="13" attributes="0"/>
+                      <Component id="conveyorLabel" max="32767" attributes="0"/>
+                  </Group>
+                  <Component id="conveyor" alignment="3" pref="37" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="inputLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="input" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
+                  <Group type="102" alignment="3" attributes="0">
+                      <EmptySpace min="13" pref="13" max="13" attributes="0"/>
+                      <Component id="inputLabel" max="32767" attributes="0"/>
+                  </Group>
+                  <Component id="input" alignment="3" pref="37" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="machineLabel" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="machineButtonsPanel" min="-2" pref="199" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="machineNextPreviousPanel" min="-2" pref="32" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="descriptionImage" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+              <Component id="machineLabel" max="32767" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Component id="machineButtonsPanel" pref="199" max="32767" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Component id="machineNextPreviousPanel" pref="32" max="32767" attributes="0"/>
+              <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
+              <Component id="descriptionImage" max="32767" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
