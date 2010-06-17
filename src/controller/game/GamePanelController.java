@@ -10,7 +10,6 @@ import javax.swing.JToggleButton;
 import javax.swing.Timer;
 
 import model.game.Game;
-
 import view.game.GamePanel;
 import view.game.LineElementsMarketPanel;
 import view.game.RawMaterialsMarketPanel;
@@ -20,6 +19,13 @@ import view.game.edition.KeyInputActionMapper;
 import controller.MainController;
 
 public class GamePanelController {
+
+	private boolean isPaused = true;
+	private ContainerAdapter gamePanelRemovedListener;
+	
+	public ContainerAdapter getGamePanelRemovedListener() {
+		return gamePanelRemovedListener;
+	}
 
 	public GamePanelController(Game game, final GamePanel gamePanel,
 			final MainController mainController) {
@@ -112,14 +118,14 @@ public class GamePanelController {
 			}
 		});
 		
-//		this.mainFrame.addContainerListener(new ContainerAdapter() {
-//
-//			@Override
-//			public void componentRemoved(ContainerEvent e) {
-//				mainLoopTimer.stop();
-//			}
-//			
-//		});
+		gamePanelRemovedListener = new ContainerAdapter() {
+
+			@Override
+			public void componentRemoved(ContainerEvent e) {
+				mainLoopTimer.stop();
+			}
+		};
 	}
+	
 
 }

@@ -84,12 +84,15 @@ public class MainController {
 		GroundPanelContainer groundPanel = new GroundPanelContainer(this.game
 				.getGround());
 		final GamePanel gamePanel = new GamePanel(groundPanel);
-		
+
 		this.mainFrame.setResizable(true);
 		this.mainFrame.maximize();
 		this.setMainFramePanel(gamePanel);
-		
-		new GamePanelController(this.game, gamePanel, this);		
+
+		GamePanelController gamePanelController = new GamePanelController(
+				this.game, gamePanel, this);
+		this.mainFrame.addContainerListener(gamePanelController
+				.getGamePanelRemovedListener());
 	}
 
 	private void setMainPanel() {
