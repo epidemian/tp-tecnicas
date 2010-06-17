@@ -2,6 +2,11 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ContainerAdapter;
+import java.awt.event.ContainerEvent;
+import java.awt.event.ContainerListener;
+import java.awt.event.HierarchyEvent;
+import java.awt.event.HierarchyListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -12,6 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import controller.game.GamePanelController;
 import controller.game.LineElementsMarketPanelController;
 import controller.game.RawMaterialsMarketPanelController;
 
@@ -64,19 +70,6 @@ public class MainController {
 		mainFrame.setVisible(true);
 		mainFrame.requestFocus();
 
-		/*
-		 * Main loop. Refresh 20 frames per second. TODO: Sacar main loop de
-		 * acá...
-		 */
-		Timer mainLoopTimer = new Timer(50, new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				mainFrame.repaint();
-			}
-		});
-		mainLoopTimer.start();
-
 		// Give focus to GamePanel when selected.
 		mainFrame.addWindowFocusListener(new WindowAdapter() {
 			@Override
@@ -91,63 +84,12 @@ public class MainController {
 		GroundPanelContainer groundPanel = new GroundPanelContainer(this.game
 				.getGround());
 		final GamePanel gamePanel = new GamePanel(groundPanel);
-
-		EditionActions editionActions = new EditionActions(gamePanel, this.game);
-		KeyInputActionMapper mapper = new KeyInputActionMapper(editionActions);
-		mapper.mapActions(gamePanel.getInputMap(), gamePanel.getActionMap());
-
-		final LineElementsMarketPanel lineElementsMarketPanel = new LineElementsMarketPanel();
-		new LineElementsMarketPanelController(this.game,
-				lineElementsMarketPanel, editionActions);
-
-		final RawMaterialsMarketPanel rawMaterialsMarketPanel = new RawMaterialsMarketPanel();
-		new RawMaterialsMarketPanelController(this.game,
-				rawMaterialsMarketPanel, gamePanel);
-
-		int balance = this.game.getBudget().getBalance();
-		gamePanel.getBudgetPanel().setMoneyBalance(balance);
-
-		ToolBarPanel toolBar = gamePanel.getToolBarPanel();
-
-		toolBar.addLineElementsMarketActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent ae) {
-				gamePanel.setToolPanel(lineElementsMarketPanel);
-			}
-		});
-		toolBar.addRawMaterialsMarketActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent ae) {
-				gamePanel.setToolPanel(rawMaterialsMarketPanel);
-			}
-		});
-
-		toolBar.addExitActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				if (MainController.showDialog("Exit", "Are you sure?"))
-					System.exit(0);
-			}
-		});
-
-		toolBar.addSellActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (MainController.showDialog("Sell", "Are you sure?")) {
-					// MainController.this.game.getWarehouse().sell();
-					MainController.this.setGroundSelectionPanel();
-				}
-			}
-		});
-
+		
 		this.mainFrame.setResizable(true);
 		this.mainFrame.maximize();
 		this.setMainFramePanel(gamePanel);
+		
+		new GamePanelController(this.game, gamePanel, this);		
 	}
 
 	private void setMainPanel() {
@@ -191,7 +133,7 @@ public class MainController {
 		this.setMainFramePanel(mainPanel);
 	}
 
-	private void setGroundSelectionPanel() {
+	public void setGroundSelectionPanel() {
 
 		final List<Ground> grounds = this.game.getGrounds();
 
@@ -303,7 +245,7 @@ public class MainController {
 		this.mainFrame.validate();
 	}
 
-	private static boolean showDialog(String title, String message) {
+	public static boolean showDialog(String title, String message) {
 		final JDialog dialog = new JDialog((JFrame) null, title, true);
 		final JOptionPane optionPane = new JOptionPane(message,
 				JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION);

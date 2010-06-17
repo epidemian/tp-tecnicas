@@ -218,8 +218,10 @@ public class MachineType extends AbstractType {
 			this.price = DEFAULT_MACHINE_PRICE;
 			this.breakChance = DEFAULT_BREAK_MACHINE_CHANCE;
 			this.damageChance = DEFAULT_DAMAGE_MACHINE_CHANCE;
-			this.inputRelativePosition = new Position(0, -1); 
-			this.outputRelativePosition = new Position(0, width);
+			
+			int col = height / 2; 
+			this.inputRelativePosition = new Position(col, -1); 
+			this.outputRelativePosition = new Position(col, width);
 		}
 		
 		public Builder name(String name) {
