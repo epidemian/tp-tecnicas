@@ -1,7 +1,6 @@
 package view.game;
 
 import static model.utils.ArgumentUtils.checkNotNull;
-import static view.game.GroundPainter.TILE_SIZE;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -10,7 +9,6 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
 
 import javax.swing.JPanel;
 
@@ -22,15 +20,21 @@ public class GroundPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	private Ground ground;
-	private GroundPainter groundPainter;
+	private static final int DEFAULT_TILE_SIZE = 50;
+
+	private final Ground ground;
+	private final GroundPainter groundPainter;
 	private EditionTool editionTool;
 
 	public GroundPanel(Ground ground) {
+		this(ground, DEFAULT_TILE_SIZE);
+	}
+	
+	public GroundPanel(Ground ground, int tileSize) {
 		super();
 
 		this.ground = ground;
-		this.groundPainter = new GroundPainter(ground);
+		this.groundPainter = new GroundPainter(ground, tileSize);
 
 		/*
 		 * TODO Do not hard-code Color.white =(.
@@ -39,7 +43,9 @@ public class GroundPanel extends JPanel {
 		/*
 		 * This a scroll-able panel. The scroll can be used in the area.
 		 */
-		this.setPreferredSize(this.getGroundSize(ground));
+		int preferredWidth = ground.getCols() * tileSize;
+		int preferredHeight = ground.getRows() * tileSize;
+		this.setPreferredSize(new Dimension(preferredWidth, preferredHeight));
 
 		this.setEditionTool(new NullEditionTool());
 		this.setMouseListeners();
@@ -96,15 +102,13 @@ public class GroundPanel extends JPanel {
 			}
 		});
 	}
-
-	private Dimension getGroundSize(Ground ground) {
-		int width = ground.getCols() * TILE_SIZE;
-		int height = ground.getRows() * TILE_SIZE;
-		return new Dimension(width, height);
+	
+	private Position getPositionFromMousePosition(Point point) {
+		return new Position(point.y / getTileSize(), point.x / getTileSize());
 	}
 
-	private Position getPositionFromMousePosition(Point point) {
-		return new Position(point.y / TILE_SIZE, point.x / TILE_SIZE);
+	private int getTileSize() {
+		return getPainter().getTileSize();
 	}
 
 	public void drawNotificationBesideMouse(String notification,

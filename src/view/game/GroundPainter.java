@@ -27,15 +27,16 @@ public class GroundPainter implements Painter {
 	private static final Color HIGHLIGHT_COLOR = new Color(0, 1, 0, 0.3F);
 	private static final Color HIGHLIGHT_ARROWS_COLOR = new Color(0, 1, 0, 0.7F);
 
-	/*
-	 * TODO Do not hard-code tileSize =(.
-	 */
-	public static final int TILE_SIZE = 50;
+	private final Ground ground;
+	private final int tileSize;
 
-	private Ground ground;
-
-	public GroundPainter(Ground ground) {
+	public GroundPainter(Ground ground, int tileSize) {
 		this.ground = ground;
+		this.tileSize = tileSize;
+	}
+	
+	public int getTileSize() {
+		return tileSize;
 	}
 
 	@Override
@@ -49,10 +50,10 @@ public class GroundPainter implements Painter {
 	private void drawVerticalLines(Graphics2D graphics) {
 		for (int col = 0; col <= this.ground.getCols(); col++) {
 
-			int x1 = col * TILE_SIZE;
+			int x1 = col * this.tileSize;
 			int y1 = 0;
-			int x2 = col * TILE_SIZE;
-			int y2 = this.ground.getRows() * TILE_SIZE;
+			int x2 = col * this.tileSize;
+			int y2 = this.ground.getRows() * this.tileSize;
 
 			graphics.drawLine(x1, y1, x2, y2);
 		}
@@ -62,9 +63,9 @@ public class GroundPainter implements Painter {
 		for (int row = 0; row <= this.ground.getRows(); row++) {
 
 			int x1 = 0;
-			int y1 = row * TILE_SIZE;
-			int x2 = this.ground.getCols() * TILE_SIZE;
-			int y2 = row * TILE_SIZE;
+			int y1 = row * this.tileSize;
+			int x2 = this.ground.getCols() * this.tileSize;
+			int y2 = row * this.tileSize;
 
 			graphics.drawLine(x1, y1, x2, y2);
 		}
@@ -90,10 +91,10 @@ public class GroundPainter implements Painter {
 					if (element.getWidth() > 1 || element.getHeight() > 1)
 						this.bigTouchedTiles.add(element);
 
-					int x = element.getPosition().getCol() * TILE_SIZE;
-					int y = element.getPosition().getRow() * TILE_SIZE;
-					int width = element.getWidth() * TILE_SIZE;
-					int height = element.getHeight() * TILE_SIZE;
+					int x = element.getPosition().getCol() * tileSize;
+					int y = element.getPosition().getRow() * tileSize;
+					int width = element.getWidth() * tileSize;
+					int height = element.getHeight() * tileSize;
 
 					graphics.drawImage(image, x, y, width, height, null);
 				}
@@ -103,10 +104,10 @@ public class GroundPainter implements Painter {
 
 	public void drawRectangle(Graphics2D graphics, Position position,
 			int width, int height, Color color) {
-		int x = position.getCol() * TILE_SIZE;
-		int y = position.getRow() * TILE_SIZE;
-		int pixelW = width * TILE_SIZE;
-		int pixelH = height * TILE_SIZE;
+		int x = position.getCol() * this.tileSize;
+		int y = position.getRow() * this.tileSize;
+		int pixelW = width * this.tileSize;
+		int pixelH = height * this.tileSize;
 
 		graphics.setColor(color);
 		graphics.fillRect(x, y, pixelW, pixelH);
@@ -165,8 +166,8 @@ public class GroundPainter implements Painter {
 			Color color, Graphics2D graphics) {
 		double[] xFloats = { 0.1, 0.5, 0.9 };
 		double[] yFloats = { 0.7, 0.9, 0.7 };
-		int[] xInts = scaleToInts(TILE_SIZE, xFloats);
-		int[] yInts = scaleToInts(TILE_SIZE, yFloats);
+		int[] xInts = scaleToInts(this.tileSize, xFloats);
+		int[] yInts = scaleToInts(this.tileSize, yFloats);
 		Polygon arrow = new Polygon(xInts, yInts, xFloats.length);
 		drawArrow(arrow, position, direction, color, graphics);
 	}
@@ -175,8 +176,8 @@ public class GroundPainter implements Painter {
 			Color color, Graphics2D graphics) {
 		double[] xFloats = { 0.1, 0.5, 0.9 };
 		double[] yFloats = { 0.9, 0.7, 0.9 };
-		int[] xInts = scaleToInts(TILE_SIZE, xFloats);
-		int[] yInts = scaleToInts(TILE_SIZE, yFloats);
+		int[] xInts = scaleToInts(this.tileSize, xFloats);
+		int[] yInts = scaleToInts(this.tileSize, yFloats);
 		Polygon arrow = new Polygon(xInts, yInts, xFloats.length);
 		drawArrow(arrow, position, direction, color, graphics);
 	}
@@ -192,10 +193,10 @@ public class GroundPainter implements Painter {
 			Direction direction, Color color, Graphics2D graphics) {
 		AffineTransform backupTransform = graphics.getTransform();
 		double theta = direction.getAssociatedRotation();
-		double tx = TILE_SIZE * position.getCol();
-		double ty = TILE_SIZE * position.getRow();
+		double tx = this.tileSize * position.getCol();
+		double ty = this.tileSize * position.getRow();
 		graphics.translate(tx, ty);
-		graphics.rotate(theta, TILE_SIZE * 0.5, TILE_SIZE * 0.5);
+		graphics.rotate(theta, this.tileSize * 0.5, this.tileSize * 0.5);
 		graphics.setColor(color);
 		graphics.fillPolygon(arrow);
 
