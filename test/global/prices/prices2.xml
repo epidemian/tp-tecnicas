@@ -1,6 +1,8 @@
 <PriceMap>
-	<PriceItem id="Gold" price="100"/>
-	<PriceItem id="Sword" price="1000"/>
+	<PriceItem id="Gold" price="300"/>
+	<PriceItem id="Sword" price="410"/>
+	<PriceItem id="Axe" price="340"/>
+	<PriceItem id="Flail" price="500"/>
 </PriceMap>
 	
 			
