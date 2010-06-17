@@ -9,8 +9,8 @@ public class GamePanel extends javax.swing.JPanel {
         this.groundPanelContainer = groundPanelContainer;
         initComponents();
 
-this.toolBarPanel.setMaximumSize(this.toolBarPanel.getPreferredSize()); // prevent growth
-this.toolBarPanel.setMinimumSize(this.toolBarPanel.getPreferredSize()); // prevent shrink
+        //this.toolBarPanel.setMaximumSize(this.toolBarPanel.getPreferredSize()); // prevent growth
+        //this.toolBarPanel.setMinimumSize(this.toolBarPanel.getPreferredSize()); // prevent shrink
     }
 	
     /** This method is called from within the constructor to

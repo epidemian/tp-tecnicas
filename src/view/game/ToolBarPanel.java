@@ -1,6 +1,7 @@
 package view.game;
 
-import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.JToggleButton;
 
 public class ToolBarPanel extends javax.swing.JPanel {
 
@@ -9,40 +10,40 @@ public class ToolBarPanel extends javax.swing.JPanel {
         initComponents();
     }
 
-    public void addLineElementsMarketActionListener(ActionListener al) {
-        this.lineElementsMarket.addActionListener(al);
+    public JButton getLineElementsMarketButton() {
+        return this.lineElementsMarket;
     }
 
-    public void addRawMaterialsMarketActionListener(ActionListener al) {
-        this.rawMaterialsMarket.addActionListener(al);
+    public JButton getRawMaterialsMarketButton() {
+        return this.rawMaterialsMarket;
     }
 
-    public void addValidProductionLinesActionListener(ActionListener al) {
-        this.validProductionLines.addActionListener(al);
+    public JButton getValidProductionLinesButton() {
+        return this.validProductionLines;
     }
 
-    public void addTechnologyTreeActionListener(ActionListener al) {
-        this.technologyTree.addActionListener(al);
+    public JButton getTechnologyTreeButton() {
+        return this.technologyTree;
     }
 
-    public void addSellActionListener(ActionListener al) {
-        this.sell.addActionListener(al);
+    public JButton getSellButton() {
+        return this.sell;
     }
 
-    public void addPauseActionListener(ActionListener al) {
-        this.pause.addActionListener(al);
+    public JToggleButton getPauseButton() {
+        return this.pause;
     }
 
-    public void addPlayActionListener(ActionListener al) {
-        this.play.addActionListener(al);
+    public JToggleButton getPlayButton() {
+        return this.play;
     }
 
-    public void addGroundSelectionMenuActionListener(ActionListener al) {
-        this.grounds.addActionListener(al);
+    public JButton getGroundSelectionMenuButton() {
+        return this.grounds;
     }
 
-    public void addExitActionListener(ActionListener al) {
-        this.exit.addActionListener(al);
+    public JButton getExitButton() {
+        return this.exit;
     }
 
     /** This method is called from within the constructor to
@@ -60,8 +61,8 @@ public class ToolBarPanel extends javax.swing.JPanel {
         validProductionLines = new javax.swing.JButton();
         technologyTree = new javax.swing.JButton();
         sell = new javax.swing.JButton();
-        pause = new javax.swing.JButton();
-        play = new javax.swing.JButton();
+        play = new javax.swing.JToggleButton();
+        pause = new javax.swing.JToggleButton();
         grounds = new javax.swing.JButton();
         exit = new javax.swing.JButton();
 
@@ -102,19 +103,19 @@ public class ToolBarPanel extends javax.swing.JPanel {
         sell.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(sell);
 
-        pause.setText("Pause");
-        pause.setToolTipText(PAUSE);
-        pause.setFocusable(false);
-        pause.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        pause.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(pause);
-
         play.setText("Play");
         play.setToolTipText(PLAY);
         play.setFocusable(false);
         play.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         play.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(play);
+
+        pause.setText("Pause");
+        pause.setToolTipText(PAUSE);
+        pause.setFocusable(false);
+        pause.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        pause.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(pause);
 
         grounds.setText("Grounds");
         grounds.setToolTipText(GROUNDS);
@@ -157,8 +158,8 @@ public class ToolBarPanel extends javax.swing.JPanel {
     private javax.swing.JButton grounds;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JButton lineElementsMarket;
-    private javax.swing.JButton pause;
-    private javax.swing.JButton play;
+    private javax.swing.JToggleButton pause;
+    private javax.swing.JToggleButton play;
     private javax.swing.JButton rawMaterialsMarket;
     private javax.swing.JButton sell;
     private javax.swing.JButton technologyTree;
