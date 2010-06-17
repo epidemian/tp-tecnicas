@@ -3,6 +3,8 @@ package view.game;
 import java.awt.image.BufferedImage;
 
 import model.production.elements.Conveyor;
+import model.production.elements.InputProductionLineElement;
+import model.production.elements.OutputProductionLineElement;
 import model.production.elements.machine.MachineType;
 import model.production.elements.machine.ProductionMachine;
 import model.production.elements.machine.QualityControlMachine;
@@ -12,22 +14,27 @@ import model.warehouse.Wall;
 
 public abstract class TileElementImageRecognizer extends TileElementVisitor {
 
-	private static final String IMG_WALL = "wall.gif";
+	protected static final String IMG_WALL = "wall.gif";
 
 	private static final String CONVEYOR_IMG_PREFIX = "./conveyor_";
 	private static final String IMG_EXTENSION = ".png";
+
+	private static final String INPUT_ELEMENT_PREFIX = "./input_";
+	private static final String OUTPUT_ELEMENT_PREFIX = "./output_";
 
 	protected abstract void onTileElmentVisited(TileElement element,
 			BufferedImage image);
 
 	@Override
 	public void visitProductionMachine(ProductionMachine machine) {
-		this.onTileElmentVisited(machine, getMachineImage(machine.getMachineType()));
+		BufferedImage image = getMachineImage(machine.getMachineType());
+		this.onTileElmentVisited(machine, image);
 	}
 
 	@Override
 	public void visitQualityControlMachine(QualityControlMachine machine) {
-		this.onTileElmentVisited(machine, getMachineImage(machine.getMachineType()));
+		BufferedImage image = getMachineImage(machine.getMachineType());
+		this.onTileElmentVisited(machine, image);
 	}
 
 	@Override
@@ -38,6 +45,34 @@ public abstract class TileElementImageRecognizer extends TileElementVisitor {
 	@Override
 	public void visitConveyor(Conveyor conveyor) {
 		this.onTileElmentVisited(conveyor, getConveyorImage(conveyor));
+	}
+
+	@Override
+	public void visitInputProductionLineElement(
+			InputProductionLineElement inputElement) {
+		BufferedImage image = getInputElementImage(inputElement);
+		this.onTileElmentVisited(inputElement, image );
+	}
+
+	@Override
+	public void visitOutputProductionLineElement(
+			OutputProductionLineElement outputElement) {
+		BufferedImage image = getOutputElementImage(outputElement);
+		this.onTileElmentVisited(outputElement, image);
+	}
+	
+	private BufferedImage getInputElementImage(
+			InputProductionLineElement inputElement) {
+		char symbol = inputElement.getOutputConnectionDirection().getSymbol();
+		String imgName = INPUT_ELEMENT_PREFIX + symbol + IMG_EXTENSION;
+		return ImageLoader.getImage(imgName);
+	}
+
+	private BufferedImage getOutputElementImage(
+			OutputProductionLineElement outputElement) {
+		char symbol = outputElement.getInputConnectionDirection().getSymbol();
+		String imgName = OUTPUT_ELEMENT_PREFIX + symbol + IMG_EXTENSION;
+		return ImageLoader.getImage(imgName);
 	}
 
 	public static BufferedImage getConveyorImage(Conveyor conveyor) {

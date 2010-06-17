@@ -3,6 +3,7 @@ package view.game;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.Polygon;
 import java.awt.geom.AffineTransform;
@@ -34,7 +35,7 @@ public class GroundPainter implements Painter {
 		this.ground = ground;
 		this.tileSize = tileSize;
 	}
-	
+
 	public int getTileSize() {
 		return tileSize;
 	}
@@ -76,28 +77,36 @@ public class GroundPainter implements Painter {
 	 */
 	private TileElementVisitor createElementPainter(final Graphics2D graphics) {
 		return new TileElementImageRecognizer() {
-			private List<TileElement> bigTouchedTiles = new ArrayList<TileElement>();
 
 			@Override
 			protected void onTileElmentVisited(TileElement element,
 					BufferedImage image) {
-				/*
-				 * Checks if 'element' is contained in the touchedTiles list. If
-				 * it is not, adds the element to the list (if size is bigger
-				 * than one tile, because is the only way that can try to draw
-				 * it twice.)
-				 */
-				if (!this.bigTouchedTiles.contains(element)) {
-					if (element.getWidth() > 1 || element.getHeight() > 1)
-						this.bigTouchedTiles.add(element);
 
-					int x = element.getPosition().getCol() * tileSize;
-					int y = element.getPosition().getRow() * tileSize;
-					int width = element.getWidth() * tileSize;
-					int height = element.getHeight() * tileSize;
+				int x = element.getPosition().getCol() * tileSize;
+				int y = element.getPosition().getRow() * tileSize;
+				int width = element.getWidth() * tileSize;
+				int height = element.getHeight() * tileSize;
 
-					graphics.drawImage(image, x, y, width, height, null);
+				graphics.drawImage(image, x, y, width, height, null);
+			}
+
+			@Override
+			public void visitWall(Wall wall) {
+				
+				Position from = wall.getPosition();
+				Position to = from.add(new Position(wall.getHeight(), wall.getWidth()));
+				Image image = ImageLoader.getImage(IMG_WALL);
+				
+				for (int row = from.getRow(); row < to.getRow(); row++) {
+					for (int col = from.getCol(); col < to.getCol(); col++) {
+						int x = col * tileSize;
+						int y = row * tileSize;
+						graphics.drawImage(image, x, y, tileSize, tileSize, null);
+						
+					}
 				}
+				
+
 			}
 		};
 	}
@@ -148,10 +157,11 @@ public class GroundPainter implements Painter {
 			}
 		});
 	}
-	
+
 	public void drawProductionLineElementArrows(
 			ProductionLineElement lineElement, Graphics2D graphics) {
-		drawProductionLineElementArrows(lineElement, graphics, HIGHLIGHT_ARROWS_COLOR);
+		drawProductionLineElementArrows(lineElement, graphics,
+				HIGHLIGHT_ARROWS_COLOR);
 	}
 
 	public void drawProductionLineElementArrows(

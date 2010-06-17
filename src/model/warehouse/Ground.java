@@ -2,7 +2,9 @@ package model.warehouse;
 
 import static model.utils.ArgumentUtils.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import model.production.elements.ProductionLineElement;
 
@@ -76,9 +78,16 @@ public class Ground {
 	}
 
 	public void visitElements(TileElementVisitor visitor) {
-		for (int row = 0; row < getRows(); row++)
-			for (int col = 0; col < getCols(); col++)
-				getTileElement(row, col).accept(visitor);
+		List<TileElement> visitedElements = new ArrayList<TileElement>();
+		for (int row = 0; row < getRows(); row++) {
+			for (int col = 0; col < getCols(); col++) {
+				TileElement element = getTileElement(row, col);
+				if (!visitedElements.contains(element)) {
+					element.accept(visitor);
+					visitedElements.add(element);
+				}
+			}
+		}
 	}
 
 	/**
