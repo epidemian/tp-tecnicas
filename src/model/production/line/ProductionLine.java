@@ -13,6 +13,8 @@ import model.game.time.TickUpdatable;
 import model.production.Product;
 import model.production.RawMaterials;
 import model.production.StorageArea;
+import model.production.elements.InputProductionLineElement;
+import model.production.elements.OutputProductionLineElement;
 import model.production.elements.ProductionLineElement;
 import model.production.elements.ProductionLineElementObserver;
 import model.production.elements.machine.Machine;
@@ -24,12 +26,12 @@ public abstract class ProductionLine implements TickUpdatable, DailyUpdatable,
 	/**
 	 * First element in the production line.
 	 */
-	ProductionLineElement firstLineElement;
+	private ProductionLineElement firstLineElement;
 
 	/**
 	 * A production line is working if none of its machines are broken.
 	 */
-	List<Machine> brokenMachines;
+	private List<Machine> brokenMachines;
 
 	protected ProductionLine(ProductionLineElement firstLineElement) {
 		this.setFirstProductionElement(firstLineElement);
@@ -43,11 +45,16 @@ public abstract class ProductionLine implements TickUpdatable, DailyUpdatable,
 		return new CircularProductionLine(firstLineElement);
 	}
 
-	public static ProductionLine createValidProductionLine(
-			ProductionLineElement firstLineElement, StorageArea storageArea,
-			RawMaterials rawMaterialConfiguration) {
-		return new ValidProductionLine(firstLineElement, storageArea,
-				rawMaterialConfiguration);
+	public static ProductionLine createFunctionalProductionLine(
+			StorageArea storageArea, InputProductionLineElement inputElement,
+			OutputProductionLineElement outputElement) {
+		return new FunctionalProductionLine(storageArea, inputElement,
+				outputElement);
+	}
+
+	public static ProductionLine createDisfunctionalProductionLine(
+			ProductionLineElement firstLineElement) {
+		return new DisfunctionalProductionLine(firstLineElement);
 	}
 
 	public ProductionLineElement getFirstLineElement() {
@@ -70,7 +77,8 @@ public abstract class ProductionLine implements TickUpdatable, DailyUpdatable,
 		return new ProductionLineIterator();
 	}
 
-	private void setFirstProductionElement(ProductionLineElement firstLineElement) {
+	private void setFirstProductionElement(
+			ProductionLineElement firstLineElement) {
 		checkNotNull(firstLineElement, "first production line element");
 		this.firstLineElement = firstLineElement;
 	}
@@ -104,14 +112,7 @@ public abstract class ProductionLine implements TickUpdatable, DailyUpdatable,
 	}
 
 	public int productionLineSize() {
-		Iterator<ProductionLineElement> iterator = this.iterator();
-		int size = 0;
-
-		while (iterator.hasNext()) {
-			iterator.next();
-			size++;
-		}
-		return size;
+		return this.getLineElements().size();
 	}
 
 	@Override
@@ -163,7 +164,7 @@ public abstract class ProductionLine implements TickUpdatable, DailyUpdatable,
 	}
 
 	public void breakAllMachines() {
-		for (ProductionLineElement element : this) 
+		for (ProductionLineElement element : this)
 			element.breakUp();
 	}
 
@@ -178,9 +179,9 @@ public abstract class ProductionLine implements TickUpdatable, DailyUpdatable,
 	public List<Integer> getProductionHistory() {
 		return new ArrayList<Integer>();
 	}
-	
-	public void sell(Budget budget){
-		for (ProductionLineElement element : this){
+
+	public void sell(Budget budget) {
+		for (ProductionLineElement element : this) {
 			element.sell(budget);
 		}
 	}

@@ -4,6 +4,7 @@ import static model.production.TestUtils.*;
 import static org.junit.Assert.assertEquals;
 
 import model.game.Budget;
+import model.production.elements.ProductionLineElementObserver;
 import model.production.elements.machine.Machine;
 import model.production.elements.machine.MachineType;
 import model.production.elements.machine.ProductionMachine;
@@ -17,23 +18,20 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class MachineStateTest {
-	
-	private Machine machine;
-	private ProductionLine line;
 
-	//At runtime a controller will assign a specific budget from where the line/
-	//machine will extract from repair.
+	private Machine machine;
+
+	// At runtime a controller will assign a specific budget from where the
+	// line/
+	// machine will extract from repair.
 	private Budget budget;
-	
+
 	@Before
 	public void setUp() {
 
 		machine = new ProductionMachine(createMachineType("TestingMachine"));
-		line = ProductionLine.createValidProductionLine(machine,
-				new StorageArea(new RawMaterials(),
-						new ValidProductionSequences()), new RawMaterials());
-		machine.setProductionLineElementObserver(line);
-		this.budget=new Budget(10000);
+		machine.setProductionLineElementObserver(new ObserverMock());
+		this.budget = new Budget(10000);
 	}
 
 	@Test(expected = CannotRepairHealthyMachineException.class)
@@ -72,25 +70,15 @@ public class MachineStateTest {
 
 	}
 
-	/**
-	 * In order to be able to avoid probability
-	 * 
-	 */
-	/*
-	private class MachineMock extends ProductionMachine {
+	public class ObserverMock implements ProductionLineElementObserver {
 
-		private MachineMock(MachineType machineType) {
-			super(machineType);
+		@Override
+		public void updateBreakdown(Machine machine) {
 		}
 
-		// TODO: Para qué se redefine esto?
-		public void breakUp() {
-			super.breakUp();
+		@Override
+		public void updateBrokenMachineRepair(Machine machine) {
 		}
 
-		public void damage() {
-			super.damage();
-		}
 	}
-	*/
 }

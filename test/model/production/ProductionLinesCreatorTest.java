@@ -1,5 +1,6 @@
 package model.production;
 
+import static model.production.line.ProductionLine.*;
 import static model.production.TestUtils.*;
 import static model.production.elements.ProductionLineElement.connectLineElements;
 import static org.junit.Assert.assertEquals;
@@ -23,17 +24,13 @@ public class ProductionLinesCreatorTest {
 
 	private ProductionLinesCreator linesCreator;
 	private Ground ground;
-	private StorageArea storageArea;
 
 	@Before
 	public void setUp() {
 		this.linesCreator = new ProductionLinesCreator(new StorageArea(
-				new RawMaterials(), new ValidProductionSequences()));
+				new ValidProductionSequences()));
 
 		this.ground = new Ground(1000, 10, 10);
-		this.storageArea = new StorageArea(new RawMaterials(),
-				new ValidProductionSequences());
-		this.linesCreator = new ProductionLinesCreator(this.storageArea);
 	}
 
 	/*
@@ -55,8 +52,7 @@ public class ProductionLinesCreatorTest {
 		connectLineElements(prodLineElement3, prodLineElement4);
 		connectLineElements(prodLineElement4, prodLineElement5);
 
-		ProductionLine line = ProductionLine.createValidProductionLine(
-				prodLineElement1, this.storageArea, new RawMaterials());
+		ProductionLine line = createDisfunctionalProductionLine(prodLineElement1);
 
 		/*
 		 * Creates the second line.
@@ -68,16 +64,14 @@ public class ProductionLinesCreatorTest {
 		connectLineElements(prodLine2Element1, prodLine2Element2);
 		connectLineElements(prodLine2Element2, prodLine2Element3);
 
-		ProductionLine line2 = ProductionLine.createValidProductionLine(
-				prodLine2Element1, this.storageArea, new RawMaterials());
+		ProductionLine line2 = createDisfunctionalProductionLine(prodLine2Element1);
 
 		/*
 		 * Creates the third line.
 		 */
 		ProductionLineElement prodLine3Element1 = createProductionMachine("Isolated");
 
-		ProductionLine line3 = ProductionLine.createValidProductionLine(
-				prodLine3Element1, this.storageArea, new RawMaterials());
+		ProductionLine line3 = createDisfunctionalProductionLine(prodLine3Element1);
 
 		/*
 		 * Puts the lines in the ground.
@@ -106,7 +100,7 @@ public class ProductionLinesCreatorTest {
 	}
 
 	private ProductionLineElement createProductionMachine(String typeName) {
-		return new ProductionMachine(createMachineType(typeName,1,1));
+		return new ProductionMachine(createMachineType(typeName, 1, 1));
 	}
 
 	@Test

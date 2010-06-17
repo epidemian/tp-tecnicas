@@ -9,6 +9,8 @@ import java.util.List;
 
 import model.game.Budget;
 import model.production.elements.Conveyor;
+import model.production.elements.InputProductionLineElement;
+import model.production.elements.OutputProductionLineElement;
 import model.production.elements.ProductionLineElement;
 import model.production.elements.machine.Machine;
 import model.production.elements.machine.MachineType;
@@ -27,7 +29,7 @@ public class ProductionLineTest {
 	private static final int INITIAL_BUDGET = 10000;
 
 	private ProductionLine productionLine;
-	
+
 	List<Machine> machines;
 
 	// At runtime a controller will assign a specific budget from where the
@@ -43,48 +45,36 @@ public class ProductionLineTest {
 
 	private void setUpProductionLineProcessingCartonWithOnlyMachines() {
 
-		Builder builder = new MachineType.Builder("Licuado", 1, 1).price(MACHINE_PRICE);
+		Builder builder = new MachineType.Builder("Licuado", 1, 1)
+				.price(MACHINE_PRICE);
 
+		InputProductionLineElement inputElement = new InputProductionLineElement();
 		Machine machine1 = new MachineThatNeverBreaks(builder.build());
 		Machine machine2 = new MachineThatNeverBreaks(builder.name("Haz")
 				.build());
 		Machine machine3 = new MachineThatNeverBreaks(builder.name("Horno")
 				.build());
+		OutputProductionLineElement outputElement = new OutputProductionLineElement();
 
+		connectLineElements(inputElement, machine1);
 		connectLineElements(machine1, machine2);
 		connectLineElements(machine2, machine3);
-		
+		connectLineElements(machine3, outputElement);
+
 		this.machines.add(machine1);
 		this.machines.add(machine2);
 		this.machines.add(machine3);
 
-		this.productionLine = ProductionLine.createValidProductionLine(machine1,
-				new StorageArea(new RawMaterials(),
-						new ValidProductionSequences()), new RawMaterials());
+		this.productionLine = ProductionLine.createFunctionalProductionLine(
+				new StorageArea(new ValidProductionSequences()), inputElement,
+				outputElement);
 	}
 
-	private void setUpProductionLineProcessingCartonWithConveyor() {
-
-		ProductionLineElement prodLineElement1 = new MachineThatNeverBreaks(
-				createMachineType("Licuado", 1, 1));
-		ProductionLineElement prodLineElement2 = new Conveyor();
-
-		ProductionLineElement prodLineElement3 = new MachineThatNeverBreaks(
-				createMachineType("Horno", 1, 1));
-
-		connectLineElements(prodLineElement1, prodLineElement2);
-		connectLineElements(prodLineElement2, prodLineElement3);
-
-		this.productionLine = ProductionLine.createValidProductionLine(prodLineElement1,
-				new StorageArea(new RawMaterials(),
-						new ValidProductionSequences()), new RawMaterials());
-	}
-	
 	@Test
 	public void dailyProduction() {
 
 		setUpProductionLineProcessingCartonWithOnlyMachines();
-		
+
 		int ticksInADay = 500;
 
 		for (int ticks = 0; ticks < ticksInADay; ticks++) {
@@ -108,11 +98,9 @@ public class ProductionLineTest {
 		assertEquals(0, this.productionLine.getDailyProduction());
 	}
 
-//	private List<Machine> createListConnectedMachines() {
-//		return createListConnectedMachines(0);
-//	}
-
-
+	// private List<Machine> createListConnectedMachines() {
+	// return createListConnectedMachines(0);
+	// }
 
 	@Test
 	public void lineWithThreeNonBrokenMachinesRepairedFromMachines()
@@ -169,7 +157,7 @@ public class ProductionLineTest {
 		int expectedBalance = INITIAL_BUDGET
 				- Math.round(machines.get(0).getPurchasePrice()
 						* Machine.PRICE_REPAIR_COEF);
-		
+
 		assertEquals(expectedBalance, this.budget.getBalance());
 	}
 
@@ -190,7 +178,7 @@ public class ProductionLineTest {
 		int price = 100;
 		setUpProductionLineProcessingCartonWithOnlyMachines();
 
-		//machines.get(0).damage();
+		// machines.get(0).damage();
 		// machines.get(0).breakUp();
 		machines.get(1).breakUp();
 
@@ -198,16 +186,6 @@ public class ProductionLineTest {
 
 		int expectedBalance = INITIAL_BUDGET + (price / 2) * 2;
 		assertEquals(expectedBalance, budget.getBalance());
-	}
-
-	@Test
-	public void breakAllMachinesInATwoMachineLine() {
-		setUpProductionLineProcessingCartonWithConveyor();
-
-		this.productionLine.breakAllMachines();
-
-		assertEquals(2, this.productionLine.getBrokenMachines().size());
-
 	}
 
 }

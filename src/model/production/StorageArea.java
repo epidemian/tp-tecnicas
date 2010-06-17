@@ -21,6 +21,10 @@ public class StorageArea {
 	 */
 	private RawMaterials rawMaterials;
 	
+	public StorageArea(ValidProductionSequences validSequences) {
+		this(new RawMaterials(), validSequences);
+	}
+	
 	public StorageArea(RawMaterials rawMaterials, 
 		ValidProductionSequences validSequences){
 		this.setRawMaterials(rawMaterials);

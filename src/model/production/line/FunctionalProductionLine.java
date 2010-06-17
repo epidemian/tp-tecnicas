@@ -1,7 +1,8 @@
 package model.production.line;
 
-import static model.utils.ArgumentUtils.checkNotNull;
+import static model.utils.ArgumentUtils.*;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -9,25 +10,34 @@ import java.util.List;
 import model.production.Product;
 import model.production.RawMaterials;
 import model.production.StorageArea;
+import model.production.elements.InputProductionLineElement;
+import model.production.elements.OutputProductionLineElement;
 import model.production.elements.ProductionLineElement;
 
-class ValidProductionLine extends ProductionLine {
-
-	// TODO: Pedir al último elemento, el output element, o lo que sea...
-	private int dailyProduction;
+class FunctionalProductionLine extends ProductionLine {
 
 	private StorageArea storageArea;
 	private List<Integer> productionHistory;
+	private InputProductionLineElement inputElement;
+	private OutputProductionLineElement outputElement;
 
-	// TODO: Pedir al input line element
-	private RawMaterials configuration;
+	protected FunctionalProductionLine(StorageArea storageArea,
+			InputProductionLineElement inputElement,
+			OutputProductionLineElement outputElement) {
+		super(inputElement);
 
-	protected ValidProductionLine(ProductionLineElement firstLineElement,
-			StorageArea storageArea, RawMaterials rawMaterialsConfiguration) {
-		super(firstLineElement);
+		checkNotNull(inputElement, "input element");
+		checkNotNull(outputElement, "output element");
+
+		List<ProductionLineElement> lineElements = getLineElements();
+		ProductionLineElement lastElement = lineElements.get(lineElements
+				.size() - 1);
+		checkArgCondition(outputElement, outputElement.equals(lastElement),
+				"output element is not last element!");
 
 		this.setStorageArea(storageArea);
-		this.setRawMaterialConfiguration(rawMaterialsConfiguration);
+		this.inputElement = inputElement;
+		this.outputElement = outputElement;
 		this.productionHistory = new LinkedList<Integer>();
 	}
 
@@ -36,40 +46,28 @@ class ValidProductionLine extends ProductionLine {
 		if (isWorking()) {
 			Iterator<ProductionLineElement> iterator = this.iterator();
 			Product product = this.getStorageArea().createProduct(
-					this.configuration);
+					this.inputElement.getRawMaterialsConfiguration());
 
 			while (iterator.hasNext()) {
 				ProductionLineElement next = iterator.next();
 				product = next.process(product);
 			}
 
-			// TODO check not null?
 			if (product != null) {
 				this.storageArea.addProduct(product);
-				this.dailyProduction++;
 			}
 		}
 	}
 
-	public void setRawMaterialConfiguration(
-			RawMaterials rawMaterialsConfiguracion) {
-		checkNotNull(rawMaterialsConfiguracion, "rawMaterialsConfiguracion");
-		this.configuration = rawMaterialsConfiguracion;
-	}
-
 	@Override
 	public void updateDay() {
-		this.productionHistory.add(this.dailyProduction);
-		this.dailyProduction = 0;
+		this.productionHistory.add(this.getDailyProduction());
+		this.outputElement.resetDailyProduction();
 	}
 
 	@Override
 	public int getDailyProduction() {
-		return dailyProduction;
-	}
-
-	public void setDailyProduction(int dailyProduction) {
-		this.dailyProduction = dailyProduction;
+		return this.outputElement.getDailyProduction();
 	}
 
 	@Override
