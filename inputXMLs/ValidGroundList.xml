@@ -1,0 +1,49 @@
+<Map>	
+	<Ground price="1000" rows="20" cols="30">
+		<Walls>
+			<!-- Upper Wall -->
+			<Wall rows="0" cols="0" width="30" height="1"/>
+			<!-- Left  Wall-->
+			<Wall rows="1" cols="0" width="1" height="18"/>
+			<!-- Lower Wall -->
+			<Wall rows="19" cols="0" width="30" height="1"/>
+			
+			
+			<!-- --------------------------------- -->
+			<!-- InternalWalls -->
+			<Wall rows="12" cols="12" width="2" height="3"/>
+			
+			
+		</Walls>
+		<Outputs>
+			<OutputElement rows="1" cols="29" direction="W" />
+			<OutputElement rows="2" cols="29" direction="W" />
+			<OutputElement rows="3" cols="29" direction="W" />
+			<OutputElement rows="4" cols="29" direction="W" />
+			<OutputElement rows="5" cols="29" direction="W" />
+			<OutputElement rows="6" cols="29" direction="W" />
+			<OutputElement rows="7" cols="29" direction="W" />
+			<OutputElement rows="8" cols="29" direction="W" />
+			<OutputElement rows="9" cols="29" direction="W" />
+			<OutputElement rows="10" cols="29" direction="W" />
+			<OutputElement rows="11" cols="29" direction="W" />
+			<OutputElement rows="12" cols="29" direction="W" />
+			<OutputElement rows="13" cols="29" direction="W" />
+			<OutputElement rows="14" cols="29" direction="W" />
+			<OutputElement rows="15" cols="29" direction="W" />
+			<OutputElement rows="16" cols="29" direction="W" />
+			<OutputElement rows="17" cols="29" direction="W" />
+			<OutputElement rows="18" cols="29" direction="W" />
+			
+		</Outputs>
+	</Ground>
+	<Ground price="15000" rows="30" cols="50">
+		<Walls>
+			<Wall rows="1" cols="1" width="10" height="1"/>
+		</Walls>
+		<Outputs>
+			<OutputElement rows="5" cols="6" direction="N" />
+			<OutputElement rows="8" cols="7" direction="W" />
+		</Outputs>
+	</Ground>
+</Map>

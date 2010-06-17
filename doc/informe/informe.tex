@@ -65,46 +65,55 @@
 		\item El precio de alquiler de la fabrica es proporcional al precio del terreno.
 		\item Las maquinas pueden no contener una entrada y una salida determinada en el archivo XML. En caso de que no tengan una establecida entonces se les genera una por defecto.
 		\item Tanto las salidas como las paredes de las fabricas se encuentran declaradas en el archivo XML correspodiente a los distintos terrenos.
+		\item Las m\'aquinas de control de calidad pueden convertir a un producto en defectuoso.
+		\item Puede suceder que un mismo tipo de producto sea creado a partir de distintas secuencias de producci\'on y diferentes materiales.
 	\end{enumerate}
 
 \clearpage
 \section{Vista Lógica}
 	\subsection{Producción}
 		
-		La forma en la cual el juego simula la producci\'on es el n'\'ucleo del modelo. 
+		La forma en la cual el juego simula la producci\'on es el n\'ucleo del modelo. 
 
-		La primer decisi\'on de relevancia fue si en el juego cada producto iba a ser un objeto que fuera circulando por cada m\'aquina o si simplemente al final del d\'ia se discretizar\''ia la producci\'on diaria. Decidimos optar por la primer alternativa porque consideramos que la segunda alternativa no representaba correctamente al negocio. Aunque se podr\'ian modelizar las funcionalidades solicitadas en el presente, cada futuro cambio llevar\'ia a nuevos parches con peligro de tener que desechar el n\'ucleo del modelo por completo en caso de que no quedara otra alternativa.  
+		La primer decisi\'on de relevancia fue si en el juego cada producto iba a ser un objeto que fuera circulando por cada maquinao si simplemente al final del d\'ia se discretizar\''ia la producci\'on diaria. Decidimos optar por la primer alternativa porque consideramos que la segunda alternativa no representaba correctamente al negocio. Aunque se podr\'ian modelizar las funcionalidades solicitadas en el presente, cada futuro cambio llevar\'ia a nuevos parches con peligro de tener que desechar el n\'ucleo del modelo por completo en caso de que no quedara otra alternativa. La segunda alternativa probablemente ser\'ia una buena opci\'on en caso de que se tuvieran que manejar varias fabricas simultáneamente.
 		
 		Una vez decidido acerca de la existencia fisica de cada producto, se abrieron distintos interrogantes. Un ejemplo fue la forma en la cual se identificar\'ia el producto luego de ser procesado por las distintas m\'aquinas.
 		
-		La primera alternativa que se considero fue que cada l\'inea fuera la encargada de identificar el tipo de producto que produc\'ia. Esto parec\'ia l\'ogico ya que la l\'inea sabe las m\'aquinas que tiene. Sin embargo, identificamos una limitaci\'on en esta soluci\'on. Esta limitaci\'on surg\'ia de que cada vez que modificaramos las m\'aquinas de la l\'inea, los productos que estuvieran siendo procesados en ese momento en la l\'inea ...
-		%TODO . 
+		La primera alternativa que se considero fue que cada l\'inea fuera la encargada de identificar el tipo de producto que produc\'ia. Esto parec\'ia l\'ogico ya que la l\'inea sabe las m\'aquinas que tiene. Sin embargo, identificamos una limitaci\'on en esta soluci\'on. Esta limitaci\'on surg\'ia de que cada vez que modificaramos las m\'aquinas de la l\'inea, los productos que estuvieran siendo procesados en ese momento en la l\'inea podr\'ian terminar resolviendo su tipo incorrectamente. 
 		
 		En consecuencia, decidimos que cada producto lleve un historial de las m\'aquinas por las que pasaba. Al final de ser procesado por todas las m\'aquinas, se analizaba cual era el producto final.
 			
 		Con el objetivo de aumentar el interes al momento de jugarlo, decidimos tomar como hipot\'esis que el producto puede necesitar distintas materias primas y cantidades de cada una de ellas. 
 		
+		En el diagrama de clases se puede observar a grandes rasgos como se implement\'o la decisión de que cada producto guarda un historial: cada producto cuando es procesado por una maquina guarda la información acerca del tipo de maquina por el que fue procesado además de la materia de prima con la que fue creado . Para que esto sea realizado, existe un método process que esta redefinido en los distintos tipos de productionLineElements.
+		
 		\begin{figure}[H]
 		\centering
-		\includegraphics[scale=0.25]{diagramas/productionClassDiagram.jpg}
+		\includegraphics[scale=0.3]{diagramas/productionClassDiagram.jpg}
 		\caption{Diagrama de Clases de la lógica de producción}
 		\end{figure}		
+		
+				
+		En el diagrama de secuencia, se puede observar como es la secuencia desde que sea crea un producto amorfo, que no sabe que tipo de producto es,  hasta que finalmente se resuelve su tipo. En el interin, el producto es procesado por todos los distintos elementos que forman parte de la l\'inea de producci\'on.
+
 	
 		\begin{figure}[H]
 		\centering
-		\includegraphics[scale=0.3]{diagramas/productionSequenceDiagram.jpg}
+		\includegraphics[scale=0.3]{diagramas/productionSequenceDiagramBis.jpg}
 		\caption{Diagrama de Secuencia de la lógica de producción}
 		\end{figure}		
 
 	\subsection{Discretizaci\'on Temporal }		
-		%TODO
-		Como se pod\'ia observar en el grafico , existe un metodo en la l\'nea de producci\'on que dispara la circulaci\'on del producto a trav\'es de las m\'aquinas. En cada ``tick'', un producto pasa de una m\'aquina a la siguiente.
+		Como se pod\'ia observar en el grafico , existe un metodo en la l\'nea de producci\'on que dispara la circulaci\'on del producto a trav\'es de las m\'aquinas. En cada ``tick'', un producto pasa de una maquinaa la siguiente.
 		De la misma forma, existen otras entidades que se suscriben a una entidad que se encarga de actualizar el paso del tiempo en todos los objetos que esten suscriptos a ella.
 		Cada d\'ia esta formado por una cantidad especificada de ticks. 
 A su vez, la cantidad de d\'ias por semana y d\'ias por mes tamb\'ien se encuentra parametizada.
 		
 	\subsection{Laboratorio de Tecnologías}
 		
+		El laboratorio se ocupa de desarrollar las distintas secuencias de producci\'on que resultan en productos validos. Cada desarrollo que realiza el laboratorio se considera una \emph{tecnolog\'ia} y cada una de las cuales habilita o una nueva forma de producir un producto o un producto nuevo.  
+		
+		Al momento de dise\~nar el laboratorio se busco que el laboratorio no sea algo secundario y prescindible. As\'i fue que se decidio que las tecnolog\'ias que este desarrolla tengan una estructura jerarquica en la cual cada tecnolog\'ia puede tener dependencias. Es decir, que se necesite desarrollar otras tecnolog\'ias antes de esta.
 		
 		
 		\begin{figure}[H]
@@ -121,11 +130,9 @@ A su vez, la cantidad de d\'ias por semana y d\'ias por mes tamb\'ien se encuent
 		\caption{Diagrama de Paqutes general de la Arquitectura}
 		\end{figure}	
 		
-		La arquitectura sigue al tradicional patr\'on de arquitectura, \emph{MVC}. El modelo no depende de nada m\'as que si mismo, Los controladores utilizan al modelo y a la vista y la vista necesita del modelo. La capa de persistencia tambi\'en esta desacoplada completamente del modelo.
+		La arquitectura sigue al patr\'on de arquitectura, \emph{MVC}. El modelo no depende de nada m\'as que si mismo, Los controladores utilizan al modelo y a la vista y la vista necesita del modelo. La capa de persistencia tambi\'en esta desacoplada completamente del modelo.
 		
-\clearpage
-\section{Vista de Procesos}
-	\textcolor{red}{mmm... la bibliografia dice de usar diagrama de actividades, o de estados. Pero...}	
+	
 
 \clearpage
 \section{Vista de Desarrollo}
@@ -136,12 +143,17 @@ A su vez, la cantidad de d\'ias por semana y d\'ias por mes tamb\'ien se encuent
 	\caption{Diagrama de Componentes}
 	\end{figure}
 	
-		En la implementaci\'on de la capa de recuperaci\'on de datos a la que llamamos persistencia por una posible futura extensi\'on, se utiliz\'o un componente para facilitar la recuperaci\'on.   
-		
-		El componente que utilizamos es la libreria Dom4j. La utilizaci\'on de esta libreria nos permitio desligarnos de la necesidad de hacer un parser de XML.
-		
-		Otro componente que utilizamos durante el desarrollo fue el framework JUnit. La utilizaci\'on de este framework facilito la construcci\'on de pruebas que nos sirvieron en primer lugar para ir probando los distintos modulos que se iban implementando y en segundo lugar, para poder refactorizarlos sin miedo a meter nuevos huecos en el programa. 
+	En la implementaci\'on de la capa de recuperaci\'on de datos a la que llamamos persistencia por una posible futura extensi\'on, se utiliz\'o un componente para facilitar la recuperaci\'on.   
 	
+	El componente que utilizamos es la libreria Dom4j. La utilizaci\'on de esta libreria nos permitio desligarnos de la necesidad de hacer un parser de XML.
+	
+	Otro componente que utilizamos durante el desarrollo fue el framework JUnit. La utilizaci\'on de este framework facilito la construcci\'on de pruebas que nos sirvieron en primer lugar para ir probando los distintos modulos que se iban implementando y en segundo lugar, para poder refactorizarlos sin miedo a meter nuevas fallas en el programa. 
+
+\clearpage
+\section{Vista de Procesos}
+
+	El programa tiene un \'unico proceso. Por lo tanto, no existe ninguna comunicaci\'on entre procesos que sea consecuencia de 
+		
 \clearpage
 \section{Vista Física}
 	\begin{figure}[H]
@@ -150,7 +162,7 @@ A su vez, la cantidad de d\'ias por semana y d\'ias por mes tamb\'ien se encuent
 	\caption{Diagrama de Despliegue }
 	\end{figure}
 	
-	El diagrama de \emph{deployment} es muy simple ya que la aplicaci\'on no es una aplicaci\'on  o que este desplegada en m\'as de un sistema. Por lo tanto, todos los componentes existentes estan contenidos en el \'unico nodo del sistema.
+	El diagrama de \emph{deployment} es muy simple ya que la aplicaci\'on no es una aplicaci\'on que este desplegada en m\'as de un sistema. Por lo tanto, todos los componentes existentes estan contenidos en el \'unico nodo del sistema.
 	
 \clearpage
 \section{Escenarios}
@@ -171,15 +183,15 @@ A su vez, la cantidad de d\'ias por semana y d\'ias por mes tamb\'ien se encuent
 			
 			\item{\emph{ Sell Warehouse:}} El jugador puede vender la fabrica y volver a la selecci\'on de terrenos.
 			
-			\item{\emph{ Sell Machine:}} El jugador puede vender la m\'aquina y recibir a cambio un valor proporcional de su precio consecuencia de la depreciaci\'on sufrida.
+			\item{\emph{ Sell Machine:}} El jugador puede vender la maquinay recibir a cambio un valor proporcional de su precio consecuencia de la depreciaci\'on sufrida.
 			
-			\item{\emph{ Move Machine:}}  El jugador puede reubicar m\'aquinas ya compradas en las distintas ubicaciones disponibles de la fabrica. La m\'aquina queda ubicada en la fabrica con su respectiva entrada y salida. 
+			\item{\emph{ Move Machine:}}  El jugador puede reubicar m\'aquinas ya compradas en las distintas ubicaciones disponibles de la fabrica. La maquinaqueda ubicada en la fabrica con su respectiva entrada y salida. 
 		
 			\item{\emph{ Configure Input of Raw Materials:}} El jugador selecciona la materia prima que se usara para la producci\'on en la l\'inea. 
 		
 			\item{\emph{ Repair Production Line Machines:}} El jugador selecciona la linea de producci\'on cuyas m\'aquinas desea reparar. La reparaci\'on tiene un costo proporcional al precio de la m\'aquina. Acci\'on ejecutada desde el modo construcci\'on.
 			
-			\item{\emph{ Repair Machine:}} El jugador repara una m\'aquina que selecciona. La reparaci\'on tiene un costo proporcional al precio de la m\'aquina. Acci\'on ejecutada desde el modo construcci\'on.
+			\item{\emph{ Repair Machine:}} El jugador repara una maquinaque selecciona. La reparaci\'on tiene un costo proporcional al precio de la m\'aquina. Acci\'on ejecutada desde el modo construcci\'on.
 			
 			\item{\emph{ Play:}} El jugador pasa a modo continuo.
 			

@@ -35,27 +35,25 @@ public class OutputProductionLineElementsPersistent {
 		Iterator<Element> iter=element.elementIterator();
 		
 		while(iter.hasNext()){
-			Element elem = iter.next();
-			if (!elem.getName().equals(
+			Element childElem = iter.next();
+			if (!childElem.getName().equals(
 					OutputProductionLineElementsPersistent.TAG_INNER)){
 				throw new InvalidTagException();
 			}
 			
 
-			
-			
-			Direction direction= (element.attribute(TAG_ATR_DIRECTION)!=null?
+			Direction direction= (childElem.attributeValue(TAG_ATR_DIRECTION)!=null?
 					Direction.getDirectionByString(StringUtils.
-							toChar(element.attributeValue(TAG_ATR_DIRECTION))):
+							toChar(childElem.attributeValue(TAG_ATR_DIRECTION))):
 					Direction.NORTH);
 			
 			OutputProductionLineElement outputElement = 
 				new OutputProductionLineElement(direction);	
 			
 			list.add(new OutputProductionLineElementPositioned(
-						new Position(Integer.valueOf(elem.attributeValue(
+						new Position(Integer.valueOf(childElem.attributeValue(
 									WallsPersistent.TAG_CHILD_ATR_ROWS)),
-									Integer.valueOf(elem.attributeValue(
+									Integer.valueOf(childElem.attributeValue(
 											WallsPersistent.TAG_CHILD_ATR_COLS)))
 						,outputElement));
 			
