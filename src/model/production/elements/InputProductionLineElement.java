@@ -18,6 +18,13 @@ public class InputProductionLineElement extends ProductionLineElement {
 	public InputProductionLineElement() {
 		this(Direction.EAST);
 	}
+	
+	
+
+	@Override
+	public boolean canHavePreviousLineElement() {
+		return false;
+	}
 
 	@Override
 	public Direction getInputConnectionDirection() {

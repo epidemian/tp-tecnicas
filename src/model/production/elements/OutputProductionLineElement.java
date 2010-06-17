@@ -27,6 +27,13 @@ public class OutputProductionLineElement extends ProductionLineElement {
 	public void resetDailyProduction() {
 		this.dailyProduction = 0;
 	}
+	
+	
+
+	@Override
+	public boolean canHaveNextLineElement() {
+		return false;
+	}
 
 	@Override
 	public Direction getInputConnectionDirection() {

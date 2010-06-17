@@ -1,5 +1,6 @@
 package model.production.elements;
 
+import model.exception.BusinessLogicException;
 import model.game.Budget;
 import model.production.Direction;
 import model.production.Product;
@@ -40,12 +41,25 @@ abstract public class ProductionLineElement extends TileElement {
 	}
 
 	public ProductionLineElement getNextLineElement() {
+		if (!canHaveNextLineElement())
+			throw new BusinessLogicException("Can't have next element");
 		return nextLineElement;
 	}
 
 	public ProductionLineElement getPreviousLineElement() {
+		if (!canHavePreviousLineElement())
+			throw new BusinessLogicException("Can't have previous element");
 		return previousLineElement;
 	}
+	
+	public boolean canHavePreviousLineElement() {
+		return true;
+	}
+
+	public boolean canHaveNextLineElement() {
+		return true;
+	}
+	
 
 	public void setProductionLineElementObserver(
 			ProductionLineElementObserver obs) {
@@ -57,15 +71,21 @@ abstract public class ProductionLineElement extends TileElement {
 	}
 
 	public boolean hasPreviousLineElement() {
+		if (!canHavePreviousLineElement())
+			return false;
 		return getPreviousLineElement() != null;
 	}
 
 	public boolean hasNextLineElement() {
+		if (!canHaveNextLineElement())
+			return false;
 		return getNextLineElement() != null;
 	}
 
 	public static void connectLineElements(ProductionLineElement previous,
 			ProductionLineElement next) {
+		if (!previous.canHaveNextLineElement() || !next.canHavePreviousLineElement())
+			throw new BusinessLogicException("Invalid connection");
 		previous.nextLineElement = next;
 		next.previousLineElement = previous;
 	}

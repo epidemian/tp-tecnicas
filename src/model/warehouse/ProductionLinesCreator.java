@@ -65,21 +65,21 @@ public class ProductionLinesCreator {
 		touchedElements.add(lineElement);
 
 		boolean circularLine = false;
-		ProductionLineElement previous = lineElement.getPreviousLineElement();
+		ProductionLineElement current = lineElement;
 		ProductionLineElement firstElement = lineElement;
 
 		/*
 		 * Try to find the first element in the line.
 		 */
-		while (previous != null && !circularLine) {
-
-			if (previous == lineElement)
-				circularLine = true;
+		while (current.hasPreviousLineElement() && !circularLine) {
+			
+			current = current.getPreviousLineElement();
+			firstElement = current;
+			
+			if (current != lineElement)
+				touchedElements.add(current);
 			else
-				touchedElements.add(previous);
-
-			firstElement = previous;
-			previous = previous.getPreviousLineElement();
+				circularLine = true;
 		}
 
 		/*
@@ -89,13 +89,14 @@ public class ProductionLinesCreator {
 		ProductionLineElement lastElement = lineElement;
 		if (!circularLine) {
 
-			ProductionLineElement next = lineElement.getNextLineElement();
-
-			while (next != null) {
-				lastElement = next;
-				touchedElements.add(next);
-				next = next.getNextLineElement();
+			current = lineElement;
+			
+			while (current.hasNextLineElement()) {
+				current = current.getNextLineElement();
+				touchedElements.add(current);
+				lastElement = current;
 			}
+			
 		}
 
 		ProductionLine line;
@@ -111,14 +112,13 @@ public class ProductionLinesCreator {
 				OutputProductionLineElement outputElement = outputElements
 						.get(indexOfLastElement);
 
-				line = createFunctionalProductionLine(storageArea, inputElement,
-						outputElement);
-			}
-			else {
+				line = createFunctionalProductionLine(storageArea,
+						inputElement, outputElement);
+			} else {
 				line = createDisfunctionalProductionLine(firstElement);
 			}
 		}
-		
+
 		return line;
 	}
 
