@@ -47,12 +47,14 @@ public class MachineType extends AbstractType {
 		if (inputPosition.equals(outputPosition))
 			throw new BusinessLogicException(
 					"Input and output positions must not be equal");
+		
+		String wAndH = "width " + width + " height " + height;
 		checkArgCondition(inputPosition,
 				isValidInputOrOutputPosition(inputPosition),
-				"Invalid input position");
+				"Invalid input position " + wAndH);
 		checkArgCondition(outputPosition,
 				isValidInputOrOutputPosition(outputPosition),
-				"Invalid output position");
+				"Invalid output position " + wAndH);
 	}
 
 	/*

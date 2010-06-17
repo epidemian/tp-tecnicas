@@ -11,6 +11,7 @@ public class ImageLoader {
     private static Map<String, BufferedImage> images = new HashMap<String, BufferedImage>();
 
     private static BufferedImage loadImage(String path) {
+    	System.out.println("LOAD IMAGE "+ path);
 		BufferedImage image = null;
 		try {
 			URL url = ImageLoader.class.getClassLoader()

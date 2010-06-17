@@ -9,7 +9,6 @@
 			<Wall rows="19" cols="0" width="30" height="1"/>
 			
 			
-			<!-- --------------------------------- -->
 			<!-- InternalWalls -->
 			<Wall rows="12" cols="12" width="2" height="3"/>
 			

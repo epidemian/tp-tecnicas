@@ -26,6 +26,8 @@ import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
+import java.util.Map;
+
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 
@@ -273,10 +275,12 @@ public class MainController {
 					.loadQualityControlMachines("inputXMLs/ValidQualityControlMachineList.xml");
 			List<RawMaterialType> validRawMaterialTypes = xmlFactory
 					.loadRawMaterialTypes("inputXMLs/ValidRawMaterialTypeList.xml");
+			Map<String, Integer> prices = xmlFactory.loadPrices("inputXMLs/prices/prices0.xml");
 
+			
 			// TODO: ver priceMap y el null
 			Warehouse warehouse = Warehouse.createRentedWarehouse(ground,
-					player.getBudget(), new PriceMap(),
+					player.getBudget(), new PriceMap(prices),
 					validProductionSequences, null);
 
 			return new Game(player, validProductionSequences,
@@ -303,10 +307,11 @@ public class MainController {
 					.loadQualityControlMachines("inputXMLs/ValidQualityControlMachineList.xml");
 			List<RawMaterialType> validRawMaterialTypes = xmlFactory
 					.loadRawMaterialTypes("inputXMLs/ValidRawMaterialTypeList.xml");
-
+			Map<String, Integer> prices = xmlFactory.loadPrices("inputXMLs/prices/prices0.xml");
+			
 			// TODO: ver priceMap y el null
 			Warehouse warehouse = Warehouse.createPurchasedWarehouse(ground,
-					player.getBudget(), new PriceMap(),
+					player.getBudget(), new PriceMap(prices),
 					validProductionSequences, null);
 
 			return new Game(player, validProductionSequences,
