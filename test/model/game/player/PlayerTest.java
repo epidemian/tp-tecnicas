@@ -7,8 +7,9 @@ import model.game.Player;
 import model.game.time.UpdateScheduler;
 import model.lab.ResearchLab;
 import model.lab.TechnologyTree;
+import model.production.ValidProductionSequences;
 import model.warehouse.Ground;
-import model.warehouse.PurchasedWarehouse;
+import model.warehouse.PriceMap;
 import model.warehouse.Warehouse;
 
 import org.junit.Before;
@@ -68,13 +69,14 @@ public class PlayerTest {
 				budget);
 
 		Ground ground = createGroundByPrice(INITIAL_BALANCE);
-		Warehouse warehouse = new PurchasedWarehouse(ground, budget);
+		Warehouse warehouse = Warehouse.createPurchasedWarehouse(ground,
+				budget, new PriceMap(), new ValidProductionSequences());
 
 		this.scheduler.subscribeDailyUpdatable(researchLab);
 		this.scheduler.subscribeMonthlyUpdatable(warehouse);
-		
+
 		GameState gameState = player.updateTick();
-		
+
 		assertEquals(GameState.WIN, gameState);
 	}
 

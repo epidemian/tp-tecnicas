@@ -2,60 +2,49 @@ package model.warehouse;
 
 import static org.junit.Assert.assertEquals;
 import model.game.Budget;
+import model.production.ValidProductionSequences;
 
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class WarehouseTest {
+
 	private static final int INITIAL_BALANCE = 5000;
 	private static final int PRICE_GROUND = 1000;
+	// TODO Machine prices.
 	private static final int PRICE_MACHINES = 0;
 	
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
-
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
-
+	private Warehouse purchasedWarehouse;
+	private Warehouse rentedWarehouse;
+	private Budget budget;
+	
 	@Before
 	public void setUp() throws Exception {
-	}
-
-	@After
-	public void tearDown() throws Exception {
+	
+		Ground ground = new Ground(PRICE_GROUND, 10, 10);
+		PriceMap map = new PriceMap();
+		ValidProductionSequences sequences = new ValidProductionSequences();
+		
+		this.budget = new Budget(INITIAL_BALANCE);
+		this.purchasedWarehouse = Warehouse.createPurchasedWarehouse(ground, budget, map, sequences,null);
+		this.rentedWarehouse = Warehouse.createRentedWarehouse(ground, budget, map, sequences,null);
 	}
 
 	@Test
 	public void sellPurcheaseWarehouseAndCheckBalance() {
-		Budget budget = new Budget(INITIAL_BALANCE);
-		Warehouse purchaseWarehouse = new PurchasedWarehouse(new Ground(PRICE_GROUND, 10, 10), budget); 
-		
-		purchaseWarehouse.sell();
-		//TODO: Ojo que al m�todo sell le falta la parte de la venta de las m�quinas en buen estado
-		assertEquals(budget.getBalance(), (int)(INITIAL_BALANCE + 0.8 * PRICE_GROUND + 0.5 * PRICE_MACHINES));
+		this.purchasedWarehouse.sell();
+		assertEquals((int)(INITIAL_BALANCE + 0.8 * this.purchasedWarehouse.getSalePrice() + 0.5 * PRICE_MACHINES), budget.getBalance());
 	}
 	
 	@Test
 	public void sellRentWarehouseAndCheckBalance() {
-		Budget budget = new Budget(INITIAL_BALANCE);
-		Warehouse rentWarehouse = new RentedWarehouse(new Ground(PRICE_GROUND, 10, 10), budget); 
-		
-		rentWarehouse.sell();
-		//TODO: Ojo que al m�todo sell le falta la parte de la venta de las m�quinas en buen estado
-		assertEquals(budget.getBalance(), (int)(INITIAL_BALANCE + 0.5 * PRICE_MACHINES));
+		this.rentedWarehouse.sell();
+		assertEquals((int)(INITIAL_BALANCE + 0.5 * PRICE_MACHINES), budget.getBalance());
 	}	
 	
 	@Test
 	public void updateMonthAndCheckBalance() {
-		Budget budget = new Budget(INITIAL_BALANCE);
-		Warehouse rentWarehouse = new RentedWarehouse(new Ground(PRICE_GROUND, 10, 10), budget); 
-		
-		rentWarehouse.updateMonth();
-		assertEquals(budget.getBalance(), (int)(INITIAL_BALANCE - PRICE_GROUND));
+		this.rentedWarehouse.updateMonth();
+		assertEquals((int)(INITIAL_BALANCE - this.rentedWarehouse.getRentPrice()),budget.getBalance());
 	}
 }
