@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import model.game.time.UpdateScheduler;
 import model.production.RawMaterialType;
 import model.production.StorageArea;
 import static model.utils.ArgumentUtils.*;
@@ -25,8 +27,12 @@ import persistence.XMLFactory;
 
 public class Game {
 
+	private static final int DAYS_PER_MONTH = 10;
+	private static final int DAYS_PER_WEEK = 3;
+	private static final int TICKS_PER_DAY = 24;
+	
 	private Ground ground;
-        private List<Ground> grounds;
+	private List<Ground> grounds;
 	private List<MachineType> qualityControlMachineType;
 	private List<MachineType> productionMachinesType;
 	private Map<RawMaterialType, Integer> rawMaterialPrices;
@@ -34,52 +40,58 @@ public class Game {
 	private Budget budget;
 	private StorageArea storageArea;
 	private String playerName;
-        private Warehouse warehouse;
+	private Warehouse warehouse;
+	private UpdateScheduler updateScheduller;
 
 	public Game(Ground ground) {
+		
+		this.updateScheduller = new UpdateScheduler(TICKS_PER_DAY, DAYS_PER_WEEK, DAYS_PER_MONTH);
 
-            this.ground = ground;
-            this.qualityControlMachineType = new ArrayList<MachineType>();
-            this.productionMachinesType = new ArrayList<MachineType>();
-            this.rawMaterialPrices = new HashMap<RawMaterialType, Integer>();
-            this.rawMaterialTypes = new ArrayList<RawMaterialType>();
-            this.budget = new Budget(1000);
-            this.grounds = new ArrayList<Ground>();
-            /*
-             * TODO hardcoding just for test.
-             */
-            MachineType prodMachType = new MachineType.Builder("productionMachine", 3, 3).price(250).build();
-            this.productionMachinesType.add(prodMachType);
-            this.productionMachinesType.add(prodMachType);
-            MachineType qualMachType = new MachineType.Builder("qualityControlMachine", 4, 3).build();
-            this.qualityControlMachineType.add(qualMachType);
-            this.qualityControlMachineType.add(qualMachType);
-            RawMaterialType rawMatType = new RawMaterialType("rawMaterial1");
-            RawMaterialType rawMatType2 = new RawMaterialType("rawMaterial2");
-            this.rawMaterialPrices.put(rawMatType, 100);
-            this.rawMaterialPrices.put(rawMatType2, 200);
-            this.rawMaterialTypes.add(rawMatType);
-            this.rawMaterialTypes.add(rawMatType2);
-            RawMaterials rawMaterials = new RawMaterials();
-            rawMaterials.store(rawMatType, 100);
-            rawMaterials.store(rawMatType2, 300);
-            this.storageArea = new StorageArea(rawMaterials, new ValidProductionSequences());
+		this.ground = ground;
+		this.qualityControlMachineType = new ArrayList<MachineType>();
+		this.productionMachinesType = new ArrayList<MachineType>();
+		this.rawMaterialPrices = new HashMap<RawMaterialType, Integer>();
+		this.rawMaterialTypes = new ArrayList<RawMaterialType>();
+		this.budget = new Budget(1000);
+		this.grounds = new ArrayList<Ground>();
+		/*
+		 * TODO hardcoding just for test.
+		 */
+		MachineType prodMachType = new MachineType.Builder("productionMachine",
+				3, 3).price(250).build();
+		this.productionMachinesType.add(prodMachType);
+		this.productionMachinesType.add(prodMachType);
+		MachineType qualMachType = new MachineType.Builder(
+				"qualityControlMachine", 4, 3).build();
+		this.qualityControlMachineType.add(qualMachType);
+		this.qualityControlMachineType.add(qualMachType);
+		RawMaterialType rawMatType = new RawMaterialType("rawMaterial1");
+		RawMaterialType rawMatType2 = new RawMaterialType("rawMaterial2");
+		this.rawMaterialPrices.put(rawMatType, 100);
+		this.rawMaterialPrices.put(rawMatType2, 200);
+		this.rawMaterialTypes.add(rawMatType);
+		this.rawMaterialTypes.add(rawMatType2);
+		RawMaterials rawMaterials = new RawMaterials();
+		rawMaterials.store(rawMatType, 100);
+		rawMaterials.store(rawMatType2, 300);
+		this.storageArea = new StorageArea(rawMaterials,
+				new ValidProductionSequences());
 
-            try {
-                InputFactory input = new XMLFactory();
-                this.grounds = input.loadGrounds("test/global/ValidGroundList.xml");
-            } catch (Exception ex) {
-                Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+		try {
+			InputFactory input = new XMLFactory();
+			this.grounds = input.loadGrounds("test/global/ValidGroundList.xml");
+		} catch (Exception ex) {
+			Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
 
 	public Ground getGround() {
 		return this.ground;
 	}
 
-        public void setGround(Ground ground){
-            this.ground = ground;
-        }
+	public void setGround(Ground ground) {
+		this.ground = ground;
+	}
 
 	public Budget getBudget() {
 		return this.budget;
@@ -87,28 +99,6 @@ public class Game {
 
 	public boolean canPurchase(int amount) {
 		return getBudget().canPurchase(amount);
-	}
-
-	public Machine buyAndAddProductionMachine(MachineType machineType,
-			Position position) {
-		ProductionMachine machine = new ProductionMachine(machineType);
-		buyAndAddMachine(machine, position);
-		return machine;
-	}
-
-	public Machine buyAndAddQualityControlMachine(MachineType machineType,
-			Position position) {
-		QualityControlMachine machine = new QualityControlMachine(machineType);
-		buyAndAddMachine(machine, position);
-		return machine;
-	}
-
-	private void buyAndAddMachine(Machine machine, Position position) {
-		int price = machine.getPurchasePrice();
-		checkArgCondition(price, canPurchase(price));
-
-		getBudget().decrement(price);
-		getGround().addTileElement(machine, position);
 	}
 
 	public List<MachineType> getProductionMachinesTypes() {
@@ -151,20 +141,20 @@ public class Game {
 	public void setInitialMoney(int money) {
 		this.budget.setBalance(money);
 	}
-	
-	public String getPlayerName(){
+
+	public String getPlayerName() {
 		return this.playerName;
 	}
 
-         public List<Ground> getGrounds() {
-           return this.grounds;
-        }
+	public List<Ground> getGrounds() {
+		return this.grounds;
+	}
 
-         public Warehouse getWarehouse(){
-             return this.warehouse;
-         }
+	public Warehouse getWarehouse() {
+		return this.warehouse;
+	}
 
-         public void setWarehouse(Warehouse warehouse){
-             this.warehouse = warehouse;
-         }
+	public void setWarehouse(Warehouse warehouse) {
+		this.warehouse = warehouse;
+	}
 }

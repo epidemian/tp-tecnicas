@@ -93,6 +93,7 @@ public class GamePanel extends javax.swing.JPanel {
         this.toolPanel.removeAll();
         this.toolPanel.add(panel);
         this.toolPanel.revalidate();
+        this.toolPanel.repaint();
     }
 
     public GroundPanelContainer getGroundPanelContainer(){

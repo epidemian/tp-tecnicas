@@ -91,6 +91,7 @@ public class MainController {
 
 		GamePanelController gamePanelController = new GamePanelController(
 				this.game, gamePanel, this);
+		System.out.println("is enabled " + this.mainFrame.isEnabled());
 		this.mainFrame.addContainerListener(gamePanelController
 				.getGamePanelRemovedListener());
 	}
@@ -246,6 +247,7 @@ public class MainController {
 		this.mainFrame.setContentPane(panel);
 		this.mainFrame.invalidate();
 		this.mainFrame.validate();
+		this.mainFrame.repaint();
 	}
 
 	public static boolean showDialog(String title, String message) {
