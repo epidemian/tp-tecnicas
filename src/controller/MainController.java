@@ -65,7 +65,7 @@ public class MainController {
 	private static final String GROUND_PREFIX = "Ground ";
 	private static final String[] DIFFICULTY_LEVELS = { "Easy", "Normal",
 			"Hard" };
-	private static final int[] INITIAL_MONEY = { 10000, 15000, 20000 };
+	private static final int[] INITIAL_MONEY = { 1000000, 1500000, 2000000 };
 	private static final float RENT_FACTOR = 0.01f;
 
 	private static final Dimension DIALOG_SIZE = new Dimension(350, 150);

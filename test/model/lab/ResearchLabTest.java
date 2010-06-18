@@ -63,7 +63,9 @@ public class ResearchLabTest {
 		Technology expensive = techs[0];
 		Technology cheapest = techs[1];
 		lab.setDailyFunding(10);
+	
 		Technology firstResearched = updateUntilOneTechnologyIsResearched();
+	
 		assertEquals(cheapest, firstResearched);
 		assertTrue(cheapest.isResearched());
 		assertFalse(expensive.isResearched());

@@ -85,6 +85,7 @@ public class ProductionLineTest {
 
 		int expectedProduction = ticksInADay
 				- this.productionLine.productionLineSize();
+		
 		assertEquals(expectedProduction, dailyProduction);
 
 		this.productionLine.updateDay();

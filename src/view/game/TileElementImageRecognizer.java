@@ -14,7 +14,7 @@ import model.warehouse.Wall;
 
 public abstract class TileElementImageRecognizer extends TileElementVisitor {
 
-	protected static final String IMG_WALL = "wall.gif";
+	protected static final String IMG_WALL = "Wall.png";
 
 	private static final String CONVEYOR_IMG_PREFIX = "./conveyor_";
 	private static final String IMG_EXTENSION = ".png";
