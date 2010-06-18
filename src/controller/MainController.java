@@ -176,7 +176,7 @@ public class MainController {
 	private List<Ground> loadAllGrounds() {
 		try {
 			return new XMLFactory()
-					.loadGrounds("inputXMLs/ValidGroundList.xml");
+					.loadGrounds("xml/ValidGroundList.xml");
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -267,15 +267,15 @@ public class MainController {
 		ValidProductionSequences validProductionSequences = new ValidProductionSequences();
 		try {
 			TechnologyTree technologyTree = xmlFactory.loadTechnologies(
-					"inputXMLs/ValidProductionSequencesTechnologyList.xml",
+					"xml/ValidProductionSequencesTechnologyList.xml",
 					validProductionSequences);
 			List<MachineType> validProductionMachineTypes = xmlFactory
-					.loadProductionMachines("inputXMLs/ValidProductionMachineList.xml");
+					.loadProductionMachines("xml/ValidProductionMachineList.xml");
 			List<MachineType> validQualityControlMachineTypes = xmlFactory
-					.loadQualityControlMachines("inputXMLs/ValidQualityControlMachineList.xml");
+					.loadQualityControlMachines("xml/ValidQualityControlMachineList.xml");
 			List<RawMaterialType> validRawMaterialTypes = xmlFactory
-					.loadRawMaterialTypes("inputXMLs/ValidRawMaterialTypeList.xml");
-			Map<String, Integer> prices = xmlFactory.loadPrices("inputXMLs/prices/prices0.xml");
+					.loadRawMaterialTypes("xml/ValidRawMaterialTypeList.xml");
+			Map<String, Integer> prices = xmlFactory.loadPrices("xml/prices/prices0.xml");
 
 			
 			// TODO: ver priceMap y el null
@@ -299,15 +299,15 @@ public class MainController {
 		ValidProductionSequences validProductionSequences = new ValidProductionSequences();
 		try {
 			TechnologyTree technologyTree = xmlFactory.loadTechnologies(
-					"inputXMLs/ValidProductionSequencesTechnologyList.xml",
+					"xml/ValidProductionSequencesTechnologyList.xml",
 					validProductionSequences);
 			List<MachineType> validProductionMachineTypes = xmlFactory
-					.loadProductionMachines("inputXMLs/ValidProductionMachineList.xml");
+					.loadProductionMachines("xml/ValidProductionMachineList.xml");
 			List<MachineType> validQualityControlMachineTypes = xmlFactory
-					.loadQualityControlMachines("inputXMLs/ValidQualityControlMachineList.xml");
+					.loadQualityControlMachines("xml/ValidQualityControlMachineList.xml");
 			List<RawMaterialType> validRawMaterialTypes = xmlFactory
-					.loadRawMaterialTypes("inputXMLs/ValidRawMaterialTypeList.xml");
-			Map<String, Integer> prices = xmlFactory.loadPrices("inputXMLs/prices/prices0.xml");
+					.loadRawMaterialTypes("xml/ValidRawMaterialTypeList.xml");
+			Map<String, Integer> prices = xmlFactory.loadPrices("xml/prices/prices0.xml");
 			
 			// TODO: ver priceMap y el null
 			Warehouse warehouse = Warehouse.createPurchasedWarehouse(ground,
