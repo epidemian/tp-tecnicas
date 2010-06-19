@@ -30,7 +30,7 @@ public class InputSelectionPanel extends javax.swing.JPanel {
     public JSpinner getQuantitySpinner(){
         return this.quantitySpinner;
     }
-
+    
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -59,10 +59,10 @@ public class InputSelectionPanel extends javax.swing.JPanel {
         tittleLabel.setText("Input");
         tittleLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        configLabel.setFont(new java.awt.Font("Purisa", 0, 13)); // NOI18N
+        configLabel.setFont(new java.awt.Font("Purisa", 0, 13));
         configLabel.setText("Raw material configuration:");
 
-        configTable.setFont(new java.awt.Font("Purisa", 0, 13)); // NOI18N
+        configTable.setFont(new java.awt.Font("Purisa", 0, 13));
         configTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -77,20 +77,19 @@ public class InputSelectionPanel extends javax.swing.JPanel {
         configTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         jScrollPane1.setViewportView(configTable);
 
-        deleteButton.setFont(new java.awt.Font("Purisa", 0, 13)); // NOI18N
+        deleteButton.setFont(new java.awt.Font("Purisa", 0, 13));
         deleteButton.setText("Delete raw material");
 
-        changeConfigLabel.setFont(new java.awt.Font("Purisa", 0, 13)); // NOI18N
+        changeConfigLabel.setFont(new java.awt.Font("Purisa", 0, 13));
         changeConfigLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         changeConfigLabel.setText("Change configuration:");
         changeConfigLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         rawMaterialCombo.setFont(new java.awt.Font("Purisa", 0, 13));
-        rawMaterialCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         quantitySpinner.setFont(new java.awt.Font("Purisa", 0, 13));
 
-        addButton.setFont(new java.awt.Font("Purisa", 0, 13)); // NOI18N
+        addButton.setFont(new java.awt.Font("Purisa", 0, 13));
         addButton.setText("Add raw material");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -98,33 +97,23 @@ public class InputSelectionPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(tittleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE))
+                    .addComponent(configLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
+                    .addComponent(tittleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(configLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(10, 10, 10))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(changeConfigLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
+                        .addGap(5, 5, 5)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
+                            .addComponent(changeConfigLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
+                            .addComponent(rawMaterialCombo, 0, 198, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(quantitySpinner, javax.swing.GroupLayout.DEFAULT_SIZE, 62, Short.MAX_VALUE)
+                                .addComponent(quantitySpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(addButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(1, 1, 1))
-                            .addComponent(rawMaterialCombo, 0, 203, Short.MAX_VALUE)))
+                                .addComponent(addButton, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addComponent(deleteButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(29, 29, 29)))
+                        .addGap(26, 26, 26)
+                        .addComponent(deleteButton)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(

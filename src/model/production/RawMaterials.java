@@ -18,7 +18,7 @@ import model.production.exception.NotEnoughRawMaterialException;
 public class RawMaterials {
 
 	public static final String NO_MATERIALS_PRETTY_STRING = "no materials";
-	public Map<RawMaterialType, Integer> rawMaterials;
+	private Map<RawMaterialType, Integer> rawMaterials;
 
 	public RawMaterials(Map<RawMaterialType, Integer> rawMaterials) {
 		checkNotNull(rawMaterials, "rawMaterials");
@@ -80,7 +80,17 @@ public class RawMaterials {
 		int quantity = this.getRawMaterialQuantity(rawMaterialType);
 		this.rawMaterials.put(rawMaterialType, quantityStore + quantity);
 	}
+	
+	public void put(RawMaterialType rawMaterialType, int quantityStore){
+		
+		validateQuantity(quantityStore);
+		this.rawMaterials.put(rawMaterialType, quantityStore);
+	}
 
+	public void remove(RawMaterialType rawMaterialType){
+		this.rawMaterials.remove(rawMaterialType);
+	}
+	
 	public int getRawMaterialQuantity(RawMaterialType rawMaterialType) {
 
 		Integer quantity = this.rawMaterials.get(rawMaterialType);

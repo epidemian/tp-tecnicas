@@ -1,9 +1,11 @@
 package view.game.edition.tools;
 
+import controller.game.InputSelectionPanelController;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import model.game.Player;
+import model.production.elements.InputProductionLineElement;
 import model.production.elements.machine.Machine;
 import model.production.elements.machine.ProductionMachine;
 import model.production.elements.machine.QualityControlMachine;
@@ -12,6 +14,7 @@ import model.warehouse.TileElement;
 import model.warehouse.TileElementVisitor;
 import view.game.GamePanel;
 import view.game.GroundPanel;
+import view.game.InputSelectionPanel;
 import view.game.MachineSelectionPanel;
 import view.game.TileElementImageRecognizer;
 import view.game.edition.EditionTool;
@@ -78,6 +81,15 @@ public class SelectionTool extends EditionTool {
                         machinePanel.setQualityControlMachineLabels();
                         // Sets panel.
                         getGamePanel().setToolPanel(machinePanel);
+                    }
+
+            @Override
+                    public void visitInputProductionLineElement(
+			InputProductionLineElement inputLineElement) {
+
+                        InputSelectionPanel inputPanel = new InputSelectionPanel();
+                        new InputSelectionPanelController(inputLineElement, inputPanel, null);
+                        getGamePanel().setToolPanel(inputPanel);
                     }
                 });
 	}

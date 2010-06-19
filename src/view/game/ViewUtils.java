@@ -1,67 +1,60 @@
 package view.game;
 
-import model.production.elements.Conveyor;
-import model.production.elements.ProductionLineElement;
-import model.production.elements.machine.MachineType;
-import model.production.elements.machine.ProductionMachine;
-import model.warehouse.Ground;
-import model.warehouse.Position;
-import model.warehouse.TileElement;
-import model.warehouse.Wall;
+import java.awt.Component;
+import javax.swing.JTable;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableColumnModel;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 
 public class ViewUtils {
 
-	private static final String[] GROUND_CONFIG = {
-			"WWWWWWWWWWWWWWWWWWWWWWWWW", "W             WWWWWWWWWWW",
-			"W             WWWWWWWWWWW", "W             WWWWWWWWWWW",
-			"W                       W", "W                    OO W",
-			"W                    OO W", "W                    OO W",
-			"W                    OO W", "W                    OO W",
-			"W                    OO W", "W                    OO W",
-			"W                       W", "WWWWWWWWWWWWWWWWWWWWWWWWW", };
+    	public static void autoResizeColWidth(JTable table, DefaultTableModel model) {
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		table.setModel(model);
 
-	public static Ground creatGroundSample1() {
+		int margin = 5;
 
-		int cols = GROUND_CONFIG[0].length();
-		int rows = GROUND_CONFIG.length;
+		for (int i = 0; i < table.getColumnCount(); i++) {
+			int vColIndex = i;
+			DefaultTableColumnModel colModel = (DefaultTableColumnModel) table
+					.getColumnModel();
+			TableColumn col = colModel.getColumn(vColIndex);
+			int width = 0;
 
-		Ground ground = new Ground(0, rows, cols);
+			// Get width of column header
+			TableCellRenderer renderer = col.getHeaderRenderer();
 
-		for (int row = 0; row < rows; row++) {
-			for (int col = 0; col < cols; col++) {
-				Position pos = new Position(row, col);
-				char c = GROUND_CONFIG[row].charAt(col);
-				TileElement element = null;
-				switch (c) {
-				case 'C':
-					element = new Conveyor();
-					break;
-				case 'M':
-					MachineType type = new MachineType.Builder("Machine at "
-							+ pos, 1, 1).build();
-					element = new ProductionMachine(type);
-					break;
-				case 'W':
-					element = new Wall(1, 1);
-					break;
-				}
-				if (element != null)
-					ground.addTileElement(element, pos);
+			if (renderer == null) {
+				renderer = table.getTableHeader().getDefaultRenderer();
 			}
+
+			Component comp = renderer.getTableCellRendererComponent(table, col
+					.getHeaderValue(), false, false, 0, 0);
+
+			width = comp.getPreferredSize().width;
+
+			// Get maximum width of column data
+			for (int r = 0; r < table.getRowCount(); r++) {
+				renderer = table.getCellRenderer(r, vColIndex);
+				comp = renderer.getTableCellRendererComponent(table, table
+						.getValueAt(r, vColIndex), false, false, r, vColIndex);
+				width = Math.max(width, comp.getPreferredSize().width);
+			}
+
+			// Add margin
+			width += 2 * margin;
+
+			// Set the width
+			col.setPreferredWidth(width);
 		}
-		return ground;
-	}
 
-	public static Ground creatGroundSample2() {
+		((DefaultTableCellRenderer) table.getTableHeader().getDefaultRenderer())
+				.setHorizontalAlignment(SwingConstants.LEFT);
 
-		Ground ground = new Ground(0, 15, 20);
-
-		// Wall upperWall=new Wall(10,1);
-		Wall lowerWall = new Wall(16, 1);
-
-		ground.addTileElement(lowerWall, new Position(1, 1));
-		// ground.addTileElement(upperWall,new Position(5,1));
-
-		return ground;
+		// table.setAutoCreateRowSorter(true);
+		table.getTableHeader().setReorderingAllowed(false);
 	}
 }

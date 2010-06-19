@@ -72,22 +72,22 @@ public class RawMaterialsMarketPanel extends javax.swing.JPanel {
         rawMaterialsStockTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         jScrollPane1.setViewportView(rawMaterialsStockTable);
 
-        storageAreaLabel.setFont(new java.awt.Font("Purisa", 0, 18)); // NOI18N
+        storageAreaLabel.setFont(new java.awt.Font("Purisa", 0, 18));
         storageAreaLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         storageAreaLabel.setText("Storage Area");
 
-        rawMaterialsStockLabel.setFont(new java.awt.Font("Purisa", 0, 13)); // NOI18N
+        rawMaterialsStockLabel.setFont(new java.awt.Font("Purisa", 0, 13));
         rawMaterialsStockLabel.setText("Raw materials in stock:");
 
         rawMaterialsMarketLabel.setFont(new java.awt.Font("Purisa", 0, 13));
         rawMaterialsMarketLabel.setText("Raw materials market:");
 
-        buyCombo.setFont(new java.awt.Font("Purisa", 0, 13)); // NOI18N
+        buyCombo.setFont(new java.awt.Font("Purisa", 0, 13));
         buyCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        quantitySpinner.setFont(new java.awt.Font("Purisa", 0, 13)); // NOI18N
+        quantitySpinner.setFont(new java.awt.Font("Purisa", 0, 13));
 
-        rawMaterialPriceLabel.setFont(new java.awt.Font("Purisa", 0, 18)); // NOI18N
+        rawMaterialPriceLabel.setFont(new java.awt.Font("Purisa", 0, 18));
         rawMaterialPriceLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         rawMaterialPriceLabel.setText("jLabel3");
 
