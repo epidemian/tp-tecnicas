@@ -53,7 +53,9 @@ public class RawMaterialsMarketPanel extends javax.swing.JPanel {
         rawMaterialPriceLabel = new javax.swing.JLabel();
         buyButton = new javax.swing.JButton();
 
-        setPreferredSize(new java.awt.Dimension(218, 569));
+        setMaximumSize(new java.awt.Dimension(227, 539));
+        setMinimumSize(new java.awt.Dimension(227, 539));
+        setPreferredSize(new java.awt.Dimension(227, 539));
 
         rawMaterialsStockTable.setFont(new java.awt.Font("Purisa", 0, 13));
         rawMaterialsStockTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -70,19 +72,22 @@ public class RawMaterialsMarketPanel extends javax.swing.JPanel {
         rawMaterialsStockTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         jScrollPane1.setViewportView(rawMaterialsStockTable);
 
-        storageAreaLabel.setFont(new java.awt.Font("Purisa", 0, 18));
+        storageAreaLabel.setFont(new java.awt.Font("Purisa", 0, 18)); // NOI18N
         storageAreaLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         storageAreaLabel.setText("Storage Area");
 
-        rawMaterialsStockLabel.setFont(new java.awt.Font("Purisa", 0, 13));
+        rawMaterialsStockLabel.setFont(new java.awt.Font("Purisa", 0, 13)); // NOI18N
         rawMaterialsStockLabel.setText("Raw materials in stock:");
 
         rawMaterialsMarketLabel.setFont(new java.awt.Font("Purisa", 0, 13));
         rawMaterialsMarketLabel.setText("Raw materials market:");
 
+        buyCombo.setFont(new java.awt.Font("Purisa", 0, 13)); // NOI18N
         buyCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        rawMaterialPriceLabel.setFont(new java.awt.Font("Purisa", 0, 18));
+        quantitySpinner.setFont(new java.awt.Font("Purisa", 0, 13)); // NOI18N
+
+        rawMaterialPriceLabel.setFont(new java.awt.Font("Purisa", 0, 18)); // NOI18N
         rawMaterialPriceLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         rawMaterialPriceLabel.setText("jLabel3");
 
@@ -97,55 +102,51 @@ public class RawMaterialsMarketPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(storageAreaLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                        .addComponent(storageAreaLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
                         .addGap(12, 12, 12))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(quantitySpinner, javax.swing.GroupLayout.DEFAULT_SIZE, 62, Short.MAX_VALUE)
+                        .addComponent(quantitySpinner, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(rawMaterialPriceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
+                        .addComponent(rawMaterialPriceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
                         .addGap(18, 18, 18))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(buyCombo, 0, 194, Short.MAX_VALUE)
+                        .addComponent(buyCombo, 0, 203, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(rawMaterialsMarketLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                        .addComponent(rawMaterialsMarketLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(rawMaterialsStockLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                        .addComponent(rawMaterialsStockLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
                         .addContainerGap())))
             .addGroup(layout.createSequentialGroup()
                 .addGap(47, 47, 47)
-                .addComponent(buyButton, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
+                .addComponent(buyButton, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
                 .addGap(57, 57, 57))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(storageAreaLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+                .addComponent(storageAreaLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(rawMaterialsStockLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                .addComponent(rawMaterialsStockLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rawMaterialsMarketLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
+                .addComponent(rawMaterialsMarketLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(buyCombo, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
+                .addComponent(buyCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(22, 22, 22)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(quantitySpinner, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
+                    .addComponent(rawMaterialPriceLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addComponent(quantitySpinner, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addComponent(rawMaterialPriceLabel)))
-                .addGap(18, 18, 18)
-                .addComponent(buyButton, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
-                .addGap(43, 43, 43))
+                .addComponent(buyButton, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(53, 53, 53))
         );
     }// </editor-fold>//GEN-END:initComponents
 

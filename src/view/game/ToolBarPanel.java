@@ -22,8 +22,12 @@ public class ToolBarPanel extends javax.swing.JPanel {
         return this.validProductionLines;
     }
 
-    public JButton getTechnologyTreeButton() {
-        return this.technologyTree;
+    public JButton getLabButton() {
+        return this.lab;
+    }
+
+    public JButton getWarehouseInformationButton(){
+        return this.info;
     }
 
     public JButton getSellButton() {
@@ -36,10 +40,6 @@ public class ToolBarPanel extends javax.swing.JPanel {
 
     public JToggleButton getPlayButton() {
         return this.play;
-    }
-
-    public JButton getGroundSelectionMenuButton() {
-        return this.grounds;
     }
 
     public JButton getExitButton() {
@@ -56,76 +56,76 @@ public class ToolBarPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jToolBar1 = new javax.swing.JToolBar();
+        info = new javax.swing.JButton();
         lineElementsMarket = new javax.swing.JButton();
         rawMaterialsMarket = new javax.swing.JButton();
         validProductionLines = new javax.swing.JButton();
-        technologyTree = new javax.swing.JButton();
         sell = new javax.swing.JButton();
+        lab = new javax.swing.JButton();
         play = new javax.swing.JToggleButton();
         pause = new javax.swing.JToggleButton();
-        grounds = new javax.swing.JButton();
         exit = new javax.swing.JButton();
 
         jToolBar1.setRollover(true);
 
-        lineElementsMarket.setText("Line market");
-        lineElementsMarket.setToolTipText(LINE_ELEMENTS_MARKET);
+        info.setIcon(new javax.swing.ImageIcon(getClass().getResource("/WarehouseInfo.png"))); // NOI18N
+        info.setToolTipText("Warehouse information");
+        info.setFocusable(false);
+        info.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        info.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(info);
+
+        lineElementsMarket.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Construction.png"))); // NOI18N
+        lineElementsMarket.setToolTipText("Construction");
         lineElementsMarket.setFocusable(false);
         lineElementsMarket.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         lineElementsMarket.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(lineElementsMarket);
 
-        rawMaterialsMarket.setText("Raw-Mat Market");
-        rawMaterialsMarket.setToolTipText(RAW_MATERIALS_MARKET);
+        rawMaterialsMarket.setIcon(new javax.swing.ImageIcon(getClass().getResource("/rawMaterialcart.png"))); // NOI18N
+        rawMaterialsMarket.setToolTipText("Raw materials market");
         rawMaterialsMarket.setFocusable(false);
         rawMaterialsMarket.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         rawMaterialsMarket.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(rawMaterialsMarket);
 
-        validProductionLines.setText("Valid Prod");
-        validProductionLines.setToolTipText(VALID_PRODUCTION_LINES);
+        validProductionLines.setIcon(new javax.swing.ImageIcon(getClass().getResource("/validSequences.png"))); // NOI18N
+        validProductionLines.setToolTipText("Valid production sequences");
         validProductionLines.setFocusable(false);
         validProductionLines.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         validProductionLines.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(validProductionLines);
 
-        technologyTree.setText("Lab");
-        technologyTree.setToolTipText(TECHNOLOGY_TREE);
-        technologyTree.setFocusable(false);
-        technologyTree.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        technologyTree.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(technologyTree);
-
-        sell.setText("Sell");
-        sell.setToolTipText(SELL);
+        sell.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cart.png"))); // NOI18N
+        sell.setToolTipText("Sell warehouse");
         sell.setFocusable(false);
         sell.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         sell.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(sell);
 
-        play.setText("Play");
-        play.setToolTipText(PLAY);
+        lab.setIcon(new javax.swing.ImageIcon(getClass().getResource("/lab.png"))); // NOI18N
+        lab.setToolTipText("Research lab");
+        lab.setFocusable(false);
+        lab.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lab.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(lab);
+
+        play.setIcon(new javax.swing.ImageIcon(getClass().getResource("/play.png"))); // NOI18N
+        play.setToolTipText("Play game");
         play.setFocusable(false);
         play.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         play.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(play);
 
-        pause.setText("Pause");
-        pause.setToolTipText(PAUSE);
+        pause.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pause.png"))); // NOI18N
+        pause.setToolTipText("Pause game");
         pause.setFocusable(false);
         pause.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         pause.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(pause);
 
-        grounds.setText("Grounds");
-        grounds.setToolTipText(GROUNDS);
-        grounds.setFocusable(false);
-        grounds.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        grounds.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(grounds);
-
-        exit.setText("Exit");
-        exit.setToolTipText(EXIT);
+        exit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/exit.png"))); // NOI18N
+        exit.setToolTipText("Exit game");
         exit.setFocusable(false);
         exit.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         exit.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -135,34 +135,23 @@ public class ToolBarPanel extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 722, Short.MAX_VALUE)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private static final String LINE_ELEMENTS_MARKET = "Line elements market";
-    private static final String RAW_MATERIALS_MARKET = "Raw materials market";
-    private static final String VALID_PRODUCTION_LINES = "Valid production lines";
-    private static final String TECHNOLOGY_TREE = "Technology tree";
-    private static final String SELL = "Sell Warehouse";
-    private static final String PAUSE = "Pause game";
-    private static final String PLAY = "Play game";
-    private static final String GROUNDS = "Ground's selection menu";
-    private static final String EXIT = "Exit game";
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton exit;
-    private javax.swing.JButton grounds;
+    private javax.swing.JButton info;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JButton lab;
     private javax.swing.JButton lineElementsMarket;
     private javax.swing.JToggleButton pause;
     private javax.swing.JToggleButton play;
     private javax.swing.JButton rawMaterialsMarket;
     private javax.swing.JButton sell;
-    private javax.swing.JButton technologyTree;
     private javax.swing.JButton validProductionLines;
     // End of variables declaration//GEN-END:variables
 

@@ -2,11 +2,6 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ContainerAdapter;
-import java.awt.event.ContainerEvent;
-import java.awt.event.ContainerListener;
-import java.awt.event.HierarchyEvent;
-import java.awt.event.HierarchyListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -15,11 +10,8 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.Timer;
 
 import controller.game.GamePanelController;
-import controller.game.LineElementsMarketPanelController;
-import controller.game.RawMaterialsMarketPanelController;
 
 import java.awt.Dimension;
 import java.awt.event.ItemListener;
@@ -31,9 +23,6 @@ import java.util.Map;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 
-import org.dom4j.DocumentException;
-
-import persistence.InvalidTagException;
 import persistence.XMLFactory;
 
 import model.exception.BusinessLogicException;
@@ -51,12 +40,7 @@ import view.MainFrame;
 import view.game.GamePanel;
 import view.game.GroundPanelContainer;
 import view.game.GroundSelectionPanel;
-import view.game.LineElementsMarketPanel;
 import view.game.MainPanel;
-import view.game.RawMaterialsMarketPanel;
-import view.game.ToolBarPanel;
-import view.game.edition.EditionActions;
-import view.game.edition.KeyInputActionMapper;
 
 public class MainController {
 

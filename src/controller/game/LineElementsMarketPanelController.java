@@ -81,7 +81,7 @@ public class LineElementsMarketPanelController {
 	}
 
 	static private ImageIcon getScaleImage(BufferedImage image) {
-		Dimension image_size = new Dimension(50, 35);
+		Dimension image_size = new Dimension(40, 35);
 
 		Image scaleImage = new ImageIcon(image).getImage().getScaledInstance(
 				image_size.width, image_size.height, Image.SCALE_SMOOTH);

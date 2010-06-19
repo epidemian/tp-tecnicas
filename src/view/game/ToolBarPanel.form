@@ -16,12 +16,12 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jToolBar1" alignment="0" pref="722" max="32767" attributes="0"/>
+          <Component id="jToolBar1" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jToolBar1" alignment="0" pref="121" max="32767" attributes="0"/>
+          <Component id="jToolBar1" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -33,9 +33,23 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
       <SubComponents>
+        <Component class="javax.swing.JButton" name="info">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/WarehouseInfo.png"/>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Warehouse information"/>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="horizontalTextPosition" type="int" value="0"/>
+            <Property name="verticalTextPosition" type="int" value="3"/>
+          </Properties>
+        </Component>
         <Component class="javax.swing.JButton" name="lineElementsMarket">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Line market" postCode="lineElementsMarket.setToolTipText(LINE_ELEMENTS_MARKET);"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/Construction.png"/>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Construction"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
@@ -43,7 +57,10 @@
         </Component>
         <Component class="javax.swing.JButton" name="rawMaterialsMarket">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Raw-Mat Market" postCode="rawMaterialsMarket.setToolTipText(RAW_MATERIALS_MARKET);"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/rawMaterialcart.png"/>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Raw materials market"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
@@ -51,15 +68,10 @@
         </Component>
         <Component class="javax.swing.JButton" name="validProductionLines">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Valid Prod" postCode="validProductionLines.setToolTipText(VALID_PRODUCTION_LINES);"/>
-            <Property name="focusable" type="boolean" value="false"/>
-            <Property name="horizontalTextPosition" type="int" value="0"/>
-            <Property name="verticalTextPosition" type="int" value="3"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="technologyTree">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Lab" postCode="technologyTree.setToolTipText(TECHNOLOGY_TREE);"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/validSequences.png"/>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Valid production sequences"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
@@ -67,7 +79,21 @@
         </Component>
         <Component class="javax.swing.JButton" name="sell">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Sell" postCode="sell.setToolTipText(SELL);"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/cart.png"/>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Sell warehouse"/>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="horizontalTextPosition" type="int" value="0"/>
+            <Property name="verticalTextPosition" type="int" value="3"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="lab">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/lab.png"/>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Research lab"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
@@ -75,10 +101,10 @@
         </Component>
         <Component class="javax.swing.JToggleButton" name="play">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Play"/>
-            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="PLAY" type="code"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/play.png"/>
             </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Play game"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
@@ -86,18 +112,10 @@
         </Component>
         <Component class="javax.swing.JToggleButton" name="pause">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Pause"/>
-            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="PAUSE" type="code"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/pause.png"/>
             </Property>
-            <Property name="focusable" type="boolean" value="false"/>
-            <Property name="horizontalTextPosition" type="int" value="0"/>
-            <Property name="verticalTextPosition" type="int" value="3"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="grounds">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Grounds" postCode="grounds.setToolTipText(GROUNDS);"/>
+            <Property name="toolTipText" type="java.lang.String" value="Pause game"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
@@ -105,7 +123,10 @@
         </Component>
         <Component class="javax.swing.JButton" name="exit">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Exit" postCode="exit.setToolTipText(EXIT);"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/exit.png"/>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Exit game"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>

@@ -24,20 +24,22 @@ public class BudgetPanel extends javax.swing.JPanel {
 
         budgetBalanceLabel = new javax.swing.JLabel();
 
-        budgetBalanceLabel.setFont(new java.awt.Font("Purisa", 0, 18)); // NOI18N
+        budgetBalanceLabel.setFont(new java.awt.Font("Purisa", 0, 18));
         budgetBalanceLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         budgetBalanceLabel.setText("jLabel1");
         budgetBalanceLabel.setBorder(null);
+        budgetBalanceLabel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        budgetBalanceLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(budgetBalanceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+            .addComponent(budgetBalanceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(budgetBalanceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(budgetBalanceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
     public void setMoneyBalance(int balance){
