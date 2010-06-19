@@ -11,16 +11,19 @@ public class HealthyMachineState extends MachineState {
 	private static final double SALE_PRICE_COEF = 0.5;
 	private static final double DEFECTIVE_PRODUCT_CHANCE = 0.05;
 	
+    @Override
 	public void repair(Machine machine)
 			throws CannotRepairHealthyMachineException {
 		throw new CannotRepairHealthyMachineException();
 	}
 
+    @Override
 	public void breakUp(Machine machine) {
 		machine.setMachineState(new BrokenMachineState());
 		machine.notifyBreakdown();
 	}
 
+    @Override
 	public void damage(Machine machine) {
 		machine.setMachineState(new DamagedMachineState());
 	}
@@ -34,4 +37,9 @@ public class HealthyMachineState extends MachineState {
 	public double getFailProductProcessChance(Machine machine) {
 		return DEFECTIVE_PRODUCT_CHANCE;
 	}
+
+        @Override
+        public String toString(){
+            return "Healthy";
+        }
 }

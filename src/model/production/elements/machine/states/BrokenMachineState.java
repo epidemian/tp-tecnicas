@@ -10,11 +10,13 @@ import model.production.elements.machine.Machine;
  */
 public class BrokenMachineState extends MachineState {
 
+    @Override
 	public void repair(Machine machine) {
 		machine.setMachineState(new HealthyMachineState());
 		machine.notifyBrokenMachineRepair();
 	}
 
+    @Override
 	public int getSalePrice(Machine machine) {
 		return 0;
 	}
@@ -24,4 +26,9 @@ public class BrokenMachineState extends MachineState {
 		throw new BusinessLogicException(
 				"Cannot get defective chance if machine is broken");
 	}
+
+        @Override
+        public String toString(){
+            return "Broken";
+        }
 }

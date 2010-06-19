@@ -134,7 +134,7 @@ public abstract class Machine extends ProductionLineElement implements
 		this.getMachineState().breakUp(this);
 	}
 
-	protected double getFailProductProcessChance() {
+	public double getFailProductProcessChance() {
 		return this.machineState.getFailProductProcessChance(this);
 	}
 
