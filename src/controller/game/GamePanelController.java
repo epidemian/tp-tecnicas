@@ -17,6 +17,7 @@ import view.game.ToolBarPanel;
 import view.game.edition.EditionActions;
 import view.game.edition.KeyInputActionMapper;
 import controller.MainController;
+import view.game.Dialog;
 import view.game.ResearchLabPanel;
 
 public class GamePanelController {
@@ -97,7 +98,7 @@ public class GamePanelController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				if (MainController.showDialog("Exit", "Are you sure?"))
+				if (Dialog.showDialog("Exit", "Are you sure?"))
 					System.exit(0);
 			}
 		});
@@ -107,7 +108,7 @@ public class GamePanelController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (MainController.showDialog("Sell", "Are you sure?")) {
+				if (Dialog.showDialog("Sell", "Are you sure?")) {
 					player.sellWarehouse();
 					mainController.setGroundSelectionPanel(player);
 				}

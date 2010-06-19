@@ -1,43 +1,20 @@
 package controller;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import controller.game.GamePanelController;
-import controller.game.MarketPricesUpdater;
+import controller.game.GroundSelectionPanelController;
+import controller.game.MainPanelController;
 
 import java.awt.Dimension;
-import java.awt.event.ItemListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.List;
-import java.util.Map;
-
-import javax.swing.JComboBox;
-import javax.swing.JTextField;
 
 import persistence.InputFactory;
 
-import model.exception.BusinessLogicException;
-import model.game.Budget;
 import model.game.Player;
-import model.game.Player;
-import model.game.time.WeeklyUpdatable;
-import model.lab.TechnologyTree;
-import model.production.RawMaterialType;
-import model.production.ValidProductionSequences;
-import model.production.elements.machine.MachineType;
-import model.warehouse.Ground;
-import model.warehouse.MarketPrices;
-import model.warehouse.Warehouse;
 import view.MainFrame;
 import view.game.GamePanel;
 import view.game.GroundPanelContainer;
@@ -80,172 +57,53 @@ public class MainController {
 		});
 	}
 
-	private void setGamePanel(Player game) {
+        public InputFactory getInputFactory(){
+            return this.inputFactory;
+        }
 
-		GroundPanelContainer groundPanel = new GroundPanelContainer(game
-				.getGround());
-		final GamePanel gamePanel = new GamePanel(groundPanel);
+        public JFrame getMainFrame(){
+            return this.mainFrame;
+        }
 
-		this.mainFrame.setResizable(true);
-		this.mainFrame.maximize();
-		this.setMainFramePanel(gamePanel);
+	public void setGamePanel(Player game) {
 
-		GamePanelController gamePanelController = new GamePanelController(game,
-				gamePanel, this);
-		System.out.println("is enabled " + this.mainFrame.isEnabled());
-		this.mainFrame.addContainerListener(gamePanelController
-				.getGamePanelRemovedListener());
+            GroundPanelContainer groundPanel = new GroundPanelContainer(game
+                            .getGround());
+            final GamePanel gamePanel = new GamePanel(groundPanel);
+
+            this.mainFrame.setResizable(true);
+            this.mainFrame.maximize();
+            this.setMainFramePanel(gamePanel);
+
+            GamePanelController gamePanelController = new GamePanelController(game,
+                            gamePanel, this);
+
+            this.mainFrame.addContainerListener(gamePanelController
+                            .getGamePanelRemovedListener());
 	}
 
-	private void setMainPanel() {
-		MainPanel mainPanel = new MainPanel();
+	public void setMainPanel() {
 
-		final JComboBox difficultyCombo = mainPanel.getDifficultyCombo();
-		final JTextField nameTextField = mainPanel.getPlayerNameTextArea();
+             MainPanel mainPanel = new MainPanel();
+             new MainPanelController(mainPanel,this);
 
-		// Init combo.
-		difficultyCombo.removeAllItems();
-		for (int i = 0; i < DIFFICULTY_LEVELS.length; i++) {
-			difficultyCombo.addItem(DIFFICULTY_LEVELS[i]);
-		}
-
-		ActionListener al = new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent ae) {
-				int selectedItem = difficultyCombo.getSelectedIndex();
-				int money = INITIAL_MONEY[selectedItem];
-				String name = nameTextField.getText();
-
-				if (!name.isEmpty()) {
-					Player player = createPlayer(name, money);
-					MainController.this.setGroundSelectionPanel(player);
-				} else
-					JOptionPane.showMessageDialog(
-							MainController.this.mainFrame,
-							"Please insert you name", "Empty name",
-							JOptionPane.ERROR_MESSAGE);
-			}
-		};
-
-		mainPanel.addStartActionListener(al);
-		nameTextField.addActionListener(al);
-
-		this.mainFrame.setResizable(false);
-		this.mainFrame.setSize(MAIN_PANEL_SIZE);
-		this.mainFrame.setLocationRelativeTo(null);
-		this.setMainFramePanel(mainPanel);
-	}
-
-	private Player createPlayer(String name, int initialBudget) {
-		return new Player(name, initialBudget, this.inputFactory);
+            this.mainFrame.setResizable(false);
+            this.mainFrame.setSize(MAIN_PANEL_SIZE);
+            this.mainFrame.setLocationRelativeTo(null);
+            this.setMainFramePanel(mainPanel);
 	}
 
 	public void setGroundSelectionPanel(Player player) {
 
-		final List<Ground> grounds = loadAllGrounds();
+            GroundSelectionPanel selectionPanel = new GroundSelectionPanel();
+            new GroundSelectionPanelController(selectionPanel, player, this);
 
-		if (grounds.isEmpty())
-			throw new BusinessLogicException("Empty grounds list");
-
-		GroundSelectionPanel selectionPanel = new GroundSelectionPanel();
-
-		this.initBuyComboFromGroundSelectionPanel(grounds, selectionPanel);
-		this.initGroundSelectionPanelButtons(selectionPanel, player);
-
-		int balance = player.getBudget().getBalance();
-		selectionPanel.getBudgetPanel().setMoneyBalance(balance);
-
-		// Frame configuration.
-		this.mainFrame.setResizable(true);
-		this.mainFrame.setSize(GROUND_SELECTION_PANEL_SIZE);
-		this.mainFrame.setLocationRelativeTo(null);
-		this.setMainFramePanel(selectionPanel);
-	}
-
-	private List<Ground> loadAllGrounds() {
-		try {
-			return this.inputFactory.loadGrounds();
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	private void initBuyComboFromGroundSelectionPanel(
-			final List<Ground> grounds,
-			final GroundSelectionPanel selectionPanel) {
-
-		final JComboBox buyCombo = selectionPanel.getGroundCombo();
-		buyCombo.removeAllItems();
-
-		// Adds grounds names to the combo.
-		for (int i = 0; i < grounds.size(); i++)
-			buyCombo.addItem(GROUND_PREFIX + i + 1);
-
-		this.buyComboGroundSelectionAction(buyCombo, grounds, selectionPanel);
-
-		// Buy buttons action listener.
-		buyCombo.addItemListener(new ItemListener() {
-
-			@Override
-			public void itemStateChanged(ItemEvent ie) {
-				MainController.this.buyComboGroundSelectionAction(buyCombo,
-						grounds, selectionPanel);
-			}
-		});
-	}
-
-	private void buyComboGroundSelectionAction(final JComboBox buyCombo,
-			final List<Ground> grounds,
-			final GroundSelectionPanel selectionPanel) {
-		// Gets ground selected.
-		int comboIndex = buyCombo.getSelectedIndex();
-		Ground ground = grounds.get(comboIndex);
-
-		// Set ground in ground panel container and show prices.
-		GroundPanelContainer groundPanelContainer = new GroundPanelContainer(
-				ground);
-
-		selectionPanel.setGroundPanelContainer(groundPanelContainer);
-		selectionPanel.setPurchasePrice(ground.getPurchasePrice());
-		selectionPanel.setRentPrice(ground.getRentPrice());
-	}
-
-	private void initGroundSelectionPanelButtons(
-			final GroundSelectionPanel selectionPanel, final Player player) {
-
-		selectionPanel.addBuyButtonActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent ae) {
-
-				Ground ground = selectionPanel.getGroundPanelContainer()
-						.getGroundPanel().getGround();
-				player.purchaseWarehouse(ground);
-				MainController.this.setGamePanel(player);
-			}
-		});
-
-		selectionPanel.addRentButtonActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent ae) {
-
-				Ground ground = selectionPanel.getGroundPanelContainer()
-						.getGroundPanel().getGround();
-				player.rentWarehouse(ground);
-				MainController.this.setGamePanel(player);
-			}
-		});
-
-		selectionPanel.addBackButtonActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent ae) {
-				MainController.this.setMainPanel();
-			}
-		});
-	}
+            // Frame configuration.
+            this.mainFrame.setResizable(true);
+            this.mainFrame.setSize(GROUND_SELECTION_PANEL_SIZE);
+            this.mainFrame.setLocationRelativeTo(null);
+            this.setMainFramePanel(selectionPanel);
+        }
 
 	private void setMainFramePanel(JPanel panel) {
 		panel.setOpaque(true);
@@ -253,31 +111,5 @@ public class MainController {
 		this.mainFrame.invalidate();
 		this.mainFrame.validate();
 		this.mainFrame.repaint();
-	}
-
-	public static boolean showDialog(String title, String message) {
-		final JDialog dialog = new JDialog((JFrame) null, title, true);
-		final JOptionPane optionPane = new JOptionPane(message,
-				JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION);
-
-		optionPane.addPropertyChangeListener(new PropertyChangeListener() {
-
-			@Override
-			public void propertyChange(PropertyChangeEvent e) {
-				String prop = e.getPropertyName();
-
-				if (dialog.isVisible() && (e.getSource() == optionPane)
-						&& (prop.equals(JOptionPane.VALUE_PROPERTY))) {
-					dialog.setVisible(false);
-				}
-			}
-		});
-
-		dialog.setContentPane(optionPane);
-		dialog.setSize(DIALOG_SIZE);
-		dialog.setLocationRelativeTo(null);
-		dialog.setVisible(true);
-
-		return ((Integer) optionPane.getValue()).intValue() == JOptionPane.YES_OPTION;
 	}
 }
