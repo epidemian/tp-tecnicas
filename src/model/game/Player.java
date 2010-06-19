@@ -6,6 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import model.exception.BusinessLogicException;
+import model.game.time.TickUpdatable;
 import model.game.time.UpdateScheduler;
 import model.game.time.WeeklyUpdatable;
 import model.lab.ResearchLab;
@@ -34,7 +35,7 @@ import model.warehouse.Warehouse;
 import persistence.InputFactory;
 import persistence.XMLFactory;
 
-public class Player {
+public class Player implements TickUpdatable {
 
 	private static final int DAYS_PER_MONTH = 10;
 	private static final int DAYS_PER_WEEK = 3;
@@ -175,5 +176,14 @@ public class Player {
 	public void sellWarehouse() {
 		this.warehouse.sell();
 		this.warehouse = null;
+	}
+
+	public String getDate() {
+		return this.scheduller.getDate();
+	}
+
+	@Override
+	public void updateTick() {
+		this.scheduller.updateTick();
 	}
 }

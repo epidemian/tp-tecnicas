@@ -21,7 +21,12 @@ import view.game.ResearchLabPanel;
 
 public class GamePanelController {
 
+	private static final int UPDATE_INTERVAL = 40;
+	private static final int TICK_INTERVAL = 500;
+	
 	private boolean isPaused = true;
+	private int timeCount = 0;
+	
 	private ContainerAdapter gamePanelRemovedListener;
 	private JToggleButton playButton;
 	private JToggleButton pauseButton;
@@ -50,8 +55,8 @@ public class GamePanelController {
 				gamePanel);
 
 		int balance = player.getBudget().getBalance();
-                final ResearchLabPanel labPanel = new ResearchLabPanel();
-                new ResearchLabPanelController(player, labPanel);
+		final ResearchLabPanel labPanel = new ResearchLabPanel();
+		new ResearchLabPanelController(player, labPanel);
 
 		gamePanel.getBudgetPanel().setMoneyBalance(balance);
 
@@ -77,14 +82,14 @@ public class GamePanelController {
 			}
 		});
 
-                JButton researchLabButton = toolBar.getLabButton();
-                researchLabButton.addActionListener(new ActionListener() {
+		JButton researchLabButton = toolBar.getLabButton();
+		researchLabButton.addActionListener(new ActionListener() {
 
-                        @Override
-                         public void actionPerformed(ActionEvent ae) {
-                                gamePanel.setToolPanel(labPanel);
-                        }
-                });
+			@Override
+			public void actionPerformed(ActionEvent ae) {
+				gamePanel.setToolPanel(labPanel);
+			}
+		});
 
 		JButton exitButton = toolBar.getExitButton();
 		exitButton.addActionListener(new ActionListener() {
@@ -109,7 +114,7 @@ public class GamePanelController {
 			}
 		});
 
-		final Timer mainLoopTimer = new Timer(40, new ActionListener() {
+		final Timer mainLoopTimer = new Timer(UPDATE_INTERVAL, new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -137,32 +142,49 @@ public class GamePanelController {
 		});
 
 		gamePanelRemovedListener = new GamePanelRemovedListener(mainLoopTimer);
+		
+		updateTimeView();
+	}
+
+	private void updateTimeView() {
+		String dateString = this.player.getDate();
+		this.gamePanel.setTimeLabel(dateString);
 	}
 
 	protected void mainLoop() {
-		
-		//this.game
+
+		if (!this.isPaused) {
+			this.timeCount += UPDATE_INTERVAL;
+			while (this.timeCount >= TICK_INTERVAL) {
+				this.timeCount -= TICK_INTERVAL;
+				this.player.updateTick();
+				updateTimeView();
+			}
+		}
+		repaintGroundPanel();
+	}
+
+	private void repaintGroundPanel() {
 		this.gamePanel.getGroundPanelContainer().getGroundPanel().repaint();
 	}
 
 	private void pauseButtonPressed() {
-		if (!isPaused) {			
+		if (!isPaused) {
 			this.isPaused = true;
-			updatePlayPauseButtons();
 		}
+		updatePlayPauseButtons();
 	}
 
 	private void playButtonPressed() {
 		if (isPaused) {
 			this.isPaused = false;
-			updatePlayPauseButtons();
 		}
+		updatePlayPauseButtons();
 	}
-	
-	private void updatePlayPauseButtons() {
-		this.pauseButton.getModel().setPressed(isPaused);
-		this.playButton.getModel().setPressed(!isPaused);
 
+	private void updatePlayPauseButtons() {
+		this.pauseButton.setSelected(isPaused);
+		this.playButton.setSelected(!isPaused);
 	}
 
 }

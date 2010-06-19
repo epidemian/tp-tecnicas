@@ -53,7 +53,7 @@ public class UpdateScheduler implements TickUpdatable {
 	public void subscribeDailyUpdatable(DailyUpdatable updatable) {
 		subscribeUpdatableTo(updatable, this.dailyUpdatables);
 	}
-	
+
 	public void subscribeWeeklyUpdatable(WeeklyUpdatable updatable) {
 		subscribeUpdatableTo(updatable, this.weeklyUpdatables);
 	}
@@ -76,7 +76,7 @@ public class UpdateScheduler implements TickUpdatable {
 	private boolean isNewDay() {
 		return this.tickCount % getTicksPerDay() == 0;
 	}
-	
+
 	private boolean isNewWeek() {
 		return this.tickCount % getTicksPerWeek() == 0;
 	}
@@ -94,7 +94,7 @@ public class UpdateScheduler implements TickUpdatable {
 		for (DailyUpdatable updatable : this.dailyUpdatables)
 			updatable.updateDay();
 	}
-	
+
 	private void updateWeeklyUpdatables() {
 		for (WeeklyUpdatable updatable : this.weeklyUpdatables)
 			updatable.updateWeek();
@@ -135,12 +135,26 @@ public class UpdateScheduler implements TickUpdatable {
 	private int getTicksPerMonth() {
 		return getTicksPerDay() * getDaysPerMonth();
 	}
-	
+
 	private int getTicksPerWeek() {
 		return getTicksPerDay() * getDaysPerWeek();
 	}
 
 	public int getWeekNumber() {
 		return this.tickCount / getTicksPerWeek();
+	}
+
+	public int getMonthNumber() {
+		return this.tickCount / getTicksPerMonth();
+	}
+
+	public int getDayInMonth() {
+		return (this.tickCount / getTicksPerDay()) % getDaysPerMonth();
+	}
+
+	public String getDate() {
+		return "Tick: " + this.tickCount % getTicksPerDay() + " - Day: "
+				+ getDayInMonth() + " Week: " + getWeekNumber() + " Month: "
+				+ getMonthNumber();
 	}
 }
