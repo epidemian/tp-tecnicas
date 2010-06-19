@@ -94,10 +94,18 @@ public class ResearchLab implements DailyUpdatable {
 		return dailyFunding;
 	}
 
+        public TechnologyTree getTechnologyTree() {
+		return technologyTree;
+	}
+
 	public void setDailyFunding(int dailyFunding) {
 		checkInRange(dailyFunding, 0, getMaxDailyFunding(), "daily funding");
 		this.dailyFunding = dailyFunding;
 	}
+
+        public Set<Technology> getUnresearchedDependencies(Technology technology){
+            return new HashSet<Technology>();
+        }
 
 	private boolean canResearchCurrentTechnology() {
 		return this.currentResearchTech != null
@@ -182,10 +190,6 @@ public class ResearchLab implements DailyUpdatable {
 				unresearchedTechs.add(tech);
 		}
 		return unresearchedTechs;
-	}
-
-	private TechnologyTree getTechnologyTree() {
-		return technologyTree;
 	}
 
 	private void setTechnologyTree(TechnologyTree technologyTree) {
