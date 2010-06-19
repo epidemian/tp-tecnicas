@@ -68,6 +68,29 @@ public class UpdateScheduler implements TickUpdatable {
 				"already suscribed");
 		where.add(updatable);
 	}
+	
+	public void unsubscribeTickUpdatable(TickUpdatable updatable) {
+		unsubscribeUpdatableFrom(updatable, this.tickUpdatables);
+	}
+
+	public void unsubscribeDailyUpdatable(DailyUpdatable updatable) {
+		unsubscribeUpdatableFrom(updatable, this.dailyUpdatables);
+	}
+
+	public void unsubscribeWeeklyUpdatable(WeeklyUpdatable updatable) {
+		unsubscribeUpdatableFrom(updatable, this.weeklyUpdatables);
+	}
+
+	public void unsubscribeMonthlyUpdatable(MonthlyUpdatable updatable) {
+		unsubscribeUpdatableFrom(updatable, this.monthlyUpdatables);
+	}
+
+	private <T> void unsubscribeUpdatableFrom(T updatable, Collection<T> where) {
+		checkNotNull(updatable);
+		checkArgCondition(updatable, where.contains(updatable),
+				"not suscribed");
+		where.remove(updatable);
+	}
 
 	private void incrementTick() {
 		this.tickCount++;

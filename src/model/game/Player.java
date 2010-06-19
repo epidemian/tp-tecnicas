@@ -37,9 +37,9 @@ import persistence.XMLFactory;
 
 public class Player implements TickUpdatable {
 
-	private static final int DAYS_PER_MONTH = 10;
+	private static final int DAYS_PER_MONTH = 2;
 	private static final int DAYS_PER_WEEK = 3;
-	private static final int TICKS_PER_DAY = 24;
+	private static final int TICKS_PER_DAY = 12;
 	private static final int MAX_DAILY_LAB_FUNDING = 500;
 
 	private Budget budget;
@@ -54,7 +54,7 @@ public class Player implements TickUpdatable {
 
 	private Warehouse warehouse;
 
-	private UpdateScheduler scheduller;
+	private UpdateScheduler scheduler;
 	private MarketPrices marketPrices;
 
 	public Player(String playerName, int initialBudget,
@@ -78,17 +78,17 @@ public class Player implements TickUpdatable {
 			throw new RuntimeException(e);
 		}
 
-		this.scheduller = new UpdateScheduler(TICKS_PER_DAY, DAYS_PER_WEEK,
+		this.scheduler = new UpdateScheduler(TICKS_PER_DAY, DAYS_PER_WEEK,
 				DAYS_PER_MONTH);
 
 		this.marketPrices = new MarketPrices();
 		WeeklyUpdatable pricesUpdater = new MarketPricesUpdater(marketPrices,
 				inputFactory);
-		this.scheduller.subscribeWeeklyUpdatable(pricesUpdater);
+		this.scheduler.subscribeWeeklyUpdatable(pricesUpdater);
 
 		this.lab = new ResearchLab(technologyTree, MAX_DAILY_LAB_FUNDING,
 				getBudget());
-		this.scheduller.subscribeDailyUpdatable(this.lab);
+		this.scheduler.subscribeDailyUpdatable(this.lab);
 
 		this.warehouse = null;
 		// this.scheduller.subscribeDailyUpdatable(this.warehouse);
@@ -163,6 +163,7 @@ public class Player implements TickUpdatable {
 		
 		this.warehouse = Warehouse.purchaseWarehouse(ground, getBudget(),
 				getMarketPrices(), getValidProductionSequences());
+		subscribeWarehouse();
 	}
 
 	public void rentWarehouse(Ground ground) {
@@ -171,19 +172,31 @@ public class Player implements TickUpdatable {
 		
 		this.warehouse = Warehouse.rentWarehouse(ground, getBudget(),
 				getMarketPrices(), getValidProductionSequences());
+		subscribeWarehouse();
 	}
 
 	public void sellWarehouse() {
+		unsubscribeWarehouse();
 		this.warehouse.sell();
 		this.warehouse = null;
 	}
 
 	public String getDate() {
-		return this.scheduller.getDate();
+		return this.scheduler.getDate();
 	}
 
 	@Override
 	public void updateTick() {
-		this.scheduller.updateTick();
+		this.scheduler.updateTick();
+	}
+	
+	private void subscribeWarehouse() {
+		this.scheduler.subscribeMonthlyUpdatable(this.warehouse);
+		this.scheduler.subscribeDailyUpdatable(this.warehouse);
+	}
+	
+	private void unsubscribeWarehouse() {
+		this.scheduler.unsubscribeMonthlyUpdatable(this.warehouse);
+		this.scheduler.unsubscribeDailyUpdatable(this.warehouse);
 	}
 }

@@ -143,7 +143,17 @@ public class GamePanelController {
 
 		gamePanelRemovedListener = new GamePanelRemovedListener(mainLoopTimer);
 		
+		updateView();
+	}
+
+	private void updateView() {
 		updateTimeView();
+		updateBudgetView();
+	}
+
+	private void updateBudgetView() {
+		int balance = this.player.getBudget().getBalance();
+		this.gamePanel.getBudgetPanel().setMoneyBalance(balance);
 	}
 
 	private void updateTimeView() {
@@ -158,7 +168,7 @@ public class GamePanelController {
 			while (this.timeCount >= TICK_INTERVAL) {
 				this.timeCount -= TICK_INTERVAL;
 				this.player.updateTick();
-				updateTimeView();
+				updateView();
 			}
 		}
 		repaintGroundPanel();
@@ -169,16 +179,12 @@ public class GamePanelController {
 	}
 
 	private void pauseButtonPressed() {
-		if (!isPaused) {
-			this.isPaused = true;
-		}
+		this.isPaused = true;
 		updatePlayPauseButtons();
 	}
 
 	private void playButtonPressed() {
-		if (isPaused) {
-			this.isPaused = false;
-		}
+		this.isPaused = false;
 		updatePlayPauseButtons();
 	}
 
