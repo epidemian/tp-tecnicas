@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import controller.game.GamePanelController;
-import controller.game.WeeklyPricesUpdater;
+import controller.game.MarketPricesUpdater;
 
 import java.awt.Dimension;
 import java.awt.event.ItemListener;
@@ -24,11 +24,11 @@ import java.util.Map;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 
-import persistence.XMLFactory;
+import persistence.InputFactory;
 
 import model.exception.BusinessLogicException;
 import model.game.Budget;
-import model.game.Game;
+import model.game.Player;
 import model.game.Player;
 import model.game.time.WeeklyUpdatable;
 import model.lab.TechnologyTree;
@@ -36,7 +36,7 @@ import model.production.RawMaterialType;
 import model.production.ValidProductionSequences;
 import model.production.elements.machine.MachineType;
 import model.warehouse.Ground;
-import model.warehouse.PriceMap;
+import model.warehouse.MarketPrices;
 import model.warehouse.Warehouse;
 import view.MainFrame;
 import view.game.GamePanel;
@@ -48,11 +48,12 @@ public class MainController {
 
 	private MainFrame mainFrame;
 
+	private InputFactory inputFactory;
+
 	private static final String GROUND_PREFIX = "Ground ";
 	private static final String[] DIFFICULTY_LEVELS = { "Easy", "Normal",
 			"Hard" };
 	private static final int[] INITIAL_MONEY = { 1000000, 1500000, 2000000 };
-	private static final float RENT_FACTOR = 0.01f;
 
 	private static final Dimension DIALOG_SIZE = new Dimension(350, 150);
 	private static final Dimension MAIN_PANEL_SIZE = new Dimension(640, 480);
@@ -60,17 +61,17 @@ public class MainController {
 			320, 670);
 	protected static final float WIN_VALUE = 50000;
 
-	public MainController(final MainFrame mainFrame) {
+	public MainController(final MainFrame mainFrame, InputFactory inputFactory) {
 		this.mainFrame = mainFrame;
+		this.inputFactory = inputFactory;
 
-		// setGamePanel();
 		setMainPanel();
-		// setGroundSelectionPanel();
 
 		mainFrame.setVisible(true);
 		mainFrame.requestFocus();
 
 		// Give focus to GamePanel when selected.
+		// TODO Delete this if doesn't work!
 		mainFrame.addWindowFocusListener(new WindowAdapter() {
 			@Override
 			public void windowGainedFocus(WindowEvent e) {
@@ -79,7 +80,7 @@ public class MainController {
 		});
 	}
 
-	private void setGamePanel(Game game) {
+	private void setGamePanel(Player game) {
 
 		GroundPanelContainer groundPanel = new GroundPanelContainer(game
 				.getGround());
@@ -117,8 +118,7 @@ public class MainController {
 				String name = nameTextField.getText();
 
 				if (!name.isEmpty()) {
-					Budget budget = new Budget(money);
-					Player player = new Player(name, budget);
+					Player player = createPlayer(name, money);
 					MainController.this.setGroundSelectionPanel(player);
 				} else
 					JOptionPane.showMessageDialog(
@@ -135,6 +135,10 @@ public class MainController {
 		this.mainFrame.setSize(MAIN_PANEL_SIZE);
 		this.mainFrame.setLocationRelativeTo(null);
 		this.setMainFramePanel(mainPanel);
+	}
+
+	private Player createPlayer(String name, int initialBudget) {
+		return new Player(name, initialBudget, this.inputFactory);
 	}
 
 	public void setGroundSelectionPanel(Player player) {
@@ -161,7 +165,7 @@ public class MainController {
 
 	private List<Ground> loadAllGrounds() {
 		try {
-			return new XMLFactory().loadGrounds("xml/ValidGroundList.xml");
+			return this.inputFactory.loadGrounds();
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -176,7 +180,7 @@ public class MainController {
 
 		// Adds grounds names to the combo.
 		for (int i = 0; i < grounds.size(); i++)
-			buyCombo.addItem(GROUND_PREFIX + i+1);
+			buyCombo.addItem(GROUND_PREFIX + i + 1);
 
 		this.buyComboGroundSelectionAction(buyCombo, grounds, selectionPanel);
 
@@ -203,8 +207,8 @@ public class MainController {
 				ground);
 
 		selectionPanel.setGroundPanelContainer(groundPanelContainer);
-		selectionPanel.setPurchasePrice(ground.getPrice());
-		selectionPanel.setRentPrice((int) (ground.getPrice() * RENT_FACTOR));
+		selectionPanel.setPurchasePrice(ground.getPurchasePrice());
+		selectionPanel.setRentPrice(ground.getRentPrice());
 	}
 
 	private void initGroundSelectionPanelButtons(
@@ -217,11 +221,8 @@ public class MainController {
 
 				Ground ground = selectionPanel.getGroundPanelContainer()
 						.getGroundPanel().getGround();
-
-				player.getBudget().decrement(ground.getPrice());
-				Game game = createGameByBuyingGround(ground, player);
-
-				MainController.this.setGamePanel(game);
+				player.purchaseWarehouse(ground);
+				MainController.this.setGamePanel(player);
 			}
 		});
 
@@ -232,8 +233,8 @@ public class MainController {
 
 				Ground ground = selectionPanel.getGroundPanelContainer()
 						.getGroundPanel().getGround();
-				Game game = createGameByRentingGround(ground, player);
-				MainController.this.setGamePanel(game);
+				player.rentWarehouse(ground);
+				MainController.this.setGamePanel(player);
 			}
 		});
 
@@ -244,76 +245,6 @@ public class MainController {
 				MainController.this.setMainPanel();
 			}
 		});
-	}
-
-	protected Game createGameByRentingGround(Ground ground, Player player) {
-		XMLFactory xmlFactory = new XMLFactory();
-
-		ValidProductionSequences validProductionSequences = new ValidProductionSequences();
-		try {
-			TechnologyTree technologyTree = xmlFactory.loadTechnologies(
-					"xml/ValidProductionSequencesTechnologyList.xml",
-					validProductionSequences);
-			List<MachineType> validProductionMachineTypes = xmlFactory
-					.loadProductionMachines("xml/ValidProductionMachineList.xml");
-			List<MachineType> validQualityControlMachineTypes = xmlFactory
-					.loadQualityControlMachines("xml/ValidQualityControlMachineList.xml");
-			List<RawMaterialType> validRawMaterialTypes = xmlFactory
-					.loadRawMaterialTypes("xml/ValidRawMaterialTypeList.xml");
-			Map<String, Integer> prices = xmlFactory
-					.loadPrices("xml/prices/prices0.xml");
-
-			PriceMap map = new PriceMap(prices);
-
-			WeeklyUpdatable pricesUpdater = new WeeklyPricesUpdater(map);
-
-			Warehouse warehouse = Warehouse.createRentedWarehouse(ground,
-					player.getBudget(), map, validProductionSequences,
-					pricesUpdater);
-
-			return new Game(player, validProductionSequences,
-					validProductionMachineTypes,
-					validQualityControlMachineTypes, validRawMaterialTypes,
-					warehouse, technologyTree);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-
-	}
-
-	private Game createGameByBuyingGround(Ground ground, Player player) {
-		XMLFactory xmlFactory = new XMLFactory();
-
-		ValidProductionSequences validProductionSequences = new ValidProductionSequences();
-		try {
-			TechnologyTree technologyTree = xmlFactory.loadTechnologies(
-					"xml/ValidProductionSequencesTechnologyList.xml",
-					validProductionSequences);
-			List<MachineType> validProductionMachineTypes = xmlFactory
-					.loadProductionMachines("xml/ValidProductionMachineList.xml");
-			List<MachineType> validQualityControlMachineTypes = xmlFactory
-					.loadQualityControlMachines("xml/ValidQualityControlMachineList.xml");
-			List<RawMaterialType> validRawMaterialTypes = xmlFactory
-					.loadRawMaterialTypes("xml/ValidRawMaterialTypeList.xml");
-			Map<String, Integer> prices = xmlFactory
-					.loadPrices("xml/prices/prices0.xml");
-
-			PriceMap map = new PriceMap(prices);
-
-			WeeklyUpdatable pricesUpdater = new WeeklyPricesUpdater(map);
-
-			// TODO: ver priceMap y el null
-			Warehouse warehouse = Warehouse.createPurchasedWarehouse(ground,
-					player.getBudget(), map, validProductionSequences,
-					pricesUpdater);
-
-			return new Game(player, validProductionSequences,
-					validProductionMachineTypes,
-					validQualityControlMachineTypes, validRawMaterialTypes,
-					warehouse, technologyTree);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
 	}
 
 	private void setMainFramePanel(JPanel panel) {

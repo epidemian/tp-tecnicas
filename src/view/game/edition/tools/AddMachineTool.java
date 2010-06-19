@@ -9,7 +9,7 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.game.Game;
+import model.game.Player;
 import model.production.Direction;
 import model.production.elements.Conveyor;
 import model.production.elements.machine.Machine;
@@ -24,7 +24,7 @@ public abstract class AddMachineTool extends EditionTool {
 
 	private MachineType machineType;
 
-	public AddMachineTool(GamePanel gamePanel, Game game,
+	public AddMachineTool(GamePanel gamePanel, Player game,
 			MachineType machineType) {
 		super(gamePanel, game);
 		this.machineType = machineType;

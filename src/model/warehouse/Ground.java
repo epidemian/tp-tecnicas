@@ -7,6 +7,10 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Ground {
+	
+	private static final double RENT_PRICE_PERCENTAGE = 0.01;
+	private static final double SALE_PRICE_PERCENTAGE = 0.8;
+	
 	private int price;
 	private TileElement tileElements[][];
 	private EmptyTileElement emptyElement;
@@ -21,7 +25,7 @@ public class Ground {
 		fillAreaWithEmptySpace(Position.ZERO, rows, cols);
 	}
 
-	public int getPrice() {
+	public int getPurchasePrice() {
 		return price;
 	}
 
@@ -164,5 +168,13 @@ public class Ground {
 		if (this.getCols() != other.getCols())
 			return false;
 		return true;
+	}
+
+	public int getSalePrice() {
+		return (int) (getPurchasePrice() * SALE_PRICE_PERCENTAGE);
+	}
+
+	public int getRentPrice() {
+		return (int) (getPurchasePrice() * RENT_PRICE_PERCENTAGE);
 	}
 }

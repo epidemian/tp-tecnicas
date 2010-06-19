@@ -19,9 +19,11 @@ import model.production.line.ProductionLine;
 public class ProductionLinesCreator {
 
 	private StorageArea storageArea;
+	private Warehouse warehouse;
 
-	public ProductionLinesCreator(StorageArea storageArea) {
-		this.storageArea = storageArea;
+	public ProductionLinesCreator(Warehouse warehouse) {
+		this.warehouse = warehouse;
+		this.storageArea = warehouse.getStorageArea();
 	}
 
 	public List<ProductionLine> createFromGround(Ground ground) {
@@ -72,10 +74,10 @@ public class ProductionLinesCreator {
 		 * Try to find the first element in the line.
 		 */
 		while (current.hasPreviousLineElement() && !circularLine) {
-			
+
 			current = current.getPreviousLineElement();
 			firstElement = current;
-			
+
 			if (current != lineElement)
 				touchedElements.add(current);
 			else
@@ -90,13 +92,13 @@ public class ProductionLinesCreator {
 		if (!circularLine) {
 
 			current = lineElement;
-			
+
 			while (current.hasNextLineElement()) {
 				current = current.getNextLineElement();
 				touchedElements.add(current);
 				lastElement = current;
 			}
-			
+
 		}
 
 		ProductionLine line;
@@ -115,10 +117,11 @@ public class ProductionLinesCreator {
 				line = createFunctionalProductionLine(storageArea,
 						inputElement, outputElement);
 			} else {
+
 				line = createDisfunctionalProductionLine(firstElement);
 			}
 		}
-
+		warehouse.getProductionLines().add(line);
 		return line;
 	}
 

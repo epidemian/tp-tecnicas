@@ -2,7 +2,7 @@ package view.game.edition.tools;
 
 import java.awt.Graphics2D;
 
-import model.game.Game;
+import model.game.Player;
 import model.warehouse.Position;
 import model.warehouse.TileElement;
 import view.game.GamePanel;
@@ -14,7 +14,7 @@ public class SelectionTool extends EditionTool {
 	private TileElement selectedTileElement = null;
 	private GroundPanel groundPanel;
 
-	public SelectionTool(GamePanel gamePanel, Game game) {
+	public SelectionTool(GamePanel gamePanel, Player game) {
 		super(gamePanel, game);
 
 		// Weeeeee!

@@ -1,6 +1,6 @@
 package view.game.edition;
 
-import model.game.Game;
+import model.game.Player;
 import model.warehouse.Ground;
 import model.warehouse.Position;
 import view.Painter;
@@ -11,9 +11,9 @@ import view.game.GroundPanel;
 public abstract class EditionTool implements Painter {
 
 	private GamePanel gamePanel;
-	private Game game;
+	private Player game;
 
-	public EditionTool(GamePanel gamePanel, Game game) {
+	public EditionTool(GamePanel gamePanel, Player game) {
 		this.gamePanel = gamePanel;
 		this.game = game;
 	}
@@ -22,7 +22,7 @@ public abstract class EditionTool implements Painter {
 		return gamePanel;
 	}
 
-	protected Game getGame() {
+	protected Player getGame() {
 		return game;
 	}
 	

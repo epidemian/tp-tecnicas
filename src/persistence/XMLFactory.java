@@ -1,5 +1,6 @@
 package persistence;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -23,11 +24,22 @@ import persistence.price.PriceMapPersistent;
 
 public class XMLFactory extends InputFactory{
 
+	private static final int WEEKS = 3;
+	private static final String PRICES_PATH = "xml/prices/prices";
+	private static final String XML_EXTENSION = ".xml";
+
 	// Reader from the XML file
 	protected SAXReader reader;
 	
 	//Document where is placed what is read from the file
 	private Document document;
+
+	private String groundsPath = "xml/ValidGroundList.xml";
+	private String technologiesPath = "xml/ValidProductionSequencesTechnologyList.xml";
+	private String productionMachinesPath = "xml/ValidProductionMachineList.xml";
+	private String qualityControlMachinesPath = "xml/ValidQualityControlMachineList.xml";
+	private String rawMaterialsPath = "xml/ValidRawMaterialTypeList.xml";
+
 	
 	public XMLFactory(){
 		reader=new SAXReader();
@@ -35,7 +47,7 @@ public class XMLFactory extends InputFactory{
 	
 	@Override
 	public TechnologyTree loadTechnologies
-					(String technologiesPath,ValidProductionSequences 
+					(ValidProductionSequences 
 							validProductionSequences) 
 							
 					throws DocumentException,SecurityException, 
@@ -43,7 +55,7 @@ public class XMLFactory extends InputFactory{
 						NoSuchMethodException, 
 						NoProductTypeDefinedInSequenceException {
 		
-		document= reader.read(technologiesPath);		
+		document= reader.read(this.technologiesPath);		
 		Element element=document.getRootElement();
 		
 		return ProductionSequenceTechnologyListPersistent.
@@ -52,9 +64,10 @@ public class XMLFactory extends InputFactory{
 	}
 
 	@Override
-	public List<Ground> loadGrounds(String groundsPath) 
+	public List<Ground> loadGrounds() 
 								throws InvalidTagException, DocumentException {
-		document= reader.read(groundsPath);		
+		
+		document= reader.read(this.groundsPath );		
 		Element element=document.getRootElement();
 		
 		return GroundListPersistent.buildFromXML(element);
@@ -62,25 +75,27 @@ public class XMLFactory extends InputFactory{
 	}
 
 	@Override
-	public Map<String, Integer> loadPrices(String pricesPath) 
+	public Map<String, Integer> loadPrices(int weekNumber) 
 				throws InvalidTagException, DocumentException {
-		document= reader.read(pricesPath);		
+		int number = weekNumber % WEEKS;
+		String path = PRICES_PATH + number + XML_EXTENSION;
+		document= reader.read(path);		
 		Element element=document.getRootElement();
 		
 		return PriceMapPersistent.buildFromXML(element);		
 	}
 
 	@Override
-	public List<MachineType> loadProductionMachines(String availableMachines) 
+	public List<MachineType> loadProductionMachines() 
 						throws DocumentException, InvalidTagException{ 
-		return this.loadMachines(availableMachines); 
+		return this.loadMachines(this.productionMachinesPath ); 
 	}
 
 	@Override
-	public List<RawMaterialType> loadRawMaterialTypes(String availableRaw)
+	public List<RawMaterialType> loadRawMaterialTypes()
 			throws Exception {
 			
-			document=reader.read(availableRaw);
+			document=reader.read(this.rawMaterialsPath);
 			Element element=document.getRootElement();
 			
 			List<RawMaterialType> list=RawMaterialTypeListPersistent.
@@ -90,9 +105,9 @@ public class XMLFactory extends InputFactory{
 	}
 
 	@Override
-	public List<MachineType> loadQualityControlMachines(String availableMachines)
+	public List<MachineType> loadQualityControlMachines()
 			throws Exception {
-		return this.loadMachines(availableMachines);
+		return this.loadMachines(this.qualityControlMachinesPath );
 	}
 
 	

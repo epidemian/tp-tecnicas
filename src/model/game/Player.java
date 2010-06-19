@@ -1,53 +1,179 @@
 package model.game;
 
-import static model.utils.ArgumentUtils.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import model.exception.BusinessLogicException;
 import model.game.time.UpdateScheduler;
+import model.game.time.WeeklyUpdatable;
+import model.lab.ResearchLab;
+import model.lab.TechnologyTree;
+import model.production.RawMaterialType;
+import model.production.StorageArea;
+import model.production.ValidMachineTypes;
+import model.production.ValidRawMaterialTypes;
+import static model.utils.ArgumentUtils.*;
+import java.util.List;
+import java.util.Map;
+
+import controller.game.MarketPricesUpdater;
+
+import model.production.RawMaterials;
+import model.production.ValidProductionSequences;
+import model.production.elements.ProductionLineElement;
+import model.production.elements.machine.Machine;
+import model.production.elements.machine.MachineType;
+import model.production.elements.machine.ProductionMachine;
+import model.production.elements.machine.QualityControlMachine;
 import model.warehouse.Ground;
+import model.warehouse.Position;
+import model.warehouse.MarketPrices;
+import model.warehouse.Warehouse;
+import persistence.InputFactory;
+import persistence.XMLFactory;
 
 public class Player {
+
+	private static final int DAYS_PER_MONTH = 10;
+	private static final int DAYS_PER_WEEK = 3;
+	private static final int TICKS_PER_DAY = 24;
+	private static final int MAX_DAILY_LAB_FUNDING = 500;
+
 	private Budget budget;
-	private String name;
+	private String playerName;
 
-	public Player(String name, Budget budget) {
+	private ValidProductionSequences validProductionSequences;
+	private List<MachineType> validProductionMachineTypes;
+	private List<MachineType> validQualityControlMachineTypes;
+	private List<RawMaterialType> validRawMaterialTypes;
 
-		this.name = name;
-		this.budget = budget;
+	private ResearchLab lab;
+
+	private Warehouse warehouse;
+
+	private UpdateScheduler scheduller;
+	private MarketPrices marketPrices;
+
+	public Player(String playerName, int initialBudget,
+			InputFactory inputFactory) {
+		super();
+		this.playerName = playerName;
+		this.budget = new Budget(initialBudget);
+
+		TechnologyTree technologyTree;
+		this.validProductionSequences = new ValidProductionSequences();
+
+		try {
+			technologyTree = inputFactory
+					.loadTechnologies(validProductionSequences);
+			this.validProductionMachineTypes = inputFactory
+					.loadProductionMachines();
+			this.validQualityControlMachineTypes = inputFactory
+					.loadQualityControlMachines();
+			this.validRawMaterialTypes = inputFactory.loadRawMaterialTypes();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+
+		this.scheduller = new UpdateScheduler(TICKS_PER_DAY, DAYS_PER_WEEK,
+				DAYS_PER_MONTH);
+
+		this.marketPrices = new MarketPrices();
+		WeeklyUpdatable pricesUpdater = new MarketPricesUpdater(marketPrices,
+				inputFactory);
+		this.scheduller.subscribeWeeklyUpdatable(pricesUpdater);
+
+		this.lab = new ResearchLab(technologyTree, MAX_DAILY_LAB_FUNDING,
+				getBudget());
+		this.scheduller.subscribeDailyUpdatable(this.lab);
+
+		this.warehouse = null;
+		// this.scheduller.subscribeDailyUpdatable(this.warehouse);
+		// this.scheduller.subscribeWeeklyUpdatable(this.warehouse);
+		// this.scheduller.subscribeMonthlyUpdatable(this.warehouse);
 	}
 
-//	private boolean lostGame(int dayBalance) {
-//		return (budget.getBalance() <= 0) || (dayBalance < 0);
-//	}
-//
-//	private boolean winGame() {
-//		return budget.getBalance() >= valueToWin;
-//	}
-
-//	public boolean purchaseGround(Ground ground) {
-//		checkNotNull(ground, "ground");
-//		if(budget.amountCovered(ground.getPrice())){	
-//			budget.decrement(ground.getPrice());
-//			return true;
-//		}
-//		
-//		return false;
-//	}
-//	public GameState updateTick() {
-//		int beforeBalance = budget.getBalance();
-//		scheduler.updateTick();
-//		int affterBalance = budget.getBalance();
-//
-//		if (winGame()) {
-//			return GameState.WIN;
-//		} else {
-//			if (lostGame(affterBalance - beforeBalance)) {
-//				return GameState.LOST;
-//			}
-//		}
-//
-//		return GameState.INPROCESS;
-//	}
+	public Ground getGround() {
+		return this.getWarehouse().getGround();
+	}
 
 	public Budget getBudget() {
 		return this.budget;
+	}
+
+	public boolean canPurchase(int amount) {
+		return getBudget().canPurchase(amount);
+	}
+
+	public StorageArea getStorageArea() {
+		return this.warehouse.getStorageArea();
+	}
+
+	public MarketPrices getMarketPrices() {
+		return this.marketPrices;
+	}
+
+	public boolean canAfford(int amount) {
+		return getBudget().canPurchase(amount);
+	}
+
+	public void buyAndAddProductionLineElement(ProductionLineElement element,
+			Position position) {
+		int price = element.getPurchasePrice();
+		checkArgCondition(price, canAfford(price));
+
+		getBudget().decrement(price);
+		getGround().addTileElement(element, position);
+	}
+
+	public void setInitialMoney(int money) {
+		this.getBudget().setBalance(money);
+	}
+
+	public Warehouse getWarehouse() {
+		return this.warehouse;
+	}
+
+	public ValidProductionSequences getValidProductionSequences() {
+		return validProductionSequences;
+	}
+
+	public List<MachineType> getValidProductionMachineTypes() {
+		return validProductionMachineTypes;
+	}
+
+	public List<MachineType> getValidQualityControlMachineTypes() {
+		return validQualityControlMachineTypes;
+	}
+
+	public List<RawMaterialType> getValidRawMaterialTypes() {
+		return validRawMaterialTypes;
+	}
+
+	public ResearchLab getLab() {
+		return lab;
+	}
+
+	public void purchaseWarehouse(Ground ground) {
+		if (this.warehouse != null)
+			throw new BusinessLogicException("Already have a warehouse");
+		
+		this.warehouse = Warehouse.purchaseWarehouse(ground, getBudget(),
+				getMarketPrices(), getValidProductionSequences());
+	}
+
+	public void rentWarehouse(Ground ground) {
+		if (this.warehouse != null)
+			throw new BusinessLogicException("Already have a warehouse");
+		
+		this.warehouse = Warehouse.rentWarehouse(ground, getBudget(),
+				getMarketPrices(), getValidProductionSequences());
+	}
+
+	public void sellWarehouse() {
+		this.warehouse.sell();
+		this.warehouse = null;
 	}
 }

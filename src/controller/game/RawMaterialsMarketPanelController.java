@@ -21,11 +21,11 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import model.game.Budget;
-import model.game.Game;
+import model.game.Player;
 import model.production.RawMaterialType;
 import static model.utils.ArgumentUtils.*;
 import model.production.StorageArea;
-import model.warehouse.PriceMap;
+import model.warehouse.MarketPrices;
 import view.game.GamePanel;
 import view.game.RawMaterialsMarketPanel;
 
@@ -36,7 +36,7 @@ public class RawMaterialsMarketPanelController {
 	private RawMaterialsMarketPanel marketPanel;
 	private StorageArea storageArea;
 	private List<RawMaterialType> rawMaterialTypes;
-	private PriceMap rawMaterialPrices;
+	private MarketPrices rawMaterialPrices;
 
 	// Buying info.
 	private RawMaterialType rawMaterialType;
@@ -45,7 +45,7 @@ public class RawMaterialsMarketPanelController {
 
 	private static final String[] columnNames = { "Type", "Quantity" };
 
-	public RawMaterialsMarketPanelController(Game game,
+	public RawMaterialsMarketPanelController(Player game,
 			RawMaterialsMarketPanel marketPanel, GamePanel gamePanel) {
 
 		checkNotNull(game, "game");
@@ -54,7 +54,7 @@ public class RawMaterialsMarketPanelController {
 
 		this.storageArea = game.getStorageArea();
 		this.rawMaterialTypes = game.getValidRawMaterialTypes();
-		this.rawMaterialPrices = game.getRawMaterialPrices();
+		this.rawMaterialPrices = game.getMarketPrices();
 		this.marketPanel = marketPanel;
 		this.budget = game.getBudget();
 		this.gamePanel = gamePanel;

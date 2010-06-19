@@ -7,15 +7,15 @@ import java.util.Map;
 import model.exception.BusinessLogicException;
 import model.production.Product;
 
-public class PriceMap {
+public class MarketPrices {
 
 	Map<String,Integer> map;
 	
-	public PriceMap(){
+	public MarketPrices(){
 		this.map=new HashMap<String, Integer>();
 	}
 	
-	public PriceMap(Map<String,Integer> map){
+	public MarketPrices(Map<String,Integer> map){
 		this.map=map;
 	}
 	

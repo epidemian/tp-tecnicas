@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.game.Budget;
-import model.game.Game;
+import model.game.Player;
 import model.production.elements.Conveyor;
 import model.production.elements.InputProductionLineElement;
 import model.production.elements.OutputProductionLineElement;
@@ -30,7 +30,7 @@ public class DeleteTool extends EditionTool {
 
 	private DeleteVisitor visitor = new DeleteVisitor();
 
-	public DeleteTool(GamePanel gamePanel, Game game) {
+	public DeleteTool(GamePanel gamePanel, Player game) {
 		super(gamePanel, game);
 	}
 

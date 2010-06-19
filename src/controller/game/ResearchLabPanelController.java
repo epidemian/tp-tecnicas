@@ -1,18 +1,21 @@
 package controller.game;
 
+import static model.utils.ArgumentUtils.checkNotNull;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.Set;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import static model.utils.ArgumentUtils.*;
-import model.game.Game;
+
+import model.game.Player;
 import model.lab.ResearchLab;
 import model.lab.Technology;
 import view.game.MoneyConstants;
@@ -24,11 +27,11 @@ public class ResearchLabPanelController {
     private Technology technologyToBeResearched;
     private int dailyFunding;
 
-    public ResearchLabPanelController(Game game, ResearchLabPanel labPanel){
-        checkNotNull(game, "game");
+    public ResearchLabPanelController(Player player, ResearchLabPanel labPanel){
+        checkNotNull(player, "player");
         checkNotNull(labPanel, "labPanel");
 
-        this.lab = game.getLab();
+        this.lab = player.getLab();
 
         initDailyFundingSpinner(labPanel);
         initDailyFundingAcceptButton(labPanel);

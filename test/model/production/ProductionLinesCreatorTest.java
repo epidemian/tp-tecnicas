@@ -8,14 +8,17 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.game.Budget;
 import model.production.elements.Conveyor;
 import model.production.elements.ProductionLineElement;
 import model.production.elements.machine.MachineType;
 import model.production.elements.machine.ProductionMachine;
 import model.production.line.ProductionLine;
 import model.warehouse.Ground;
+import model.warehouse.MarketPrices;
 import model.warehouse.Position;
 import model.warehouse.ProductionLinesCreator;
+import model.warehouse.Warehouse;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -27,10 +30,12 @@ public class ProductionLinesCreatorTest {
 
 	@Before
 	public void setUp() {
-		this.linesCreator = new ProductionLinesCreator(new StorageArea(
-				new ValidProductionSequences()));
-
 		this.ground = new Ground(1000, 10, 10);
+		Warehouse warehouse = Warehouse.purchaseWarehouse(this.ground,
+				new Budget(), new MarketPrices(),
+				new ValidProductionSequences());
+		this.linesCreator = new ProductionLinesCreator(warehouse);
+
 	}
 
 	/*

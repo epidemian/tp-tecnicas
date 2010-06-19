@@ -13,7 +13,7 @@ import java.util.Collections;
 import java.util.List;
 
 import model.exception.BusinessLogicException;
-import model.game.Game;
+import model.game.Player;
 import model.production.Direction;
 import model.production.elements.Conveyor;
 import model.production.elements.InputProductionLineElement;
@@ -37,7 +37,7 @@ public class AddConveyorTool extends EditionTool {
 	EdgeType initialEdgeType = null;
 	ProductionLineElement initialElement = null;
 
-	public AddConveyorTool(GamePanel gamePanel, Game game) {
+	public AddConveyorTool(GamePanel gamePanel, Player game) {
 		super(gamePanel, game);
 	}
 

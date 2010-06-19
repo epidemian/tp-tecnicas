@@ -2,6 +2,9 @@ package main;
 
 import javax.swing.UIManager;
 
+import persistence.InputFactory;
+import persistence.XMLFactory;
+
 import controller.MainController;
 
 import view.MainFrame;
@@ -14,7 +17,9 @@ public class Main {
 		setOSLookAndFeel();
 
 		MainFrame mainFrame = new MainFrame();
-		new MainController(mainFrame);
+		
+		InputFactory factory = new XMLFactory();
+		new MainController(mainFrame, factory);
 	}
 
 	private static void setOSLookAndFeel() {

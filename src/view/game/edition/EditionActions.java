@@ -8,7 +8,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 
-import model.game.Game;
+import model.game.Player;
 import model.production.elements.machine.MachineType;
 import view.game.GamePanel;
 import view.game.GroundPanel;
@@ -24,10 +24,10 @@ import view.game.edition.tools.SelectionTool;
 public class EditionActions {
 
 	private GamePanel gamePanel;
-	private Game game;
+	private Player game;
 	private GroundPanel groundPanel;
 
-	public EditionActions(GamePanel gamePanel, Game game) {
+	public EditionActions(GamePanel gamePanel, Player game) {
 		checkNotNull(gamePanel, "game panel");
 		checkNotNull(game, "game");
 		this.gamePanel = gamePanel;

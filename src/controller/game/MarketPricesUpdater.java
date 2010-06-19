@@ -7,26 +7,22 @@ import persistence.XMLFactory;
 
 import model.exception.BusinessLogicException;
 import model.game.time.WeeklyUpdatable;
-import model.warehouse.PriceMap;
+import model.warehouse.MarketPrices;
 
-public class WeeklyPricesUpdater implements WeeklyUpdatable {
-
-	private String[] pricesPaths = { "test/global/prices/prices0.xml",
-			"test/global/prices/prices1.xml", "test/global/prices/prices2.xml",
-			"test/global/prices/prices3.xml", };
+public class MarketPricesUpdater implements WeeklyUpdatable {
 
 	private int weekNumber;
 
 	private InputFactory inputFactory;
 
-	private PriceMap priceMap;
+	private MarketPrices marketPrices;
 
-	public WeeklyPricesUpdater(PriceMap map) {
+	public MarketPricesUpdater(MarketPrices marketPrices, InputFactory inputFactory) {
 		super();
 		this.weekNumber = 0;
-		this.inputFactory = new XMLFactory();
-		this.priceMap = map;
-
+		this.inputFactory = inputFactory;
+		this.marketPrices = marketPrices;
+		changeWeeklyPrices();
 	}
 
 	/*
@@ -39,14 +35,13 @@ public class WeeklyPricesUpdater implements WeeklyUpdatable {
 
 	@Override
 	public void updateWeek() {
-		this.changeWeeklyPrices();
 		this.weekNumber++;
+		this.changeWeeklyPrices();
 	}
 
 	private void changeWeeklyPrices() {
-		int number = weekNumber % this.pricesPaths.length; 
 		try { 
-			 this.priceMap.setMap(this.inputFactory.loadPrices(pricesPaths[number])); 
+			 this.marketPrices.setMap(this.inputFactory.loadPrices(weekNumber));
 		} 
 		catch (Exception e) {			
 			throw new BusinessLogicException("Price File doesn't exist"); 

@@ -11,7 +11,7 @@ import java.util.List;
 import javax.swing.Action;
 import javax.swing.ImageIcon;
 
-import model.game.Game;
+import model.game.Player;
 import static model.utils.ArgumentUtils.*;
 import model.production.elements.machine.MachineType;
 
@@ -28,7 +28,7 @@ public class LineElementsMarketPanelController {
 	private LineElementsMarketPanel marketPanel;
 	private int machineTab;
 
-	public LineElementsMarketPanelController(Game game,
+	public LineElementsMarketPanelController(Player game,
 			LineElementsMarketPanel marketPanel, EditionActions editionActions) {
 
 		checkNotNull(editionActions, "editionActions");
@@ -58,7 +58,7 @@ public class LineElementsMarketPanelController {
 		this.setUpButtons();
 	}
 
-	private void initMachineButtonsActionsAndImages(Game game) {
+	private void initMachineButtonsActionsAndImages(Player game) {
 		// Production machine buttons actions n' images.
 		for (MachineType mtype : game.getValidProductionMachineTypes()) {
 			ImageIcon icon = getScaleImage(TileElementImageRecognizer

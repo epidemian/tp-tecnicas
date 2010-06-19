@@ -9,7 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JToggleButton;
 import javax.swing.Timer;
 
-import model.game.Game;
+import model.game.Player;
 import view.game.GamePanel;
 import view.game.LineElementsMarketPanel;
 import view.game.RawMaterialsMarketPanel;
@@ -26,33 +26,33 @@ public class GamePanelController {
 	private JToggleButton playButton;
 	private JToggleButton pauseButton;
 	private GamePanel gamePanel;
-	private Game game;
+	private Player player;
 
 	public ContainerAdapter getGamePanelRemovedListener() {
 		return gamePanelRemovedListener;
 	}
 
-	public GamePanelController(final Game game, final GamePanel gamePanel,
+	public GamePanelController(final Player player, final GamePanel gamePanel,
 			final MainController mainController) {
 
 		this.gamePanel = gamePanel;
-		this.game = game;
-		EditionActions editionActions = new EditionActions(gamePanel, game);
+		this.player = player;
+		EditionActions editionActions = new EditionActions(gamePanel, player);
 		KeyInputActionMapper mapper = new KeyInputActionMapper(editionActions);
 		mapper.mapActions(gamePanel.getInputMap(), gamePanel.getActionMap());
 
 		final LineElementsMarketPanel lineElementsMarketPanel = new LineElementsMarketPanel();
-		new LineElementsMarketPanelController(game, lineElementsMarketPanel,
+		new LineElementsMarketPanelController(player, lineElementsMarketPanel,
 				editionActions);
 
 		final RawMaterialsMarketPanel rawMaterialsMarketPanel = new RawMaterialsMarketPanel();
-		new RawMaterialsMarketPanelController(game, rawMaterialsMarketPanel,
+		new RawMaterialsMarketPanelController(player, rawMaterialsMarketPanel,
 				gamePanel);
 
+		int balance = player.getBudget().getBalance();
                 final ResearchLabPanel labPanel = new ResearchLabPanel();
-                new ResearchLabPanelController(game, labPanel);
+                new ResearchLabPanelController(player, labPanel);
 
-		int balance = game.getBudget().getBalance();
 		gamePanel.getBudgetPanel().setMoneyBalance(balance);
 
 		ToolBarPanel toolBar = gamePanel.getToolBarPanel();
@@ -103,8 +103,8 @@ public class GamePanelController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (MainController.showDialog("Sell", "Are you sure?")) {
-					// MainController.this.game.getWarehouse().sell();
-					mainController.setGroundSelectionPanel(game.getPlayer());
+					player.sellWarehouse();
+					mainController.setGroundSelectionPanel(player);
 				}
 			}
 		});

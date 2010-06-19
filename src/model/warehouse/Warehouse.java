@@ -19,26 +19,22 @@ import model.production.ValidProductionSequences;
 import model.production.elements.ProductionLineElement;
 import model.production.line.ProductionLine;
 
-public class Warehouse implements MonthlyUpdatable, DailyUpdatable,
-		WeeklyUpdatable {
+public class Warehouse implements MonthlyUpdatable, DailyUpdatable {
 
 	private static final double RENT = 0.01f;
 
 	private Budget budget;
 	private Ground ground;
 	private StorageArea storageArea;
-	private PriceMap priceMap;
+	private MarketPrices marketPrices;
 	private int totalProductsMade;
 	private int totalDefectiveProductsMade;
 	private int salePrice;
 	private int rentPrice;
 	private Collection<ProductionLine> productionLines = new ArrayList<ProductionLine>();
 
-	private WeeklyUpdatable weeklyPrices;
-
-	private Warehouse(Ground ground, Budget budget, PriceMap map,
-			ValidProductionSequences sequences, int salePrice, int rentPrice,
-			WeeklyUpdatable weeklyPrices) {
+	private Warehouse(Ground ground, Budget budget, MarketPrices map,
+			ValidProductionSequences sequences, int salePrice, int rentPrice) {
 
 		checkNotNull(ground, "ground");
 		checkNotNull(budget, "budget");
@@ -46,33 +42,29 @@ public class Warehouse implements MonthlyUpdatable, DailyUpdatable,
 
 		this.ground = ground;
 		this.budget = budget;
-		this.priceMap = map;
+		this.marketPrices = map;
 		this.totalDefectiveProductsMade = 0;
 		this.totalProductsMade = 0;
-		this.weeklyPrices = weeklyPrices;
 		this.storageArea = new StorageArea(new RawMaterials(), sequences);
 		this.setRentPrice(rentPrice);
 		this.setSalePrice(salePrice);
 	}
 
-	public static Warehouse createPurchasedWarehouse(Ground ground,
-			Budget budget, PriceMap map, ValidProductionSequences sequences,
-			WeeklyUpdatable weeklyPrices) {
-		return new Warehouse(ground, budget, map, sequences, ground.getPrice(),
-				0, weeklyPrices);
+	public static Warehouse purchaseWarehouse(Ground ground,
+			Budget budget, MarketPrices marketPrices, ValidProductionSequences sequences) {
+		budget.decrement(ground.getPurchasePrice());
+		return new Warehouse(ground, budget, marketPrices, sequences, ground.getSalePrice(),
+				0);
 	}
 
-	public static Warehouse createRentedWarehouse(Ground ground, Budget budget,
-			PriceMap map, ValidProductionSequences sequences,
-			WeeklyUpdatable weeklyPrices) {
-		return new Warehouse(ground, budget, map, sequences, 0,
-				(int) (RENT * ground.getPrice()), weeklyPrices);
+	public static Warehouse rentWarehouse(Ground ground, Budget budget,
+			MarketPrices marketPrices, ValidProductionSequences sequences) {
+		return new Warehouse(ground, budget, marketPrices, sequences, 0, ground.getRentPrice());
 	}
 
 	public void createProductionLines() {
 
-		ProductionLinesCreator creator = new ProductionLinesCreator(
-				this.storageArea);
+		ProductionLinesCreator creator = new ProductionLinesCreator(this);
 		this.productionLines = creator.createFromGround(this.ground);
 	}
 
@@ -82,17 +74,15 @@ public class Warehouse implements MonthlyUpdatable, DailyUpdatable,
 	}
 
 	private void sellMachines() {
-		if (this.productionLines != null) {
-			for (ProductionLine productionLine : this.productionLines) {
-				for (ProductionLineElement element : productionLine) {
-					element.sell(this.budget);
-				}
+		for (ProductionLine productionLine : this.productionLines) {
+			for (ProductionLineElement element : productionLine) {
+				element.sell(this.budget);
 			}
 		}
 	}
 
-	public void sellGround() {
-		budget.increment((int) (0.8 * this.salePrice));
+	private void sellGround() {
+		budget.increment(this.salePrice);
 	}
 
 	private void sellProducts() {
@@ -100,7 +90,7 @@ public class Warehouse implements MonthlyUpdatable, DailyUpdatable,
 		int productPrice = 0;
 
 		for (Product prod : this.storageArea.getProductsProduced()) {
-			productPrice = this.priceMap.getPrice(prod);
+			productPrice = this.marketPrices.getPrice(prod);
 			partial += Math.pow(1 - this.getDefectivePercentage(), 2)
 					* productPrice;
 		}
@@ -176,14 +166,9 @@ public class Warehouse implements MonthlyUpdatable, DailyUpdatable,
 	private void setTotalDefectiveProductsMade(int totalDefectiveProductsMade) {
 		this.totalDefectiveProductsMade = totalDefectiveProductsMade;
 	}
-
-	@Override
-	public void updateWeek() {
-		this.weeklyPrices.updateWeek();
-	}
 	
 
-	public PriceMap getPriceMap() {
-		return this.priceMap;
+	public MarketPrices getMarketPrices() {
+		return this.marketPrices;
 	}
 }

@@ -9,7 +9,7 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.game.Game;
+import model.game.Player;
 import model.production.Direction;
 import model.production.RawMaterialType;
 import model.production.RawMaterials;
@@ -32,7 +32,7 @@ public class AddInputLineElementTool extends EditionTool {
 	private static RawMaterialType RAW_MAT_TYPE = new RawMaterialType("Gold");
 	private static int RAW_MAT_QUANTITY = 1;
 
-	public AddInputLineElementTool(GamePanel gamePanel, Game game) {
+	public AddInputLineElementTool(GamePanel gamePanel, Player game) {
 		super(gamePanel, game);
 	}
 
