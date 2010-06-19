@@ -5,6 +5,8 @@ import model.production.ProductType;
 
 import org.dom4j.Element;
 
+import persistence.exceptions.InvalidTagException;
+
 public class ProductTypePersistent {
 
 	static String TAG_NAME="ProductType";

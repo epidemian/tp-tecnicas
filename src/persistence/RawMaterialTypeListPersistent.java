@@ -7,6 +7,8 @@ import java.util.List;
 import model.production.RawMaterialType;
 import org.dom4j.Element;
 
+import persistence.exceptions.InvalidTagException;
+
 public class RawMaterialTypeListPersistent {
 
 	static String TAG_NAME="RawMaterialTypeList";

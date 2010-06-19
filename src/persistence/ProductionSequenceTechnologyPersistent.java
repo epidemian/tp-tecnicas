@@ -14,6 +14,9 @@ import model.production.elements.machine.MachineType;
 
 import org.dom4j.Element;
 
+import persistence.exceptions.InvalidTagException;
+import persistence.exceptions.NoProductTypeDefinedInSequenceException;
+
 public class ProductionSequenceTechnologyPersistent {
 
 	static String TAG_NAME="ProductionSequence";

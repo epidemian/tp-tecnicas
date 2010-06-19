@@ -5,6 +5,9 @@ import model.production.elements.machine.MachineType.Builder;
 
 import org.dom4j.Element;
 
+import persistence.exceptions.InvalidTagException;
+import persistence.utils.PositionPersistent;
+
 public class MachineTypePersistent {
 
 	static String TAG_NAME = "MachineType";

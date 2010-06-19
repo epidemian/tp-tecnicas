@@ -16,6 +16,11 @@ import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
+import persistence.exceptions.InvalidTagException;
+import persistence.exceptions.NoProductTypeDefinedInSequenceException;
+import persistence.ground.GroundListPersistent;
+import persistence.price.PriceMapPersistent;
+
 public class XMLFactory extends InputFactory{
 
 	// Reader from the XML file

@@ -8,7 +8,6 @@ import java.util.Map;
 
 import model.exception.BusinessLogicException;
 import model.game.Budget;
-import model.game.WeeklyPrices;
 import model.game.time.DailyUpdatable;
 import model.game.time.MonthlyUpdatable;
 import model.game.time.WeeklyUpdatable;
@@ -35,11 +34,11 @@ public class Warehouse implements MonthlyUpdatable, DailyUpdatable,
 	private int rentPrice;
 	private Collection<ProductionLine> productionLines = new ArrayList<ProductionLine>();
 
-	private WeeklyPrices weeklyPrices;
+	private WeeklyUpdatable weeklyPrices;
 
 	private Warehouse(Ground ground, Budget budget, PriceMap map,
 			ValidProductionSequences sequences, int salePrice, int rentPrice,
-			WeeklyPrices weeklyPrices) {
+			WeeklyUpdatable weeklyPrices) {
 
 		checkNotNull(ground, "ground");
 		checkNotNull(budget, "budget");
@@ -58,14 +57,14 @@ public class Warehouse implements MonthlyUpdatable, DailyUpdatable,
 
 	public static Warehouse createPurchasedWarehouse(Ground ground,
 			Budget budget, PriceMap map, ValidProductionSequences sequences,
-			WeeklyPrices weeklyPrices) {
+			WeeklyUpdatable weeklyPrices) {
 		return new Warehouse(ground, budget, map, sequences, ground.getPrice(),
 				0, weeklyPrices);
 	}
 
 	public static Warehouse createRentedWarehouse(Ground ground, Budget budget,
 			PriceMap map, ValidProductionSequences sequences,
-			WeeklyPrices weeklyPrices) {
+			WeeklyUpdatable weeklyPrices) {
 		return new Warehouse(ground, budget, map, sequences, 0,
 				(int) (RENT * ground.getPrice()), weeklyPrices);
 	}
@@ -180,12 +179,9 @@ public class Warehouse implements MonthlyUpdatable, DailyUpdatable,
 
 	@Override
 	public void updateWeek() {
-		if (this.weeklyPrices != null) {
-			Map<String, Integer> prices = this.weeklyPrices.getWeeklyPrices();
-			this.priceMap.setMap(prices);
-			this.weeklyPrices.nextWeek();
-		}
+		this.weeklyPrices.updateWeek();
 	}
+	
 
 	public PriceMap getPriceMap() {
 		return this.priceMap;

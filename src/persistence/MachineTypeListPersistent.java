@@ -8,6 +8,8 @@ import model.production.elements.machine.MachineType;
 
 import org.dom4j.Element;
 
+import persistence.exceptions.InvalidTagException;
+
 public class MachineTypeListPersistent {
 	
 	static String TAG_NAME="MachineList";

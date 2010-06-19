@@ -1,6 +1,8 @@
-package persistence;
+package persistence.price;
 
 import org.dom4j.Element;
+
+import persistence.exceptions.InvalidTagException;
 
 public class PriceItemPersistent {
 

@@ -11,6 +11,8 @@ import org.dom4j.Element;
 import org.junit.Before;
 import org.junit.Test;
 
+import persistence.exceptions.InvalidTagException;
+
 public class MachineTypePersistentTest extends XMLPersistentTest {
 
 	private MachineType machineType;

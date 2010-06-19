@@ -1,4 +1,4 @@
-package persistence;
+package persistence.ground;
 
 import model.warehouse.Position;
 import model.warehouse.Wall;

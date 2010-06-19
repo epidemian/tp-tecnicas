@@ -45,6 +45,7 @@ public class Game {
 	private List<RawMaterialType> validRawMaterialTypes;
 
 	private ResearchLab lab;
+
 	private Warehouse warehouse;
 
 	private UpdateScheduler scheduller;
@@ -62,7 +63,7 @@ public class Game {
 		this.validQualityControlMachineTypes = validQualityControlMachineTypes;
 		this.validRawMaterialTypes = validRawMaterialTypes;
 		this.warehouse = warehouse;
-
+		
 		this.scheduller = new UpdateScheduler(TICKS_PER_DAY, DAYS_PER_WEEK,
 				DAYS_PER_MONTH);
 
@@ -183,5 +184,9 @@ public class Game {
 
 	public Player getPlayer() {
 		return this.player;
+	}
+	
+	public ResearchLab getLab() {
+		return lab;
 	}
 }

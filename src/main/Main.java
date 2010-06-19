@@ -4,10 +4,8 @@ import javax.swing.UIManager;
 
 import controller.MainController;
 
-import model.game.Game;
-import model.warehouse.Ground;
 import view.MainFrame;
-import view.game.ViewUtils;
+
 
 public class Main {
 

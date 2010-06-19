@@ -14,6 +14,9 @@ import model.production.ValidProductionSequences;
 
 import org.dom4j.Element;
 
+import persistence.exceptions.InvalidTagException;
+import persistence.exceptions.NoProductTypeDefinedInSequenceException;
+
 
 
 public class ProductionSequenceTechnologyListPersistent {

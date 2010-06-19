@@ -1,4 +1,4 @@
-package persistence;
+package persistence.price;
 
 
 import java.util.HashMap;
@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.dom4j.Element;
+
+import persistence.exceptions.InvalidTagException;
 
 public class PriceMapPersistent {
 	static String TAG_NAME="PriceMap";

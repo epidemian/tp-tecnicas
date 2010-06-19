@@ -10,6 +10,8 @@ import org.dom4j.Element;
 import org.junit.Before;
 import org.junit.Test;
 
+import persistence.exceptions.InvalidTagException;
+
 public class ProductTypePersistentTest extends XMLPersistentTest{
 
 	private ProductType prodType;

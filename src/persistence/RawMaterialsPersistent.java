@@ -7,6 +7,8 @@ import model.production.RawMaterials;
 
 import org.dom4j.Element;
 
+import persistence.exceptions.InvalidTagException;
+
 public class RawMaterialsPersistent {
 	
 	static String TAG_NAME="RawMaterials";

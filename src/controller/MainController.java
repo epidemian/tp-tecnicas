@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import controller.game.GamePanelController;
+import controller.game.WeeklyPricesUpdater;
 
 import java.awt.Dimension;
 import java.awt.event.ItemListener;
@@ -29,6 +30,7 @@ import model.exception.BusinessLogicException;
 import model.game.Budget;
 import model.game.Game;
 import model.game.Player;
+import model.game.time.WeeklyUpdatable;
 import model.lab.TechnologyTree;
 import model.production.RawMaterialType;
 import model.production.ValidProductionSequences;
@@ -87,8 +89,8 @@ public class MainController {
 		this.mainFrame.maximize();
 		this.setMainFramePanel(gamePanel);
 
-		GamePanelController gamePanelController = new GamePanelController(
-				game, gamePanel, this);
+		GamePanelController gamePanelController = new GamePanelController(game,
+				gamePanel, this);
 		System.out.println("is enabled " + this.mainFrame.isEnabled());
 		this.mainFrame.addContainerListener(gamePanelController
 				.getGamePanelRemovedListener());
@@ -159,8 +161,7 @@ public class MainController {
 
 	private List<Ground> loadAllGrounds() {
 		try {
-			return new XMLFactory()
-					.loadGrounds("xml/ValidGroundList.xml");
+			return new XMLFactory().loadGrounds("xml/ValidGroundList.xml");
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -259,13 +260,16 @@ public class MainController {
 					.loadQualityControlMachines("xml/ValidQualityControlMachineList.xml");
 			List<RawMaterialType> validRawMaterialTypes = xmlFactory
 					.loadRawMaterialTypes("xml/ValidRawMaterialTypeList.xml");
-			Map<String, Integer> prices = xmlFactory.loadPrices("xml/prices/prices0.xml");
+			Map<String, Integer> prices = xmlFactory
+					.loadPrices("xml/prices/prices0.xml");
 
-			
-			// TODO: ver priceMap y el null
+			PriceMap map = new PriceMap(prices);
+
+			WeeklyUpdatable pricesUpdater = new WeeklyPricesUpdater(map);
+
 			Warehouse warehouse = Warehouse.createRentedWarehouse(ground,
-					player.getBudget(), new PriceMap(prices),
-					validProductionSequences, null);
+					player.getBudget(), map, validProductionSequences,
+					pricesUpdater);
 
 			return new Game(player, validProductionSequences,
 					validProductionMachineTypes,
@@ -274,7 +278,7 @@ public class MainController {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-		
+
 	}
 
 	private Game createGameByBuyingGround(Ground ground, Player player) {
@@ -291,12 +295,17 @@ public class MainController {
 					.loadQualityControlMachines("xml/ValidQualityControlMachineList.xml");
 			List<RawMaterialType> validRawMaterialTypes = xmlFactory
 					.loadRawMaterialTypes("xml/ValidRawMaterialTypeList.xml");
-			Map<String, Integer> prices = xmlFactory.loadPrices("xml/prices/prices0.xml");
-			
+			Map<String, Integer> prices = xmlFactory
+					.loadPrices("xml/prices/prices0.xml");
+
+			PriceMap map = new PriceMap(prices);
+
+			WeeklyUpdatable pricesUpdater = new WeeklyPricesUpdater(map);
+
 			// TODO: ver priceMap y el null
 			Warehouse warehouse = Warehouse.createPurchasedWarehouse(ground,
-					player.getBudget(), new PriceMap(prices),
-					validProductionSequences, null);
+					player.getBudget(), map, validProductionSequences,
+					pricesUpdater);
 
 			return new Game(player, validProductionSequences,
 					validProductionMachineTypes,

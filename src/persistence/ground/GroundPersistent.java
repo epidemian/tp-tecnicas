@@ -1,4 +1,4 @@
-package persistence;
+package persistence.ground;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -9,6 +9,8 @@ import model.warehouse.Position;
 import model.warehouse.Wall;
 
 import org.dom4j.Element;
+
+import persistence.exceptions.InvalidTagException;
 
 public class GroundPersistent{
 

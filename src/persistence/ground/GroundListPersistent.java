@@ -1,4 +1,4 @@
-package persistence;
+package persistence.ground;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -7,6 +7,8 @@ import java.util.List;
 import model.warehouse.Ground;
 
 import org.dom4j.Element;
+
+import persistence.exceptions.InvalidTagException;
 
 public class GroundListPersistent {
 

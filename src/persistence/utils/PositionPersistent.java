@@ -1,8 +1,10 @@
-package persistence;
+package persistence.utils;
 
 import model.warehouse.Position;
 
 import org.dom4j.Element;
+
+import persistence.exceptions.InvalidTagException;
 
 public class PositionPersistent {
 	static String TAG_ATR_ROWS="rows";

@@ -11,9 +11,8 @@
 			
 			<!-- InternalWalls -->
 			<Wall rows="12" cols="12" width="2" height="3"/>
-			
-			
 		</Walls>
+		
 		<Outputs>
 			<OutputElement rows="1" cols="29" direction="W" />
 			<OutputElement rows="2" cols="29" direction="W" />
@@ -37,6 +36,24 @@
 		</Outputs>
 	</Ground>
 	<Ground price="15000" rows="30" cols="50">
+		<Walls>
+			<Wall rows="1" cols="1" width="10" height="1"/>
+		</Walls>
+		<Outputs>
+			<OutputElement rows="5" cols="6" direction="N" />
+			<OutputElement rows="8" cols="7" direction="W" />
+		</Outputs>
+	</Ground>
+	<Ground price="7000" rows="20" cols="25">
+		<Walls>
+			<Wall rows="1" cols="1" width="10" height="1"/>
+		</Walls>
+		<Outputs>
+			<OutputElement rows="5" cols="6" direction="N" />
+			<OutputElement rows="8" cols="7" direction="W" />
+		</Outputs>
+	</Ground>
+	<Ground price="8000" rows="25" cols="25">
 		<Walls>
 			<Wall rows="1" cols="1" width="10" height="1"/>
 		</Walls>
