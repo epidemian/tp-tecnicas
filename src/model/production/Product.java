@@ -56,4 +56,16 @@ public class Product {
 		checkNotNull(productType, "productType");
 		this.productType = productType;
 	}
+
+	public boolean isWaste() {
+		return this.getProductType().isWaste();
+	}
+
+	@Override
+	public String toString() {
+		return "Product [defective=" + defective + ", history=" + history
+				+ ", productType=" + productType + "]";
+	}
+	
+	
 }

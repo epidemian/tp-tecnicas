@@ -185,7 +185,10 @@ public class GamePanelController {
 	}
 
 	private void playButtonPressed() {
-		this.isPaused = false;
+		if (isPaused) {
+			this.isPaused = false;
+			this.player.getWarehouse().createProductionLines();
+		}
 		updatePlayPauseButtons();
 	}
 

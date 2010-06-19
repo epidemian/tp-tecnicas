@@ -151,7 +151,7 @@ public abstract class ProductionLine implements TickUpdatable, DailyUpdatable,
 	}
 
 	public boolean isWorking() {
-		return (this.brokenMachines.size() == 0);
+		return this.brokenMachines.isEmpty();
 	}
 
 	public void repairAllMachines(Budget budget)

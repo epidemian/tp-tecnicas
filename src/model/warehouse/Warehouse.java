@@ -10,6 +10,7 @@ import model.exception.BusinessLogicException;
 import model.game.Budget;
 import model.game.time.DailyUpdatable;
 import model.game.time.MonthlyUpdatable;
+import model.game.time.TickUpdatable;
 import model.game.time.WeeklyUpdatable;
 import model.production.Product;
 import model.production.RawMaterialType;
@@ -18,8 +19,10 @@ import model.production.StorageArea;
 import model.production.ValidProductionSequences;
 import model.production.elements.ProductionLineElement;
 import model.production.line.ProductionLine;
+import model.utils.StringUtils;
 
-public class Warehouse implements MonthlyUpdatable, DailyUpdatable {
+public class Warehouse implements MonthlyUpdatable, DailyUpdatable,
+		TickUpdatable {
 
 	private static final double RENT = 0.01f;
 
@@ -50,22 +53,25 @@ public class Warehouse implements MonthlyUpdatable, DailyUpdatable {
 		this.setSalePrice(salePrice);
 	}
 
-	public static Warehouse purchaseWarehouse(Ground ground,
-			Budget budget, MarketPrices marketPrices, ValidProductionSequences sequences) {
+	public static Warehouse purchaseWarehouse(Ground ground, Budget budget,
+			MarketPrices marketPrices, ValidProductionSequences sequences) {
 		budget.decrement(ground.getPurchasePrice());
-		return new Warehouse(ground, budget, marketPrices, sequences, ground.getSalePrice(),
-				0);
+		return new Warehouse(ground, budget, marketPrices, sequences, ground
+				.getSalePrice(), 0);
 	}
 
 	public static Warehouse rentWarehouse(Ground ground, Budget budget,
 			MarketPrices marketPrices, ValidProductionSequences sequences) {
-		return new Warehouse(ground, budget, marketPrices, sequences, 0, ground.getRentPrice());
+		return new Warehouse(ground, budget, marketPrices, sequences, 0, ground
+				.getRentPrice());
 	}
 
 	public void createProductionLines() {
 
 		ProductionLinesCreator creator = new ProductionLinesCreator(this);
 		this.productionLines = creator.createFromGround(this.ground);
+		System.out.println("PRODUCTION LINES!\n"
+				+ StringUtils.join(this.productionLines, "\n"));
 	}
 
 	public void sell() {
@@ -87,23 +93,29 @@ public class Warehouse implements MonthlyUpdatable, DailyUpdatable {
 
 	private void sellProducts() {
 		double partial = 0;
-		int productPrice = 0;
-
+		double quality = 1 - this.getDefectivePercentage();
+		
 		for (Product prod : this.storageArea.getProductsProduced()) {
-			productPrice = this.marketPrices.getPrice(prod);
-			partial += Math.pow(1 - this.getDefectivePercentage(), 2)
-					* productPrice;
+			int productPrice = this.marketPrices.getPrice(prod);
+			partial += quality * quality * productPrice;
 		}
 
+		System.out.println("Sell products, partial: " + (int) Math.round(partial));
+		
 		this.budget.increment((int) Math.round(partial));
 	}
 
-	public void updateMonth() {
-		budget.decrement(this.rentPrice);
+	@Override
+	public void updateTick() {
+		for (ProductionLine line : this.productionLines)
+			line.updateTick();
 	}
 
+	@Override
 	public void updateDay() {
-
+		for (ProductionLine line : this.productionLines)
+			line.updateDay();
+		
 		sellProducts();
 
 		setTotalDefectiveProductsMade(this.totalDefectiveProductsMade
@@ -113,6 +125,11 @@ public class Warehouse implements MonthlyUpdatable, DailyUpdatable {
 				+ this.storageArea.getProductsProduced().size());
 
 		this.storageArea.getProductsProduced().clear();
+	}
+
+	@Override
+	public void updateMonth() {
+		budget.decrement(this.rentPrice);
 	}
 
 	public Collection<ProductionLine> getProductionLines() {
@@ -166,9 +183,9 @@ public class Warehouse implements MonthlyUpdatable, DailyUpdatable {
 	private void setTotalDefectiveProductsMade(int totalDefectiveProductsMade) {
 		this.totalDefectiveProductsMade = totalDefectiveProductsMade;
 	}
-	
 
 	public MarketPrices getMarketPrices() {
 		return this.marketPrices;
 	}
+
 }

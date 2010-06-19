@@ -37,7 +37,7 @@ import persistence.XMLFactory;
 
 public class Player implements TickUpdatable {
 
-	private static final int DAYS_PER_MONTH = 2;
+	private static final int DAYS_PER_MONTH = 10;
 	private static final int DAYS_PER_WEEK = 3;
 	private static final int TICKS_PER_DAY = 12;
 	private static final int MAX_DAILY_LAB_FUNDING = 500;
@@ -191,12 +191,13 @@ public class Player implements TickUpdatable {
 	}
 	
 	private void subscribeWarehouse() {
-		this.scheduler.subscribeMonthlyUpdatable(this.warehouse);
+		this.scheduler.subscribeTickUpdatable(this.warehouse);
 		this.scheduler.subscribeDailyUpdatable(this.warehouse);
+		this.scheduler.subscribeMonthlyUpdatable(this.warehouse);
 	}
 	
 	private void unsubscribeWarehouse() {
-		this.scheduler.unsubscribeMonthlyUpdatable(this.warehouse);
 		this.scheduler.unsubscribeDailyUpdatable(this.warehouse);
+		this.scheduler.unsubscribeMonthlyUpdatable(this.warehouse);
 	}
 }

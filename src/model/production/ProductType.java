@@ -10,8 +10,6 @@ public class ProductType extends AbstractType {
 	private static final String WASTE_NAME = "waste";
 
 	public static ProductType getWaste() {
-		// TODO: might cache this instance (?)
-		// Demian
 		return new ProductType(WASTE_NAME, false);
 	}
 
@@ -24,5 +22,9 @@ public class ProductType extends AbstractType {
 		boolean invalidName = validateName && name.equals(WASTE_NAME);
 		checkArgCondition(name, !invalidName,
 				"cannot create product with name \"" + WASTE_NAME + "\"");
+	}
+
+	public boolean isWaste() {
+		return this.equals(getWaste());
 	}
 }

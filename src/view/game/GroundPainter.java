@@ -18,6 +18,7 @@ import model.production.elements.OutputProductionLineElement;
 import model.production.elements.ProductionLineElement;
 import model.production.elements.machine.ProductionMachine;
 import model.production.elements.machine.QualityControlMachine;
+import model.production.elements.machine.Machine;
 import model.warehouse.Ground;
 import model.warehouse.Position;
 import model.warehouse.TileElement;
@@ -29,6 +30,7 @@ public class GroundPainter implements Painter {
 
 	private static final Color HIGHLIGHT_COLOR = new Color(0, 1, 0, 0.3F);
 	private static final Color HIGHLIGHT_ARROWS_COLOR = new Color(0, 1, 0, 0.7F);
+	private static final Color BROKEN_MACHINE_COLOR = new Color(1, 0, 0, 0.4F);
 
 	private final Ground ground;
 	private final int tileSize;
@@ -109,8 +111,28 @@ public class GroundPainter implements Painter {
 
 					}
 				}
-
 			}
+
+			@Override
+			public void visitProductionMachine(ProductionMachine machine) {
+				super.visitProductionMachine(machine);
+				drawMachineState(graphics, machine);
+			}
+
+			@Override
+			public void visitQualityControlMachine(QualityControlMachine machine) {
+				super.visitQualityControlMachine(machine);
+				drawMachineState(graphics, machine);
+			}
+
+			private void drawMachineState(final Graphics2D graphics,
+					Machine machine) {
+				if (machine.isBroken())
+					drawRectangle(graphics, machine.getPosition(), machine
+							.getWidth(), machine.getHeight(),
+							BROKEN_MACHINE_COLOR);
+			}
+
 		};
 	}
 

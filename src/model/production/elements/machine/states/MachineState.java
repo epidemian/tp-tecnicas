@@ -22,4 +22,8 @@ public abstract class MachineState {
 
 	public abstract double getFailProductProcessChance(Machine machine);
 
+	public boolean isBroken() {
+		return false;
+	}
+
 }

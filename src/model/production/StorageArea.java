@@ -39,7 +39,8 @@ public class StorageArea {
 	public void addProduct(Product product){
 		// TODO must filter waste products?
 		product.resolveProductType(this.validProductionSequences);
-		this.productsProduced.add(product);
+		if (!product.isWaste())
+			this.productsProduced.add(product);
 	}
 	
 	public int countDefectiveProducts(){

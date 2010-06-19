@@ -7,6 +7,7 @@ import model.game.Budget;
 import model.production.Direction;
 import model.production.Product;
 import model.production.elements.ProductionLineElement;
+import model.production.elements.machine.states.BrokenMachineState;
 import model.production.elements.machine.states.CannotRepairHealthyMachineException;
 import model.production.elements.machine.states.HealthyMachineState;
 import model.production.elements.machine.states.MachineState;
@@ -97,15 +98,6 @@ public abstract class Machine extends ProductionLineElement implements
 		this.machineType = machineType;
 	}
 
-	// @Override
-	// public void addToGround(Ground ground, Position position) {
-	// // TODO Auto-generated method stub
-	// if (getPreviousLineElement() != null && getNextLineElement() != null)
-	// throw new BusinessLogicException("Already connected");
-	//		
-	//		
-	// }
-
 	/**
 	 * Analyzes whether after processing the product, the machine becomes
 	 * damaged or broken.
@@ -132,6 +124,10 @@ public abstract class Machine extends ProductionLineElement implements
 	@Override
 	public void breakUp() {
 		this.getMachineState().breakUp(this);
+	}
+	
+	public boolean isBroken() {
+		return this.machineState.isBroken();
 	}
 
 	public double getFailProductProcessChance() {
