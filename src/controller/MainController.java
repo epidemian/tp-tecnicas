@@ -174,8 +174,8 @@ public class MainController {
 		buyCombo.removeAllItems();
 
 		// Adds grounds names to the combo.
-		for (int i = 1; i < grounds.size(); i++)
-			buyCombo.addItem(GROUND_PREFIX + i);
+		for (int i = 0; i < grounds.size(); i++)
+			buyCombo.addItem(GROUND_PREFIX + i+1);
 
 		this.buyComboGroundSelectionAction(buyCombo, grounds, selectionPanel);
 
