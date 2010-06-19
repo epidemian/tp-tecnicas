@@ -17,6 +17,7 @@ import view.game.ToolBarPanel;
 import view.game.edition.EditionActions;
 import view.game.edition.KeyInputActionMapper;
 import controller.MainController;
+import view.game.ResearchLabPanel;
 
 public class GamePanelController {
 
@@ -48,6 +49,9 @@ public class GamePanelController {
 		new RawMaterialsMarketPanelController(game, rawMaterialsMarketPanel,
 				gamePanel);
 
+                final ResearchLabPanel labPanel = new ResearchLabPanel();
+                new ResearchLabPanelController(game, labPanel);
+
 		int balance = game.getBudget().getBalance();
 		gamePanel.getBudgetPanel().setMoneyBalance(balance);
 
@@ -72,6 +76,15 @@ public class GamePanelController {
 				gamePanel.setToolPanel(rawMaterialsMarketPanel);
 			}
 		});
+
+                JButton researchLabButton = toolBar.getLabButton();
+                researchLabButton.addActionListener(new ActionListener() {
+
+                        @Override
+                         public void actionPerformed(ActionEvent ae) {
+                                gamePanel.setToolPanel(labPanel);
+                        }
+                });
 
 		JButton exitButton = toolBar.getExitButton();
 		exitButton.addActionListener(new ActionListener() {

@@ -15,6 +15,7 @@ import static model.utils.ArgumentUtils.*;
 import model.game.Game;
 import model.lab.ResearchLab;
 import model.lab.Technology;
+import view.game.MoneyConstants;
 import view.game.ResearchLabPanel;
 
 public class ResearchLabPanelController {
@@ -37,7 +38,13 @@ public class ResearchLabPanelController {
 
     private void initDailyFundingSpinner(ResearchLabPanel labPanel) {
 
-        SpinnerNumberModel model = new SpinnerNumberModel();
+        int value = 0;
+        int minimum = 0;
+        int maximun = Integer.MAX_VALUE;
+        int stepSize = 1;
+
+        SpinnerNumberModel model = new SpinnerNumberModel(value, minimum,
+            maximun, stepSize);
         final JSpinner spinner = labPanel.getDailyFundingSpinner();
         spinner.setModel(model);
 
@@ -73,6 +80,8 @@ public class ResearchLabPanelController {
 	for (Technology tech : labTechnologies)
             technologyCombo.addItem(new TechnologyComboEntry(tech));
 
+        technologyComboAction(technologyCombo,labPanel);
+
         technologyCombo.addItemListener(new ItemListener() {
 
             @Override
@@ -94,11 +103,14 @@ public class ResearchLabPanelController {
         labPanel.setTechnologyPrice(technology.getResearchCost());
         // Set description.
         String description = "Unresearched dependecies: \n";
-        for (Technology dependency : dependencies)
+        if (dependencies.isEmpty())
+            description += "\t - \n";
+        else
+            for (Technology dependency : dependencies)
             description += "\t " + dependency.getName() + "\n";
-        description += technology.getDescription();
-        description += "Research cost: \n" +
-                       "\t " + technology.getResearchCost() + "\n";
+        description += "Description: \n" + "\t " + technology.getDescription() + "\n";
+        description += "Research cost: " + MoneyConstants.MONEY_SYMBOL +
+            technology.getResearchCost() + "\n";
         labPanel.setTechnologyInfo(description);
     }
 
