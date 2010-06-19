@@ -42,7 +42,14 @@
           </Group>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="dailyFundingSpinner" pref="204" max="32767" attributes="0"/>
+              <Component id="dailyFundingSpinner" min="-2" pref="78" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+              <Component id="dailyFundingAcceptButton" pref="100" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+              <Component id="technologiesResearchLabel" pref="205" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
           <Group type="102" alignment="1" attributes="0">
@@ -60,16 +67,6 @@
               <Component id="researchPanel" pref="204" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
-              <Component id="dailyFundingAcceptButton" pref="100" max="32767" attributes="0"/>
-              <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="technologiesResearchLabel" pref="205" max="32767" attributes="0"/>
-              <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
-          </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -79,19 +76,20 @@
               <Component id="tittleLabel" min="-2" pref="54" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="dailyFundingLabel" min="-2" pref="22" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="dailyFundingSpinner" min="-2" pref="41" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="dailyFundingAcceptButton" min="-2" pref="30" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="dailyFundingSpinner" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
+                  <Component id="dailyFundingAcceptButton" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="technologiesResearchLabel" min="-2" pref="30" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="technologyCombo" min="-2" pref="36" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="technologyInfoScrollPane" min="-2" pref="188" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="researchPanel" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="30" max="32767" attributes="1"/>
+              <EmptySpace pref="66" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
