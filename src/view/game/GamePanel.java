@@ -26,12 +26,18 @@ public class GamePanel extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         toolBarPanel = new view.game.ToolBarPanel();
         budgetPanel = new view.game.BudgetPanel();
+        timeLabel = new javax.swing.JLabel();
         toolPanel = new javax.swing.JPanel();
         jScrollPane1 = this.groundPanelContainer;
 
         setFont(new java.awt.Font("Purisa", 0, 13));
         setPreferredSize(new java.awt.Dimension(850, 650));
         setLayout(new java.awt.GridBagLayout());
+
+        timeLabel.setFont(new java.awt.Font("Purisa", 0, 11)); // NOI18N
+        timeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        timeLabel.setText("jLabel1");
+        timeLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -40,12 +46,19 @@ public class GamePanel extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addComponent(toolBarPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 770, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(budgetPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(timeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
+                        .addGap(12, 12, 12))
+                    .addComponent(budgetPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(toolBarPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
-            .addComponent(budgetPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(budgetPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(timeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE))
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -100,12 +113,17 @@ public class GamePanel extends javax.swing.JPanel {
         return this.budgetPanel;
     }
 
+    public void setTimeLabel(String time){
+        this.timeLabel.setText(time);
+    }
+
     private GroundPanelContainer groundPanelContainer;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private view.game.BudgetPanel budgetPanel;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel timeLabel;
     private view.game.ToolBarPanel toolBarPanel;
     private javax.swing.JPanel toolPanel;
     // End of variables declaration//GEN-END:variables
