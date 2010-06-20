@@ -1,27 +1,21 @@
 package model.production.elements.machine;
 
-import static model.utils.RandomUtils.*;
 import static model.utils.ArgumentUtils.checkNotNull;
-import model.exception.BusinessLogicException;
+import static model.utils.RandomUtils.randomBoolean;
 import model.game.Budget;
 import model.production.Direction;
 import model.production.Product;
 import model.production.elements.ProductionLineElement;
-import model.production.elements.machine.states.BrokenMachineState;
-import model.production.elements.machine.states.CannotRepairHealthyMachineException;
 import model.production.elements.machine.states.HealthyMachineState;
 import model.production.elements.machine.states.MachineState;
 import model.warehouse.Position;
-import model.warehouse.TileElementVisitor;
 
-public abstract class Machine extends ProductionLineElement implements
-		MachineObservable {
+public abstract class Machine extends ProductionLineElement {
 
 	// Represent the chance of the machine of breaking or damaging after
 	// processing
 	// private static final float BREAK_CHANCE = 0.05f;
 	// private static final float DAMAGE_CHANCE = 0.15f;
-	public static final float PRICE_REPAIR_COEF = 0.05f;
 
 	private MachineState machineState;
 	private MachineType machineType;
@@ -59,11 +53,8 @@ public abstract class Machine extends ProductionLineElement implements
 	 */
 	protected abstract Product treatProduct(Product input);
 
-	public void repair(Budget budget)
-			throws CannotRepairHealthyMachineException {
-		budget.decrement(Math.round(this.machineType.getPrice()
-				* PRICE_REPAIR_COEF));
-		this.getMachineState().repair(this);
+	public void repair(Budget budget) {
+		this.getMachineState().repair(this, budget);
 	}
 
 	public MachineState getMachineState() {
@@ -85,14 +76,6 @@ public abstract class Machine extends ProductionLineElement implements
 		return "ProductionMachine [" + this.getMachineType().toString() + "]";
 	}
 
-	public void notifyBreakdown() {
-		this.getProductionLineElementObserver().updateBreakdown(this);
-	}
-
-	public void notifyBrokenMachineRepair() {
-		this.getProductionLineElementObserver().updateBrokenMachineRepair(this);
-	}
-
 	private void setMachineType(MachineType machineType) {
 		checkNotNull(machineType, "machine type");
 		this.machineType = machineType;
@@ -108,7 +91,7 @@ public abstract class Machine extends ProductionLineElement implements
 		if (willBreakUp())
 			this.breakUp();
 	}
-	
+
 	protected boolean willBecomeDamage() {
 		return randomBoolean(this.getMachineType().getDamageChance());
 	}
@@ -125,7 +108,8 @@ public abstract class Machine extends ProductionLineElement implements
 	public void breakUp() {
 		this.getMachineState().breakUp(this);
 	}
-	
+
+	@Override
 	public boolean isBroken() {
 		return this.machineState.isBroken();
 	}

@@ -1,6 +1,7 @@
 package model.production.elements.machine.states;
 
 import model.exception.BusinessLogicException;
+import model.game.Budget;
 import model.production.elements.machine.Machine;
 
 /**
@@ -10,10 +11,13 @@ import model.production.elements.machine.Machine;
  */
 public class BrokenMachineState extends MachineState {
 
+	public static final float PRICE_REPAIR_COEF = 0.3f;
+
 	@Override
-	public void repair(Machine machine) {
+	public void repair(Machine machine, Budget budget) {
+		budget.decrement(Math.round(machine.getPurchasePrice()
+				* PRICE_REPAIR_COEF));
 		machine.setMachineState(new HealthyMachineState());
-		machine.notifyBrokenMachineRepair();
 	}
 
 	@Override

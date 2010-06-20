@@ -1,6 +1,5 @@
 package model.production;
 
-import static model.production.TestUtils.createMachineType;
 import static model.production.elements.ProductionLineElement.connectLineElements;
 import static org.junit.Assert.*;
 
@@ -8,15 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.game.Budget;
-import model.production.elements.Conveyor;
 import model.production.elements.InputProductionLineElement;
 import model.production.elements.OutputProductionLineElement;
-import model.production.elements.ProductionLineElement;
 import model.production.elements.machine.Machine;
 import model.production.elements.machine.MachineType;
 import model.production.elements.machine.ProductionMachine;
 import model.production.elements.machine.MachineType.Builder;
-import model.production.elements.machine.states.CannotRepairHealthyMachineException;
+import model.production.elements.machine.states.BrokenMachineState;
 import model.production.line.ProductionLine;
 
 import org.junit.Before;
@@ -104,8 +101,7 @@ public class ProductionLineTest {
 	// }
 
 	@Test
-	public void lineWithThreeNonBrokenMachinesRepairedFromMachines()
-			throws CannotRepairHealthyMachineException {
+	public void lineWithThreeNonBrokenMachinesRepairedFromMachines() {
 
 		setUpProductionLineProcessingCartonWithOnlyMachines();
 
@@ -124,12 +120,10 @@ public class ProductionLineTest {
 
 		// All machines are now repaired!
 		assertTrue(this.productionLine.isWorking());
-
 	}
 
 	@Test
-	public void lineWithThreeNonBrokenMachinesRepairedFromLine()
-			throws CannotRepairHealthyMachineException {
+	public void lineWithThreeNonBrokenMachinesRepairedFromLine() {
 
 		setUpProductionLineProcessingCartonWithOnlyMachines();
 
@@ -144,8 +138,7 @@ public class ProductionLineTest {
 	}
 
 	@Test
-	public void debitFromBudgetWhenRepairingLine()
-			throws CannotRepairHealthyMachineException {
+	public void debitFromBudgetWhenRepairingLine() {
 
 		setUpProductionLineProcessingCartonWithOnlyMachines();
 
@@ -157,7 +150,7 @@ public class ProductionLineTest {
 
 		int expectedBalance = INITIAL_BUDGET
 				- Math.round(machines.get(0).getPurchasePrice()
-						* Machine.PRICE_REPAIR_COEF);
+						* BrokenMachineState.PRICE_REPAIR_COEF);
 
 		assertEquals(expectedBalance, this.budget.getBalance());
 	}

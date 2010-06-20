@@ -1,5 +1,6 @@
 package model.production.elements.machine.states;
 
+import model.game.Budget;
 import model.production.elements.machine.Machine;
 
 /**
@@ -8,21 +9,23 @@ import model.production.elements.machine.Machine;
  */
 public class DamagedMachineState extends MachineState {
 
-	private static final double SALE_PRICE_COEF = 0.5;
-	private static final double DEFECTIVE_PRODUCT_CHANCE = 0.15;
-	
-    @Override
-	public void repair(Machine machine) {
+	private static final float SALE_PRICE_COEF = 0.5f;
+	private static final float DEFECTIVE_PRODUCT_CHANCE = 0.15f;
+	private static final float PRICE_REPAIR_COEF = 0.2f;
+
+	@Override
+	public void repair(Machine machine, Budget budget) {
+		budget.decrement(Math.round(machine.getPurchasePrice()
+				* PRICE_REPAIR_COEF));
 		machine.setMachineState(new HealthyMachineState());
 	}
 
-    @Override
+	@Override
 	public void breakUp(Machine machine) {
 		machine.setMachineState(new BrokenMachineState());
-		machine.notifyBreakdown();
 	}
 
-    @Override
+	@Override
 	public int getSalePrice(Machine machine) {
 		return (int) (Math.round(machine.getPurchasePrice() * SALE_PRICE_COEF));
 	}
@@ -32,8 +35,8 @@ public class DamagedMachineState extends MachineState {
 		return DEFECTIVE_PRODUCT_CHANCE;
 	}
 
-        @Override
-        public String toString(){
-            return "Damaged";
-        }
+	@Override
+	public String toString() {
+		return "Damaged";
+	}
 }

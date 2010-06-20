@@ -10,34 +10,22 @@ import java.util.List;
 import model.game.Budget;
 import model.game.time.DailyUpdatable;
 import model.game.time.TickUpdatable;
-import model.production.Product;
-import model.production.RawMaterials;
 import model.production.StorageArea;
 import model.production.elements.InputProductionLineElement;
 import model.production.elements.OutputProductionLineElement;
 import model.production.elements.ProductionLineElement;
-import model.production.elements.ProductionLineElementObserver;
 import model.production.elements.machine.Machine;
-import model.production.elements.machine.states.CannotRepairHealthyMachineException;
 
 public abstract class ProductionLine implements TickUpdatable, DailyUpdatable,
-		Iterable<ProductionLineElement>, ProductionLineElementObserver {
+		Iterable<ProductionLineElement> {
 
 	/**
 	 * First element in the production line.
 	 */
 	private ProductionLineElement firstLineElement;
 
-	/**
-	 * A production line is working if none of its machines are broken.
-	 */
-	private List<Machine> brokenMachines;
-
 	protected ProductionLine(ProductionLineElement firstLineElement) {
 		this.setFirstProductionElement(firstLineElement);
-		this.setProductionLineElementsObserver();
-		brokenMachines = new ArrayList<Machine>();
-
 	}
 
 	public static ProductionLine createCircularProductionLine(
@@ -99,8 +87,7 @@ public abstract class ProductionLine implements TickUpdatable, DailyUpdatable,
 			if (this.current.canHaveNextLineElement()) {
 				ProductionLineElement next = this.current.getNextLineElement();
 				this.current = (next == firstLineElement ? null : next);
-			}
-			else 
+			} else
 				this.current = null;
 			return returnElement;
 		}
@@ -111,28 +98,8 @@ public abstract class ProductionLine implements TickUpdatable, DailyUpdatable,
 		}
 	}
 
-	public void setProductionLineElementsObserver() {
-		for (ProductionLineElement element : this)
-			element.setProductionLineElementObserver(this);
-	}
-
 	public int productionLineSize() {
 		return this.getLineElements().size();
-	}
-
-	@Override
-	public void updateBreakdown(Machine machine) {
-
-		this.brokenMachines.add(machine);
-	}
-
-	/**
-	 * Called when a Broken machine is repaired
-	 */
-	@Override
-	public void updateBrokenMachineRepair(Machine machine) {
-
-		this.brokenMachines.remove(machine);
 	}
 
 	private String toStringLine() {
@@ -155,16 +122,19 @@ public abstract class ProductionLine implements TickUpdatable, DailyUpdatable,
 	}
 
 	public boolean isWorking() {
-		return this.brokenMachines.isEmpty();
+		return !hasAnyBrokenElement();
 	}
 
-	public void repairAllMachines(Budget budget)
-			throws CannotRepairHealthyMachineException {
+	private boolean hasAnyBrokenElement() {
+		for (ProductionLineElement element : this)
+			if (element.isBroken())
+				return true;
+		return false;
+	}
 
-		// As items are removes in each iteration, we repair always the first
-		// item
-		while (!this.brokenMachines.isEmpty())
-			brokenMachines.get(0).repair(budget);
+	public void repairAllMachines(Budget budget) {
+		for (ProductionLineElement element : this)
+			element.repair(budget);
 
 	}
 
@@ -173,9 +143,9 @@ public abstract class ProductionLine implements TickUpdatable, DailyUpdatable,
 			element.breakUp();
 	}
 
-	public List<Machine> getBrokenMachines() {
-		return this.brokenMachines;
-	}
+	// public List<Machine> getBrokenMachines() {
+	// return this.brokenMachines;
+	// }
 
 	public int getDailyProduction() {
 		return 0;

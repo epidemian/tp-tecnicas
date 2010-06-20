@@ -4,7 +4,6 @@ import model.exception.BusinessLogicException;
 import model.game.Budget;
 import model.production.Direction;
 import model.production.Product;
-import model.production.elements.machine.states.CannotRepairHealthyMachineException;
 import model.warehouse.Position;
 import model.warehouse.TileElement;
 
@@ -20,8 +19,6 @@ abstract public class ProductionLineElement extends TileElement {
 	private ProductionLineElement previousLineElement = null;
 
 	protected Product productContained;
-
-	private ProductionLineElementObserver prodLineElementObserver;
 
 	public ProductionLineElement(int width, int height) {
 		super(width, height);
@@ -51,23 +48,13 @@ abstract public class ProductionLineElement extends TileElement {
 			throw new BusinessLogicException("Can't have previous element");
 		return previousLineElement;
 	}
-	
+
 	public boolean canHavePreviousLineElement() {
 		return true;
 	}
 
 	public boolean canHaveNextLineElement() {
 		return true;
-	}
-	
-
-	public void setProductionLineElementObserver(
-			ProductionLineElementObserver obs) {
-		this.prodLineElementObserver = obs;
-	}
-
-	public ProductionLineElementObserver getProductionLineElementObserver() {
-		return this.prodLineElementObserver;
 	}
 
 	public boolean hasPreviousLineElement() {
@@ -84,12 +71,13 @@ abstract public class ProductionLineElement extends TileElement {
 
 	public static void connectLineElements(ProductionLineElement previous,
 			ProductionLineElement next) {
-		if (!previous.canHaveNextLineElement() || !next.canHavePreviousLineElement())
+		if (!previous.canHaveNextLineElement()
+				|| !next.canHavePreviousLineElement())
 			throw new BusinessLogicException("Invalid connection");
 		previous.nextLineElement = next;
 		next.previousLineElement = previous;
 	}
-	
+
 	public static void disconnectLineElement(ProductionLineElement element) {
 		if (element.hasPreviousLineElement()) {
 			element.previousLineElement.nextLineElement = null;
@@ -108,11 +96,12 @@ abstract public class ProductionLineElement extends TileElement {
 	public abstract Direction getInputConnectionDirection();
 
 	public abstract Direction getOutputConnectionDirection();
-	
-	public void repair(Budget budget)
-		throws CannotRepairHealthyMachineException {}
-	
-	public void breakUp(){}
+
+	public void repair(Budget budget) {
+	}
+
+	public void breakUp() {
+	}
 
 	public final void sell(Budget budget) {
 		budget.increment(this.getSalePrice());
@@ -121,5 +110,9 @@ abstract public class ProductionLineElement extends TileElement {
 	public abstract int getPurchasePrice();
 
 	public abstract int getSalePrice();
-	
+
+	public boolean isBroken() {
+		return false;
+	}
+
 }
