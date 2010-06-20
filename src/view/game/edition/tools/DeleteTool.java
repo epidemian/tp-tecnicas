@@ -1,5 +1,6 @@
 package view.game.edition.tools;
 
+import controller.game.GamePanelController;
 import static view.game.edition.tools.Colors.*;
 import static model.utils.StringUtils.join;
 import static model.production.elements.ProductionLineElement.*;
@@ -23,15 +24,14 @@ import model.warehouse.Position;
 import model.warehouse.TileElement;
 import model.warehouse.TileElementVisitor;
 import model.warehouse.Wall;
-import view.game.GamePanel;
 import view.game.edition.EditionTool;
 
 public class DeleteTool extends EditionTool {
 
 	private DeleteVisitor visitor = new DeleteVisitor();
 
-	public DeleteTool(GamePanel gamePanel, Player game) {
-		super(gamePanel, game);
+	public DeleteTool(GamePanelController gamePanelController, Player game) {
+		super(gamePanelController, game);
 	}
 
 	@Override

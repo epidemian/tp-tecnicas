@@ -1,5 +1,6 @@
 package view.game.edition.tools;
 
+import controller.game.GamePanelController;
 import static model.production.elements.ProductionLineElement.connectLineElements;
 import static model.utils.StringUtils.join;
 import static view.game.edition.tools.Colors.*;
@@ -12,13 +13,10 @@ import java.util.List;
 import model.game.Player;
 import model.production.Direction;
 import model.production.RawMaterialType;
-import model.production.RawMaterials;
 import model.production.elements.Conveyor;
 import model.production.elements.InputProductionLineElement;
-import model.production.elements.machine.Machine;
 import model.warehouse.Position;
 import model.warehouse.TileElement;
-import view.game.GamePanel;
 import view.game.edition.EditionTool;
 
 /*
@@ -32,8 +30,8 @@ public class AddInputLineElementTool extends EditionTool {
 	private static RawMaterialType RAW_MAT_TYPE = new RawMaterialType("Gold");
 	private static int RAW_MAT_QUANTITY = 1;
 
-	public AddInputLineElementTool(GamePanel gamePanel, Player game) {
-		super(gamePanel, game);
+	public AddInputLineElementTool(GamePanelController gamePanelController, Player game) {
+		super(gamePanelController, game);
 	}
 
 	@Override

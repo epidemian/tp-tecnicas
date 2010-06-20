@@ -10,6 +10,7 @@ import javax.swing.JToggleButton;
 import javax.swing.Timer;
 
 import model.game.Player;
+import model.warehouse.TileElement;
 import view.game.GamePanel;
 import view.game.LineElementsMarketPanel;
 import view.game.RawMaterialsMarketPanel;
@@ -17,8 +18,17 @@ import view.game.ToolBarPanel;
 import view.game.edition.EditionActions;
 import view.game.edition.KeyInputActionMapper;
 import controller.MainController;
+import java.awt.image.BufferedImage;
+import model.production.elements.InputProductionLineElement;
+import model.production.elements.machine.Machine;
+import model.production.elements.machine.ProductionMachine;
+import model.production.elements.machine.QualityControlMachine;
+import model.warehouse.TileElementVisitor;
 import view.game.Dialog;
+import view.game.InputSelectionPanel;
+import view.game.MachineSelectionPanel;
 import view.game.ResearchLabPanel;
+import view.game.TileElementImageRecognizer;
 
 public class GamePanelController {
 
@@ -43,7 +53,7 @@ public class GamePanelController {
 
 		this.gamePanel = gamePanel;
 		this.player = player;
-		EditionActions editionActions = new EditionActions(gamePanel, player);
+		EditionActions editionActions = new EditionActions(this, player);
 		KeyInputActionMapper mapper = new KeyInputActionMapper(editionActions);
 		mapper.mapActions(gamePanel.getInputMap(), gamePanel.getActionMap());
 
@@ -196,6 +206,63 @@ public class GamePanelController {
 		this.pauseButton.setSelected(isPaused);
 		this.playButton.setSelected(!isPaused);
 	}
+
+        public GamePanel getGamePanel(){
+            return this.gamePanel;
+        }
+
+        public void setToolPanelFromSelectionTool(TileElement selectedTileElement) {
+
+
+            selectedTileElement.accept(new TileElementVisitor() {
+
+                // TODO hacer un controller para esto!
+                private MachineSelectionPanel visitMachine(Machine machine){
+                    MachineSelectionPanel machinePanel = new MachineSelectionPanel();
+
+                    int price = machine.getSalePrice();
+                    BufferedImage image = TileElementImageRecognizer.getMachineImage(machine.getMachineType());
+                    String machineType = machine.getMachineType().getName();
+                    double fail = machine.getFailProductProcessChance();
+                    String state = machine.getMachineState().toString();
+
+                    machinePanel.setMachinePrice(price);
+                    machinePanel.setMachineImage(image);
+                    machinePanel.setMachineType(machineType);
+                    machinePanel.setFailProductProcessChance(fail);
+                    machinePanel.setMachineState(state);
+
+                    return machinePanel;
+                }
+
+                @Override
+                public void visitProductionMachine(ProductionMachine machine) {
+                    // Creates machine panel.
+                    MachineSelectionPanel machinePanel = this.visitMachine(machine);
+                    machinePanel.setProductionMachineLabels();
+                    // Sets panel.
+                    getGamePanel().setToolPanel(machinePanel);
+                }
+
+                @Override
+                public void visitQualityControlMachine(QualityControlMachine machine) {
+                    // Creates machine panel.
+                    MachineSelectionPanel machinePanel = this.visitMachine(machine);
+                    machinePanel.setQualityControlMachineLabels();
+                    // Sets panel.
+                    getGamePanel().setToolPanel(machinePanel);
+                }
+
+        @Override
+                public void visitInputProductionLineElement(
+                    InputProductionLineElement inputLineElement) {
+
+                    InputSelectionPanel inputPanel = new InputSelectionPanel();
+                    new InputSelectionPanelController(inputLineElement, inputPanel, player);
+                    getGamePanel().setToolPanel(inputPanel);
+                }
+            });
+    }
 
 }
 

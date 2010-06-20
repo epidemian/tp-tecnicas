@@ -1,16 +1,16 @@
 package view.game.edition.tools;
 
+import controller.game.GamePanelController;
 import java.awt.Graphics2D;
 
 import model.game.Player;
 import model.warehouse.Position;
-import view.game.GamePanel;
 import view.game.edition.EditionTool;
 
 public class MoveTool extends EditionTool {
 
-	public MoveTool(GamePanel gamePanel, Player game) {
-		super(gamePanel, game);
+	public MoveTool(GamePanelController gamePanelController, Player game) {
+		super(gamePanelController, game);
 	}
 
 	@Override

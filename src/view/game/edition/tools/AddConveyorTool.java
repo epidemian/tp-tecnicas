@@ -1,5 +1,6 @@
 package view.game.edition.tools;
 
+import controller.game.GamePanelController;
 import static model.production.elements.ProductionLineElement.connectLineElements;
 import static model.utils.StringUtils.join;
 import static view.game.MoneyConstants.getMoneyString;
@@ -24,7 +25,6 @@ import model.production.elements.machine.QualityControlMachine;
 import model.warehouse.Position;
 import model.warehouse.TileElement;
 import model.warehouse.TileElementVisitor;
-import view.game.GamePanel;
 import view.game.edition.EditionTool;
 
 public class AddConveyorTool extends EditionTool {
@@ -37,8 +37,8 @@ public class AddConveyorTool extends EditionTool {
 	EdgeType initialEdgeType = null;
 	ProductionLineElement initialElement = null;
 
-	public AddConveyorTool(GamePanel gamePanel, Player game) {
-		super(gamePanel, game);
+	public AddConveyorTool(GamePanelController gamePanelController, Player game) {
+		super(gamePanelController, game);
 	}
 
 	@Override

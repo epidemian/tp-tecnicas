@@ -1,5 +1,6 @@
 package view.game.edition.tools;
 
+import controller.game.GamePanelController;
 import controller.game.InputSelectionPanelController;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -24,8 +25,8 @@ public class SelectionTool extends EditionTool {
 	private TileElement selectedTileElement = null;
 	private GroundPanel groundPanel;
 
-	public SelectionTool(GamePanel gamePanel, Player game) {
-		super(gamePanel, game);
+	public SelectionTool(GamePanelController gamePanelController, Player game) {
+		super(gamePanelController, game);
 
 		// Weeeeee!
 		groundPanel = getGamePanel().getGroundPanelContainer().getGroundPanel();
@@ -39,59 +40,12 @@ public class SelectionTool extends EditionTool {
 
 	@Override
 	public void mouseClicked(Position position) {
-		this.selectedTileElement = this.groundPanel.getGround()
-				.getTileElementAt(position);
-		System.out.println("Clicked on " + position + " and selected "
-				+ selectedTileElement);
+            this.selectedTileElement = this.groundPanel.getGround()
+                            .getTileElementAt(position);
+            System.out.println("Clicked on " + position + " and selected "
+                            + selectedTileElement);
 
-                this.selectedTileElement.accept(new TileElementVisitor() {
-
-                    // TODO hacer un controller para esto!
-                    private MachineSelectionPanel visitMachine(Machine machine){
-                        MachineSelectionPanel machinePanel = new MachineSelectionPanel();
-
-                        int price = machine.getSalePrice();
-                        BufferedImage image = TileElementImageRecognizer.getMachineImage(machine.getMachineType());
-                        String machineType = machine.getMachineType().getName();
-                        double fail = machine.getFailProductProcessChance();
-                        String state = machine.getMachineState().toString();
-
-                        machinePanel.setMachinePrice(price);
-                        machinePanel.setMachineImage(image);
-                        machinePanel.setMachineType(machineType);
-                        machinePanel.setFailProductProcessChance(fail);
-                        machinePanel.setMachineState(state);
-
-                        return machinePanel;
-                    }
-
-                    @Override
-                    public void visitProductionMachine(ProductionMachine machine) {
-                        // Creates machine panel.
-                        MachineSelectionPanel machinePanel = this.visitMachine(machine);
-                        machinePanel.setProductionMachineLabels();
-                        // Sets panel.
-                        getGamePanel().setToolPanel(machinePanel);
-                    }
-
-                    @Override
-                    public void visitQualityControlMachine(QualityControlMachine machine) {
-                        // Creates machine panel.
-                        MachineSelectionPanel machinePanel = this.visitMachine(machine);
-                        machinePanel.setQualityControlMachineLabels();
-                        // Sets panel.
-                        getGamePanel().setToolPanel(machinePanel);
-                    }
-
-            @Override
-                    public void visitInputProductionLineElement(
-			InputProductionLineElement inputLineElement) {
-
-                        InputSelectionPanel inputPanel = new InputSelectionPanel();
-                        new InputSelectionPanelController(inputLineElement, inputPanel, null);
-                        getGamePanel().setToolPanel(inputPanel);
-                    }
-                });
+            this.getGamePanelController().setToolPanelFromSelectionTool(this.selectedTileElement);
 	}
 
 	@Override

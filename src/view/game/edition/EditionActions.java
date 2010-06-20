@@ -1,5 +1,6 @@
 package view.game.edition;
 
+import controller.game.GamePanelController;
 import static java.lang.System.out;
 import static model.utils.ArgumentUtils.checkNotNull;
 
@@ -14,7 +15,6 @@ import view.game.GamePanel;
 import view.game.GroundPanel;
 import view.game.edition.tools.AddConveyorTool;
 import view.game.edition.tools.AddInputLineElementTool;
-import view.game.edition.tools.AddMachineTool;
 import view.game.edition.tools.AddProductionMachineTool;
 import view.game.edition.tools.AddQualityControlMachineTool;
 import view.game.edition.tools.DeleteTool;
@@ -23,16 +23,17 @@ import view.game.edition.tools.SelectionTool;
 
 public class EditionActions {
 
-	private GamePanel gamePanel;
+	private GamePanelController gamePanelController;
 	private Player game;
 	private GroundPanel groundPanel;
 
-	public EditionActions(GamePanel gamePanel, Player game) {
-		checkNotNull(gamePanel, "game panel");
-		checkNotNull(game, "game");
-		this.gamePanel = gamePanel;
+	public EditionActions(GamePanelController gamePanelController, Player game) {
+
+            
+		this.gamePanelController = gamePanelController;
 		this.game = game;
-		this.groundPanel = gamePanel.getGroundPanelContainer().getGroundPanel();
+		this.groundPanel = gamePanelController.getGamePanel()
+                        .getGroundPanelContainer().getGroundPanel();
 	}
 
 	public Action getEscAction() {
@@ -48,40 +49,40 @@ public class EditionActions {
 
 	public Action getActionToSetNewProductionMachineTool(
 			final MachineType machineType) {
-		EditionTool tool = new AddProductionMachineTool(gamePanel, game,
+		EditionTool tool = new AddProductionMachineTool(gamePanelController, game,
 				machineType);
 		return getActionToSetTool(tool, "Add-Machine");
 	}
 
 	public Action getActionToSetNewQualityControlMachineTool(
 			final MachineType machineType) {
-		EditionTool tool = new AddQualityControlMachineTool(gamePanel, game,
+		EditionTool tool = new AddQualityControlMachineTool(gamePanelController, game,
 				machineType);
 		return getActionToSetTool(tool, "Add-Quality-Control-Machine");
 	}
 
 	public Action getActionToSetSelectionTool() {
-		EditionTool tool = new SelectionTool(gamePanel, game);
+		EditionTool tool = new SelectionTool(gamePanelController, game);
 		return getActionToSetTool(tool, "Selection");
 	}
 
 	public Action getActionToSetConveyorTool() {
-		EditionTool tool = new AddConveyorTool(gamePanel, game);
+		EditionTool tool = new AddConveyorTool(gamePanelController, game);
 		return getActionToSetTool(tool, "Add-Conveyor");
 	}
 	
 	public Action getActionToSetInputLineElementTool() {
-		EditionTool tool = new AddInputLineElementTool(gamePanel, game);
+		EditionTool tool = new AddInputLineElementTool(gamePanelController, game);
 		return getActionToSetTool(tool, "Add-Conveyor");
 	}
 	
 	public Action getActionToSetDeleteTool() {
-		EditionTool tool = new DeleteTool(gamePanel, game);
+		EditionTool tool = new DeleteTool(gamePanelController, game);
 		return getActionToSetTool(tool, "Delete");
 	}
 	
 	public Action getActionToSetMoveTool() {
-		EditionTool tool = new MoveTool(gamePanel, game);
+		EditionTool tool = new MoveTool(gamePanelController, game);
 		return getActionToSetTool(tool, "Delete");
 	}
 
