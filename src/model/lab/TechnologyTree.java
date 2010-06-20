@@ -85,7 +85,6 @@ public class TechnologyTree {
 	 * @return
 	 */
 	Set<Technology> getAllDependencies(Technology technology) {
-		// Note: this check should be unnecessary.
 		checkArgCondition(technology, contains(technology),
 				"must be cointained in technology tree");
 		Set<Technology> deps = new HashSet<Technology>();

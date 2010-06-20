@@ -1,5 +1,6 @@
 package controller.game;
 
+import static model.utils.StringUtils.join;
 import static model.utils.ArgumentUtils.checkNotNull;
 
 import java.awt.event.ActionEvent;
@@ -18,134 +19,147 @@ import javax.swing.event.ChangeListener;
 import model.game.Player;
 import model.lab.ResearchLab;
 import model.lab.Technology;
-import view.game.MoneyConstants;
+import static view.game.MoneyConstants.*;
 import view.game.ResearchLabPanel;
 
 public class ResearchLabPanelController {
 
-    private ResearchLab lab;
-    private Technology technologyToBeResearched;
-    private int dailyFunding;
+	private ResearchLab lab;
+	private Technology technologyToBeResearched;
+	private int dailyFunding;
 
-    public ResearchLabPanelController(Player player, ResearchLabPanel labPanel){
-        checkNotNull(player, "player");
-        checkNotNull(labPanel, "labPanel");
+	private ResearchLabPanel labPanel;
 
-        this.lab = player.getLab();
+	public ResearchLabPanelController(Player player, ResearchLabPanel labPanel) {
+		checkNotNull(player, "player");
+		checkNotNull(labPanel, "labPanel");
 
-        initDailyFundingSpinner(labPanel);
-        initDailyFundingAcceptButton(labPanel);
-        initTechnologyCombo(labPanel);
-        initTechnologyResearchButton(labPanel);
-    }
+		this.lab = player.getLab();
+		this.labPanel = labPanel;
 
-    private void initDailyFundingSpinner(ResearchLabPanel labPanel) {
+		initDailyFundingSpinner();
+		initDailyFundingAcceptButton();
+		initTechnologyCombo();
+		initTechnologyResearchButton();
+	}
 
-        int value = 0;
-        int minimum = 0;
-        int maximun = Integer.MAX_VALUE;
-        int stepSize = 1;
+	private void initDailyFundingSpinner() {
 
-        SpinnerNumberModel model = new SpinnerNumberModel(value, minimum,
-            maximun, stepSize);
-        final JSpinner spinner = labPanel.getDailyFundingSpinner();
-        spinner.setModel(model);
+		int value = 0;
+		int minimum = 0;
+		int maximun = this.lab.getMaxDailyFunding();
+		int stepSize = 1;
 
-        spinner.addChangeListener(new ChangeListener() {
+		SpinnerNumberModel model = new SpinnerNumberModel(value, minimum,
+				maximun, stepSize);
+		final JSpinner spinner = this.labPanel.getDailyFundingSpinner();
+		spinner.setModel(model);
 
-            @Override
-            public void stateChanged(ChangeEvent ce) {
-                dailyFunding = (Integer)(spinner.getValue());
-            }
-        });
-    }
+		spinner.addChangeListener(new ChangeListener() {
 
-    private void initDailyFundingAcceptButton(ResearchLabPanel labPanel) {
+			@Override
+			public void stateChanged(ChangeEvent ce) {
+				dailyFunding = (Integer) (spinner.getValue());
+			}
+		});
+	}
 
-        final JButton accept = labPanel.getDailyFundingAcceptButton();
+	// TODO: Me parece que no hace falta un botón para confirmar que se 
+	// cambió el daily funding, tranquilamente el spinner lo puede ir seteando.
+	private void initDailyFundingAcceptButton() {
 
-        accept.addActionListener(new ActionListener() {
+		final JButton accept = this.labPanel.getDailyFundingAcceptButton();
 
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                lab.setDailyFunding(dailyFunding);
-            }
-        });
-    }
+		accept.addActionListener(new ActionListener() {
 
-    private void initTechnologyCombo(final ResearchLabPanel labPanel) {
+			@Override
+			public void actionPerformed(ActionEvent ae) {
+				lab.setDailyFunding(dailyFunding);
+			}
+		});
+	}
 
-        final JComboBox technologyCombo = labPanel.geTechnologyCombo();
+	private void initTechnologyCombo() {
 
-        Set<Technology> labTechnologies = this.lab.getTechnologies();
+		final JComboBox technologyCombo = this.labPanel.geTechnologyCombo();
 
-        technologyCombo.removeAllItems();
-	for (Technology tech : labTechnologies)
-            technologyCombo.addItem(new TechnologyComboEntry(tech));
+		Set<Technology> labTechnologies = this.lab.getTechnologies();
 
-        technologyComboAction(technologyCombo,labPanel);
+		technologyCombo.removeAllItems();
+		for (Technology tech : labTechnologies)
+			technologyCombo.addItem(new TechnologyComboEntry(tech));
 
-        technologyCombo.addItemListener(new ItemListener() {
+		technologyComboAction(technologyCombo);
 
-            @Override
-            public void itemStateChanged(ItemEvent ie) {
-                technologyComboAction(technologyCombo,labPanel);
-            }
-        });
-    }
+		technologyCombo.addItemListener(new ItemListener() {
 
-    private void technologyComboAction(JComboBox technologyCombo,
-        ResearchLabPanel labPanel){
+			@Override
+			public void itemStateChanged(ItemEvent ie) {
+				technologyComboAction(technologyCombo);
+			}
+		});
+	}
 
-        TechnologyComboEntry technologyEntry =
-            (TechnologyComboEntry)technologyCombo.getSelectedItem();
-        Technology technology = technologyEntry.getTechnology();
-        Set<Technology> dependencies = lab.getUnresearchedDependencies(technology);
+	private void technologyComboAction(JComboBox technologyCombo) {
 
-        // Set techonology price.
-        labPanel.setTechnologyPrice(technology.getResearchCost());
-        // Set description.
-        String description = "Unresearched dependecies: \n";
-        if (dependencies.isEmpty())
-            description += "\t - \n";
-        else
-            for (Technology dependency : dependencies)
-            description += "\t " + dependency.getName() + "\n";
-        description += "Description: \n" + "\t " + technology.getDescription() + "\n";
-        description += "Research cost: " + MoneyConstants.MONEY_SYMBOL +
-            technology.getResearchCost() + "\n";
-        labPanel.setTechnologyInfo(description);
-    }
+		TechnologyComboEntry technologyEntry = (TechnologyComboEntry) technologyCombo
+				.getSelectedItem();
+		Technology technology = technologyEntry.getTechnology();
+		Set<Technology> dependencies = lab
+				.getUnresearchedDependencies(technology);
 
-    private void initTechnologyResearchButton(ResearchLabPanel labPanel) {
+		// Set techonology price.
+		this.labPanel.setTechnologyPrice(technology.getResearchCost());
+		// Set description.
+		String description = "";
+		if (!dependencies.isEmpty()) {
+			description += "Unresearched dependecies: \n";
+			for (Technology dependency : dependencies)
+				description += "\t " + dependency.getName() + "\n";
+		}
+		description += "Description: \n" + "\t " + technology.getDescription()
+				+ "\n";
 
-        JButton research = labPanel.getResearchButton();
-        research.addActionListener(new ActionListener() {
+		if (technology.isResearched()) {
+			description += "Already researched!\n";
+		} else {
+			description += "Research cost: "
+					+ getMoneyString(technology.getResearchCost()) + "\n";
+		}
+		this.labPanel.setTechnologyInfo(description);
+		
+		this.labPanel.getResearchButton().setEnabled(!technology.isResearched());
+	}
 
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                lab.startResearching(technologyToBeResearched);
-            }
-        });
-    }
+	private void initTechnologyResearchButton() {
 
-    private class TechnologyComboEntry {
+		JButton research = this.labPanel.getResearchButton();
+		research.addActionListener(new ActionListener() {
 
-        private Technology technology;
+			@Override
+			public void actionPerformed(ActionEvent ae) {
+				lab.startResearching(technologyToBeResearched);
+			}
+		});
+	}
 
-        public TechnologyComboEntry(Technology technology){
-            checkNotNull(technology, "technology");
-            this.technology = technology;
-        }
+	private class TechnologyComboEntry {
 
-        public Technology getTechnology(){
-            return this.technology;
-        }
+		private Technology technology;
 
-        @Override
-        public String toString(){
-            return this.technology.getName() + " - "
-                    + this.technology.getResearchCost();
-        }
-    }
+		public TechnologyComboEntry(Technology technology) {
+			checkNotNull(technology, "technology");
+			this.technology = technology;
+		}
+
+		public Technology getTechnology() {
+			return this.technology;
+		}
+
+		@Override
+		public String toString() {
+			return this.technology.getName() + " - "
+					+ this.technology.getResearchCost();
+		}
+	}
 }
