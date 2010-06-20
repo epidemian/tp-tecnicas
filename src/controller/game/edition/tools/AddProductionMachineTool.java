@@ -1,21 +1,21 @@
-package view.game.edition.tools;
+package controller.game.edition.tools;
 
 import controller.game.GamePanelController;
 import model.game.Player;
 import model.production.elements.machine.Machine;
 import model.production.elements.machine.MachineType;
-import model.production.elements.machine.QualityControlMachine;
+import model.production.elements.machine.ProductionMachine;
 
-public class AddQualityControlMachineTool extends AddMachineTool {
+public class AddProductionMachineTool extends AddMachineTool {
 
-	public AddQualityControlMachineTool(GamePanelController gamePanelController
+	public AddProductionMachineTool(GamePanelController gamePanelController
                 , Player game, MachineType machineType) {
 		super(gamePanelController, game, machineType);
 	}
-	
+
 	@Override
 	protected Machine createMachine() {
-		return new QualityControlMachine(getMachineType());
+		return new ProductionMachine(getMachineType());
 	}
 
 }

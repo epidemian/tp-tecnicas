@@ -1,4 +1,4 @@
-package view.game.edition.tools;
+package controller.game.edition.tools;
 
 import java.awt.Color;
 

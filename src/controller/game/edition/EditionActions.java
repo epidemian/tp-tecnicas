@@ -1,6 +1,13 @@
-package view.game.edition;
+package controller.game.edition;
 
 import controller.game.GamePanelController;
+import controller.game.edition.tools.AddConveyorTool;
+import controller.game.edition.tools.AddInputLineElementTool;
+import controller.game.edition.tools.AddProductionMachineTool;
+import controller.game.edition.tools.AddQualityControlMachineTool;
+import controller.game.edition.tools.DeleteTool;
+import controller.game.edition.tools.MoveTool;
+import controller.game.edition.tools.SelectionTool;
 import static java.lang.System.out;
 import static model.utils.ArgumentUtils.checkNotNull;
 
@@ -13,13 +20,6 @@ import model.game.Player;
 import model.production.elements.machine.MachineType;
 import view.game.GamePanel;
 import view.game.GroundPanel;
-import view.game.edition.tools.AddConveyorTool;
-import view.game.edition.tools.AddInputLineElementTool;
-import view.game.edition.tools.AddProductionMachineTool;
-import view.game.edition.tools.AddQualityControlMachineTool;
-import view.game.edition.tools.DeleteTool;
-import view.game.edition.tools.MoveTool;
-import view.game.edition.tools.SelectionTool;
 
 public class EditionActions {
 

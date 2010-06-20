@@ -1,7 +1,8 @@
-package view.game.edition.tools;
+package controller.game.edition.tools;
 
 import controller.game.GamePanelController;
-import static view.game.edition.tools.Colors.*;
+import controller.game.edition.EditionTool;
+import static controller.game.edition.tools.Colors.*;
 import static model.utils.StringUtils.join;
 import static model.production.elements.ProductionLineElement.*;
 import static view.game.MoneyConstants.*;
@@ -24,7 +25,6 @@ import model.warehouse.Position;
 import model.warehouse.TileElement;
 import model.warehouse.TileElementVisitor;
 import model.warehouse.Wall;
-import view.game.edition.EditionTool;
 
 public class DeleteTool extends EditionTool {
 

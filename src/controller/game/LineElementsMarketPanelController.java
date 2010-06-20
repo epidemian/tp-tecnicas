@@ -11,13 +11,14 @@ import java.util.List;
 import javax.swing.Action;
 import javax.swing.ImageIcon;
 
+import controller.game.edition.EditionActions;
+
 import model.game.Player;
 import static model.utils.ArgumentUtils.*;
 import model.production.elements.machine.MachineType;
 
 import view.game.LineElementsMarketPanel;
 import view.game.TileElementImageRecognizer;
-import view.game.edition.EditionActions;
 
 public class LineElementsMarketPanelController {
 

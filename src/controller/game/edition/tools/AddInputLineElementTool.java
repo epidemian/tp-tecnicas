@@ -1,9 +1,10 @@
-package view.game.edition.tools;
+package controller.game.edition.tools;
 
 import controller.game.GamePanelController;
+import controller.game.edition.EditionTool;
+import static controller.game.edition.tools.Colors.*;
 import static model.production.elements.ProductionLineElement.connectLineElements;
 import static model.utils.StringUtils.join;
-import static view.game.edition.tools.Colors.*;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -17,7 +18,6 @@ import model.production.elements.Conveyor;
 import model.production.elements.InputProductionLineElement;
 import model.warehouse.Position;
 import model.warehouse.TileElement;
-import view.game.edition.EditionTool;
 
 /*
  * TODO: Hay un montón de código compiado de AddMachineTool.... generalizar...

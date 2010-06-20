@@ -1,4 +1,4 @@
-package view.game.edition;
+package controller.game.edition;
 
 import controller.game.GamePanelController;
 import model.game.Player;

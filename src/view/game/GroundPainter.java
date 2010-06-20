@@ -1,24 +1,20 @@
 package view.game;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.Point;
 import java.awt.Polygon;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.List;
 
 import model.production.Direction;
 import model.production.elements.Conveyor;
 import model.production.elements.InputProductionLineElement;
 import model.production.elements.OutputProductionLineElement;
 import model.production.elements.ProductionLineElement;
+import model.production.elements.machine.Machine;
 import model.production.elements.machine.ProductionMachine;
 import model.production.elements.machine.QualityControlMachine;
-import model.production.elements.machine.Machine;
 import model.warehouse.Ground;
 import model.warehouse.Position;
 import model.warehouse.TileElement;

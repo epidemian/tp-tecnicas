@@ -12,9 +12,10 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JPanel;
 
+import controller.game.edition.EditionTool;
+
 import model.warehouse.Ground;
 import model.warehouse.Position;
-import view.game.edition.EditionTool;
 
 public class GroundPanel extends JPanel {
 

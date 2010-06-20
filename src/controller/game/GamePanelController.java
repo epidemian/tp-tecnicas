@@ -6,6 +6,7 @@ import java.awt.event.ContainerAdapter;
 import java.awt.event.ContainerEvent;
 
 import javax.swing.JButton;
+import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import javax.swing.Timer;
 
@@ -15,9 +16,10 @@ import view.game.GamePanel;
 import view.game.LineElementsMarketPanel;
 import view.game.RawMaterialsMarketPanel;
 import view.game.ToolBarPanel;
-import view.game.edition.EditionActions;
-import view.game.edition.KeyInputActionMapper;
 import controller.MainController;
+import controller.game.edition.EditionActions;
+import controller.game.edition.KeyInputActionMapper;
+
 import java.awt.image.BufferedImage;
 import model.production.elements.InputProductionLineElement;
 import model.production.elements.machine.Machine;
@@ -34,10 +36,10 @@ public class GamePanelController {
 
 	private static final int UPDATE_INTERVAL = 40;
 	private static final int TICK_INTERVAL = 500;
-	
+
 	private boolean isPaused = true;
 	private int timeCount = 0;
-	
+
 	private ContainerAdapter gamePanelRemovedListener;
 	private JToggleButton playButton;
 	private JToggleButton pauseButton;
@@ -55,8 +57,8 @@ public class GamePanelController {
 		this.player = player;
 		final EditionActions editionActions = new EditionActions(this, player);
 		KeyInputActionMapper mapper = new KeyInputActionMapper(editionActions);
-		mapper.mapActions(gamePanel.getInputMap(), gamePanel.getActionMap());
-
+		mapper.mapActions(gamePanel.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW),
+				gamePanel.getActionMap());
 
 		int balance = player.getBudget().getBalance();
 		gamePanel.getBudgetPanel().setMoneyBalance(balance);
@@ -69,10 +71,10 @@ public class GamePanelController {
 
 			@Override
 			public void actionPerformed(ActionEvent ae) {
-				
+
 				LineElementsMarketPanel lineElementsMarketPanel = new LineElementsMarketPanel();
-				new LineElementsMarketPanelController(player, lineElementsMarketPanel,
-						editionActions);
+				new LineElementsMarketPanelController(player,
+						lineElementsMarketPanel, editionActions);
 				gamePanel.setToolPanel(lineElementsMarketPanel);
 			}
 		});
@@ -83,10 +85,10 @@ public class GamePanelController {
 
 			@Override
 			public void actionPerformed(ActionEvent ae) {
-				
+
 				RawMaterialsMarketPanel rawMaterialsMarketPanel = new RawMaterialsMarketPanel();
-				new RawMaterialsMarketPanelController(player, rawMaterialsMarketPanel,
-						gamePanel);
+				new RawMaterialsMarketPanelController(player,
+						rawMaterialsMarketPanel, gamePanel);
 				gamePanel.setToolPanel(rawMaterialsMarketPanel);
 			}
 		});
@@ -96,7 +98,7 @@ public class GamePanelController {
 
 			@Override
 			public void actionPerformed(ActionEvent ae) {
-				
+
 				ResearchLabPanel labPanel = new ResearchLabPanel();
 				new ResearchLabPanelController(player, labPanel);
 				gamePanel.setToolPanel(labPanel);
@@ -126,13 +128,14 @@ public class GamePanelController {
 			}
 		});
 
-		final Timer mainLoopTimer = new Timer(UPDATE_INTERVAL, new ActionListener() {
+		final Timer mainLoopTimer = new Timer(UPDATE_INTERVAL,
+				new ActionListener() {
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				mainLoop();
-			}
-		});
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						mainLoop();
+					}
+				});
 		mainLoopTimer.start();
 
 		playButton = toolBar.getPlayButton();
@@ -154,7 +157,7 @@ public class GamePanelController {
 		});
 
 		gamePanelRemovedListener = new GamePanelRemovedListener(mainLoopTimer);
-		
+
 		updateView();
 	}
 
@@ -208,62 +211,63 @@ public class GamePanelController {
 		this.playButton.setSelected(!isPaused);
 	}
 
-        public GamePanel getGamePanel(){
-            return this.gamePanel;
-        }
+	public GamePanel getGamePanel() {
+		return this.gamePanel;
+	}
 
-        public void setToolPanelFromSelectionTool(TileElement selectedTileElement) {
+	public void setToolPanelFromSelectionTool(TileElement selectedTileElement) {
 
+		selectedTileElement.accept(new TileElementVisitor() {
 
-            selectedTileElement.accept(new TileElementVisitor() {
+			// TODO hacer un controller para esto!
+			private MachineSelectionPanel visitMachine(Machine machine) {
+				MachineSelectionPanel machinePanel = new MachineSelectionPanel();
 
-                // TODO hacer un controller para esto!
-                private MachineSelectionPanel visitMachine(Machine machine){
-                    MachineSelectionPanel machinePanel = new MachineSelectionPanel();
+				int price = machine.getSalePrice();
+				BufferedImage image = TileElementImageRecognizer
+						.getMachineImage(machine.getMachineType());
+				String machineType = machine.getMachineType().getName();
+				double fail = machine.getFailProductProcessChance();
+				String state = machine.getMachineState().toString();
 
-                    int price = machine.getSalePrice();
-                    BufferedImage image = TileElementImageRecognizer.getMachineImage(machine.getMachineType());
-                    String machineType = machine.getMachineType().getName();
-                    double fail = machine.getFailProductProcessChance();
-                    String state = machine.getMachineState().toString();
+				machinePanel.setMachinePrice(price);
+				machinePanel.setMachineImage(image);
+				machinePanel.setMachineType(machineType);
+				machinePanel.setFailProductProcessChance(fail);
+				machinePanel.setMachineState(state);
 
-                    machinePanel.setMachinePrice(price);
-                    machinePanel.setMachineImage(image);
-                    machinePanel.setMachineType(machineType);
-                    machinePanel.setFailProductProcessChance(fail);
-                    machinePanel.setMachineState(state);
+				return machinePanel;
+			}
 
-                    return machinePanel;
-                }
+			@Override
+			public void visitProductionMachine(ProductionMachine machine) {
+				// Creates machine panel.
+				MachineSelectionPanel machinePanel = this.visitMachine(machine);
+				machinePanel.setProductionMachineLabels();
+				// Sets panel.
+				getGamePanel().setToolPanel(machinePanel);
+			}
 
-                @Override
-                public void visitProductionMachine(ProductionMachine machine) {
-                    // Creates machine panel.
-                    MachineSelectionPanel machinePanel = this.visitMachine(machine);
-                    machinePanel.setProductionMachineLabels();
-                    // Sets panel.
-                    getGamePanel().setToolPanel(machinePanel);
-                }
+			@Override
+			public void visitQualityControlMachine(QualityControlMachine machine) {
+				// Creates machine panel.
+				MachineSelectionPanel machinePanel = this.visitMachine(machine);
+				machinePanel.setQualityControlMachineLabels();
+				// Sets panel.
+				getGamePanel().setToolPanel(machinePanel);
+			}
 
-                @Override
-                public void visitQualityControlMachine(QualityControlMachine machine) {
-                    // Creates machine panel.
-                    MachineSelectionPanel machinePanel = this.visitMachine(machine);
-                    machinePanel.setQualityControlMachineLabels();
-                    // Sets panel.
-                    getGamePanel().setToolPanel(machinePanel);
-                }
+			@Override
+			public void visitInputProductionLineElement(
+					InputProductionLineElement inputLineElement) {
 
-        @Override
-                public void visitInputProductionLineElement(
-                    InputProductionLineElement inputLineElement) {
-
-                    InputSelectionPanel inputPanel = new InputSelectionPanel();
-                    new InputSelectionPanelController(inputLineElement, inputPanel, player);
-                    getGamePanel().setToolPanel(inputPanel);
-                }
-            });
-    }
+				InputSelectionPanel inputPanel = new InputSelectionPanel();
+				new InputSelectionPanelController(inputLineElement, inputPanel,
+						player);
+				getGamePanel().setToolPanel(inputPanel);
+			}
+		});
+	}
 
 }
 

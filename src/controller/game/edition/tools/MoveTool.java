@@ -1,11 +1,12 @@
-package view.game.edition.tools;
+package controller.game.edition.tools;
 
 import controller.game.GamePanelController;
+import controller.game.edition.EditionTool;
+
 import java.awt.Graphics2D;
 
 import model.game.Player;
 import model.warehouse.Position;
-import view.game.edition.EditionTool;
 
 public class MoveTool extends EditionTool {
 

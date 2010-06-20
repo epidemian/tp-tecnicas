@@ -1,7 +1,9 @@
-package view.game.edition.tools;
+package controller.game.edition.tools;
 
 import controller.game.GamePanelController;
 import controller.game.InputSelectionPanelController;
+import controller.game.edition.EditionTool;
+
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
@@ -18,7 +20,6 @@ import view.game.GroundPanel;
 import view.game.InputSelectionPanel;
 import view.game.MachineSelectionPanel;
 import view.game.TileElementImageRecognizer;
-import view.game.edition.EditionTool;
 
 public class SelectionTool extends EditionTool {
 	

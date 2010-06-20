@@ -1,10 +1,11 @@
-package view.game.edition.tools;
+package controller.game.edition.tools;
 
 import controller.game.GamePanelController;
+import controller.game.edition.EditionTool;
+import static controller.game.edition.tools.Colors.*;
 import static model.production.elements.ProductionLineElement.connectLineElements;
 import static model.utils.StringUtils.join;
 import static view.game.MoneyConstants.getMoneyString;
-import static view.game.edition.tools.Colors.*;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -25,7 +26,6 @@ import model.production.elements.machine.QualityControlMachine;
 import model.warehouse.Position;
 import model.warehouse.TileElement;
 import model.warehouse.TileElementVisitor;
-import view.game.edition.EditionTool;
 
 public class AddConveyorTool extends EditionTool {
 
