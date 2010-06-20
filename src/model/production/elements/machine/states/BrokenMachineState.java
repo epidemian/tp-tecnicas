@@ -1,6 +1,5 @@
 package model.production.elements.machine.states;
 
-import model.exception.BusinessLogicException;
 import model.game.Budget;
 import model.production.elements.machine.Machine;
 

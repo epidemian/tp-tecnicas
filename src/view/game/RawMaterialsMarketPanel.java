@@ -1,11 +1,12 @@
 package view.game;
 
+import static view.game.MoneyConstants.MONEY_SYMBOL;
+
 import java.awt.event.ActionListener;
+
 import javax.swing.JComboBox;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
-
-import static view.game.MoneyConstants.*;
 
 public class RawMaterialsMarketPanel extends javax.swing.JPanel {
 

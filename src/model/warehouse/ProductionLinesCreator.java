@@ -3,10 +3,8 @@ package model.warehouse;
 import static model.production.line.ProductionLine.*;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-import model.production.RawMaterials;
 import model.production.StorageArea;
 import model.production.elements.Conveyor;
 import model.production.elements.InputProductionLineElement;

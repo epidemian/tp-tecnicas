@@ -4,10 +4,8 @@ import javax.swing.UIManager;
 
 import persistence.InputFactory;
 import persistence.XMLFactory;
-
-import controller.MainController;
-
 import view.MainFrame;
+import controller.MainController;
 
 
 public class Main {

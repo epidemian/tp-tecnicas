@@ -1,10 +1,8 @@
 package model.production;
 
-import static model.production.TestUtils.*;
+import static model.production.TestUtils.createMachineType;
 import static org.junit.Assert.*;
-
 import model.production.elements.machine.Machine;
-import model.production.elements.machine.MachineType;
 import model.production.elements.machine.ProductionMachine;
 
 import org.junit.Ignore;

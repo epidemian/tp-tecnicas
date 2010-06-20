@@ -1,7 +1,6 @@
 package model.warehouse;
 
-import static model.production.TestUtils.*;
-
+import static model.production.TestUtils.createMachineType;
 import static org.junit.Assert.*;
 import model.exception.BusinessLogicException;
 import model.production.elements.ProductionLineElement;

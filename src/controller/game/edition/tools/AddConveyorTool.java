@@ -1,7 +1,5 @@
 package controller.game.edition.tools;
 
-import controller.game.GamePanelController;
-import controller.game.edition.EditionTool;
 import static controller.game.edition.tools.Colors.*;
 import static model.production.elements.ProductionLineElement.connectLineElements;
 import static model.utils.StringUtils.join;
@@ -26,6 +24,8 @@ import model.production.elements.machine.QualityControlMachine;
 import model.warehouse.Position;
 import model.warehouse.TileElement;
 import model.warehouse.TileElementVisitor;
+import controller.game.GamePanelController;
+import controller.game.edition.EditionTool;
 
 public class AddConveyorTool extends EditionTool {
 
@@ -214,12 +214,14 @@ public class AddConveyorTool extends EditionTool {
 	}
 
 	private boolean isInputAvailable(ProductionLineElement element) {
-		return element.canHavePreviousLineElement() && !element.hasPreviousLineElement()
+		return element.canHavePreviousLineElement()
+				&& !element.hasPreviousLineElement()
 				&& isTileEmpty(element.getInputConnectionPosition());
 	}
 
 	private boolean isOutputAvailable(ProductionLineElement element) {
-		return element.canHaveNextLineElement() && !element.hasNextLineElement()
+		return element.canHaveNextLineElement()
+				&& !element.hasNextLineElement()
 				&& isTileEmpty(element.getOutputConnectionPosition());
 	}
 
@@ -281,7 +283,7 @@ public class AddConveyorTool extends EditionTool {
 		if (isOverLineElement) {
 			newPositions = getNewPositionsWhenOverLineElement(mousePosition,
 					element);
-			getPainter().drawProductionLineElementArrows(element, graphics);
+			getGroundPanel().drawProductionLineElementArrows(element, graphics);
 		} else {
 			newPositions = getNewPositionsWhenOverNonLineElement(mousePosition);
 			isOverNothingAndNotBuilding = !isBuilding();
@@ -344,7 +346,7 @@ public class AddConveyorTool extends EditionTool {
 
 	private void drawConveyorRectangle(Position position, Color color,
 			Graphics2D graphics) {
-		getPainter().drawRectangle(graphics, position, 1, 1, color);
+		getGroundPanel().drawRectangle(graphics, position, 1, 1, color);
 	}
 
 	private void drawAllConveyorPositions(Graphics2D graphics) {
@@ -425,5 +427,4 @@ class LineElementRecognizer extends TileElementVisitor {
 		this.lineElement = outputLineElement;
 	}
 
-	
 }

@@ -5,8 +5,8 @@ import javax.swing.JPanel;
 public class GamePanel extends javax.swing.JPanel {
     
     /** Creates new form GamePanel */
-    public GamePanel(GroundPanelContainer groundPanelContainer) {
-        this.groundPanelContainer = groundPanelContainer;
+    public GamePanel() {
+        this.groundPanelContainer = new GroundPanelContainer();
         initComponents();
 
         this.toolBarPanel.setMaximumSize(this.toolBarPanel.getPreferredSize()); // prevent growth

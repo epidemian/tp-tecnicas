@@ -1,8 +1,7 @@
 package persistence;
 
-import static model.production.TestUtils.*;
-
-import static org.junit.Assert.*;
+import static model.production.TestUtils.createMachineType;
+import static org.junit.Assert.assertEquals;
 import model.production.elements.machine.MachineType;
 
 import org.dom4j.Document;

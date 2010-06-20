@@ -1,9 +1,8 @@
 package model.game;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import static model.utils.ArgumentUtils.checkArgCondition;
+
+import java.util.List;
 
 import model.exception.BusinessLogicException;
 import model.game.time.TickUpdatable;
@@ -13,27 +12,15 @@ import model.lab.ResearchLab;
 import model.lab.TechnologyTree;
 import model.production.RawMaterialType;
 import model.production.StorageArea;
-import model.production.ValidMachineTypes;
-import model.production.ValidRawMaterialTypes;
-import static model.utils.ArgumentUtils.*;
-import java.util.List;
-import java.util.Map;
-
-import controller.game.MarketPricesUpdater;
-
-import model.production.RawMaterials;
 import model.production.ValidProductionSequences;
 import model.production.elements.ProductionLineElement;
-import model.production.elements.machine.Machine;
 import model.production.elements.machine.MachineType;
-import model.production.elements.machine.ProductionMachine;
-import model.production.elements.machine.QualityControlMachine;
 import model.warehouse.Ground;
-import model.warehouse.Position;
 import model.warehouse.MarketPrices;
+import model.warehouse.Position;
 import model.warehouse.Warehouse;
 import persistence.InputFactory;
-import persistence.XMLFactory;
+import controller.game.MarketPricesUpdater;
 
 public class Player implements TickUpdatable {
 

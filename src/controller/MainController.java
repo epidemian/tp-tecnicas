@@ -1,25 +1,21 @@
 package controller;
 
+import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import model.game.Player;
+import persistence.InputFactory;
+import view.MainFrame;
+import view.game.GamePanel;
+import view.game.GroundSelectionPanel;
+import view.game.MainPanel;
 import controller.game.GamePanelController;
 import controller.game.GroundSelectionPanelController;
 import controller.game.MainPanelController;
-
-import java.awt.Dimension;
-
-import persistence.InputFactory;
-
-import model.game.Player;
-import view.MainFrame;
-import view.game.GamePanel;
-import view.game.GroundPanelContainer;
-import view.game.GroundSelectionPanel;
-import view.game.MainPanel;
 
 public class MainController {
 
@@ -61,9 +57,7 @@ public class MainController {
 
 	public void setGamePanel(Player game) {
 
-            GroundPanelContainer groundPanel = new GroundPanelContainer(game
-                            .getGround());
-            final GamePanel gamePanel = new GamePanel(groundPanel);
+            final GamePanel gamePanel = new GamePanel();
 
             this.mainFrame.setResizable(true);
             this.mainFrame.maximize();

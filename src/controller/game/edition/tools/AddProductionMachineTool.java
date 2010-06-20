@@ -1,10 +1,10 @@
 package controller.game.edition.tools;
 
-import controller.game.GamePanelController;
 import model.game.Player;
 import model.production.elements.machine.Machine;
 import model.production.elements.machine.MachineType;
 import model.production.elements.machine.ProductionMachine;
+import controller.game.GamePanelController;
 
 public class AddProductionMachineTool extends AddMachineTool {
 

@@ -8,7 +8,6 @@ import model.production.Direction;
 import model.production.elements.OutputProductionLineElement;
 import model.utils.StringUtils;
 import model.warehouse.Position;
-import model.warehouse.Wall;
 
 import org.dom4j.Element;
 

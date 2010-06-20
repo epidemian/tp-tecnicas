@@ -1,6 +1,7 @@
 package view.game;
 
 import java.awt.image.BufferedImage;
+
 import javax.swing.JButton;
 
 public class MachineSelectionPanel extends javax.swing.JPanel {

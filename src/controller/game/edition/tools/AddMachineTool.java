@@ -1,7 +1,5 @@
 package controller.game.edition.tools;
 
-import controller.game.GamePanelController;
-import controller.game.edition.EditionTool;
 import static controller.game.edition.tools.Colors.*;
 import static model.production.elements.ProductionLineElement.connectLineElements;
 import static model.utils.StringUtils.join;
@@ -19,6 +17,8 @@ import model.production.elements.machine.MachineType;
 import model.warehouse.Position;
 import model.warehouse.TileElement;
 import model.warehouse.TileElementVisitor;
+import controller.game.GamePanelController;
+import controller.game.edition.EditionTool;
 
 public abstract class AddMachineTool extends EditionTool {
 
@@ -88,7 +88,7 @@ public abstract class AddMachineTool extends EditionTool {
 			Position mousePosition, Color color) {
 		int width = this.machineType.getWidth();
 		int height = this.machineType.getHeight();
-		getPainter().drawRectangle(graphics, mousePosition, width, height,
+		getGroundPanel().drawRectangle(graphics, mousePosition, width, height,
 				color);
 	}
 
@@ -97,7 +97,7 @@ public abstract class AddMachineTool extends EditionTool {
 		Position inPos = mousePosition.add(this.machineType
 				.getInputRelativePosition());
 		Direction inDir = this.machineType.getInputConnectionDirection();
-		getPainter().drawInputArrow(inPos, inDir, color, graphics);
+		getGroundPanel().drawInputArrow(inPos, inDir, color, graphics);
 	}
 
 	private void drawOutputArrow(Graphics2D graphics, Position mousePosition,
@@ -105,7 +105,7 @@ public abstract class AddMachineTool extends EditionTool {
 		Position outPos = mousePosition.add(this.machineType
 				.getOutputRelativePosition());
 		Direction outDir = this.machineType.getOutputConnectionDirection();
-		getPainter().drawOutputArrow(outPos, outDir, color, graphics);
+		getGroundPanel().drawOutputArrow(outPos, outDir, color, graphics);
 	}
 
 	private void tryConnectInput(Machine machine) {

@@ -1,7 +1,8 @@
 package view.game;
 
-import java.awt.Color;
 import static view.game.MoneyConstants.*;
+
+import java.awt.Color;
 
 public class BudgetPanel extends javax.swing.JPanel {
 

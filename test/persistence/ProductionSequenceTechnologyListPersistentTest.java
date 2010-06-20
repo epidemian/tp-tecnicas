@@ -1,19 +1,12 @@
 package persistence;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import model.lab.technologies.NewProductionSequenceTechnology;
-import model.production.ValidProductionSequences;
 
-import org.dom4j.Document;
-import org.dom4j.DocumentException;
-import org.dom4j.Element;
 import org.junit.Before;
 import org.junit.Ignore;
-import org.junit.Test;
 
 @Ignore
 public class ProductionSequenceTechnologyListPersistentTest 

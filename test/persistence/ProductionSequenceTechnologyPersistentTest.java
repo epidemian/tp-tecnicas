@@ -1,8 +1,6 @@
 package persistence;
 
-import static model.production.TestUtils.*;
-
-import static org.junit.Assert.*;
+import static model.production.TestUtils.createMachineType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,12 +13,8 @@ import model.production.RawMaterials;
 import model.production.ValidProductionSequences;
 import model.production.elements.machine.MachineType;
 
-import org.dom4j.Document;
-import org.dom4j.DocumentException;
-import org.dom4j.Element;
 import org.junit.Before;
 import org.junit.Ignore;
-import org.junit.Test;
 
 @Ignore
 public class ProductionSequenceTechnologyPersistentTest 

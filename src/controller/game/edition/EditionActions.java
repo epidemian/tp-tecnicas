@@ -1,15 +1,6 @@
 package controller.game.edition;
 
-import controller.game.GamePanelController;
-import controller.game.edition.tools.AddConveyorTool;
-import controller.game.edition.tools.AddInputLineElementTool;
-import controller.game.edition.tools.AddProductionMachineTool;
-import controller.game.edition.tools.AddQualityControlMachineTool;
-import controller.game.edition.tools.DeleteTool;
-import controller.game.edition.tools.MoveTool;
-import controller.game.edition.tools.SelectionTool;
 import static java.lang.System.out;
-import static model.utils.ArgumentUtils.checkNotNull;
 
 import java.awt.event.ActionEvent;
 
@@ -18,29 +9,32 @@ import javax.swing.Action;
 
 import model.game.Player;
 import model.production.elements.machine.MachineType;
-import view.game.GamePanel;
-import view.game.GroundPanel;
+import controller.game.GamePanelController;
+import controller.game.edition.tools.AddConveyorTool;
+import controller.game.edition.tools.AddInputLineElementTool;
+import controller.game.edition.tools.AddProductionMachineTool;
+import controller.game.edition.tools.AddQualityControlMachineTool;
+import controller.game.edition.tools.DeleteTool;
+import controller.game.edition.tools.MoveTool;
+import controller.game.edition.tools.SelectionTool;
 
 public class EditionActions {
 
 	private GamePanelController gamePanelController;
 	private Player game;
-	private GroundPanel groundPanel;
 
 	public EditionActions(GamePanelController gamePanelController, Player game) {
 
-            
 		this.gamePanelController = gamePanelController;
 		this.game = game;
-		this.groundPanel = gamePanelController.getGamePanel()
-                        .getGroundPanelContainer().getGroundPanel();
 	}
 
 	public Action getEscAction() {
 		return new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				groundPanel.getEditionTool().reset();
+				gamePanelController.getGroundPanelController().getEditionTool()
+						.reset();
 			}
 
 			private static final long serialVersionUID = 1L;
@@ -49,15 +43,15 @@ public class EditionActions {
 
 	public Action getActionToSetNewProductionMachineTool(
 			final MachineType machineType) {
-		EditionTool tool = new AddProductionMachineTool(gamePanelController, game,
-				machineType);
+		EditionTool tool = new AddProductionMachineTool(gamePanelController,
+				game, machineType);
 		return getActionToSetTool(tool, "Add-Machine");
 	}
 
 	public Action getActionToSetNewQualityControlMachineTool(
 			final MachineType machineType) {
-		EditionTool tool = new AddQualityControlMachineTool(gamePanelController, game,
-				machineType);
+		EditionTool tool = new AddQualityControlMachineTool(
+				gamePanelController, game, machineType);
 		return getActionToSetTool(tool, "Add-Quality-Control-Machine");
 	}
 
@@ -70,17 +64,18 @@ public class EditionActions {
 		EditionTool tool = new AddConveyorTool(gamePanelController, game);
 		return getActionToSetTool(tool, "Add-Conveyor");
 	}
-	
+
 	public Action getActionToSetInputLineElementTool() {
-		EditionTool tool = new AddInputLineElementTool(gamePanelController, game);
+		EditionTool tool = new AddInputLineElementTool(gamePanelController,
+				game);
 		return getActionToSetTool(tool, "Add-Conveyor");
 	}
-	
+
 	public Action getActionToSetDeleteTool() {
 		EditionTool tool = new DeleteTool(gamePanelController, game);
 		return getActionToSetTool(tool, "Delete");
 	}
-	
+
 	public Action getActionToSetMoveTool() {
 		EditionTool tool = new MoveTool(gamePanelController, game);
 		return getActionToSetTool(tool, "Delete");
@@ -96,12 +91,12 @@ public class EditionActions {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				printToolSelection(toolName);
-				groundPanel.setEditionTool(tool);
+				gamePanelController.getGroundPanelController().setEditionTool(
+						tool);
 			}
 
 			private static final long serialVersionUID = 1L;
 		};
 	}
 
-	
 }

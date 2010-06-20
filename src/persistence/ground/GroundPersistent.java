@@ -1,12 +1,9 @@
 package persistence.ground;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import model.warehouse.Ground;
-import model.warehouse.Position;
-import model.warehouse.Wall;
 
 import org.dom4j.Element;
 

@@ -1,14 +1,17 @@
 package controller.game;
 
-import controller.MainController;
+import static model.utils.ArgumentUtils.checkNotNull;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+
 import model.game.Player;
 import view.game.MainPanel;
-import static model.utils.ArgumentUtils.*;
+import controller.MainController;
 
 public class MainPanelController {
 

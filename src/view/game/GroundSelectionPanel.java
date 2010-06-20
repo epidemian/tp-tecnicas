@@ -1,9 +1,10 @@
 package view.game;
 
-import java.awt.event.ActionListener;
-import javax.swing.JComboBox;
+import static model.utils.ArgumentUtils.checkNotNull;
 
-import static model.utils.ArgumentUtils.*;
+import java.awt.event.ActionListener;
+
+import javax.swing.JComboBox;
 
 public class GroundSelectionPanel extends javax.swing.JPanel {
 

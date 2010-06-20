@@ -1,16 +1,11 @@
 package controller.game.edition.tools;
 
-import controller.game.GamePanelController;
-import controller.game.edition.EditionTool;
 import static controller.game.edition.tools.Colors.*;
-import static model.utils.StringUtils.join;
-import static model.production.elements.ProductionLineElement.*;
-import static view.game.MoneyConstants.*;
+import static model.production.elements.ProductionLineElement.disconnectLineElement;
+import static view.game.MoneyConstants.getMoneyString;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.util.ArrayList;
-import java.util.List;
 
 import model.game.Budget;
 import model.game.Player;
@@ -25,6 +20,8 @@ import model.warehouse.Position;
 import model.warehouse.TileElement;
 import model.warehouse.TileElementVisitor;
 import model.warehouse.Wall;
+import controller.game.GamePanelController;
+import controller.game.edition.EditionTool;
 
 public class DeleteTool extends EditionTool {
 
@@ -80,7 +77,7 @@ public class DeleteTool extends EditionTool {
 						graphics);
 			if (!isTileEmpty(position)) {
 				Color color = isDeletableElement() ? OK_COLOR : BAD_COLOR;
-				getPainter().drawRectangle(graphics, element.getPosition(),
+				getGroundPanel().drawRectangle(graphics, element.getPosition(),
 						element.getWidth(), element.getHeight(), color);
 			}
 		}
@@ -118,7 +115,6 @@ public class DeleteTool extends EditionTool {
 		public void visitWall(Wall wall) {
 			this.visitNonDeletableElement();
 		}
-		
 
 		@Override
 		public void visitInputProductionLineElement(

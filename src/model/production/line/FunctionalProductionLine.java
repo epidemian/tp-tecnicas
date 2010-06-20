@@ -2,13 +2,11 @@ package model.production.line;
 
 import static model.utils.ArgumentUtils.*;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
 import model.production.Product;
-import model.production.RawMaterials;
 import model.production.StorageArea;
 import model.production.elements.InputProductionLineElement;
 import model.production.elements.OutputProductionLineElement;

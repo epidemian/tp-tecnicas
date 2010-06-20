@@ -1,10 +1,9 @@
 package controller.game;
 
-import persistence.InputFactory;
-
 import model.exception.BusinessLogicException;
 import model.game.time.WeeklyUpdatable;
 import model.warehouse.MarketPrices;
+import persistence.InputFactory;
 
 public class MarketPricesUpdater implements WeeklyUpdatable {
 

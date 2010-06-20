@@ -1,6 +1,7 @@
 package model.warehouse;
 
-import static model.utils.ArgumentUtils.*;
+import static model.utils.ArgumentUtils.checkNotNull;
+
 import java.util.HashMap;
 import java.util.Map;
 

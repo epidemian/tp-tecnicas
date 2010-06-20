@@ -1,8 +1,8 @@
 package model.production;
 
-import static org.hamcrest.CoreMatchers.*;
 import static model.production.TestUtils.createMachineType;
-import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.assertThat;
 import model.game.Budget;
 import model.production.elements.machine.Machine;
 import model.production.elements.machine.ProductionMachine;

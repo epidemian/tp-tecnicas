@@ -1,7 +1,7 @@
 package controller.game;
 
-import static model.utils.StringUtils.join;
 import static model.utils.ArgumentUtils.checkNotNull;
+import static view.game.MoneyConstants.getMoneyString;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,7 +19,6 @@ import javax.swing.event.ChangeListener;
 import model.game.Player;
 import model.lab.ResearchLab;
 import model.lab.Technology;
-import static view.game.MoneyConstants.*;
 import view.game.ResearchLabPanel;
 
 public class ResearchLabPanelController {

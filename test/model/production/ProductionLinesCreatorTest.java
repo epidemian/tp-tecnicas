@@ -1,8 +1,8 @@
 package model.production;
 
-import static model.production.line.ProductionLine.*;
-import static model.production.TestUtils.*;
+import static model.production.TestUtils.createMachineType;
 import static model.production.elements.ProductionLineElement.connectLineElements;
+import static model.production.line.ProductionLine.createDisfunctionalProductionLine;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
@@ -11,7 +11,6 @@ import java.util.List;
 import model.game.Budget;
 import model.production.elements.Conveyor;
 import model.production.elements.ProductionLineElement;
-import model.production.elements.machine.MachineType;
 import model.production.elements.machine.ProductionMachine;
 import model.production.line.ProductionLine;
 import model.warehouse.Ground;

@@ -1,10 +1,10 @@
 package controller.game.edition.tools;
 
-import controller.game.GamePanelController;
 import model.game.Player;
 import model.production.elements.machine.Machine;
 import model.production.elements.machine.MachineType;
 import model.production.elements.machine.QualityControlMachine;
+import controller.game.GamePanelController;
 
 public class AddQualityControlMachineTool extends AddMachineTool {
 

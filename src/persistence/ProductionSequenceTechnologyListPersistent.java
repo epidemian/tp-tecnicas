@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 import model.exception.BusinessLogicException;
-import model.lab.Technology;
 import model.lab.TechnologyTree;
 import model.lab.technologies.NewProductionSequenceTechnology;
 import model.production.ValidProductionSequences;

@@ -14,7 +14,6 @@ import model.production.StorageArea;
 import model.production.elements.InputProductionLineElement;
 import model.production.elements.OutputProductionLineElement;
 import model.production.elements.ProductionLineElement;
-import model.production.elements.machine.Machine;
 
 public abstract class ProductionLine implements TickUpdatable, DailyUpdatable,
 		Iterable<ProductionLineElement> {

@@ -60,13 +60,13 @@ abstract public class ProductionLineElement extends TileElement {
 	public boolean hasPreviousLineElement() {
 		if (!canHavePreviousLineElement())
 			return false;
-		return getPreviousLineElement() != null;
+		return this.previousLineElement != null;
 	}
 
 	public boolean hasNextLineElement() {
 		if (!canHaveNextLineElement())
 			return false;
-		return getNextLineElement() != null;
+		return this.nextLineElement != null;
 	}
 
 	public static void connectLineElements(ProductionLineElement previous,

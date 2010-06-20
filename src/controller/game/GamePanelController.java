@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ContainerAdapter;
 import java.awt.event.ContainerEvent;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -11,26 +12,25 @@ import javax.swing.JToggleButton;
 import javax.swing.Timer;
 
 import model.game.Player;
-import model.warehouse.TileElement;
-import view.game.GamePanel;
-import view.game.LineElementsMarketPanel;
-import view.game.RawMaterialsMarketPanel;
-import view.game.ToolBarPanel;
-import controller.MainController;
-import controller.game.edition.EditionActions;
-import controller.game.edition.KeyInputActionMapper;
-
-import java.awt.image.BufferedImage;
 import model.production.elements.InputProductionLineElement;
 import model.production.elements.machine.Machine;
 import model.production.elements.machine.ProductionMachine;
 import model.production.elements.machine.QualityControlMachine;
+import model.warehouse.TileElement;
 import model.warehouse.TileElementVisitor;
 import view.game.Dialog;
+import view.game.GamePanel;
+import view.game.GroundPanel;
 import view.game.InputSelectionPanel;
+import view.game.LineElementsMarketPanel;
 import view.game.MachineSelectionPanel;
+import view.game.RawMaterialsMarketPanel;
 import view.game.ResearchLabPanel;
 import view.game.TileElementImageRecognizer;
+import view.game.ToolBarPanel;
+import controller.MainController;
+import controller.game.edition.EditionActions;
+import controller.game.edition.KeyInputActionMapper;
 
 public class GamePanelController {
 
@@ -45,6 +45,7 @@ public class GamePanelController {
 	private JToggleButton pauseButton;
 	private GamePanel gamePanel;
 	private Player player;
+	private GroundPanelController groundPanelController;
 
 	public ContainerAdapter getGamePanelRemovedListener() {
 		return gamePanelRemovedListener;
@@ -62,6 +63,11 @@ public class GamePanelController {
 
 		int balance = player.getBudget().getBalance();
 		gamePanel.getBudgetPanel().setMoneyBalance(balance);
+		
+		GroundPanel groundPanel = new GroundPanel(player.getGround());
+		gamePanel.getGroundPanelContainer().setGroundPanel(groundPanel);
+		groundPanelController = new GroundPanelController(player, groundPanel);
+		
 
 		ToolBarPanel toolBar = gamePanel.getToolBarPanel();
 
@@ -159,6 +165,10 @@ public class GamePanelController {
 		gamePanelRemovedListener = new GamePanelRemovedListener(mainLoopTimer);
 
 		updateView();
+	}
+	
+	public GroundPanelController getGroundPanelController() {
+		return groundPanelController;
 	}
 
 	private void updateView() {

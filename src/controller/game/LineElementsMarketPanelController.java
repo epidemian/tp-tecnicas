@@ -1,5 +1,7 @@
 package controller.game;
 
+import static model.utils.ArgumentUtils.checkNotNull;
+
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -11,14 +13,11 @@ import java.util.List;
 import javax.swing.Action;
 import javax.swing.ImageIcon;
 
-import controller.game.edition.EditionActions;
-
 import model.game.Player;
-import static model.utils.ArgumentUtils.*;
 import model.production.elements.machine.MachineType;
-
 import view.game.LineElementsMarketPanel;
 import view.game.TileElementImageRecognizer;
+import controller.game.edition.EditionActions;
 
 public class LineElementsMarketPanelController {
 

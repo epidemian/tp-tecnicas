@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+
 import javax.imageio.ImageIO;
 
 public class ImageLoader {

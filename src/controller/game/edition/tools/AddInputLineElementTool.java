@@ -1,7 +1,5 @@
 package controller.game.edition.tools;
 
-import controller.game.GamePanelController;
-import controller.game.edition.EditionTool;
 import static controller.game.edition.tools.Colors.*;
 import static model.production.elements.ProductionLineElement.connectLineElements;
 import static model.utils.StringUtils.join;
@@ -13,11 +11,12 @@ import java.util.List;
 
 import model.game.Player;
 import model.production.Direction;
-import model.production.RawMaterialType;
 import model.production.elements.Conveyor;
 import model.production.elements.InputProductionLineElement;
 import model.warehouse.Position;
 import model.warehouse.TileElement;
+import controller.game.GamePanelController;
+import controller.game.edition.EditionTool;
 
 /*
  * TODO: Hay un montón de código compiado de AddMachineTool.... generalizar...
@@ -26,7 +25,8 @@ public class AddInputLineElementTool extends EditionTool {
 
 	private static final Direction OUTPUT_DIR = Direction.EAST;
 
-	public AddInputLineElementTool(GamePanelController gamePanelController, Player game) {
+	public AddInputLineElementTool(GamePanelController gamePanelController,
+			Player game) {
 		super(gamePanelController, game);
 	}
 
@@ -79,13 +79,13 @@ public class AddInputLineElementTool extends EditionTool {
 
 	private void drawElementRectagle(Graphics2D graphics,
 			Position mousePosition, Color color) {
-		getPainter().drawRectangle(graphics, mousePosition, 1, 1, color);
+		getGroundPanel().drawRectangle(graphics, mousePosition, 1, 1, color);
 	}
 
 	private void drawOutputArrow(Graphics2D graphics, Position mousePosition,
 			Color color) {
 		Position outPos = mousePosition.add(OUTPUT_DIR.getAssociatedPosition());
-		getPainter().drawOutputArrow(outPos, OUTPUT_DIR, color, graphics);
+		getGroundPanel().drawOutputArrow(outPos, OUTPUT_DIR, color, graphics);
 	}
 
 	private void tryConnectOutput(InputProductionLineElement inputElement) {

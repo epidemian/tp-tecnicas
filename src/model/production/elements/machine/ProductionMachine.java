@@ -1,7 +1,7 @@
 package model.production.elements.machine;
 
-import static model.utils.RandomUtils.*;
 import static model.utils.ArgumentUtils.checkNotNull;
+import static model.utils.RandomUtils.randomBoolean;
 import model.production.Product;
 import model.warehouse.TileElementVisitor;
 
