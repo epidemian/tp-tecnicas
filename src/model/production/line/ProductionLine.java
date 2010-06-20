@@ -90,14 +90,18 @@ public abstract class ProductionLine implements TickUpdatable, DailyUpdatable,
 
 		@Override
 		public boolean hasNext() {
-			return (this.current != null);
+			return current != null;
 		}
 
 		@Override
 		public ProductionLineElement next() {
 			ProductionLineElement returnElement = this.current;
-			this.current = this.current.canHaveNextLineElement() ? this.current
-					.getNextLineElement() : null;
+			if (this.current.canHaveNextLineElement()) {
+				ProductionLineElement next = this.current.getNextLineElement();
+				this.current = (next == firstLineElement ? null : next);
+			}
+			else 
+				this.current = null;
 			return returnElement;
 		}
 

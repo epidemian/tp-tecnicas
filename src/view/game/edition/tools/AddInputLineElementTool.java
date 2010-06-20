@@ -26,10 +26,6 @@ public class AddInputLineElementTool extends EditionTool {
 
 	private static final Direction OUTPUT_DIR = Direction.EAST;
 
-	// TODO: No hacer esto xD
-	private static RawMaterialType RAW_MAT_TYPE = new RawMaterialType("Gold");
-	private static int RAW_MAT_QUANTITY = 1;
-
 	public AddInputLineElementTool(GamePanelController gamePanelController, Player game) {
 		super(gamePanelController, game);
 	}
@@ -43,8 +39,6 @@ public class AddInputLineElementTool extends EditionTool {
 		if (canPutElementAt(position) && haveEnoughMoney()) {
 			InputProductionLineElement inputElement = new InputProductionLineElement(
 					OUTPUT_DIR);
-			inputElement.getRawMaterialsConfiguration().store(RAW_MAT_TYPE,
-					RAW_MAT_QUANTITY);
 			getGame().buyAndAddProductionLineElement(inputElement, position);
 			updateBudgetView();
 
