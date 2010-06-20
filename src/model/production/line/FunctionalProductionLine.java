@@ -48,7 +48,7 @@ class FunctionalProductionLine extends ProductionLine {
 			Iterator<ProductionLineElement> iterator = this.iterator();
 			Product product = this.getStorageArea().createProduct(
 					this.inputElement.getRawMaterialsConfiguration());
-			System.out.println("Input Product: " + product);
+			
 			while (iterator.hasNext()) {
 				ProductionLineElement next = iterator.next();
 				product = next.process(product);
@@ -57,8 +57,6 @@ class FunctionalProductionLine extends ProductionLine {
 			if (product != null) {
 				this.storageArea.addProduct(product);
 			}
-			
-			System.out.println("Output Product: " + product);
 		}
 	}
 

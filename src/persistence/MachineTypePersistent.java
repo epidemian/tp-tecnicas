@@ -32,19 +32,19 @@ public class MachineTypePersistent {
 
 		Builder builder = new MachineType.Builder(name, width, height);
 
-		if (element.element(TAG_ATR_DAMAGE_CHANCE) != null)
+		if (element.attributeValue(TAG_ATR_DAMAGE_CHANCE) != null)
 			builder.damageChance(Float.valueOf(element
 					.attributeValue(TAG_ATR_DAMAGE_CHANCE)));
 
-		if (element.element(TAG_ATR_BREAK_CHANCE) != null)
+		if (element.attributeValue(TAG_ATR_BREAK_CHANCE) != null)
 			builder.breakChance(Float.valueOf(element
 					.attributeValue(TAG_ATR_BREAK_CHANCE)));
 
-		if (element.element(TAG_CHILD_INPUT) != null)
+		if (element.attributeValue(TAG_CHILD_INPUT) != null)
 			builder.inputRelativePosition(PositionPersistent
 					.buildFromXML(element.element(TAG_CHILD_INPUT)));
 
-		if (element.element(TAG_CHILD_OUTPUT) != null)
+		if (element.attributeValue(TAG_CHILD_OUTPUT) != null)
 			builder.outputRelativePosition(PositionPersistent
 					.buildFromXML(element.element(TAG_CHILD_OUTPUT)));
 

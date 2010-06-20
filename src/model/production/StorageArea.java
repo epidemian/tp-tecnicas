@@ -10,23 +10,24 @@ import model.production.exception.NotEnoughRawMaterialException;
 public class StorageArea {
 
 	private List<Product> productsProduced;
+
 	public List<Product> getProductsProduced() {
 		return productsProduced;
 	}
 
 	private ValidProductionSequences validProductionSequences;
-	
+
 	/**
-	 * Contains all the raw materials of the AssemblyPlant 
+	 * Contains all the raw materials of the AssemblyPlant
 	 */
 	private RawMaterials rawMaterials;
-	
+
 	public StorageArea(ValidProductionSequences validSequences) {
 		this(new RawMaterials(), validSequences);
 	}
-	
-	public StorageArea(RawMaterials rawMaterials, 
-		ValidProductionSequences validSequences){
+
+	public StorageArea(RawMaterials rawMaterials,
+			ValidProductionSequences validSequences) {
 		this.setRawMaterials(rawMaterials);
 		this.setValidProductionSequences(validSequences);
 		this.productsProduced = new LinkedList<Product>();
@@ -36,51 +37,49 @@ public class StorageArea {
 		return rawMaterials;
 	}
 
-	public void addProduct(Product product){
-		// TODO must filter waste products?
+	public void addProduct(Product product) {
 		product.resolveProductType(this.validProductionSequences);
 		if (!product.isWaste())
 			this.productsProduced.add(product);
 	}
-	
-	public int countDefectiveProducts(){
-		
+
+	public int countDefectiveProducts() {
+
 		int defectiveProducts = 0;
-		
-		for (Product entry : this.productsProduced){
-			if(entry.isDamaged())
+
+		for (Product entry : this.productsProduced) {
+			if (entry.isDamaged())
 				defectiveProducts++;
 		}
-		
+
 		return defectiveProducts;
 	}
-	
+
 	/**
 	 * Creation of the product which will enter the inputStorage.
 	 */
-	public Product createProduct(RawMaterials inputRawMaterials){
-		
-		try{
+	public Product createProduct(RawMaterials inputRawMaterials) {
+
+		try {
 			this.rawMaterials.extract(inputRawMaterials);
-		}
-		catch (NotEnoughRawMaterialException e) {
+		} catch (NotEnoughRawMaterialException e) {
 			return null;
 		}
-		
+
 		return new Product(inputRawMaterials);
 	}
-	
+
 	public void storeRawMaterial(RawMaterialType rawMaterialType,
-			int quantityStore){
+			int quantityStore) {
 		this.rawMaterials.store(rawMaterialType, quantityStore);
 	}
-	
-	private void setValidProductionSequences(ValidProductionSequences
-		validProductionSequences){
+
+	private void setValidProductionSequences(
+			ValidProductionSequences validProductionSequences) {
 		checkNotNull(validProductionSequences, "validProductionSequences");
 		this.validProductionSequences = validProductionSequences;
 	}
-	
+
 	private void setRawMaterials(RawMaterials rawMaterials) {
 		checkNotNull(rawMaterials, "rawMaterials");
 		this.rawMaterials = rawMaterials;

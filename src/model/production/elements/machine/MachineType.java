@@ -121,52 +121,6 @@ public class MachineType extends AbstractType {
 		return outputRelativePosition;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + height;
-		result = prime
-				* result
-				+ ((inputRelativePosition == null) ? 0 : inputRelativePosition
-						.hashCode());
-		result = prime
-				* result
-				+ ((outputRelativePosition == null) ? 0
-						: outputRelativePosition.hashCode());
-		result = prime * result + price;
-		result = prime * result + width;
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		MachineType other = (MachineType) obj;
-		if (height != other.height)
-			return false;
-		if (inputRelativePosition == null) {
-			if (other.inputRelativePosition != null)
-				return false;
-		} else if (!inputRelativePosition.equals(other.inputRelativePosition))
-			return false;
-		if (outputRelativePosition == null) {
-			if (other.outputRelativePosition != null)
-				return false;
-		} else if (!outputRelativePosition.equals(other.outputRelativePosition))
-			return false;
-		if (price != other.price)
-			return false;
-		if (width != other.width)
-			return false;
-		return true;
-	}
-
 	public Direction getInputConnectionDirection() {
 		return getInOutDirectionByPosition(this.getInputRelativePosition());
 	}
