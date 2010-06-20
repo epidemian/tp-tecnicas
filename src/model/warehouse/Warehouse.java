@@ -103,6 +103,8 @@ public class Warehouse implements MonthlyUpdatable, DailyUpdatable,
 		System.out.println("Sell products, partial: " + (int) Math.round(partial));
 		
 		this.budget.increment((int) Math.round(partial));
+		
+		this.storageArea.clearProductsProduced();
 	}
 
 	@Override

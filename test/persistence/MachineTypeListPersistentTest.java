@@ -67,7 +67,7 @@ public class MachineTypeListPersistentTest extends XMLPersistentTest {
 		List<MachineType> recovered = MachineTypeListPersistent
 				.buildFromXML(element);
 
-		assertFalse(recovered.equals(list));
+		assertEquals(list, recovered);
 
 	}
 }

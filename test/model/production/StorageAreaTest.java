@@ -15,7 +15,14 @@ public class StorageAreaTest {
 	@Before
 	public void setUp(){
 		storageArea = new StorageArea(TestUtils.createRawMaterials(2,1,10),
-					  new ValidProductionSequences());
+					  new ValidProductionSequences(){
+			
+			@Override
+			public ProductType identifyProductType(ProductionSequence
+				productionSequence) {
+					return new ProductType("valid product");
+			}			
+		});
 	}
 	
 	private List<Product> generateNonDefectiveProducts(){
@@ -52,6 +59,5 @@ public class StorageAreaTest {
 		}
 		
 		assertEquals(0,storageArea.countDefectiveProducts());
-	}
-	
+	}	
 }

@@ -84,4 +84,8 @@ public class StorageArea {
 		checkNotNull(rawMaterials, "rawMaterials");
 		this.rawMaterials = rawMaterials;
 	}
+
+	public void clearProductsProduced() {
+		this.productsProduced.clear();
+	}
 }

@@ -48,6 +48,6 @@ public class MachineTypePersistentTest extends XMLPersistentTest {
 
 		MachineType recovered = MachineTypePersistent.buildFromXML(element);
 
-		assertFalse(recovered.equals(machineType));
+		assertEquals(machineType, recovered);
 	}
 }
