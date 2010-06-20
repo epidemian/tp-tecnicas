@@ -1,9 +1,6 @@
 package controller.game;
 
-import java.util.Map;
-
 import persistence.InputFactory;
-import persistence.XMLFactory;
 
 import model.exception.BusinessLogicException;
 import model.game.time.WeeklyUpdatable;

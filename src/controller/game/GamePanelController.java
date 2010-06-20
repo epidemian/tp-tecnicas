@@ -53,22 +53,12 @@ public class GamePanelController {
 
 		this.gamePanel = gamePanel;
 		this.player = player;
-		EditionActions editionActions = new EditionActions(this, player);
+		final EditionActions editionActions = new EditionActions(this, player);
 		KeyInputActionMapper mapper = new KeyInputActionMapper(editionActions);
 		mapper.mapActions(gamePanel.getInputMap(), gamePanel.getActionMap());
 
-		final LineElementsMarketPanel lineElementsMarketPanel = new LineElementsMarketPanel();
-		new LineElementsMarketPanelController(player, lineElementsMarketPanel,
-				editionActions);
-
-		final RawMaterialsMarketPanel rawMaterialsMarketPanel = new RawMaterialsMarketPanel();
-		new RawMaterialsMarketPanelController(player, rawMaterialsMarketPanel,
-				gamePanel);
 
 		int balance = player.getBudget().getBalance();
-		final ResearchLabPanel labPanel = new ResearchLabPanel();
-		new ResearchLabPanelController(player, labPanel);
-
 		gamePanel.getBudgetPanel().setMoneyBalance(balance);
 
 		ToolBarPanel toolBar = gamePanel.getToolBarPanel();
@@ -79,6 +69,10 @@ public class GamePanelController {
 
 			@Override
 			public void actionPerformed(ActionEvent ae) {
+				
+				LineElementsMarketPanel lineElementsMarketPanel = new LineElementsMarketPanel();
+				new LineElementsMarketPanelController(player, lineElementsMarketPanel,
+						editionActions);
 				gamePanel.setToolPanel(lineElementsMarketPanel);
 			}
 		});
@@ -89,6 +83,10 @@ public class GamePanelController {
 
 			@Override
 			public void actionPerformed(ActionEvent ae) {
+				
+				RawMaterialsMarketPanel rawMaterialsMarketPanel = new RawMaterialsMarketPanel();
+				new RawMaterialsMarketPanelController(player, rawMaterialsMarketPanel,
+						gamePanel);
 				gamePanel.setToolPanel(rawMaterialsMarketPanel);
 			}
 		});
@@ -98,6 +96,9 @@ public class GamePanelController {
 
 			@Override
 			public void actionPerformed(ActionEvent ae) {
+				
+				ResearchLabPanel labPanel = new ResearchLabPanel();
+				new ResearchLabPanelController(player, labPanel);
 				gamePanel.setToolPanel(labPanel);
 			}
 		});

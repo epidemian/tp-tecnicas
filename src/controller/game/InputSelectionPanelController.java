@@ -149,8 +149,7 @@ public class InputSelectionPanelController {
             @Override
             public void actionPerformed(ActionEvent ae) {
                JTable table = inputPanel.getConfigTable();
-               DefaultTableModel model = (DefaultTableModel) table.getModel();
-
+  
                int row = table.getSelectedRow();
                int col = 0;
 

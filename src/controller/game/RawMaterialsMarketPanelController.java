@@ -122,7 +122,6 @@ public class RawMaterialsMarketPanelController {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
 
-				int price = thisRef.getRawMaterialPrice();
 				if (thisRef.canBuyRawMaterial()) {
 					thisRef.budget.decrement(thisRef.getRawMaterialPrice());
 					thisRef.gamePanel.getBudgetPanel().setMoneyBalance(

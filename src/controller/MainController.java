@@ -27,12 +27,6 @@ public class MainController {
 
 	private InputFactory inputFactory;
 
-	private static final String GROUND_PREFIX = "Ground ";
-	private static final String[] DIFFICULTY_LEVELS = { "Easy", "Normal",
-			"Hard" };
-	private static final int[] INITIAL_MONEY = { 1000000, 1500000, 2000000 };
-
-	private static final Dimension DIALOG_SIZE = new Dimension(350, 150);
 	private static final Dimension MAIN_PANEL_SIZE = new Dimension(640, 480);
 	private static final Dimension GROUND_SELECTION_PANEL_SIZE = new Dimension(
 			320, 670);
