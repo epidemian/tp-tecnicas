@@ -1,0 +1,4 @@
+<Config>	
+	<Item id="BROKEN_PRICE_REPAIR_COEF" value="0.03"/>
+	<Item id="DAMAGED_PRICE_REPAIR_COEF" value="0.03"/>
+</Config>
