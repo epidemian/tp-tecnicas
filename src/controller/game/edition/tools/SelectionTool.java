@@ -5,20 +5,15 @@ import java.awt.Graphics2D;
 import model.game.Player;
 import model.warehouse.Position;
 import model.warehouse.TileElement;
-import view.game.GroundPanel;
 import controller.game.GamePanelController;
 import controller.game.edition.EditionTool;
 
 public class SelectionTool extends EditionTool {
 
 	private TileElement selectedTileElement = null;
-	private GroundPanel groundPanel;
 
 	public SelectionTool(GamePanelController gamePanelController, Player game) {
 		super(gamePanelController, game);
-
-		// Weeeeee!
-		groundPanel = getGamePanel().getGroundPanelContainer().getGroundPanel();
 	}
 
 	@Override
@@ -30,7 +25,7 @@ public class SelectionTool extends EditionTool {
 
 	@Override
 	public void mouseClicked(Position position) {
-		this.selectedTileElement = this.groundPanel.getGround()
+		this.selectedTileElement = this.getGroundPanel().getGround()
 				.getTileElementAt(position);
 		System.out.println("Clicked on " + position + " and selected "
 				+ selectedTileElement);
