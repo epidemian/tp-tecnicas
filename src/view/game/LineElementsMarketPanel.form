@@ -27,33 +27,34 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Component id="titleLabel" pref="203" max="32767" attributes="2"/>
-              <EmptySpace min="12" pref="12" max="12" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="conveyorPanel" max="32767" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="inputPanel" max="32767" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-              <Component id="machineLabel" pref="205" max="32767" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                  <Component id="machineNextPreviousExternalPanel" alignment="0" max="32767" attributes="3"/>
-                  <Component id="machineButtonsExternalPanel" alignment="0" max="32767" attributes="3"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace min="52" pref="52" max="52" attributes="0"/>
+                      <Component id="lineElementPreview" min="-2" max="-2" attributes="2"/>
+                      <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="prodLineLabel" alignment="0" pref="203" max="32767" attributes="2"/>
+                          <Component id="lineElementBuyCombo" alignment="0" pref="203" max="32767" attributes="2"/>
+                          <Component id="titleLabel" alignment="0" pref="203" max="32767" attributes="2"/>
+                      </Group>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="lineElementTypeLabel" alignment="0" pref="203" max="32767" attributes="2"/>
+                          <Component id="toolsLabel" alignment="1" pref="203" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="buttonsExternalPanel" min="-2" max="-2" attributes="2"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -63,16 +64,18 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="titleLabel" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="conveyorPanel" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="inputPanel" min="-2" max="-2" attributes="0"/>
+              <Component id="prodLineLabel" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="machineLabel" min="-2" pref="37" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="machineButtonsExternalPanel" min="-2" max="-2" attributes="0"/>
+              <Component id="lineElementBuyCombo" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="lineElementPreview" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="machineNextPreviousExternalPanel" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="37" max="32767" attributes="0"/>
+              <Component id="lineElementTypeLabel" min="-2" pref="20" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="toolsLabel" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="buttonsExternalPanel" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="154" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -88,97 +91,65 @@
         <Property name="horizontalTextPosition" type="int" value="0"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="machineLabel">
+    <Component class="javax.swing.JLabel" name="prodLineLabel">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Purisa" size="13" style="0"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Machines"/>
+        <Property name="text" type="java.lang.String" value="Production line elements:"/>
       </Properties>
     </Component>
-    <Container class="javax.swing.JPanel" name="conveyorPanel">
+    <Component class="javax.swing.JComboBox" name="lineElementBuyCombo">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Purisa" size="13" style="0"/>
+        </Property>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="0"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Container class="view.game.BackGroundPanel" name="lineElementPreview">
 
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <Component id="conveyorLabel" pref="91" max="32767" attributes="0"/>
-                  <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
-                  <Component id="conveyor" min="-2" pref="50" max="-2" attributes="2"/>
-                  <EmptySpace max="-2" attributes="0"/>
-              </Group>
+              <EmptySpace min="0" pref="100" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="conveyorLabel" alignment="1" pref="45" max="32767" attributes="1"/>
-              <Component id="conveyor" alignment="0" pref="45" max="32767" attributes="1"/>
+              <EmptySpace min="0" pref="100" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
-      <SubComponents>
-        <Component class="javax.swing.JButton" name="conveyor">
-          <Properties>
-            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[66, 29]"/>
-            </Property>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="conveyorLabel">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Purisa" size="13" style="0"/>
-            </Property>
-            <Property name="horizontalAlignment" type="int" value="2"/>
-            <Property name="text" type="java.lang.String" value="Conveyor"/>
-            <Property name="horizontalTextPosition" type="int" value="0"/>
-          </Properties>
-        </Component>
-      </SubComponents>
     </Container>
-    <Container class="javax.swing.JPanel" name="inputPanel">
-
-      <Layout>
-        <DimensionLayout dim="0">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="1" attributes="0">
-                  <Component id="inputLabel" pref="107" max="32767" attributes="0"/>
-                  <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
-                  <Component id="input" min="-2" pref="50" max="-2" attributes="2"/>
-                  <EmptySpace max="-2" attributes="0"/>
-              </Group>
-          </Group>
-        </DimensionLayout>
-        <DimensionLayout dim="1">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="input" alignment="0" pref="41" max="32767" attributes="1"/>
-              <Component id="inputLabel" alignment="0" pref="41" max="32767" attributes="1"/>
-          </Group>
-        </DimensionLayout>
-      </Layout>
-      <SubComponents>
-        <Component class="javax.swing.JLabel" name="inputLabel">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Purisa" size="13" style="0"/>
-            </Property>
-            <Property name="horizontalAlignment" type="int" value="2"/>
-            <Property name="text" type="java.lang.String" value="Input"/>
-            <Property name="horizontalTextPosition" type="int" value="0"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="input">
-        </Component>
-      </SubComponents>
-    </Container>
-    <Container class="javax.swing.JPanel" name="machineButtonsExternalPanel">
+    <Component class="javax.swing.JLabel" name="lineElementTypeLabel">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Purisa" size="13" style="0"/>
+        </Property>
+        <Property name="horizontalAlignment" type="int" value="0"/>
+        <Property name="horizontalTextPosition" type="int" value="0"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="toolsLabel">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Purisa" size="13" style="0"/>
+        </Property>
+        <Property name="horizontalAlignment" type="int" value="2"/>
+        <Property name="text" type="java.lang.String" value="Tools:"/>
+      </Properties>
+    </Component>
+    <Container class="javax.swing.JPanel" name="buttonsExternalPanel">
 
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <EmptySpace min="-2" max="-2" attributes="0"/>
-                  <Component id="machineButtonsPanel" min="-2" pref="150" max="-2" attributes="2"/>
+                  <Component id="buttonsPanel" alignment="1" max="32767" attributes="0"/>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -187,97 +158,48 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="machineButtonsPanel" min="-2" pref="215" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="buttonsPanel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="1"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Container class="javax.swing.JPanel" name="machineButtonsPanel">
+        <Container class="javax.swing.JPanel" name="buttonsPanel">
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
             <Property name="columns" type="int" value="3"/>
-            <Property name="rows" type="int" value="5"/>
-          </Layout>
-          <SubComponents>
-            <Component class="javax.swing.JButton" name="machine1">
-            </Component>
-            <Component class="javax.swing.JButton" name="machine2">
-            </Component>
-            <Component class="javax.swing.JButton" name="machine3">
-            </Component>
-            <Component class="javax.swing.JButton" name="machine4">
-            </Component>
-            <Component class="javax.swing.JButton" name="machine5">
-            </Component>
-            <Component class="javax.swing.JButton" name="machine6">
-            </Component>
-            <Component class="javax.swing.JButton" name="machine7">
-            </Component>
-            <Component class="javax.swing.JButton" name="machine8">
-            </Component>
-            <Component class="javax.swing.JButton" name="machine9">
-            </Component>
-            <Component class="javax.swing.JButton" name="machine10">
-            </Component>
-            <Component class="javax.swing.JButton" name="machine11">
-            </Component>
-            <Component class="javax.swing.JButton" name="machine12">
-            </Component>
-            <Component class="javax.swing.JButton" name="machine13">
-            </Component>
-            <Component class="javax.swing.JButton" name="machine14">
-            </Component>
-            <Component class="javax.swing.JButton" name="machine15">
-            </Component>
-          </SubComponents>
-        </Container>
-      </SubComponents>
-    </Container>
-    <Container class="javax.swing.JPanel" name="machineNextPreviousExternalPanel">
-
-      <Layout>
-        <DimensionLayout dim="0">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="machineNextPreviousPanel" pref="150" max="32767" attributes="2"/>
-                  <EmptySpace max="-2" attributes="0"/>
-              </Group>
-          </Group>
-        </DimensionLayout>
-        <DimensionLayout dim="1">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <Component id="machineNextPreviousPanel" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
-              </Group>
-          </Group>
-        </DimensionLayout>
-      </Layout>
-      <SubComponents>
-        <Container class="javax.swing.JPanel" name="machineNextPreviousPanel">
-
-          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
-            <Property name="columns" type="int" value="2"/>
             <Property name="rows" type="int" value="1"/>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JButton" name="previousMachine">
+            <Component class="javax.swing.JButton" name="sellButton">
               <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Purisa" size="13" style="0"/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/smallSell.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Previous"/>
+                <Property name="toolTipText" type="java.lang.String" value="Sell line element"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="nextMachine">
+            <Component class="javax.swing.JButton" name="moveButton">
               <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Purisa" size="13" style="0"/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/smallMove.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Next"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="repairButton">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/smallRepair.png"/>
+                </Property>
+                <Property name="toolTipText" type="java.lang.String" value="Repair line element"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="cancelToolButton">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/smallCancel.png"/>
+                </Property>
               </Properties>
             </Component>
           </SubComponents>

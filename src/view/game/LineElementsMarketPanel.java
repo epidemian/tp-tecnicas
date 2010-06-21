@@ -1,83 +1,41 @@
 package view.game;
 
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.ImageIcon;
+import java.awt.image.BufferedImage;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 
 public class LineElementsMarketPanel extends javax.swing.JPanel {
 
     public LineElementsMarketPanel() {
-
         initComponents();
-        this.machineButtons = new ArrayList<JButton>();
-
-        this.machineButtons.add(this.machine1);
-        this.machineButtons.add(this.machine2);
-        this.machineButtons.add(this.machine3);
-        this.machineButtons.add(this.machine4);
-        this.machineButtons.add(this.machine5);
-        this.machineButtons.add(this.machine6);
-        this.machineButtons.add(this.machine7);
-        this.machineButtons.add(this.machine8);
-        this.machineButtons.add(this.machine9);
-        this.machineButtons.add(this.machine10);
-        this.machineButtons.add(this.machine11);
-        this.machineButtons.add(this.machine12);
-        this.machineButtons.add(this.machine13);
-        this.machineButtons.add(this.machine14);
-        this.machineButtons.add(this.machine15);
-    }
-        
-    public void setMachineButtonIcon(int index, ImageIcon image){
-    	this.machineButtons.get(index).setIcon(image);
-    }
-    
-    public void setMachineButtonVisible(int index, boolean aFlag){
-    	this.machineButtons.get(index).setVisible(aFlag);
-    }
-    
-    public void setMachineButtonActionListener(int index, ActionListener action){
-    	JButton machineButton = this.machineButtons.get(index);
-        removeActionListenersFromButton(machineButton);
-    	machineButton.addActionListener(action);
     }
 
-    public int getMachineButtonsSize(){
-    	return this.machineButtons.size();
-    }
-    
-    public void addNextMachinesButtonActionListener(ActionListener action){
-    	this.nextMachine.addActionListener(action);
-    }
-    
-    public void setNextMachineButtonEnabled(boolean aFlag){
-    	this.nextMachine.setEnabled(aFlag);
-    }
-    
-    public void addPreviousMachinesButtonActionListener(ActionListener action){
-    	this.previousMachine.addActionListener(action);
-    }
-    
-    public void setPreviousMachineButtonEnabled(boolean aFlag){
-    	this.previousMachine.setEnabled(aFlag);
-    }
-    
-    public void addConveyorButtonActionListener(ActionListener action){
-    	this.conveyor.addActionListener(action);
-    }
-    
-    public void addInputButtonActionListener(ActionListener action){
-    	this.input.addActionListener(action);
+    public JComboBox getBuyCombo(){
+        return this.lineElementBuyCombo;
     }
 
-    // TODO ver si cambiar de lugar! o si hay otra forma de hacerlo!
-    private static void removeActionListenersFromButton(JButton button){
-        ActionListener[] actionListeners = button.getActionListeners();
-        for (int i = 0; i < actionListeners.length; i++)
-            button.removeActionListener(actionListeners[i]);
+    public void setLineElementType(String type){
+        this.lineElementTypeLabel.setText(type);
+    }
+
+    public void setLineElementImage(BufferedImage image){
+        this.lineElementPreview.setImage(image);
+    }
+
+    public JButton getSellButton(){
+        return this.sellButton;
+    }
+
+    public JButton getRepairButton(){
+        return this.repairButton;
+    }
+
+    public JButton getMoveButton(){
+        return this.moveButton;
+    }
+
+    public JButton getCancelButton(){
+        return this.cancelToolButton;
     }
 
     /** This method is called from within the constructor to
@@ -90,148 +48,81 @@ public class LineElementsMarketPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         titleLabel = new javax.swing.JLabel();
-        machineLabel = new javax.swing.JLabel();
-        conveyorPanel = new javax.swing.JPanel();
-        conveyor = new javax.swing.JButton();
-        conveyorLabel = new javax.swing.JLabel();
-        inputPanel = new javax.swing.JPanel();
-        inputLabel = new javax.swing.JLabel();
-        input = new javax.swing.JButton();
-        machineButtonsExternalPanel = new javax.swing.JPanel();
-        machineButtonsPanel = new javax.swing.JPanel();
-        machine1 = new javax.swing.JButton();
-        machine2 = new javax.swing.JButton();
-        machine3 = new javax.swing.JButton();
-        machine4 = new javax.swing.JButton();
-        machine5 = new javax.swing.JButton();
-        machine6 = new javax.swing.JButton();
-        machine7 = new javax.swing.JButton();
-        machine8 = new javax.swing.JButton();
-        machine9 = new javax.swing.JButton();
-        machine10 = new javax.swing.JButton();
-        machine11 = new javax.swing.JButton();
-        machine12 = new javax.swing.JButton();
-        machine13 = new javax.swing.JButton();
-        machine14 = new javax.swing.JButton();
-        machine15 = new javax.swing.JButton();
-        machineNextPreviousExternalPanel = new javax.swing.JPanel();
-        machineNextPreviousPanel = new javax.swing.JPanel();
-        previousMachine = new javax.swing.JButton();
-        nextMachine = new javax.swing.JButton();
+        prodLineLabel = new javax.swing.JLabel();
+        lineElementBuyCombo = new javax.swing.JComboBox();
+        lineElementPreview = new view.game.BackGroundPanel();
+        lineElementTypeLabel = new javax.swing.JLabel();
+        toolsLabel = new javax.swing.JLabel();
+        buttonsExternalPanel = new javax.swing.JPanel();
+        buttonsPanel = new javax.swing.JPanel();
+        sellButton = new javax.swing.JButton();
+        moveButton = new javax.swing.JButton();
+        repairButton = new javax.swing.JButton();
+        cancelToolButton = new javax.swing.JButton();
 
         setMaximumSize(new java.awt.Dimension(227, 539));
         setMinimumSize(new java.awt.Dimension(227, 539));
         setPreferredSize(new java.awt.Dimension(227, 539));
 
-        titleLabel.setFont(new java.awt.Font("Purisa", 0, 18)); // NOI18N
+        titleLabel.setFont(new java.awt.Font("Purisa", 0, 18));
         titleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         titleLabel.setText("Line Elements");
         titleLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        machineLabel.setFont(new java.awt.Font("Purisa", 0, 13)); // NOI18N
-        machineLabel.setText("Machines");
+        prodLineLabel.setFont(new java.awt.Font("Purisa", 0, 13)); // NOI18N
+        prodLineLabel.setText("Production line elements:");
 
-        conveyor.setPreferredSize(new java.awt.Dimension(66, 29));
+        lineElementBuyCombo.setFont(new java.awt.Font("Purisa", 0, 13)); // NOI18N
 
-        conveyorLabel.setFont(new java.awt.Font("Purisa", 0, 13)); // NOI18N
-        conveyorLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        conveyorLabel.setText("Conveyor");
-        conveyorLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        javax.swing.GroupLayout conveyorPanelLayout = new javax.swing.GroupLayout(conveyorPanel);
-        conveyorPanel.setLayout(conveyorPanelLayout);
-        conveyorPanelLayout.setHorizontalGroup(
-            conveyorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(conveyorPanelLayout.createSequentialGroup()
-                .addComponent(conveyorLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)
-                .addGap(50, 50, 50)
-                .addComponent(conveyor, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+        javax.swing.GroupLayout lineElementPreviewLayout = new javax.swing.GroupLayout(lineElementPreview);
+        lineElementPreview.setLayout(lineElementPreviewLayout);
+        lineElementPreviewLayout.setHorizontalGroup(
+            lineElementPreviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
         );
-        conveyorPanelLayout.setVerticalGroup(
-            conveyorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(conveyorLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
-            .addComponent(conveyor, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
+        lineElementPreviewLayout.setVerticalGroup(
+            lineElementPreviewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
         );
 
-        inputLabel.setFont(new java.awt.Font("Purisa", 0, 13)); // NOI18N
-        inputLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        inputLabel.setText("Input");
-        inputLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lineElementTypeLabel.setFont(new java.awt.Font("Purisa", 0, 13)); // NOI18N
+        lineElementTypeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lineElementTypeLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        javax.swing.GroupLayout inputPanelLayout = new javax.swing.GroupLayout(inputPanel);
-        inputPanel.setLayout(inputPanelLayout);
-        inputPanelLayout.setHorizontalGroup(
-            inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, inputPanelLayout.createSequentialGroup()
-                .addComponent(inputLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
-                .addGap(34, 34, 34)
-                .addComponent(input, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        inputPanelLayout.setVerticalGroup(
-            inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(input, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-            .addComponent(inputLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-        );
+        toolsLabel.setFont(new java.awt.Font("Purisa", 0, 13)); // NOI18N
+        toolsLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        toolsLabel.setText("Tools:");
 
-        machineButtonsPanel.setLayout(new java.awt.GridLayout(5, 3));
-        machineButtonsPanel.add(machine1);
-        machineButtonsPanel.add(machine2);
-        machineButtonsPanel.add(machine3);
-        machineButtonsPanel.add(machine4);
-        machineButtonsPanel.add(machine5);
-        machineButtonsPanel.add(machine6);
-        machineButtonsPanel.add(machine7);
-        machineButtonsPanel.add(machine8);
-        machineButtonsPanel.add(machine9);
-        machineButtonsPanel.add(machine10);
-        machineButtonsPanel.add(machine11);
-        machineButtonsPanel.add(machine12);
-        machineButtonsPanel.add(machine13);
-        machineButtonsPanel.add(machine14);
-        machineButtonsPanel.add(machine15);
+        buttonsPanel.setLayout(new java.awt.GridLayout(1, 3));
 
-        javax.swing.GroupLayout machineButtonsExternalPanelLayout = new javax.swing.GroupLayout(machineButtonsExternalPanel);
-        machineButtonsExternalPanel.setLayout(machineButtonsExternalPanelLayout);
-        machineButtonsExternalPanelLayout.setHorizontalGroup(
-            machineButtonsExternalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(machineButtonsExternalPanelLayout.createSequentialGroup()
+        sellButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/smallSell.png"))); // NOI18N
+        sellButton.setToolTipText("Sell line element");
+        buttonsPanel.add(sellButton);
+
+        moveButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/smallMove.png"))); // NOI18N
+        buttonsPanel.add(moveButton);
+
+        repairButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/smallRepair.png"))); // NOI18N
+        repairButton.setToolTipText("Repair line element");
+        buttonsPanel.add(repairButton);
+
+        cancelToolButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/smallCancel.png"))); // NOI18N
+        buttonsPanel.add(cancelToolButton);
+
+        javax.swing.GroupLayout buttonsExternalPanelLayout = new javax.swing.GroupLayout(buttonsExternalPanel);
+        buttonsExternalPanel.setLayout(buttonsExternalPanelLayout);
+        buttonsExternalPanelLayout.setHorizontalGroup(
+            buttonsExternalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(buttonsExternalPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(machineButtonsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(buttonsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        machineButtonsExternalPanelLayout.setVerticalGroup(
-            machineButtonsExternalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(machineButtonsExternalPanelLayout.createSequentialGroup()
+        buttonsExternalPanelLayout.setVerticalGroup(
+            buttonsExternalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(buttonsExternalPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(machineButtonsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        machineNextPreviousPanel.setLayout(new java.awt.GridLayout(1, 2));
-
-        previousMachine.setFont(new java.awt.Font("Purisa", 0, 13));
-        previousMachine.setText("Previous");
-        machineNextPreviousPanel.add(previousMachine);
-
-        nextMachine.setFont(new java.awt.Font("Purisa", 0, 13));
-        nextMachine.setText("Next");
-        machineNextPreviousPanel.add(nextMachine);
-
-        javax.swing.GroupLayout machineNextPreviousExternalPanelLayout = new javax.swing.GroupLayout(machineNextPreviousExternalPanel);
-        machineNextPreviousExternalPanel.setLayout(machineNextPreviousExternalPanelLayout);
-        machineNextPreviousExternalPanelLayout.setHorizontalGroup(
-            machineNextPreviousExternalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(machineNextPreviousExternalPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(machineNextPreviousPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        machineNextPreviousExternalPanelLayout.setVerticalGroup(
-            machineNextPreviousExternalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(machineNextPreviousExternalPanelLayout.createSequentialGroup()
-                .addComponent(machineNextPreviousPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(buttonsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -241,26 +132,25 @@ public class LineElementsMarketPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(titleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
-                .addGap(12, 12, 12))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(conveyorPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(inputPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(machineLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(machineNextPreviousExternalPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(machineButtonsExternalPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(21, 21, 21))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(52, 52, 52)
+                        .addComponent(lineElementPreview, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(63, 63, 63))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(prodLineLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
+                            .addComponent(lineElementBuyCombo, javax.swing.GroupLayout.Alignment.LEADING, 0, 203, Short.MAX_VALUE)
+                            .addComponent(titleLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE))
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lineElementTypeLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
+                            .addComponent(toolsLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE))
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(buttonsExternalPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -268,51 +158,33 @@ public class LineElementsMarketPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(titleLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(conveyorPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(inputPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(prodLineLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(machineLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(machineButtonsExternalPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lineElementBuyCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(lineElementPreview, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(machineNextPreviousExternalPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addComponent(lineElementTypeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(toolsLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(buttonsExternalPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(154, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private List<JButton> machineButtons;
-	private static final long serialVersionUID = 1L;
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton conveyor;
-    private javax.swing.JLabel conveyorLabel;
-    private javax.swing.JPanel conveyorPanel;
-    private javax.swing.JButton input;
-    private javax.swing.JLabel inputLabel;
-    private javax.swing.JPanel inputPanel;
-    private javax.swing.JButton machine1;
-    private javax.swing.JButton machine10;
-    private javax.swing.JButton machine11;
-    private javax.swing.JButton machine12;
-    private javax.swing.JButton machine13;
-    private javax.swing.JButton machine14;
-    private javax.swing.JButton machine15;
-    private javax.swing.JButton machine2;
-    private javax.swing.JButton machine3;
-    private javax.swing.JButton machine4;
-    private javax.swing.JButton machine5;
-    private javax.swing.JButton machine6;
-    private javax.swing.JButton machine7;
-    private javax.swing.JButton machine8;
-    private javax.swing.JButton machine9;
-    private javax.swing.JPanel machineButtonsExternalPanel;
-    private javax.swing.JPanel machineButtonsPanel;
-    private javax.swing.JLabel machineLabel;
-    private javax.swing.JPanel machineNextPreviousExternalPanel;
-    private javax.swing.JPanel machineNextPreviousPanel;
-    private javax.swing.JButton nextMachine;
-    private javax.swing.JButton previousMachine;
+    private javax.swing.JPanel buttonsExternalPanel;
+    private javax.swing.JPanel buttonsPanel;
+    private javax.swing.JButton cancelToolButton;
+    private javax.swing.JComboBox lineElementBuyCombo;
+    private view.game.BackGroundPanel lineElementPreview;
+    private javax.swing.JLabel lineElementTypeLabel;
+    private javax.swing.JButton moveButton;
+    private javax.swing.JLabel prodLineLabel;
+    private javax.swing.JButton repairButton;
+    private javax.swing.JButton sellButton;
     private javax.swing.JLabel titleLabel;
+    private javax.swing.JLabel toolsLabel;
     // End of variables declaration//GEN-END:variables
 }

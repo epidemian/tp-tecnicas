@@ -1,7 +1,5 @@
 package view.game;
 
-import static model.utils.ArgumentUtils.checkNotNull;
-
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -21,7 +19,6 @@ public class BackGroundPanel extends javax.swing.JPanel {
     }
 
     public void setImage(BufferedImage image) {
-        checkNotNull(image, "image");
         this.image = image;
         this.repaint();
     }

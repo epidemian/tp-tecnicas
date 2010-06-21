@@ -61,14 +61,14 @@ public abstract class TileElementImageRecognizer extends TileElementVisitor {
 		this.onTileElmentVisited(outputElement, image);
 	}
 	
-	private BufferedImage getInputElementImage(
+	public static BufferedImage getInputElementImage(
 			InputProductionLineElement inputElement) {
 		char symbol = inputElement.getOutputConnectionDirection().getSymbol();
 		String imgName = INPUT_ELEMENT_PREFIX + symbol + IMG_EXTENSION;
 		return ImageLoader.getImage(imgName);
 	}
 
-	private BufferedImage getOutputElementImage(
+	public static BufferedImage getOutputElementImage(
 			OutputProductionLineElement outputElement) {
 		char symbol = outputElement.getInputConnectionDirection().getSymbol();
 		String imgName = OUTPUT_ELEMENT_PREFIX + symbol + IMG_EXTENSION;

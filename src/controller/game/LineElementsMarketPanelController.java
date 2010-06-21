@@ -1,170 +1,242 @@
 package controller.game;
 
+import java.awt.event.ActionEvent;
 import static model.utils.ArgumentUtils.checkNotNull;
 
-import java.awt.Dimension;
-import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.Action;
-import javax.swing.ImageIcon;
 
 import model.game.Player;
 import model.production.elements.machine.MachineType;
 import view.game.LineElementsMarketPanel;
 import view.game.TileElementImageRecognizer;
 import controller.game.edition.EditionActions;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import model.production.elements.Conveyor;
+import model.production.elements.InputProductionLineElement;
 
 public class LineElementsMarketPanelController {
 
-	private List<Action> machineButtonsActions;
-	private List<ImageIcon> machineButtonsImages;
-
-	private EditionActions editionActions;
-	private LineElementsMarketPanel marketPanel;
-	private int machineTab;
+	private List<Action> actions;
+	private List<BufferedImage> images;
+        private List<String> messages;
+        
+        private Action selectionTool;
+        private Action deleteTool;
 
 	public LineElementsMarketPanelController(Player game,
 			LineElementsMarketPanel marketPanel, EditionActions editionActions) {
 
-		checkNotNull(editionActions, "editionActions");
+                checkNotNull(game, "game");
 		checkNotNull(marketPanel, "marketPanel");
+		checkNotNull(editionActions, "editionActions");
 
-		this.editionActions = editionActions;
-		this.marketPanel = marketPanel;
+                this.selectionTool = editionActions.getActionToSetSelectionTool();
+                this.deleteTool = editionActions.getActionToSetDeleteTool();
 
-		this.machineButtonsActions = new ArrayList<Action>();
-		this.machineButtonsImages = new ArrayList<ImageIcon>();
+		this.actions = new ArrayList<Action>();
+		this.images = new ArrayList<BufferedImage>();
+                this.messages = new ArrayList<String>();
 
-		this.machineTab = 0;
+                this.initConveyor(editionActions);
+                this.initInput(editionActions);
+                this.initProductionMachines(editionActions,game.getValidProductionMachineTypes());
+                this.initQualityMachines(editionActions,game.getValidQualityControlMachineTypes());
 
-		initNextMachinesButtonActionListener();
-		initPreviousMachinesButtonActionListener();
-
-		// Conveyor action.
-		this.marketPanel.addConveyorButtonActionListener(this.editionActions
-				.getActionToSetConveyorTool());
-
-		// Raw materials input action.
-		this.marketPanel.addInputButtonActionListener(this.editionActions
-				.getActionToSetInputLineElementTool());
-
-		initMachineButtonsActionsAndImages(game);
-
-		this.setUpButtons();
+                this.initBuyCombo(marketPanel);
+                this.initToolButtons(marketPanel);
 	}
 
-	private void initMachineButtonsActionsAndImages(Player game) {
-		// Production machine buttons actions n' images.
-		for (MachineType mtype : game.getValidProductionMachineTypes()) {
-			ImageIcon icon = getScaleImage(TileElementImageRecognizer
-					.getMachineImage(mtype));
+        private void initConveyor(EditionActions editionActions){
+            BufferedImage image = TileElementImageRecognizer
+                    .getConveyorImage(new Conveyor());
+            Action action = editionActions
+                    .getActionToSetConveyorTool();
 
-			this.machineButtonsImages.add(icon);
-			this.machineButtonsActions.add(this.editionActions
-					.getActionToSetNewProductionMachineTool(mtype));
-		}
+            this.images.add(image);
+            this.actions.add(action);
+            this.messages.add("Conveyor");
+        }
 
-		// Quality control machine buttons actions n' images.
-		for (MachineType mtype : game.getValidQualityControlMachineTypes()) {
-			ImageIcon icon = getScaleImage(TileElementImageRecognizer
-					.getMachineImage(mtype));
+        private void initInput(EditionActions editionActions){
+             BufferedImage image = TileElementImageRecognizer
+                     .getInputElementImage(new InputProductionLineElement());
+            Action action = editionActions
+                    .getActionToSetInputLineElementTool();
 
-			this.machineButtonsImages.add(icon);
-			this.machineButtonsActions.add(this.editionActions
-					.getActionToSetNewQualityControlMachineTool(mtype));
-		}
-	}
+            this.images.add(image);
+            this.actions.add(action);
+            this.messages.add("Input");
+        }
 
-	static private ImageIcon getScaleImage(BufferedImage image) {
-		Dimension image_size = new Dimension(40, 35);
+        private void initProductionMachines(EditionActions editionActions,
+            List<MachineType> validProductionMachineTypes){
+             for (MachineType mtype : validProductionMachineTypes) {
+                BufferedImage image = TileElementImageRecognizer
+                    .getMachineImage(mtype);
+                Action action = editionActions
+                    .getActionToSetNewProductionMachineTool(mtype);
 
-		Image scaleImage = new ImageIcon(image).getImage().getScaledInstance(
-				image_size.width, image_size.height, Image.SCALE_SMOOTH);
-		return new ImageIcon(scaleImage);
-	}
+                this.images.add(image);
+                this.actions.add(action);
+                this.messages.add("Machine - " + mtype.getName());
+            }
+        }
 
-	private void initPreviousMachinesButtonActionListener() {
-		this.marketPanel
-				.addPreviousMachinesButtonActionListener(new ActionListener() {
+        private void initQualityMachines(EditionActions editionActions,
+            List<MachineType> validQualityMachineTypes){
+            for (MachineType mtype : validQualityMachineTypes) {
+                BufferedImage image = TileElementImageRecognizer
+                        .getMachineImage(mtype);
+                Action action = editionActions
+                        .getActionToSetNewQualityControlMachineTool(mtype);
 
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						LineElementsMarketPanelController.this
-								.decreseMachineTab();
+                this.images.add(image);
+                this.actions.add(action);
+                this.messages.add("Machine - " + mtype.getName());
+            }
+        }
 
-					}
-				});
-	}
 
-	private void initNextMachinesButtonActionListener() {
-		this.marketPanel
-				.addNextMachinesButtonActionListener(new ActionListener() {
+    private void initBuyCombo(final LineElementsMarketPanel marketPanel) {
 
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						LineElementsMarketPanelController.this
-								.increaseMachineTab();
-					}
-				});
-	}
+        final JComboBox lineElements = marketPanel.getBuyCombo();
 
-	private boolean canIncreseMachineTab() {
+        lineElements.removeAllItems();
+        lineElements.addItem(new LineElementComboEntry(-1,"-"));
 
-		int buttonsSize = this.marketPanel.getMachineButtonsSize();
-		int machinesSize = this.machineButtonsImages.size();
+        int i = 0;
+	for (String lineElementMessage : this.messages)
+            lineElements.addItem(new LineElementComboEntry(i++, lineElementMessage));
 
-		return machinesSize / buttonsSize >= this.machineTab + 1;
-	}
+        lineElements.addItemListener(new ItemListener() {
 
-	private boolean canDecreseMachineTab() {
-		return this.machineTab - 1 >= 0;
-	}
+            @Override
+            public void itemStateChanged(ItemEvent ie) {
+                rawMaterialComboAction(lineElements, marketPanel);
+            }
+        });
+    }
 
-	private void increaseMachineTab() {
-		this.machineTab++;
-		this.setUpButtons();
-	}
 
-	private void decreseMachineTab() {
-		this.machineTab--;
-		this.setUpButtons();
-	}
+    private void rawMaterialComboAction(JComboBox lineElements,
+            LineElementsMarketPanel marketPanel) {
 
-	/**
-	 * Determines the buttons that has to be shown on the panel.
-	 */
-	private void setUpButtons() {
+        LineElementComboEntry lineElementEntry =
+            (LineElementComboEntry)lineElements.getSelectedItem();
 
-		// Next-Previous machine buttons.
-		this.marketPanel.setNextMachineButtonEnabled(this
-				.canIncreseMachineTab());
-		this.marketPanel.setPreviousMachineButtonEnabled(this
-				.canDecreseMachineTab());
+        int index = lineElementEntry.getIndex();
 
-		// Machine buttons.
-		int buttonsSize = this.marketPanel.getMachineButtonsSize();
-		int machinesSize = this.machineButtonsImages.size();
+        // index = -1, null entry!
+        if (index >= 0){
+            BufferedImage image = this.images.get(index);
+            String message = this.messages.get(index);
+            Action action = this.actions.get(index);
 
-		int startIndex = buttonsSize * this.machineTab;
-		int lastIndex = machinesSize >= startIndex + buttonsSize ? startIndex
-				+ buttonsSize : machinesSize;
+            marketPanel.setLineElementImage(image);
+            marketPanel.setLineElementType(message);
+            action.actionPerformed(null);
+        }
+        else{
+            marketPanel.setLineElementImage(null);
+            marketPanel.setLineElementType(lineElementEntry.toString());
+            this.selectionTool.actionPerformed(null);
+        }
+    }
 
-		int j = 0;
-		for (int i = startIndex; i < lastIndex; i++, j++) {
-			Action action = this.machineButtonsActions.get(i);
-			ImageIcon icon = this.machineButtonsImages.get(i);
+    private void initToolButtons(final LineElementsMarketPanel marketPanel) {
 
-			this.marketPanel.setMachineButtonActionListener(j, action);
-			this.marketPanel.setMachineButtonIcon(j, icon);
-			this.marketPanel.setMachineButtonVisible(j, true);
-		}
-		for (; j < buttonsSize; j++) {
-			this.marketPanel.setMachineButtonVisible(j, false);
-		}
-	}
+        final JButton sellButton = marketPanel.getSellButton();
+        final JButton repairButton = marketPanel.getRepairButton();
+        final JButton moveButton = marketPanel.getMoveButton();
+        final JButton cancelButon = marketPanel.getCancelButton();
+
+        // Sell.
+        sellButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                enabledAllPanelElements(marketPanel, false);
+                sellButton.setEnabled(true);
+                cancelButon.setEnabled(true);
+                deleteTool.actionPerformed(e);
+            }
+        });
+
+
+        // Move.
+        moveButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                enabledAllPanelElements(marketPanel, false);
+                moveButton.setEnabled(true);
+                cancelButon.setEnabled(true);
+                selectionTool.actionPerformed(e);
+            }
+        });
+
+        // Repair.
+        repairButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                enabledAllPanelElements(marketPanel, false);
+                repairButton.setEnabled(true);
+                cancelButon.setEnabled(true);
+                throw new UnsupportedOperationException("Not supported yet.");
+            }
+        });
+
+        // Cancel.
+        cancelButon.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                enabledAllPanelElements(marketPanel, true);
+                selectionTool.actionPerformed(e);
+            }
+        });
+    }
+
+    private void enabledAllPanelElements(LineElementsMarketPanel marketPanel,
+        boolean aFlag){
+
+        marketPanel.getMoveButton().setEnabled(aFlag);
+        marketPanel.getSellButton().setEnabled(aFlag);
+        marketPanel.getCancelButton().setEnabled(aFlag);
+        marketPanel.getRepairButton().setEnabled(aFlag);
+
+        JComboBox combo = marketPanel.getBuyCombo();
+        combo.setSelectedIndex(0);
+        combo.setEnabled(aFlag);
+    }
+
+    private class LineElementComboEntry{
+
+        private String message;
+        private int index;
+
+        public LineElementComboEntry(int index, String message){
+            checkNotNull(message, "message");
+            this.message = message;
+            this.index = index;
+        }
+
+        public int getIndex(){
+            return this.index;
+        }
+
+        @Override
+        public String toString(){
+            return this.message;
+        }
+    }
 }
