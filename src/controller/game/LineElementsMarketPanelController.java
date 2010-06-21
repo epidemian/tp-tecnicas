@@ -21,6 +21,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import model.production.elements.Conveyor;
 import model.production.elements.InputProductionLineElement;
+import view.game.BackGroundPanel;
 
 public class LineElementsMarketPanelController {
 
@@ -30,6 +31,13 @@ public class LineElementsMarketPanelController {
         
         private Action selectionTool;
         private Action deleteTool;
+
+        private JButton sellButton;
+        private JButton repairButton;
+        private JButton moveButton;
+        private JButton cancelButon;
+
+        private JComboBox lineElements;
 
 	public LineElementsMarketPanelController(Player game,
 			LineElementsMarketPanel marketPanel, EditionActions editionActions) {
@@ -50,8 +58,14 @@ public class LineElementsMarketPanelController {
                 this.initProductionMachines(editionActions,game.getValidProductionMachineTypes());
                 this.initQualityMachines(editionActions,game.getValidQualityControlMachineTypes());
 
+                this.sellButton = marketPanel.getSellButton();
+                this.repairButton = marketPanel.getRepairButton();
+                this.moveButton = marketPanel.getMoveButton();
+                this.cancelButon = marketPanel.getCancelButton();
+                this.lineElements = marketPanel.getBuyCombo();
+
                 this.initBuyCombo(marketPanel);
-                this.initToolButtons(marketPanel);
+                this.initToolButtons();
 	}
 
         private void initConveyor(EditionActions editionActions){
@@ -107,8 +121,6 @@ public class LineElementsMarketPanelController {
 
     private void initBuyCombo(final LineElementsMarketPanel marketPanel) {
 
-        final JComboBox lineElements = marketPanel.getBuyCombo();
-
         lineElements.removeAllItems();
         lineElements.addItem(new LineElementComboEntry(-1,"-"));
 
@@ -120,14 +132,14 @@ public class LineElementsMarketPanelController {
 
             @Override
             public void itemStateChanged(ItemEvent ie) {
-                rawMaterialComboAction(lineElements, marketPanel);
+                lineElementsComboAction(marketPanel);
             }
         });
     }
 
 
-    private void rawMaterialComboAction(JComboBox lineElements,
-            LineElementsMarketPanel marketPanel) {
+    private void lineElementsComboAction(LineElementsMarketPanel
+            marketPanel) {
 
         LineElementComboEntry lineElementEntry =
             (LineElementComboEntry)lineElements.getSelectedItem();
@@ -149,21 +161,22 @@ public class LineElementsMarketPanelController {
             marketPanel.setLineElementType(lineElementEntry.toString());
             this.selectionTool.actionPerformed(null);
         }
+
+        enabledButtons(false);
+        cancelButon.setEnabled(true);
     }
 
-    private void initToolButtons(final LineElementsMarketPanel marketPanel) {
+    private void initToolButtons() {
 
-        final JButton sellButton = marketPanel.getSellButton();
-        final JButton repairButton = marketPanel.getRepairButton();
-        final JButton moveButton = marketPanel.getMoveButton();
-        final JButton cancelButon = marketPanel.getCancelButton();
-
+        cancelButon.setEnabled(false);
+        
         // Sell.
         sellButton.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                enabledAllPanelElements(marketPanel, false);
+                enabledButtons(false);
+                enabledCombo(false);
                 sellButton.setEnabled(true);
                 cancelButon.setEnabled(true);
                 deleteTool.actionPerformed(e);
@@ -176,7 +189,8 @@ public class LineElementsMarketPanelController {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                enabledAllPanelElements(marketPanel, false);
+                enabledButtons(false);
+                enabledCombo(false);
                 moveButton.setEnabled(true);
                 cancelButon.setEnabled(true);
                 selectionTool.actionPerformed(e);
@@ -188,9 +202,11 @@ public class LineElementsMarketPanelController {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                enabledAllPanelElements(marketPanel, false);
+                enabledButtons(false);
+                enabledCombo(false);
                 repairButton.setEnabled(true);
                 cancelButon.setEnabled(true);
+                
                 throw new UnsupportedOperationException("Not supported yet.");
             }
         });
@@ -200,23 +216,25 @@ public class LineElementsMarketPanelController {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                enabledAllPanelElements(marketPanel, true);
+                enabledCombo(true);
+                enabledButtons(true);
+                cancelButon.setEnabled(false);
                 selectionTool.actionPerformed(e);
             }
         });
     }
 
-    private void enabledAllPanelElements(LineElementsMarketPanel marketPanel,
-        boolean aFlag){
+    private void enabledButtons(boolean aFlag){
 
-        marketPanel.getMoveButton().setEnabled(aFlag);
-        marketPanel.getSellButton().setEnabled(aFlag);
-        marketPanel.getCancelButton().setEnabled(aFlag);
-        marketPanel.getRepairButton().setEnabled(aFlag);
+        moveButton.setEnabled(aFlag);
+        sellButton.setEnabled(aFlag);
+        cancelButon.setEnabled(aFlag);
+        repairButton.setEnabled(aFlag);
+    }
 
-        JComboBox combo = marketPanel.getBuyCombo();
-        combo.setSelectedIndex(0);
-        combo.setEnabled(aFlag);
+    private void enabledCombo(boolean aFlag){
+        lineElements.setSelectedIndex(0);
+        lineElements.setEnabled(aFlag);
     }
 
     private class LineElementComboEntry{
