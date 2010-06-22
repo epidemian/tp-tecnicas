@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ContainerAdapter;
 import java.awt.event.ContainerEvent;
 import java.awt.image.BufferedImage;
+import java.util.Observable;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -31,6 +32,7 @@ import view.game.ToolBarPanel;
 import controller.MainController;
 import controller.game.edition.EditionActions;
 import controller.game.edition.KeyInputActionMapper;
+import java.util.Observer;
 
 public class GamePanelController {
 
@@ -61,8 +63,18 @@ public class GamePanelController {
 		mapper.mapActions(gamePanel.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW),
 				gamePanel.getActionMap());
 
-		int balance = player.getBudget().getBalance();
-		gamePanel.getBudgetPanel().setMoneyBalance(balance);
+		/**
+                 * The budget panel is updated by the observer pattern.
+                 */
+                player.getBudget().addObserver(new Observer() {
+
+                @Override
+                public void update(Observable o, Object arg) {
+                    int balance = player.getBudget().getBalance();
+                    gamePanel.getBudgetPanel().setMoneyBalance(balance);
+                }
+                });
+
 		
 		GroundPanel groundPanel = new GroundPanel(player.getGround());
 		gamePanel.getGroundPanelContainer().setGroundPanel(groundPanel);

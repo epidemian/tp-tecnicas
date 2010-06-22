@@ -1,6 +1,9 @@
 package model.game;
 
-public class Budget {
+import java.util.Observable;
+
+public class Budget extends Observable{
+	
 	private int balance;
 
 	public Budget(int initialBalance) {
@@ -21,10 +24,14 @@ public class Budget {
 	
 	public void increment(int amount) {
 		this.balance += amount;
+		this.setChanged();
+		this.notifyObservers();
 	}
 	
 	public void decrement(int amount) {
 		this.balance -= amount;
+		this.setChanged();
+		this.notifyObservers();		
 	}
 	
 	public boolean canPurchase(int amount) {
