@@ -200,7 +200,7 @@ public class GamePanelController {
 	}
 
 	private void repaintGroundPanel() {
-		double elapsedTickTime = this.timeCount / TICK_INTERVAL;
+		double elapsedTickTime = (double) this.timeCount / TICK_INTERVAL;
 		getGroundPanel().setElapsedTickTime(elapsedTickTime);
 		getGroundPanel().repaint();
 	}

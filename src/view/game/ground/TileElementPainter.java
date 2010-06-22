@@ -22,6 +22,11 @@ import view.game.TileElementImageRecognizer;
  */
 public class TileElementPainter extends TileElementImageRecognizer {
 
+	private static final double ANIMATION_END_TIME = 0.75;
+	private static final double ANIMATION_START_TIME = 0.25;
+	private static final double ANIMATION_TOTAL_TIME = ANIMATION_END_TIME
+			- ANIMATION_START_TIME;
+
 	private static final Color BROKEN_MACHINE_COLOR = new Color(1, 0, 0, 0.4F);
 
 	private GroundPanel groundPanel;
@@ -76,15 +81,31 @@ public class TileElementPainter extends TileElementImageRecognizer {
 
 	private void drawProductOverElement(ProductionLineElement element) {
 		Product product = element.getProductContained();
-		if (product != null) {
-			Position pos = element.getPosition();
-			double x = pos.getCol() + 0.35;
-			double y = pos.getRow() + 0.35;
+		if (product != null && element.canHaveNextLineElement()) {
+			Position startPos;
+			if (element.getWidth() == 1 && element.getHeight() == 1)
+				startPos = element.getPosition();
+			else
+				startPos = element.getOutputConnectionPosition().subtract(
+						element.getOutputConnectionDirection()
+								.getAssociatedPosition());
+			Position endPos = element.getOutputConnectionPosition();
+			Position posDiff = endPos.subtract(startPos);
+			double dt;
+			if (this.elapsedTickTime < ANIMATION_START_TIME)
+				dt = 0;
+			else if (this.elapsedTickTime > ANIMATION_END_TIME)
+				dt = 1;
+			else
+				dt = (this.elapsedTickTime - ANIMATION_START_TIME) / ANIMATION_TOTAL_TIME;
+
+			
+			double x = startPos.getCol() + posDiff.getCol() * dt + 0.35;
+			double y = startPos.getRow() + posDiff.getRow() * dt + 0.35;
 			double size = 0.30;
 			Ellipse2D.Double dot = new Ellipse2D.Double(x, y, size, size);
 			graphics.setColor(Color.BLACK);
 			graphics.fill(dot);
 		}
 	}
-
 }
