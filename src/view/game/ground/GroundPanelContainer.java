@@ -1,4 +1,4 @@
-package view.game;
+package view.game.ground;
 
 import javax.swing.JScrollPane;
 

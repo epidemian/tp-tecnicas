@@ -19,7 +19,7 @@ public class MoveTool extends EditionTool {
 	private StartMoveVisitor startMoveVisitor = new StartMoveVisitor();
 	private ProductionLineElement movableElement;
 	private Position elementPositionBeforeMove;
-	private AddElementTool addTool = new AddElementTool();
+	private AddOneElementTool addTool;
 
 	public MoveTool(GamePanelController gamePanelController, Player game) {
 		super(gamePanelController, game);
@@ -65,7 +65,8 @@ public class MoveTool extends EditionTool {
 		getGround().removeTileElement(element);
 		disconnectLineElement(element);
 
-		this.addTool.reset();
+		this.addTool = new AddOneElementTool(getGamePanelController(),
+				getGame(), element);
 	}
 
 	private class StartMoveVisitor extends EditableElementVisitor {
@@ -116,27 +117,29 @@ public class MoveTool extends EditionTool {
 
 	}
 
-	private class AddElementTool extends AbstractAddLineElementTool {
+}
 
-		public AddElementTool() {
-			super(MoveTool.this.getGamePanelController(), MoveTool.this
-					.getGame());
-		}
+class AddOneElementTool extends AbstractAddLineElementTool {
 
-		@Override
-		protected ProductionLineElement createLineElement() {
-			return MoveTool.this.movableElement;
-		}
-
-		@Override
-		protected boolean haveEnoughMoney() {
-			return true;
-		}
-
-		@Override
-		protected void putLineElementAt(Position position) {
-			getGround().addTileElement(MoveTool.this.movableElement, position);
-		}
-
+	public AddOneElementTool(GamePanelController gamePanelController,
+			Player game, ProductionLineElement startElement) {
+		super(gamePanelController, game, startElement);
 	}
+
+	@Override
+	protected ProductionLineElement createLineElement() {
+		return null;
+	}
+
+	@Override
+	protected boolean haveEnoughMoney() {
+		return true;
+	}
+
+	@Override
+	protected void putLineElementAt(Position position,
+			ProductionLineElement element) {
+		getGround().addTileElement(element, position);
+	}
+
 }

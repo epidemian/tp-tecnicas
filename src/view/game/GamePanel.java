@@ -2,6 +2,8 @@ package view.game;
 
 import javax.swing.JPanel;
 
+import view.game.ground.GroundPanelContainer;
+
 public class GamePanel extends javax.swing.JPanel {
     
     /** Creates new form GamePanel */

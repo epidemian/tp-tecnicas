@@ -5,7 +5,7 @@ import model.warehouse.Ground;
 import model.warehouse.Position;
 import view.Painter;
 import view.game.GamePanel;
-import view.game.GroundPanel;
+import view.game.ground.GroundPanel;
 import controller.game.GamePanelController;
 
 public abstract class EditionTool implements Painter {

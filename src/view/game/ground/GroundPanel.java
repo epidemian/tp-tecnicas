@@ -1,16 +1,24 @@
-package view.game;
+package view.game.ground;
 
-import static model.utils.ArgumentUtils.checkNotNull;
+import static model.utils.ArgumentUtils.*;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Polygon;
+import java.awt.Shape;
+import java.awt.font.TextAttribute;
 import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
+import java.awt.geom.GeneralPath;
+import java.awt.geom.Path2D;
+import java.awt.geom.Path2D.Double;
+import java.text.AttributedCharacterIterator.Attribute;
+import java.util.Map;
 
 import javax.swing.JPanel;
 
@@ -19,7 +27,6 @@ import model.production.elements.Conveyor;
 import model.production.elements.InputProductionLineElement;
 import model.production.elements.OutputProductionLineElement;
 import model.production.elements.ProductionLineElement;
-import model.production.elements.machine.Machine;
 import model.production.elements.machine.ProductionMachine;
 import model.production.elements.machine.QualityControlMachine;
 import model.warehouse.Ground;
@@ -35,13 +42,17 @@ public class GroundPanel extends JPanel {
 
 	private static final Color HIGHLIGHT_COLOR = new Color(0, 1, 0, 0.3F);
 	private static final Color HIGHLIGHT_ARROWS_COLOR = new Color(0, 1, 0, 0.7F);
-	private static final Color BROKEN_MACHINE_COLOR = new Color(1, 0, 0, 0.4F);
-	
+	private static final Color NOTIFICATION_COLOR = Color.BLACK;
+
 	private static final int DEFAULT_TILE_SIZE = 50;
+
+	private static final float NOTIFICATION_TEXT_SIZE = 15f;
 
 	private final Ground ground;
 	private int tileSize;
 	private Painter painter;
+
+	private double elapsedTickTime;
 
 	public GroundPanel(Ground ground) {
 		this(ground, DEFAULT_TILE_SIZE);
@@ -63,7 +74,7 @@ public class GroundPanel extends JPanel {
 		int preferredWidth = ground.getCols() * tileSize;
 		int preferredHeight = ground.getRows() * tileSize;
 		this.setPreferredSize(new Dimension(preferredWidth, preferredHeight));
-		
+
 		this.setPainter(new Painter() {
 			@Override
 			public void paint(Graphics2D graphics) {
@@ -74,109 +85,38 @@ public class GroundPanel extends JPanel {
 	@Override
 	protected void paintComponent(Graphics graphics) {
 		super.paintComponent(graphics);
-		
+
 		Graphics2D g2d = (Graphics2D) graphics;
-		
+		g2d.scale(tileSize, tileSize);
+
+		g2d.setStroke(new BasicStroke(1.0f / this.tileSize));
 		drawVerticalLines(g2d);
 		drawHorizontalLines(g2d);
-		this.ground.visitElements(createElementPainter(g2d));
-		
+		this.ground.visitElements(new TileElementPainter(this, g2d,
+				this.elapsedTickTime));
+
 		this.painter.paint(g2d);
 	}
-	
+
 	private void drawVerticalLines(Graphics2D graphics) {
-		for (int col = 0; col <= this.ground.getCols(); col++) {
-
-			int x1 = col * this.tileSize;
-			int y1 = 0;
-			int x2 = col * this.tileSize;
-			int y2 = this.ground.getRows() * this.tileSize;
-
-			graphics.drawLine(x1, y1, x2, y2);
-		}
+		for (int col = 0; col <= this.ground.getCols(); col++)
+			graphics.drawLine(col, 0, col, this.ground.getRows());
 	}
 
 	private void drawHorizontalLines(Graphics2D graphics) {
-		for (int row = 0; row <= this.ground.getRows(); row++) {
-
-			int x1 = 0;
-			int y1 = row * this.tileSize;
-			int x2 = this.ground.getCols() * this.tileSize;
-			int y2 = row * this.tileSize;
-
-			graphics.drawLine(x1, y1, x2, y2);
-		}
+		for (int row = 0; row <= this.ground.getRows(); row++)
+			graphics.drawLine(0, row, this.ground.getCols(), row);
 	}
 
-	/*
-	 * Visitor used to draw each element in the warehouse.
-	 */
-	private TileElementVisitor createElementPainter(final Graphics2D graphics) {
-		return new TileElementImageRecognizer() {
-
-			@Override
-			protected void onTileElmentVisited(TileElement element,
-					BufferedImage image) {
-
-				int x = element.getPosition().getCol() * tileSize;
-				int y = element.getPosition().getRow() * tileSize;
-				int width = element.getWidth() * tileSize;
-				int height = element.getHeight() * tileSize;
-
-				graphics.drawImage(image, x, y, width, height, null);
-			}
-
-			@Override
-			public void visitWall(Wall wall) {
-
-				Position from = wall.getPosition();
-				Position to = from.add(new Position(wall.getHeight(), wall
-						.getWidth()));
-				Image image = ImageLoader.getImage(IMG_WALL);
-
-				for (int row = from.getRow(); row < to.getRow(); row++) {
-					for (int col = from.getCol(); col < to.getCol(); col++) {
-						int x = col * tileSize;
-						int y = row * tileSize;
-						graphics.drawImage(image, x, y, tileSize, tileSize,
-								null);
-
-					}
-				}
-			}
-
-			@Override
-			public void visitProductionMachine(ProductionMachine machine) {
-				super.visitProductionMachine(machine);
-				drawMachineState(graphics, machine);
-			}
-
-			@Override
-			public void visitQualityControlMachine(QualityControlMachine machine) {
-				super.visitQualityControlMachine(machine);
-				drawMachineState(graphics, machine);
-			}
-
-			private void drawMachineState(final Graphics2D graphics,
-					Machine machine) {
-				if (machine.isBroken())
-					drawRectangle(graphics, machine.getPosition(), machine
-							.getWidth(), machine.getHeight(),
-							BROKEN_MACHINE_COLOR);
-			}
-
-		};
+	public void drawImage(Image img, int row, int col, int width, int height,
+			Graphics2D graphics) {
+		graphics.drawImage(img, col, row, width, height, null);
 	}
 
 	public void drawRectangle(Graphics2D graphics, Position position,
 			int width, int height, Color color) {
-		int x = position.getCol() * this.tileSize;
-		int y = position.getRow() * this.tileSize;
-		int pixelW = width * this.tileSize;
-		int pixelH = height * this.tileSize;
-
 		graphics.setColor(color);
-		graphics.fillRect(x, y, pixelW, pixelH);
+		graphics.fillRect(position.getCol(), position.getRow(), width, height);
 	}
 
 	public void highlightTileElement(final TileElement tileElement,
@@ -245,41 +185,34 @@ public class GroundPanel extends JPanel {
 
 	public void drawInputArrow(Position position, Direction direction,
 			Color color, Graphics2D graphics) {
-		double[] xFloats = { 0.1, 0.5, 0.9 };
-		double[] yFloats = { 0.7, 0.9, 0.7 };
-		int[] xInts = scaleToInts(this.tileSize, xFloats);
-		int[] yInts = scaleToInts(this.tileSize, yFloats);
-		Polygon arrow = new Polygon(xInts, yInts, xFloats.length);
+		Path2D.Double arrow = new Path2D.Double();
+		arrow.moveTo(0.1, 0.7);
+		arrow.lineTo(0.5, 0.9);
+		arrow.lineTo(0.9, 0.7);
+
 		drawArrow(arrow, position, direction, color, graphics);
 	}
 
 	public void drawOutputArrow(Position position, Direction direction,
 			Color color, Graphics2D graphics) {
-		double[] xFloats = { 0.1, 0.5, 0.9 };
-		double[] yFloats = { 0.9, 0.7, 0.9 };
-		int[] xInts = scaleToInts(this.tileSize, xFloats);
-		int[] yInts = scaleToInts(this.tileSize, yFloats);
-		Polygon arrow = new Polygon(xInts, yInts, xFloats.length);
+		Path2D.Double arrow = new Path2D.Double();
+		arrow.moveTo(0.1, 0.9);
+		arrow.lineTo(0.5, 0.7);
+		arrow.lineTo(0.9, 0.9);
 		drawArrow(arrow, position, direction, color, graphics);
 	}
 
-	private int[] scaleToInts(double scale, double[] floats) {
-		int[] ints = new int[floats.length];
-		for (int i = 0; i < floats.length; i++)
-			ints[i] = (int) (floats[i] * scale);
-		return ints;
-	}
-
-	private void drawArrow(Polygon arrow, Position position,
-			Direction direction, Color color, Graphics2D graphics) {
+	private void drawArrow(Shape arrow, Position position, Direction direction,
+			Color color, Graphics2D graphics) {
 		AffineTransform backupTransform = graphics.getTransform();
 		double theta = direction.getAssociatedRotation();
-		double tx = this.tileSize * position.getCol();
-		double ty = this.tileSize * position.getRow();
+		double tx = position.getCol();
+		double ty = position.getRow();
 		graphics.translate(tx, ty);
-		graphics.rotate(theta, this.tileSize * 0.5, this.tileSize * 0.5);
+		graphics.rotate(theta, 0.5, 0.5);
 		graphics.setColor(color);
-		graphics.fillPolygon(arrow);
+
+		graphics.fill(arrow);
 
 		graphics.setTransform(backupTransform);
 	}
@@ -287,7 +220,7 @@ public class GroundPanel extends JPanel {
 	public Ground getGround() {
 		return ground;
 	}
-	
+
 	public void setPainter(Painter painter) {
 		checkNotNull(painter, "painter");
 		this.painter = painter;
@@ -305,25 +238,31 @@ public class GroundPanel extends JPanel {
 				: getPositionFromMousePosition(mousePosition);
 	}
 
-	
-
 	private Position getPositionFromMousePosition(Point point) {
-		return new Position(point.y / getTileSize(), point.x / getTileSize());
-	}
-
-	private int getTileSize() {
-		return this.tileSize;
+		return new Position(point.y / this.tileSize, point.x / this.tileSize);
 	}
 
 	public void drawNotificationBesideMouse(String notification,
 			Graphics2D graphics) {
-		Point mousePosition = this.getMousePosition();
+		Position mousePosition = this.getCurrentMousePosition();
 		if (mousePosition != null) {
-			int x = mousePosition.x + 20;
-			int y = mousePosition.y - 20;
-			graphics.setColor(Color.BLACK);
+			graphics.setColor(NOTIFICATION_COLOR);
+			graphics.setFont(getNotificationFont());
+
+			float x = mousePosition.getCol() + 0.3f;
+			float y = mousePosition.getRow() - 0.3f;
 			graphics.drawString(notification, x, y);
 		}
 	}
-}
 
+	private Font getNotificationFont() {
+		float size = NOTIFICATION_TEXT_SIZE / (float) this.tileSize;
+		return new Font(null).deriveFont(Font.BOLD, size);
+	}
+
+	public void setElapsedTickTime(double elapsedTickTime) {
+		checkArgCondition(elapsedTickTime, 0 <= elapsedTickTime
+				&& elapsedTickTime <= 1.0);
+		this.elapsedTickTime = elapsedTickTime;
+	}
+}

@@ -1,10 +1,10 @@
 package controller.game.edition.tools;
 
+import static controller.game.edition.ConnectionRules.canConnectLineElements;
 import static controller.game.edition.tools.Colors.*;
 import static controller.game.edition.tools.LineElementRecognizer.recognizeLineElement;
 import static model.production.elements.ProductionLineElement.connectLineElements;
 import static model.utils.StringUtils.join;
-import static controller.game.edition.ConnectionRules.canConnectLineElements;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -13,9 +13,7 @@ import java.util.List;
 
 import model.game.Player;
 import model.production.Direction;
-import model.production.elements.Conveyor;
 import model.production.elements.ProductionLineElement;
-import model.production.elements.machine.Machine;
 import model.warehouse.Position;
 import model.warehouse.TileElement;
 import controller.game.GamePanelController;
@@ -28,7 +26,13 @@ public abstract class AbstractAddLineElementTool extends EditionTool {
 
 	public AbstractAddLineElementTool(GamePanelController gamePanelController,
 			Player game) {
+		this(gamePanelController, game, null);
+	}
+	
+	public AbstractAddLineElementTool(GamePanelController gamePanelController,
+			Player game, ProductionLineElement startElement) {
 		super(gamePanelController, game);
+		this.lineElement = startElement;
 	}
 
 	@Override
@@ -60,7 +64,7 @@ public abstract class AbstractAddLineElementTool extends EditionTool {
 	@Override
 	public void mouseClicked(Position position) {
 		if (canPutElementAt(position) && haveEnoughMoney()) {
-			putLineElementAt(position);
+			putLineElementAt(position, this.lineElement);
 			tryConnectInput(position);
 			tryConnectOutput(position);
 
@@ -68,8 +72,8 @@ public abstract class AbstractAddLineElementTool extends EditionTool {
 		}
 	}
 
-	protected void putLineElementAt(Position position) {
-		getGame().buyAndAddProductionLineElement(this.lineElement, position);
+	protected void putLineElementAt(Position position, ProductionLineElement element) {
+		getGame().buyAndAddProductionLineElement(element, position);
 	}
 
 	protected abstract ProductionLineElement createLineElement();
@@ -206,10 +210,10 @@ public abstract class AbstractAddLineElementTool extends EditionTool {
 				|| !canConnectByRule) {
 			inputElement = null;
 		} else {
-			Position expectedConveyorOutputPos = inputPos.subtract(inputDir
+			Position expectedOutputPos = inputPos.subtract(inputDir
 					.getAssociatedPosition());
 			boolean canConnect = inputElement.getOutputConnectionPosition()
-					.equals(expectedConveyorOutputPos);
+					.equals(expectedOutputPos);
 			if (!canConnect)
 				inputElement = null;
 		}
@@ -228,10 +232,10 @@ public abstract class AbstractAddLineElementTool extends EditionTool {
 				|| !canConnectByRule) {
 			outputElement = null;
 		} else {
-			Position expectedConveyorInputPos = outputPos.subtract(outputDir
+			Position expectedInputPos = outputPos.subtract(outputDir
 					.getAssociatedPosition());
 			boolean canConnect = outputElement.getInputConnectionPosition()
-					.equals(expectedConveyorInputPos);
+					.equals(expectedInputPos);
 			if (!canConnect)
 				outputElement = null;
 		}

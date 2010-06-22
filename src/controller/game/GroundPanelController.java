@@ -8,7 +8,7 @@ import java.awt.event.MouseEvent;
 
 import model.game.Player;
 import model.warehouse.Position;
-import view.game.GroundPanel;
+import view.game.ground.GroundPanel;
 import controller.game.edition.EditionTool;
 
 public class GroundPanelController {
@@ -54,7 +54,6 @@ public class GroundPanelController {
 class NullEditionTool extends EditionTool {
 
 	public NullEditionTool() {
-		// TODO: this is quite ugly xD
 		super(null, null);
 	}
 

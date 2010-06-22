@@ -21,7 +21,6 @@ import model.warehouse.TileElement;
 import model.warehouse.TileElementVisitor;
 import view.game.Dialog;
 import view.game.GamePanel;
-import view.game.GroundPanel;
 import view.game.InputSelectionPanel;
 import view.game.LineElementsMarketPanel;
 import view.game.MachineSelectionPanel;
@@ -29,6 +28,7 @@ import view.game.RawMaterialsMarketPanel;
 import view.game.ResearchLabPanel;
 import view.game.TileElementImageRecognizer;
 import view.game.ToolBarPanel;
+import view.game.ground.GroundPanel;
 import controller.MainController;
 import controller.game.edition.EditionActions;
 import controller.game.edition.KeyInputActionMapper;
@@ -174,21 +174,11 @@ public class GamePanelController {
 
 		gamePanelRemovedListener = new GamePanelRemovedListener(mainLoopTimer);
 
-		updateView();
+		updateTimeView();
 	}
 
 	public GroundPanelController getGroundPanelController() {
 		return groundPanelController;
-	}
-
-	private void updateView() {
-		updateTimeView();
-		updateBudgetView();
-	}
-
-	private void updateBudgetView() {
-		int balance = this.player.getBudget().getBalance();
-		this.gamePanel.getBudgetPanel().setMoneyBalance(balance);
 	}
 
 	private void updateTimeView() {
@@ -203,14 +193,20 @@ public class GamePanelController {
 			while (this.timeCount >= TICK_INTERVAL) {
 				this.timeCount -= TICK_INTERVAL;
 				this.player.updateTick();
-				updateView();
+				updateTimeView();
 			}
 		}
 		repaintGroundPanel();
 	}
 
 	private void repaintGroundPanel() {
-		this.gamePanel.getGroundPanelContainer().getGroundPanel().repaint();
+		double elapsedTickTime = this.timeCount / TICK_INTERVAL;
+		getGroundPanel().setElapsedTickTime(elapsedTickTime);
+		getGroundPanel().repaint();
+	}
+
+	private GroundPanel getGroundPanel() {
+		return this.gamePanel.getGroundPanelContainer().getGroundPanel();
 	}
 
 	private void pauseButtonPressed() {

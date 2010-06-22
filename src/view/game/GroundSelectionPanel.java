@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JComboBox;
 
+import view.game.ground.GroundPanelContainer;
+
 public class GroundSelectionPanel extends javax.swing.JPanel {
 
 	private static final long serialVersionUID = 1L;

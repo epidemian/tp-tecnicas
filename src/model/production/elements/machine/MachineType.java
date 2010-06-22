@@ -44,7 +44,7 @@ public class MachineType extends AbstractType {
 		if (inputPosition.equals(outputPosition))
 			throw new BusinessLogicException(
 					"Input and output positions must not be equal");
-		
+
 		String wAndH = "width " + width + " height " + height;
 		checkArgCondition(inputPosition,
 				isValidInputOrOutputPosition(inputPosition),
@@ -147,16 +147,16 @@ public class MachineType extends AbstractType {
 	}
 
 	public static class Builder {
-		
+
 		private static final int DEFAULT_MACHINE_PRICE = 0;
 		private static final float DEFAULT_BREAK_MACHINE_CHANCE = 0.02f;
 		private static final float DEFAULT_DAMAGE_MACHINE_CHANCE = 0.02f;
-		
+
 		private String name;
 		private int width;
 		private int height;
 		private int price;
-		
+
 		private Position inputRelativePosition;
 		private Position outputRelativePosition;
 
@@ -167,16 +167,16 @@ public class MachineType extends AbstractType {
 			this.name = name;
 			this.width = width;
 			this.height = height;
-			
+
 			this.price = DEFAULT_MACHINE_PRICE;
 			this.breakChance = DEFAULT_BREAK_MACHINE_CHANCE;
 			this.damageChance = DEFAULT_DAMAGE_MACHINE_CHANCE;
-			
-			int col = height / 2; 
-			this.inputRelativePosition = new Position(col, -1); 
+
+			int col = (height - 1) / 2;
+			this.inputRelativePosition = new Position(col, -1);
 			this.outputRelativePosition = new Position(col, width);
 		}
-		
+
 		public Builder name(String name) {
 			this.name = name;
 			return this;
@@ -186,12 +186,12 @@ public class MachineType extends AbstractType {
 			this.width = width;
 			return this;
 		}
-		
+
 		public Builder height(int height) {
 			this.height = height;
 			return this;
 		}
-		
+
 		public Builder price(int price) {
 			this.price = price;
 			return this;
