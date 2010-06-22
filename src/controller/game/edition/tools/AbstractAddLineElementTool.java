@@ -60,13 +60,16 @@ public abstract class AbstractAddLineElementTool extends EditionTool {
 	@Override
 	public void mouseClicked(Position position) {
 		if (canPutElementAt(position) && haveEnoughMoney()) {
-			getGame()
-					.buyAndAddProductionLineElement(this.lineElement, position);
+			putLineElementAt(position);
 			tryConnectInput(position);
 			tryConnectOutput(position);
 
 			this.lineElement = createLineElement();
 		}
+	}
+
+	protected void putLineElementAt(Position position) {
+		getGame().buyAndAddProductionLineElement(this.lineElement, position);
 	}
 
 	protected abstract ProductionLineElement createLineElement();
@@ -149,7 +152,7 @@ public abstract class AbstractAddLineElementTool extends EditionTool {
 		Position inputPos = getInputConnectionPosition(position);
 		boolean emptyArea = getGround().canAddTileElementByDimension(1, 1,
 				inputPos);
-		boolean canConnect = canConnectInput(inputPos);
+		boolean canConnect = canConnectInput(position);
 
 		boolean canPutInput = emptyArea || canConnect;
 		if (!canPutInput && whyNot != null)
@@ -235,7 +238,7 @@ public abstract class AbstractAddLineElementTool extends EditionTool {
 		return outputElement;
 	}
 
-	private boolean haveEnoughMoney() {
+	protected boolean haveEnoughMoney() {
 		return this.getGame().canAfford(this.lineElement.getPurchasePrice());
 	}
 

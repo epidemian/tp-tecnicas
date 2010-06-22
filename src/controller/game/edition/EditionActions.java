@@ -78,7 +78,7 @@ public class EditionActions {
 
 	public Action getActionToSetMoveTool() {
 		EditionTool tool = new MoveTool(gamePanelController, game);
-		return getActionToSetTool(tool, "Delete");
+		return getActionToSetTool(tool, "Move");
 	}
 
 	private static void printToolSelection(String toolName) {

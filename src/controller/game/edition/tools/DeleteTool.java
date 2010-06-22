@@ -56,7 +56,7 @@ public class DeleteTool extends EditionTool {
 		disconnectLineElement(element);
 	}
 
-	private class DeleteVisitor extends TileElementVisitor {
+	private class DeleteVisitor extends EditableElementVisitor {
 
 		private ProductionLineElement deletableElement = null;
 		private String notification = "";
@@ -92,50 +92,15 @@ public class DeleteTool extends EditionTool {
 		}
 
 		@Override
-		public void visitConveyor(Conveyor conveyor) {
-			this.visitDeletableElement(conveyor);
-		}
-
-		@Override
-		public void visitEmptyElement(EmptyTileElement emptyTileElement) {
-			this.visitNonDeletableElement();
-		}
-
-		@Override
-		public void visitProductionMachine(ProductionMachine machine) {
-			this.visitDeletableElement(machine);
-		}
-
-		@Override
-		public void visitQualityControlMachine(QualityControlMachine machine) {
-			this.visitDeletableElement(machine);
-		}
-
-		@Override
-		public void visitWall(Wall wall) {
-			this.visitNonDeletableElement();
-		}
-
-		@Override
-		public void visitInputProductionLineElement(
-				InputProductionLineElement inputLineElement) {
-			visitDeletableElement(inputLineElement);
-		}
-
-		@Override
-		public void visitOutputProductionLineElement(
-				OutputProductionLineElement outputLineElement) {
-			visitNonDeletableElement();
-		}
-
-		private void visitDeletableElement(ProductionLineElement element) {
+		protected void visitEditableElement(ProductionLineElement element) {
 			this.deletableElement = element;
 			this.notification = "+" + getMoneyString(element.getSalePrice())
 					+ " - Click to sell element";
 		}
 
-		private void visitNonDeletableElement() {
-			this.notification = "Click over line element to delete it";
+		@Override
+		protected void visitNonEditableElement() {
+			this.notification = "Click over line element to sell it";
 		}
 
 	}

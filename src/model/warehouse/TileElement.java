@@ -1,6 +1,9 @@
 package model.warehouse;
 
 import static model.utils.ArgumentUtils.*;
+
+import org.hamcrest.core.IsNot;
+
 import model.exception.BusinessLogicException;
 
 abstract public class TileElement {
@@ -27,6 +30,13 @@ abstract public class TileElement {
 		return height;
 	}
 
+	/**
+	 * Retrieves the current position of the tile element on a ground. If the
+	 * element is not in a ground (i.e: {@link TileElement#isNowhere()} yields
+	 * true), this method throws an exception.
+	 * 
+	 * @return
+	 */
 	public Position getPosition() {
 		if (isNowhere())
 			throw new BusinessLogicException(
@@ -34,6 +44,11 @@ abstract public class TileElement {
 		return position;
 	}
 
+	/**
+	 * Returns true if the tile element has been added to a ground (and not
+	 * removed from it yet). 
+	 * @return
+	 */
 	public boolean isNowhere() {
 		return this.position.equals(NOWHERE);
 	}
@@ -49,7 +64,9 @@ abstract public class TileElement {
 	}
 
 	/**
-	 * Note: Should only be called by {@link Ground#addTileElement(TileElement, Position)}
+	 * Note: Should only be called by
+	 * {@link Ground#addTileElement(TileElement, Position)}
+	 * 
 	 * @param position
 	 */
 	void setPosition(Position position) {
@@ -66,5 +83,5 @@ abstract public class TileElement {
 	public final int hashCode() {
 		return super.hashCode();
 	}
-	
+
 }
