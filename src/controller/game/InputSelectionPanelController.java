@@ -28,160 +28,162 @@ import view.game.ViewUtils;
 
 public class InputSelectionPanelController {
 
-    private static final String[] columnNames = { "Type", "Quantity" };
+	private static final String[] columnNames = { "Type", "Quantity" };
 
-    private InputProductionLineElement input;
-    private RawMaterialType selectedRawMaterial;
-    private int rawMaterialQuantity;
+	private InputProductionLineElement input;
+	private RawMaterialType selectedRawMaterial;
+	private int rawMaterialQuantity;
 
-    public InputSelectionPanelController(InputProductionLineElement input,
-        InputSelectionPanel inputPanel, Player player){
+	public InputSelectionPanelController(InputProductionLineElement input,
+			InputSelectionPanel inputPanel, Player player) {
 
-        checkNotNull(input, "input");
-        checkNotNull(inputPanel, "inputPanel");
-        checkNotNull(player, "player");
+		checkNotNull(input, "input");
+		checkNotNull(inputPanel, "inputPanel");
+		checkNotNull(player, "player");
 
-        this.input = input;
+		this.input = input;
 
-        initRawMaterialCombo(inputPanel,player.getValidRawMaterialTypes());
-        initRawMaterialSpinner(inputPanel);
-        initRawMaterialTable(inputPanel);
-        initAddRawMaterialButton(inputPanel);
-        initDeleteRawMaterialButton(inputPanel);
-    }
+		initRawMaterialCombo(inputPanel, player.getValidRawMaterialTypes());
+		initRawMaterialSpinner(inputPanel);
+		initRawMaterialTable(inputPanel);
+		initAddRawMaterialButton(inputPanel);
+		initDeleteRawMaterialButton(inputPanel);
+	}
 
-    private void initRawMaterialCombo(InputSelectionPanel inputPanel,
-            List<RawMaterialType> validRawMaterialTypes) {
+	private void initRawMaterialCombo(InputSelectionPanel inputPanel,
+			List<RawMaterialType> validRawMaterialTypes) {
 
-        final JComboBox inputRawMaterial = inputPanel.getRawMaterialCombo();
+		final JComboBox inputRawMaterial = inputPanel.getRawMaterialCombo();
 
-        inputRawMaterial.removeAllItems();
-	for (RawMaterialType rtype : validRawMaterialTypes)
-            inputRawMaterial.addItem(new RawMaterialTypeComboEntry(rtype));
+		inputRawMaterial.removeAllItems();
+		for (RawMaterialType rtype : validRawMaterialTypes)
+			inputRawMaterial.addItem(new RawMaterialTypeComboEntry(rtype));
 
-        rawMaterialComboAction(inputRawMaterial);
+		rawMaterialComboAction(inputRawMaterial);
 
-        inputRawMaterial.addItemListener(new ItemListener() {
+		inputRawMaterial.addItemListener(new ItemListener() {
 
-            @Override
-            public void itemStateChanged(ItemEvent ie) {
-                rawMaterialComboAction(inputRawMaterial);
-            }
-        });
-    }
-    
-    private void rawMaterialComboAction(JComboBox inputRawMaterial){
-        
-        RawMaterialTypeComboEntry rawMaterialEntry =
-            (RawMaterialTypeComboEntry)inputRawMaterial.getSelectedItem();
-        this.selectedRawMaterial = rawMaterialEntry.getRawMaterialType();
-    }
+			@Override
+			public void itemStateChanged(ItemEvent ie) {
+				rawMaterialComboAction(inputRawMaterial);
+			}
+		});
+	}
 
-    private void initRawMaterialSpinner(InputSelectionPanel inputPanel) {
+	private void rawMaterialComboAction(JComboBox inputRawMaterial) {
 
-        int value = 0;
-        int minimum = 0;
-        int maximun = Integer.MAX_VALUE;
-        int stepSize = 1;
+		RawMaterialTypeComboEntry rawMaterialEntry = (RawMaterialTypeComboEntry) inputRawMaterial
+				.getSelectedItem();
+		this.selectedRawMaterial = rawMaterialEntry.getRawMaterialType();
+	}
 
-        SpinnerNumberModel model = new SpinnerNumberModel(value, minimum,
-            maximun, stepSize);
-        final JSpinner spinner = inputPanel.getQuantitySpinner();
-        spinner.setModel(model);
+	private void initRawMaterialSpinner(InputSelectionPanel inputPanel) {
 
-        spinner.addChangeListener(new ChangeListener() {
+		int value = 0;
+		int minimum = 0;
+		int maximun = Integer.MAX_VALUE;
+		int stepSize = 1;
 
-            @Override
-            public void stateChanged(ChangeEvent ce) {
-                rawMaterialQuantity = (Integer)(spinner.getValue());
-            }
-        });
-    }
+		SpinnerNumberModel model = new SpinnerNumberModel(value, minimum,
+				maximun, stepSize);
+		final JSpinner spinner = inputPanel.getQuantitySpinner();
+		spinner.setModel(model);
 
-    private void initRawMaterialTable(InputSelectionPanel inputPanel) {
+		spinner.addChangeListener(new ChangeListener() {
 
-        JTable table = inputPanel.getConfigTable();
-        DefaultTableModel model = new DefaultTableModel();
-        table.setModel(model);
+			@Override
+			public void stateChanged(ChangeEvent ce) {
+				rawMaterialQuantity = (Integer) (spinner.getValue());
+			}
+		});
+	}
 
-        updateRawMaterialTable(inputPanel);
-    }
+	private void initRawMaterialTable(InputSelectionPanel inputPanel) {
 
-    private void updateRawMaterialTable(InputSelectionPanel inputPanel){
-         JTable table = inputPanel.getConfigTable();
-         DefaultTableModel model = (DefaultTableModel) table.getModel();
+		JTable table = inputPanel.getConfigTable();
+		DefaultTableModel model = new DefaultTableModel();
+		table.setModel(model);
 
-         // Clears the table.
-         model.setRowCount(0);
-         model.setColumnCount(0);
+		updateRawMaterialTable(inputPanel);
+	}
 
-         model.addColumn(columnNames[0]);
-         model.addColumn(columnNames[1]);
+	private void updateRawMaterialTable(InputSelectionPanel inputPanel) {
+		JTable table = inputPanel.getConfigTable();
+		DefaultTableModel model = (DefaultTableModel) table.getModel();
 
-         Map<RawMaterialType, Integer> rawMaterials =
-            this.input.getRawMaterialsConfiguration().getRawMaterials();
+		// Clears the table.
+		model.setRowCount(0);
+		model.setColumnCount(0);
 
-        for (Entry<RawMaterialType, Integer> entry : rawMaterials.entrySet())
-                model.addRow(new Object[] { entry.getKey(), entry.getValue() });
+		model.addColumn(columnNames[0]);
+		model.addColumn(columnNames[1]);
 
-        ViewUtils.autoResizeColWidth(table, model);
-    }
+		Map<RawMaterialType, Integer> rawMaterials = this.input
+				.getRawMaterialsConfiguration().getRawMaterials();
 
-    private void initAddRawMaterialButton(final InputSelectionPanel inputPanel) {
+		for (Entry<RawMaterialType, Integer> entry : rawMaterials.entrySet())
+			model.addRow(new Object[] { entry.getKey(), entry.getValue() });
 
-        JButton add = inputPanel.getAddlButton();
+		ViewUtils.autoResizeColWidth(table, model);
+	}
 
-        add.addActionListener(new ActionListener() {
+	private void initAddRawMaterialButton(final InputSelectionPanel inputPanel) {
 
-            @Override
-            public void actionPerformed(ActionEvent ae) {
+		JButton add = inputPanel.getAddlButton();
 
-                RawMaterials config = input.getRawMaterialsConfiguration();
-                config.put(selectedRawMaterial, rawMaterialQuantity);
-                updateRawMaterialTable(inputPanel);
-            }
-        });
-    }
+		add.addActionListener(new ActionListener() {
 
-    private void initDeleteRawMaterialButton(final InputSelectionPanel inputPanel) {
+			@Override
+			public void actionPerformed(ActionEvent ae) {
 
-        JButton delete = inputPanel.getDeleteButton();
+				RawMaterials config = input.getRawMaterialsConfiguration();
+				config.put(selectedRawMaterial, rawMaterialQuantity);
+				updateRawMaterialTable(inputPanel);
+			}
+		});
+	}
 
-        delete.addActionListener(new ActionListener() {
+	private void initDeleteRawMaterialButton(
+			final InputSelectionPanel inputPanel) {
 
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-               JTable table = inputPanel.getConfigTable();
-  
-               int row = table.getSelectedRow();
-               int col = 0;
+		JButton delete = inputPanel.getDeleteButton();
 
-               // row = -1 when the table is empty.
-               if (row >= 0){
-                    RawMaterialType rtype = (RawMaterialType) table.getValueAt(row, col);
-                    input.getRawMaterialsConfiguration().remove(rtype);
-                    updateRawMaterialTable(inputPanel);
-               }
-            }
-        });
-    }
+		delete.addActionListener(new ActionListener() {
 
-    private class RawMaterialTypeComboEntry {
+			@Override
+			public void actionPerformed(ActionEvent ae) {
+				JTable table = inputPanel.getConfigTable();
 
-        private RawMaterialType rawMaterialType;
+				int row = table.getSelectedRow();
+				int col = 0;
 
-        public RawMaterialTypeComboEntry(RawMaterialType rawMaterialType){
-            checkNotNull(rawMaterialType, "rawMaterialType");
-            this.rawMaterialType = rawMaterialType;
-        }
+				// row = -1 when the table is empty.
+				if (row >= 0) {
+					RawMaterialType rtype = (RawMaterialType) table.getValueAt(
+							row, col);
+					input.getRawMaterialsConfiguration().remove(rtype);
+					updateRawMaterialTable(inputPanel);
+				}
+			}
+		});
+	}
 
-        public RawMaterialType getRawMaterialType(){
-            return this.rawMaterialType;
-        }
+	private class RawMaterialTypeComboEntry {
 
-        @Override
-        public String toString(){
-            return rawMaterialType.getName();
-        }
-    }
+		private RawMaterialType rawMaterialType;
+
+		public RawMaterialTypeComboEntry(RawMaterialType rawMaterialType) {
+			checkNotNull(rawMaterialType, "rawMaterialType");
+			this.rawMaterialType = rawMaterialType;
+		}
+
+		public RawMaterialType getRawMaterialType() {
+			return this.rawMaterialType;
+		}
+
+		@Override
+		public String toString() {
+			return rawMaterialType.getName();
+		}
+	}
 }

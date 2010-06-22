@@ -2,7 +2,6 @@ package controller.game;
 
 import static model.utils.ArgumentUtils.checkNotNull;
 
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -15,14 +14,9 @@ import javax.swing.JComboBox;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableColumn;
 
 import model.game.Budget;
 import model.game.Player;
@@ -31,12 +25,11 @@ import model.production.StorageArea;
 import model.warehouse.MarketPrices;
 import view.game.GamePanel;
 import view.game.RawMaterialsMarketPanel;
+import view.game.ViewUtils;
 
 public class RawMaterialsMarketPanelController {
 
-	private GamePanel gamePanel;
 	private Budget budget;
-	private RawMaterialsMarketPanel marketPanel;
 	private StorageArea storageArea;
 	private List<RawMaterialType> rawMaterialTypes;
 	private MarketPrices rawMaterialPrices;
@@ -48,6 +41,10 @@ public class RawMaterialsMarketPanelController {
 
 	private static final String[] columnNames = { "Type", "Quantity" };
 
+	private JSpinner quantitySpinner;
+	private JComboBox buyCombo;
+	private JTable table;
+
 	public RawMaterialsMarketPanelController(Player game,
 			RawMaterialsMarketPanel marketPanel, GamePanel gamePanel) {
 
@@ -58,96 +55,94 @@ public class RawMaterialsMarketPanelController {
 		this.storageArea = game.getStorageArea();
 		this.rawMaterialTypes = game.getValidRawMaterialTypes();
 		this.rawMaterialPrices = game.getMarketPrices();
-		this.marketPanel = marketPanel;
 		this.budget = game.getBudget();
-		this.gamePanel = gamePanel;
 
-		initBuyButtonActionListener();
-		initQuantitySpinner();
-		initBuyCombo();
+		this.quantitySpinner = marketPanel.getQuantitySpinner();
+		this.buyCombo = marketPanel.getBuyCombo();
+		this.table = marketPanel.getStockTable();
+
+		initBuyButtonActionListener(marketPanel);
+		initQuantitySpinner(marketPanel);
+		initBuyCombo(marketPanel);
 		updateTableData();
 	}
 
-	private void initQuantitySpinner() {
-		this.rawMaterialQuantityModel = new SpinnerNumberModel();
+	private void initQuantitySpinner(final RawMaterialsMarketPanel marketPanel) {
 
-		final RawMaterialsMarketPanelController thisRef = this;
-		final JSpinner quantitySpinner = this.marketPanel.getQuantitySpinner();
-		quantitySpinner.setModel(this.rawMaterialQuantityModel);
+		int value = 0;
+		int minimum = 0;
+		int maximum = Integer.MAX_VALUE;
+		int step = 1;
 
-		quantitySpinner.addChangeListener(new ChangeListener() {
+		this.rawMaterialQuantityModel = new SpinnerNumberModel(value, minimum,
+				maximum, step);
+		this.quantitySpinner.setModel(this.rawMaterialQuantityModel);
+		this.quantitySpinner.addChangeListener(new ChangeListener() {
 
 			@Override
 			public void stateChanged(ChangeEvent ce) {
-				thisRef.marketPanel.setRawMaterialPrice(thisRef
-						.getRawMaterialPrice());
+
+				int price = (Integer) rawMaterialQuantityModel.getValue()
+						* rawMaterialPrice;
+				marketPanel.setRawMaterialPrice(price);
 			}
 		});
 	}
 
-	private void initBuyCombo() {
-		final JComboBox buyCombo = this.marketPanel.getBuyCombo();
-		final RawMaterialsMarketPanelController thisRef = this;
+	private void initBuyCombo(final RawMaterialsMarketPanel marketPanel) {
 
 		buyCombo.removeAllItems();
-		for (RawMaterialType mtype : this.rawMaterialTypes) {
-			buyCombo.addItem(mtype.getName());
+
+		for (RawMaterialType rtype : this.rawMaterialTypes) {
+			buyCombo.addItem(new RawMaterialTypeComboEntry(rtype));
 		}
 
-		buyComboAction();
+		buyComboAction(marketPanel);
 
 		buyCombo.addItemListener(new ItemListener() {
 
 			@Override
 			public void itemStateChanged(ItemEvent ie) {
-				thisRef.buyComboAction();
+				buyComboAction(marketPanel);
 			}
 		});
 	}
 
-	/**
-	 * Gets the raw material selected by the combo, and set the price label with
-	 * the correct value.
-	 */
-	private void buyComboAction() {
-		JComboBox buyCombo = this.marketPanel.getBuyCombo();
-		int buyComboSelectedIndex = buyCombo.getSelectedIndex();
-		this.rawMaterialType = this.rawMaterialTypes.get(buyComboSelectedIndex);
+	private void buyComboAction(final RawMaterialsMarketPanel marketPanel) {
+
+		RawMaterialTypeComboEntry entry = (RawMaterialTypeComboEntry) buyCombo
+				.getSelectedItem();
+		this.rawMaterialType = entry.getRawMaterialType();
 		this.rawMaterialPrice = this.rawMaterialPrices
 				.getPriceByName(this.rawMaterialType.getName());
-		this.marketPanel.setRawMaterialPrice(getRawMaterialPrice());
+		marketPanel.setRawMaterialPrice(this.rawMaterialPrice);
 	}
 
-	private void initBuyButtonActionListener() {
-		final RawMaterialsMarketPanelController thisRef = this;
-		this.marketPanel.setBuyButtonActionListener(new ActionListener() {
+	private void initBuyButtonActionListener(
+			final RawMaterialsMarketPanel marketPanel) {
+
+		marketPanel.setBuyButtonActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent ae) {
 
-				if (thisRef.canBuyRawMaterial()) {
-					thisRef.budget.decrement(thisRef.getRawMaterialPrice());
-					thisRef.gamePanel.getBudgetPanel().setMoneyBalance(
-							thisRef.budget.getBalance());
-					thisRef.storageArea.getRawMaterials().store(
-							thisRef.rawMaterialType,
-							thisRef.getRawMaterialQuantity());
-					thisRef.updateTableData();
+				if (budget.canPurchase(rawMaterialPrice)) {
+
+					budget.decrement(rawMaterialPrice);
+
+					storageArea.getRawMaterials().store(rawMaterialType,
+							getRawMaterialQuantity());
+					updateTableData();
 				}
 			}
 		});
 	}
 
 	private int getRawMaterialQuantity() {
-		return ((Integer) this.rawMaterialQuantityModel.getValue());
-	}
-
-	private int getRawMaterialPrice() {
-		return this.getRawMaterialQuantity() * this.rawMaterialPrice;
+		return (Integer) rawMaterialQuantityModel.getValue();
 	}
 
 	private void updateTableData() {
-		JTable table = this.marketPanel.getStockTable();
 		DefaultTableModel model = new DefaultTableModel();
 		table.setModel(model);
 
@@ -160,61 +155,25 @@ public class RawMaterialsMarketPanelController {
 		for (Entry<RawMaterialType, Integer> entry : rawMaterials.entrySet())
 			model.addRow(new Object[] { entry.getKey(), entry.getValue() });
 
-		this.autoResizeColWidth(table, model);
+		ViewUtils.autoResizeColWidth(table, model);
 	}
 
-	/*
-	 * Internet code.
-	 */
-	private void autoResizeColWidth(JTable table, DefaultTableModel model) {
-		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		table.setModel(model);
+	private class RawMaterialTypeComboEntry {
 
-		int margin = 5;
+		private RawMaterialType rawMaterialType;
 
-		for (int i = 0; i < table.getColumnCount(); i++) {
-			int vColIndex = i;
-			DefaultTableColumnModel colModel = (DefaultTableColumnModel) table
-					.getColumnModel();
-			TableColumn col = colModel.getColumn(vColIndex);
-			int width = 0;
-
-			// Get width of column header
-			TableCellRenderer renderer = col.getHeaderRenderer();
-
-			if (renderer == null) {
-				renderer = table.getTableHeader().getDefaultRenderer();
-			}
-
-			Component comp = renderer.getTableCellRendererComponent(table, col
-					.getHeaderValue(), false, false, 0, 0);
-
-			width = comp.getPreferredSize().width;
-
-			// Get maximum width of column data
-			for (int r = 0; r < table.getRowCount(); r++) {
-				renderer = table.getCellRenderer(r, vColIndex);
-				comp = renderer.getTableCellRendererComponent(table, table
-						.getValueAt(r, vColIndex), false, false, r, vColIndex);
-				width = Math.max(width, comp.getPreferredSize().width);
-			}
-
-			// Add margin
-			width += 2 * margin;
-
-			// Set the width
-			col.setPreferredWidth(width);
+		public RawMaterialTypeComboEntry(RawMaterialType rawMaterialType) {
+			checkNotNull(rawMaterialType, "rawMaterialType");
+			this.rawMaterialType = rawMaterialType;
 		}
 
-		((DefaultTableCellRenderer) table.getTableHeader().getDefaultRenderer())
-				.setHorizontalAlignment(SwingConstants.LEFT);
+		public RawMaterialType getRawMaterialType() {
+			return this.rawMaterialType;
+		}
 
-		// table.setAutoCreateRowSorter(true);
-		table.getTableHeader().setReorderingAllowed(false);
+		@Override
+		public String toString() {
+			return rawMaterialType.getName();
+		}
 	}
-
-	private boolean canBuyRawMaterial() {
-        	return this.budget.canPurchase(this.getRawMaterialPrice());
-	}
-
 }

@@ -64,22 +64,20 @@ public class GamePanelController {
 				gamePanel.getActionMap());
 
 		/**
-                 * The budget panel is updated by the observer pattern.
-                 */
-                player.getBudget().addObserver(new Observer() {
+		 * The budget panel is updated by the observer pattern.
+		 */
+		player.getBudget().addObserver(new Observer() {
 
-                @Override
-                public void update(Observable o, Object arg) {
-                    int balance = player.getBudget().getBalance();
-                    gamePanel.getBudgetPanel().setMoneyBalance(balance);
-                }
-                });
+			@Override
+			public void update(Observable o, Object arg) {
+				int balance = player.getBudget().getBalance();
+				gamePanel.getBudgetPanel().setMoneyBalance(balance);
+			}
+		});
 
-		
 		GroundPanel groundPanel = new GroundPanel(player.getGround());
 		gamePanel.getGroundPanelContainer().setGroundPanel(groundPanel);
 		groundPanelController = new GroundPanelController(player, groundPanel);
-		
 
 		ToolBarPanel toolBar = gamePanel.getToolBarPanel();
 
@@ -178,7 +176,7 @@ public class GamePanelController {
 
 		updateView();
 	}
-	
+
 	public GroundPanelController getGroundPanelController() {
 		return groundPanelController;
 	}

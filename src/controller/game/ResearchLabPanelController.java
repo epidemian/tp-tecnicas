@@ -63,7 +63,7 @@ public class ResearchLabPanelController {
 		});
 	}
 
-	// TODO: Me parece que no hace falta un botón para confirmar que se 
+	// TODO: Me parece que no hace falta un botón para confirmar que se
 	// cambió el daily funding, tranquilamente el spinner lo puede ir seteando.
 	private void initDailyFundingAcceptButton() {
 
@@ -126,8 +126,9 @@ public class ResearchLabPanelController {
 					+ getMoneyString(technology.getResearchCost()) + "\n";
 		}
 		this.labPanel.setTechnologyInfo(description);
-		
-		this.labPanel.getResearchButton().setEnabled(!technology.isResearched());
+
+		this.labPanel.getResearchButton()
+				.setEnabled(!technology.isResearched());
 	}
 
 	private void initTechnologyResearchButton() {

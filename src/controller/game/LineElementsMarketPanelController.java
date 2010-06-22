@@ -27,234 +27,230 @@ public class LineElementsMarketPanelController {
 
 	private List<Action> actions;
 	private List<BufferedImage> images;
-        private List<String> messages;
-        
-        private Action selectionTool;
-        private Action deleteTool;
+	private List<String> messages;
 
-        private JButton sellButton;
-        private JButton repairButton;
-        private JButton moveButton;
-        private JButton cancelButon;
+	private Action selectionTool;
+	private Action deleteTool;
 
-        private JComboBox lineElements;
+	private JButton sellButton;
+	private JButton repairButton;
+	private JButton moveButton;
+	private JButton cancelButon;
+
+	private JComboBox lineElements;
 
 	public LineElementsMarketPanelController(Player game,
 			LineElementsMarketPanel marketPanel, EditionActions editionActions) {
 
-                checkNotNull(game, "game");
+		checkNotNull(game, "game");
 		checkNotNull(marketPanel, "marketPanel");
 		checkNotNull(editionActions, "editionActions");
 
-                this.selectionTool = editionActions.getActionToSetSelectionTool();
-                this.deleteTool = editionActions.getActionToSetDeleteTool();
+		this.selectionTool = editionActions.getActionToSetSelectionTool();
+		this.deleteTool = editionActions.getActionToSetDeleteTool();
 
 		this.actions = new ArrayList<Action>();
 		this.images = new ArrayList<BufferedImage>();
-                this.messages = new ArrayList<String>();
+		this.messages = new ArrayList<String>();
 
-                this.initConveyor(editionActions);
-                this.initInput(editionActions);
-                this.initProductionMachines(editionActions,game.getValidProductionMachineTypes());
-                this.initQualityMachines(editionActions,game.getValidQualityControlMachineTypes());
+		this.initConveyor(editionActions);
+		this.initInput(editionActions);
+		this.initProductionMachines(editionActions, game
+				.getValidProductionMachineTypes());
+		this.initQualityMachines(editionActions, game
+				.getValidQualityControlMachineTypes());
 
-                this.sellButton = marketPanel.getSellButton();
-                this.repairButton = marketPanel.getRepairButton();
-                this.moveButton = marketPanel.getMoveButton();
-                this.cancelButon = marketPanel.getCancelButton();
-                this.lineElements = marketPanel.getBuyCombo();
+		this.sellButton = marketPanel.getSellButton();
+		this.repairButton = marketPanel.getRepairButton();
+		this.moveButton = marketPanel.getMoveButton();
+		this.cancelButon = marketPanel.getCancelButton();
+		this.lineElements = marketPanel.getBuyCombo();
 
-                this.initBuyCombo(marketPanel);
-                this.initToolButtons();
+		this.initBuyCombo(marketPanel);
+		this.initToolButtons();
 	}
 
-        private void initConveyor(EditionActions editionActions){
-            BufferedImage image = TileElementImageRecognizer
-                    .getConveyorImage(new Conveyor());
-            Action action = editionActions
-                    .getActionToSetConveyorTool();
+	private void initConveyor(EditionActions editionActions) {
+		BufferedImage image = TileElementImageRecognizer
+				.getConveyorImage(new Conveyor());
+		Action action = editionActions.getActionToSetConveyorTool();
 
-            this.images.add(image);
-            this.actions.add(action);
-            this.messages.add("Conveyor");
-        }
+		this.images.add(image);
+		this.actions.add(action);
+		this.messages.add("Conveyor");
+	}
 
-        private void initInput(EditionActions editionActions){
-             BufferedImage image = TileElementImageRecognizer
-                     .getInputElementImage(new InputProductionLineElement());
-            Action action = editionActions
-                    .getActionToSetInputLineElementTool();
+	private void initInput(EditionActions editionActions) {
+		BufferedImage image = TileElementImageRecognizer
+				.getInputElementImage(new InputProductionLineElement());
+		Action action = editionActions.getActionToSetInputLineElementTool();
 
-            this.images.add(image);
-            this.actions.add(action);
-            this.messages.add("Input");
-        }
+		this.images.add(image);
+		this.actions.add(action);
+		this.messages.add("Input");
+	}
 
-        private void initProductionMachines(EditionActions editionActions,
-            List<MachineType> validProductionMachineTypes){
-             for (MachineType mtype : validProductionMachineTypes) {
-                BufferedImage image = TileElementImageRecognizer
-                    .getMachineImage(mtype);
-                Action action = editionActions
-                    .getActionToSetNewProductionMachineTool(mtype);
+	private void initProductionMachines(EditionActions editionActions,
+			List<MachineType> validProductionMachineTypes) {
+		for (MachineType mtype : validProductionMachineTypes) {
+			BufferedImage image = TileElementImageRecognizer
+					.getMachineImage(mtype);
+			Action action = editionActions
+					.getActionToSetNewProductionMachineTool(mtype);
 
-                this.images.add(image);
-                this.actions.add(action);
-                this.messages.add("Machine - " + mtype.getName());
-            }
-        }
+			this.images.add(image);
+			this.actions.add(action);
+			this.messages.add("Machine - " + mtype.getName());
+		}
+	}
 
-        private void initQualityMachines(EditionActions editionActions,
-            List<MachineType> validQualityMachineTypes){
-            for (MachineType mtype : validQualityMachineTypes) {
-                BufferedImage image = TileElementImageRecognizer
-                        .getMachineImage(mtype);
-                Action action = editionActions
-                        .getActionToSetNewQualityControlMachineTool(mtype);
+	private void initQualityMachines(EditionActions editionActions,
+			List<MachineType> validQualityMachineTypes) {
+		for (MachineType mtype : validQualityMachineTypes) {
+			BufferedImage image = TileElementImageRecognizer
+					.getMachineImage(mtype);
+			Action action = editionActions
+					.getActionToSetNewQualityControlMachineTool(mtype);
 
-                this.images.add(image);
-                this.actions.add(action);
-                this.messages.add("Machine - " + mtype.getName());
-            }
-        }
+			this.images.add(image);
+			this.actions.add(action);
+			this.messages.add("Machine - " + mtype.getName());
+		}
+	}
 
+	private void initBuyCombo(final LineElementsMarketPanel marketPanel) {
 
-    private void initBuyCombo(final LineElementsMarketPanel marketPanel) {
+		lineElements.removeAllItems();
+		lineElements.addItem(new LineElementComboEntry(-1, "-"));
 
-        lineElements.removeAllItems();
-        lineElements.addItem(new LineElementComboEntry(-1,"-"));
+		int i = 0;
+		for (String lineElementMessage : this.messages)
+			lineElements.addItem(new LineElementComboEntry(i++,
+					lineElementMessage));
 
-        int i = 0;
-	for (String lineElementMessage : this.messages)
-            lineElements.addItem(new LineElementComboEntry(i++, lineElementMessage));
+		lineElements.addItemListener(new ItemListener() {
 
-        lineElements.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent ie) {
+				lineElementsComboAction(marketPanel);
+			}
+		});
+	}
 
-            @Override
-            public void itemStateChanged(ItemEvent ie) {
-                lineElementsComboAction(marketPanel);
-            }
-        });
-    }
+	private void lineElementsComboAction(LineElementsMarketPanel marketPanel) {
 
+		LineElementComboEntry lineElementEntry = (LineElementComboEntry) lineElements
+				.getSelectedItem();
 
-    private void lineElementsComboAction(LineElementsMarketPanel
-            marketPanel) {
+		int index = lineElementEntry.getIndex();
 
-        LineElementComboEntry lineElementEntry =
-            (LineElementComboEntry)lineElements.getSelectedItem();
+		// index = -1, null entry!
+		if (index >= 0) {
+			BufferedImage image = this.images.get(index);
+			String message = this.messages.get(index);
+			Action action = this.actions.get(index);
 
-        int index = lineElementEntry.getIndex();
+			marketPanel.setLineElementImage(image);
+			marketPanel.setLineElementType(message);
+			action.actionPerformed(null);
+		} else {
+			marketPanel.setLineElementImage(null);
+			marketPanel.setLineElementType(lineElementEntry.toString());
+			this.selectionTool.actionPerformed(null);
+		}
 
-        // index = -1, null entry!
-        if (index >= 0){
-            BufferedImage image = this.images.get(index);
-            String message = this.messages.get(index);
-            Action action = this.actions.get(index);
+		enabledButtons(false);
+		cancelButon.setEnabled(true);
+	}
 
-            marketPanel.setLineElementImage(image);
-            marketPanel.setLineElementType(message);
-            action.actionPerformed(null);
-        }
-        else{
-            marketPanel.setLineElementImage(null);
-            marketPanel.setLineElementType(lineElementEntry.toString());
-            this.selectionTool.actionPerformed(null);
-        }
+	private void initToolButtons() {
 
-        enabledButtons(false);
-        cancelButon.setEnabled(true);
-    }
+		cancelButon.setEnabled(false);
 
-    private void initToolButtons() {
+		// Sell.
+		sellButton.addActionListener(new ActionListener() {
 
-        cancelButon.setEnabled(false);
-        
-        // Sell.
-        sellButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				enabledButtons(false);
+				enabledCombo(false);
+				sellButton.setEnabled(true);
+				cancelButon.setEnabled(true);
+				deleteTool.actionPerformed(e);
+			}
+		});
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                enabledButtons(false);
-                enabledCombo(false);
-                sellButton.setEnabled(true);
-                cancelButon.setEnabled(true);
-                deleteTool.actionPerformed(e);
-            }
-        });
+		// Move.
+		moveButton.addActionListener(new ActionListener() {
 
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				enabledButtons(false);
+				enabledCombo(false);
+				moveButton.setEnabled(true);
+				cancelButon.setEnabled(true);
+				selectionTool.actionPerformed(e);
+			}
+		});
 
-        // Move.
-        moveButton.addActionListener(new ActionListener() {
+		// Repair.
+		repairButton.addActionListener(new ActionListener() {
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                enabledButtons(false);
-                enabledCombo(false);
-                moveButton.setEnabled(true);
-                cancelButon.setEnabled(true);
-                selectionTool.actionPerformed(e);
-            }
-        });
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				enabledButtons(false);
+				enabledCombo(false);
+				repairButton.setEnabled(true);
+				cancelButon.setEnabled(true);
 
-        // Repair.
-        repairButton.addActionListener(new ActionListener() {
+				throw new UnsupportedOperationException("Not supported yet.");
+			}
+		});
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                enabledButtons(false);
-                enabledCombo(false);
-                repairButton.setEnabled(true);
-                cancelButon.setEnabled(true);
-                
-                throw new UnsupportedOperationException("Not supported yet.");
-            }
-        });
+		// Cancel.
+		cancelButon.addActionListener(new ActionListener() {
 
-        // Cancel.
-        cancelButon.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				enabledCombo(true);
+				enabledButtons(true);
+				cancelButon.setEnabled(false);
+				selectionTool.actionPerformed(e);
+			}
+		});
+	}
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                enabledCombo(true);
-                enabledButtons(true);
-                cancelButon.setEnabled(false);
-                selectionTool.actionPerformed(e);
-            }
-        });
-    }
+	private void enabledButtons(boolean aFlag) {
 
-    private void enabledButtons(boolean aFlag){
+		moveButton.setEnabled(aFlag);
+		sellButton.setEnabled(aFlag);
+		cancelButon.setEnabled(aFlag);
+		repairButton.setEnabled(aFlag);
+	}
 
-        moveButton.setEnabled(aFlag);
-        sellButton.setEnabled(aFlag);
-        cancelButon.setEnabled(aFlag);
-        repairButton.setEnabled(aFlag);
-    }
+	private void enabledCombo(boolean aFlag) {
+		lineElements.setSelectedIndex(0);
+		lineElements.setEnabled(aFlag);
+	}
 
-    private void enabledCombo(boolean aFlag){
-        lineElements.setSelectedIndex(0);
-        lineElements.setEnabled(aFlag);
-    }
+	private class LineElementComboEntry {
 
-    private class LineElementComboEntry{
+		private String message;
+		private int index;
 
-        private String message;
-        private int index;
+		public LineElementComboEntry(int index, String message) {
+			checkNotNull(message, "message");
+			this.message = message;
+			this.index = index;
+		}
 
-        public LineElementComboEntry(int index, String message){
-            checkNotNull(message, "message");
-            this.message = message;
-            this.index = index;
-        }
+		public int getIndex() {
+			return this.index;
+		}
 
-        public int getIndex(){
-            return this.index;
-        }
-
-        @Override
-        public String toString(){
-            return this.message;
-        }
-    }
+		@Override
+		public String toString() {
+			return this.message;
+		}
+	}
 }
