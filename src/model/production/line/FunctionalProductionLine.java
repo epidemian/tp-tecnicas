@@ -41,7 +41,6 @@ class FunctionalProductionLine extends ProductionLine {
 
 	@Override
 	public void updateTick() {
-		System.out.println("Update tick functional line, is working: " + isWorking());
 		if (isWorking()) {
 			Iterator<ProductionLineElement> iterator = this.iterator();
 			Product product = this.getStorageArea().createProduct(

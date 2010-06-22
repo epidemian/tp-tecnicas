@@ -1,7 +1,6 @@
 package model.production;
 
 import static model.production.TestUtils.createMachineType;
-import static model.production.elements.ProductionLineElement.connectLineElements;
 import static model.production.line.ProductionLine.createDisfunctionalProductionLine;
 import static org.junit.Assert.assertEquals;
 
@@ -101,6 +100,12 @@ public class ProductionLinesCreatorTest {
 		linesCreated.add(line3);
 
 		return linesCreated;
+	}
+
+	private static void connectLineElements(ProductionLineElement previous,
+			ProductionLineElement next) {
+		ProductionLineElement.connectLineElements(previous, next,
+				new PermissiveConnectionRules());
 	}
 
 	private ProductionLineElement createProductionMachine(String typeName) {

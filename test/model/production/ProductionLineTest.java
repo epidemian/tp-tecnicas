@@ -9,6 +9,7 @@ import java.util.List;
 import model.game.Budget;
 import model.production.elements.InputProductionLineElement;
 import model.production.elements.OutputProductionLineElement;
+import model.production.elements.ProductionLineElement;
 import model.production.elements.machine.Machine;
 import model.production.elements.machine.MachineType;
 import model.production.elements.machine.ProductionMachine;
@@ -65,6 +66,12 @@ public class ProductionLineTest {
 		this.productionLine = ProductionLine.createFunctionalProductionLine(
 				new StorageArea(new ValidProductionSequences()), inputElement,
 				outputElement);
+	}
+	
+	private static void connectLineElements(ProductionLineElement previous,
+			ProductionLineElement next) {
+		ProductionLineElement.connectLineElements(previous, next,
+				new PermissiveConnectionRules());
 	}
 
 	@Test

@@ -25,6 +25,7 @@ import model.warehouse.Position;
 import model.warehouse.TileElement;
 import model.warehouse.TileElementVisitor;
 import controller.game.GamePanelController;
+import controller.game.edition.ConnectionRules;
 import controller.game.edition.EditionTool;
 
 public class AddConveyorTool extends EditionTool {
@@ -90,12 +91,12 @@ public class AddConveyorTool extends EditionTool {
 					: prevConveyor;
 
 			Conveyor conveyor = createConveyor(currPos, prevPos, nextPos);
-			connectLineElements(prevElement, conveyor);
+			connectLineElements(prevElement, conveyor, ConnectionRules.getInstance());
 			buyAndAddConveyor(conveyor, currPos);
 
 			prevConveyor = conveyor;
 		}
-		connectLineElements(prevConveyor, lastElement);
+		connectLineElements(prevConveyor, lastElement, ConnectionRules.getInstance());
 		updateBudgetView();
 	}
 
@@ -346,7 +347,7 @@ public class AddConveyorTool extends EditionTool {
 
 	private void drawConveyorRectangle(Position position, Color color,
 			Graphics2D graphics) {
-		getGroundPanel().drawRectangle(graphics, position, 1, 1, color);
+		getGroundPanel().drawRectangle(graphics, position, Conveyor.WIDTH, Conveyor.HEIGHT, color);
 	}
 
 	private void drawAllConveyorPositions(Graphics2D graphics) {
@@ -382,49 +383,4 @@ public class AddConveyorTool extends EditionTool {
 			TileElement tileElement) {
 		return LineElementRecognizer.recognizeLineElement(tileElement);
 	}
-}
-
-class LineElementRecognizer extends TileElementVisitor {
-
-	private static final LineElementRecognizer INSTANCE = new LineElementRecognizer();
-
-	private LineElementRecognizer() {
-	}
-
-	private ProductionLineElement lineElement;
-
-	public static ProductionLineElement recognizeLineElement(
-			TileElement tileElement) {
-		INSTANCE.lineElement = null;
-		tileElement.accept(INSTANCE);
-		return INSTANCE.lineElement;
-	}
-
-	@Override
-	public void visitConveyor(Conveyor conveyor) {
-		this.lineElement = conveyor;
-	}
-
-	@Override
-	public void visitProductionMachine(ProductionMachine machine) {
-		this.lineElement = machine;
-	}
-
-	@Override
-	public void visitQualityControlMachine(QualityControlMachine machine) {
-		this.lineElement = machine;
-	}
-
-	@Override
-	public void visitInputProductionLineElement(
-			InputProductionLineElement inputLineElement) {
-		this.lineElement = inputLineElement;
-	}
-
-	@Override
-	public void visitOutputProductionLineElement(
-			OutputProductionLineElement outputLineElement) {
-		this.lineElement = outputLineElement;
-	}
-
 }

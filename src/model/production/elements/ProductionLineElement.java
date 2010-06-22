@@ -70,10 +70,12 @@ abstract public class ProductionLineElement extends TileElement {
 	}
 
 	public static void connectLineElements(ProductionLineElement previous,
-			ProductionLineElement next) {
+			ProductionLineElement next, ConnectionRules rules) {
 		if (!previous.canHaveNextLineElement()
-				|| !next.canHavePreviousLineElement())
-			throw new BusinessLogicException("Invalid connection");
+				|| !next.canHavePreviousLineElement()
+				|| !rules.canConnect(previous, next))
+			throw new BusinessLogicException("Invalid connection [previous="
+					+ previous + ", next=" + next + "]");
 		previous.nextLineElement = next;
 		next.previousLineElement = previous;
 	}
@@ -89,9 +91,17 @@ abstract public class ProductionLineElement extends TileElement {
 		}
 	}
 
-	public abstract Position getInputConnectionPosition();
+	public final Position getInputConnectionPosition() {
+		return getPosition().add(getInputConnectionRelativePosition());
+	}
 
-	public abstract Position getOutputConnectionPosition();
+	public final Position getOutputConnectionPosition() {
+		return getPosition().add(getOutputConnectionRelativePosition());
+	}
+
+	public abstract Position getOutputConnectionRelativePosition();
+
+	public abstract Position getInputConnectionRelativePosition();
 
 	public abstract Direction getInputConnectionDirection();
 

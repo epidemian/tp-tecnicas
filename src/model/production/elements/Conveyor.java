@@ -10,7 +10,9 @@ public class Conveyor extends ProductionLineElement {
 
 	public static final int PURCHASE_PRICE = 10;
 	public static final int SALE_PRICE = 0;
-	
+	public static final int WIDTH = 1;
+	public static final int HEIGHT = 1;
+
 	private final Direction inputConnectionDirection;
 	private final Direction outputConnectionDirection;
 
@@ -53,15 +55,13 @@ public class Conveyor extends ProductionLineElement {
 	}
 
 	@Override
-	public Position getInputConnectionPosition() {
-		return this.getPosition().add(
-				this.getInputConnectionDirection().getAssociatedPosition());
+	public Position getInputConnectionRelativePosition() {
+		return this.getInputConnectionDirection().getAssociatedPosition();
 	}
 
 	@Override
-	public Position getOutputConnectionPosition() {
-		return this.getPosition().add(
-				this.getOutputConnectionDirection().getAssociatedPosition());
+	public Position getOutputConnectionRelativePosition() {
+		return this.getOutputConnectionDirection().getAssociatedPosition();
 	}
 
 	@Override
@@ -73,6 +73,5 @@ public class Conveyor extends ProductionLineElement {
 	public int getSalePrice() {
 		return SALE_PRICE;
 	}
-	
-	
+
 }

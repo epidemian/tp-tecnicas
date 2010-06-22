@@ -42,9 +42,8 @@ public class OutputProductionLineElement extends ProductionLineElement {
 	}
 
 	@Override
-	public Position getInputConnectionPosition() {
-		return this.getPosition().add(
-				this.getInputConnectionDirection().getAssociatedPosition());
+	public Position getInputConnectionRelativePosition() {
+		return this.getInputConnectionDirection().getAssociatedPosition();
 	}
 
 	@Override
@@ -53,7 +52,7 @@ public class OutputProductionLineElement extends ProductionLineElement {
 	}
 
 	@Override
-	public Position getOutputConnectionPosition() {
+	public Position getOutputConnectionRelativePosition() {
 		throw new BusinessLogicException("Illegal operation");
 	}
 

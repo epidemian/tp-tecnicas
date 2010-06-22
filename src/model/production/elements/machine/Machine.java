@@ -129,13 +129,13 @@ public abstract class Machine extends ProductionLineElement {
 	}
 
 	@Override
-	public Position getInputConnectionPosition() {
-		return this.getPosition().add(machineType.getInputRelativePosition());
+	public Position getInputConnectionRelativePosition() {
+		return machineType.getInputRelativePosition();
 	}
 
 	@Override
-	public Position getOutputConnectionPosition() {
-		return this.getPosition().add(machineType.getOutputRelativePosition());
+	public Position getOutputConnectionRelativePosition() {
+		return machineType.getOutputRelativePosition();
 	}
 
 	@Override

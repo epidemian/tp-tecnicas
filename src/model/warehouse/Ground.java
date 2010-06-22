@@ -80,13 +80,11 @@ public class Ground {
 	}
 
 	public void visitElements(TileElementVisitor visitor) {
-		System.out.println("Start element visit");
 		List<TileElement> visitedElements = new ArrayList<TileElement>();
 		for (int row = 0; row < getRows(); row++) {
 			for (int col = 0; col < getCols(); col++) {
 				TileElement element = getTileElement(row, col);
 				if (!visitedElements.contains(element)) {
-					System.out.println("  Visiting element " + element);
 					element.accept(visitor);
 					visitedElements.add(element);
 				}
