@@ -3,8 +3,10 @@ package view.game.ground;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 
+import model.production.Product;
 import model.production.elements.ProductionLineElement;
 import model.production.elements.machine.Machine;
 import model.production.elements.machine.ProductionMachine;
@@ -34,11 +36,13 @@ public class TileElementPainter extends TileElementImageRecognizer {
 	}
 
 	@Override
-	protected void onLineElmentVisited(ProductionLineElement element, BufferedImage image) {
+	protected void onLineElmentVisited(ProductionLineElement element,
+			BufferedImage image) {
 
 		Position pos = element.getPosition();
 		groundPanel.drawImage(image, pos.getRow(), pos.getCol(), element
 				.getWidth(), element.getHeight(), graphics);
+		drawProductOverElement(element);
 	}
 
 	@Override
@@ -70,6 +74,17 @@ public class TileElementPainter extends TileElementImageRecognizer {
 					.getWidth(), machine.getHeight(), BROKEN_MACHINE_COLOR);
 	}
 
-	
+	private void drawProductOverElement(ProductionLineElement element) {
+		Product product = element.getProductContained();
+		if (product != null) {
+			Position pos = element.getPosition();
+			double x = pos.getCol() + 0.35;
+			double y = pos.getRow() + 0.35;
+			double size = 0.30;
+			Ellipse2D.Double dot = new Ellipse2D.Double(x, y, size, size);
+			graphics.setColor(Color.BLACK);
+			graphics.fill(dot);
+		}
+	}
 
 }

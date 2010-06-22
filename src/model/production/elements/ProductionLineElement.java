@@ -36,6 +36,10 @@ abstract public class ProductionLineElement extends TileElement {
 		this.productContained = input;
 		return output;
 	}
+	
+	public Product getProductContained() {
+		return productContained;
+	}
 
 	public ProductionLineElement getNextLineElement() {
 		if (!canHaveNextLineElement())

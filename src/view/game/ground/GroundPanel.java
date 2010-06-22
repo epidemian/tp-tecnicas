@@ -16,6 +16,7 @@ import java.awt.font.TextAttribute;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Path2D;
+import java.awt.geom.Point2D;
 import java.awt.geom.Path2D.Double;
 import java.text.AttributedCharacterIterator.Attribute;
 import java.util.Map;
@@ -244,13 +245,13 @@ public class GroundPanel extends JPanel {
 
 	public void drawNotificationBesideMouse(String notification,
 			Graphics2D graphics) {
-		Position mousePosition = this.getCurrentMousePosition();
+		Point2D mousePosition = this.getMousePosition();
 		if (mousePosition != null) {
 			graphics.setColor(NOTIFICATION_COLOR);
 			graphics.setFont(getNotificationFont());
 
-			float x = mousePosition.getCol() + 0.3f;
-			float y = mousePosition.getRow() - 0.3f;
+			float x = (float) (mousePosition.getX() / this.tileSize + 0.3f);
+			float y = (float) (mousePosition.getY() / this.tileSize - 0.3f);
 			graphics.drawString(notification, x, y);
 		}
 	}
