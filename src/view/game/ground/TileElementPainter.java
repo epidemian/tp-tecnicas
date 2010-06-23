@@ -22,22 +22,14 @@ import view.game.TileElementImageRecognizer;
  */
 public class TileElementPainter extends TileElementImageRecognizer {
 
-	private static final double ANIMATION_END_TIME = 0.75;
-	private static final double ANIMATION_START_TIME = 0.25;
-	private static final double ANIMATION_TOTAL_TIME = ANIMATION_END_TIME
-			- ANIMATION_START_TIME;
+	
 
 	private static final Color BROKEN_MACHINE_COLOR = new Color(1, 0, 0, 0.4F);
 
-	private GroundPanel groundPanel;
 	private Graphics2D graphics;
-	private double elapsedTickTime;
 
-	public TileElementPainter(GroundPanel groundPanel, Graphics2D graphics,
-			double elapsedTickTime) {
-		this.groundPanel = groundPanel;
+	public TileElementPainter(Graphics2D graphics) {
 		this.graphics = graphics;
-		this.elapsedTickTime = elapsedTickTime;
 	}
 
 	@Override
@@ -45,9 +37,8 @@ public class TileElementPainter extends TileElementImageRecognizer {
 			BufferedImage image) {
 
 		Position pos = element.getPosition();
-		groundPanel.drawImage(image, pos.getRow(), pos.getCol(), element
-				.getWidth(), element.getHeight(), graphics);
-		drawProductOverElement(element);
+		drawImage(image, pos.getRow(), pos.getCol(), element.getWidth(),
+				element.getHeight());
 	}
 
 	@Override
@@ -57,7 +48,7 @@ public class TileElementPainter extends TileElementImageRecognizer {
 
 		for (int row = from.getRow(); row < to.getRow(); row++)
 			for (int col = from.getCol(); col < to.getCol(); col++)
-				groundPanel.drawImage(image, row, col, 1, 1, graphics);
+				drawImage(image, row, col, 1, 1);
 	}
 
 	@Override
@@ -72,40 +63,18 @@ public class TileElementPainter extends TileElementImageRecognizer {
 		drawMachineState(graphics, machine);
 	}
 
-	private void drawMachineState(final Graphics2D graphics, Machine machine) {
-		if (machine.isBroken())
-			// TODO: draw image instead of ugly rectangle.
-			groundPanel.drawRectangle(graphics, machine.getPosition(), machine
-					.getWidth(), machine.getHeight(), BROKEN_MACHINE_COLOR);
+	public void drawImage(Image img, int row, int col, int width, int height) {
+		graphics.drawImage(img, col, row, width, height, null);
 	}
 
-	private void drawProductOverElement(ProductionLineElement element) {
-		Product product = element.getProductContained();
-		if (product != null && element.canHaveNextLineElement()) {
-			Position startPos;
-			if (element.getWidth() == 1 && element.getHeight() == 1)
-				startPos = element.getPosition();
-			else
-				startPos = element.getOutputConnectionPosition().subtract(
-						element.getOutputConnectionDirection()
-								.getAssociatedPosition());
-			Position endPos = element.getOutputConnectionPosition();
-			Position posDiff = endPos.subtract(startPos);
-			double dt;
-			if (this.elapsedTickTime < ANIMATION_START_TIME)
-				dt = 0;
-			else if (this.elapsedTickTime > ANIMATION_END_TIME)
-				dt = 1;
-			else
-				dt = (this.elapsedTickTime - ANIMATION_START_TIME) / ANIMATION_TOTAL_TIME;
-
-			
-			double x = startPos.getCol() + posDiff.getCol() * dt + 0.35;
-			double y = startPos.getRow() + posDiff.getRow() * dt + 0.35;
-			double size = 0.30;
-			Ellipse2D.Double dot = new Ellipse2D.Double(x, y, size, size);
-			graphics.setColor(Color.BLACK);
-			graphics.fill(dot);
+	private void drawMachineState(final Graphics2D graphics, Machine machine) {
+		if (machine.isBroken()) {
+			// TODO: draw image instead of ugly rectangle.
+			graphics.setColor(BROKEN_MACHINE_COLOR);
+			Position pos = machine.getPosition();
+			graphics.fillRect(pos.getCol(), pos.getRow(), machine.getWidth(),
+					machine.getHeight());
 		}
 	}
+
 }

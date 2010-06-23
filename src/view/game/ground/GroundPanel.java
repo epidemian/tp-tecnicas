@@ -93,8 +93,8 @@ public class GroundPanel extends JPanel {
 		g2d.setStroke(new BasicStroke(1.0f / this.tileSize));
 		drawVerticalLines(g2d);
 		drawHorizontalLines(g2d);
-		this.ground.visitElements(new TileElementPainter(this, g2d,
-				this.elapsedTickTime));
+		this.ground.visitElements(new TileElementPainter(g2d));
+		this.ground.visitElements(new ProductPainter(g2d, elapsedTickTime));
 
 		this.painter.paint(g2d);
 	}
@@ -109,10 +109,7 @@ public class GroundPanel extends JPanel {
 			graphics.drawLine(0, row, this.ground.getCols(), row);
 	}
 
-	public void drawImage(Image img, int row, int col, int width, int height,
-			Graphics2D graphics) {
-		graphics.drawImage(img, col, row, width, height, null);
-	}
+	
 
 	public void drawRectangle(Graphics2D graphics, Position position,
 			int width, int height, Color color) {
