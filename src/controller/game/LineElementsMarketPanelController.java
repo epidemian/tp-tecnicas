@@ -22,7 +22,6 @@ import javax.swing.JComboBox;
 import model.production.elements.Conveyor;
 import model.production.elements.InputProductionLineElement;
 import model.utils.Config;
-import view.game.BackGroundPanel;
 
 public class LineElementsMarketPanelController {
 

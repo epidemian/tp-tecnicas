@@ -1,25 +1,15 @@
 package controller.game.edition.tools;
 
 import static controller.game.edition.tools.Colors.*;
-import static model.production.elements.ProductionLineElement.disconnectLineElement;
 import static view.game.MoneyConstants.getMoneyString;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import model.game.Budget;
 import model.game.Player;
-import model.production.elements.Conveyor;
-import model.production.elements.InputProductionLineElement;
-import model.production.elements.OutputProductionLineElement;
 import model.production.elements.ProductionLineElement;
-import model.production.elements.machine.ProductionMachine;
-import model.production.elements.machine.QualityControlMachine;
-import model.warehouse.EmptyTileElement;
 import model.warehouse.Position;
 import model.warehouse.TileElement;
-import model.warehouse.TileElementVisitor;
-import model.warehouse.Wall;
 import controller.game.GamePanelController;
 import controller.game.edition.EditionTool;
 

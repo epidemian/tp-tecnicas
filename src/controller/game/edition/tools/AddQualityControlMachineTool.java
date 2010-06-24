@@ -2,7 +2,6 @@ package controller.game.edition.tools;
 
 import model.game.Player;
 import model.production.elements.ProductionLineElement;
-import model.production.elements.machine.Machine;
 import model.production.elements.machine.MachineType;
 import model.production.elements.machine.QualityControlMachine;
 import controller.game.GamePanelController;

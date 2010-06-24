@@ -6,20 +6,16 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import model.game.Player;
 import model.warehouse.Position;
 import view.game.ground.GroundPanel;
-import view.game.ground.StaticGroundPanel;
 import controller.game.edition.EditionTool;
 
 public class GroundPanelController {
 
-	private Player player;
 	private GroundPanel groundPanel;
 	private EditionTool editionTool;
 	
-	public GroundPanelController(Player player, GroundPanel groundPanel) {
-		this.player = player;
+	public GroundPanelController(GroundPanel groundPanel) {
 		this.groundPanel = groundPanel;
 		
 		this.setEditionTool(new NullEditionTool());

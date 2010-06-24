@@ -70,7 +70,7 @@ public class GamePanelController {
 	private static Refreshable NULL_REFRESHABLE = new NullRefreshable();
 
 	private MainController mainController;
-	
+
 	public ContainerAdapter getGamePanelRemovedListener() {
 		return gamePanelRemovedListener;
 	}
@@ -81,7 +81,7 @@ public class GamePanelController {
 		this.gamePanel = gamePanel;
 		this.player = player;
 		this.mainController = mainController;
-		
+
 		final EditionActions editionActions = new EditionActions(this, player);
 		KeyInputActionMapper mapper = new KeyInputActionMapper(editionActions);
 		mapper.mapActions(gamePanel.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW),
@@ -91,8 +91,7 @@ public class GamePanelController {
 
 		GroundPanel groundPanel = new GroundPanel(player);
 		gamePanel.setGroundPanel(groundPanel);
-		this.groundPanelController = new GroundPanelController(player,
-				groundPanel);
+		this.groundPanelController = new GroundPanelController(groundPanel);
 
 		this.toolBar = gamePanel.getToolBarPanel();
 
@@ -369,13 +368,13 @@ public class GamePanelController {
 			}
 		}
 		this.refreshablePanelController.refresh();
-		
+
 		GameState gameState = this.player.getGameState();
 		if (gameState.equals(GameState.WIN))
 			this.win();
 		else if (gameState.equals(GameState.LOOSE))
 			this.loose();
-		
+
 		repaintGroundPanel();
 	}
 
@@ -425,7 +424,7 @@ public class GamePanelController {
 		this.mainController.setMainPanel();
 		disposeGamePanel();
 	}
-	
+
 	private void updatePlayPauseButtons() {
 		this.pauseButton.setSelected(pausePressed);
 		this.playButton.setSelected(!pausePressed);
