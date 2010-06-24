@@ -60,6 +60,8 @@ public class StorageArea {
 	 */
 	public Product createProduct(RawMaterials inputRawMaterials) {
 
+		if (inputRawMaterials.isEmpty())
+			return null;
 		try {
 			this.rawMaterials.extract(inputRawMaterials);
 		} catch (NotEnoughRawMaterialException e) {

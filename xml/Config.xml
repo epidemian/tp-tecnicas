@@ -30,7 +30,7 @@
 	<Item id="DAYS_PER_MONTH" value="10"/>
 	<Item id="DAYS_PER_WEEK" value="3"/>
 	<Item id="TICKS_PER_DAY" value="12"/>
-	<Item id="MAX_DAILY_FUND_RAISING" value="500"/>
+	<Item id="MAX_DAILY_LAB_FUNDING" value="500"/>
 	
 	<!-- Ground -->	
 	<Item id="GROUND_SALE_PRICE_COEF" value="0.8"/>

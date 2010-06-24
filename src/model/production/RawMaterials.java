@@ -80,17 +80,17 @@ public class RawMaterials {
 		int quantity = this.getRawMaterialQuantity(rawMaterialType);
 		this.rawMaterials.put(rawMaterialType, quantityStore + quantity);
 	}
-	
-	public void put(RawMaterialType rawMaterialType, int quantityStore){
-		
+
+	public void put(RawMaterialType rawMaterialType, int quantityStore) {
+
 		validateQuantity(quantityStore);
 		this.rawMaterials.put(rawMaterialType, quantityStore);
 	}
 
-	public void remove(RawMaterialType rawMaterialType){
+	public void remove(RawMaterialType rawMaterialType) {
 		this.rawMaterials.remove(rawMaterialType);
 	}
-	
+
 	public int getRawMaterialQuantity(RawMaterialType rawMaterialType) {
 
 		Integer quantity = this.rawMaterials.get(rawMaterialType);
@@ -144,7 +144,11 @@ public class RawMaterials {
 		return join(matStrings, ", ");
 	}
 
-        public Map<RawMaterialType,Integer> getRawMaterials(){
-            return Collections.unmodifiableMap(this.rawMaterials);
-        }
+	public Map<RawMaterialType, Integer> getRawMaterials() {
+		return Collections.unmodifiableMap(this.rawMaterials);
+	}
+
+	public boolean isEmpty() {
+		return this.rawMaterials.isEmpty();
+	}
 }

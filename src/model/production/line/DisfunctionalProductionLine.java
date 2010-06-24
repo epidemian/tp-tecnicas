@@ -16,4 +16,8 @@ class DisfunctionalProductionLine extends ProductionLine {
 	public void updateDay() {
 	}
 
+	@Override
+	public boolean isWorking() {
+		return false;
+	}
 }
