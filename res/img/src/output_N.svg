@@ -15,8 +15,8 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.47pre4 r22446"
-   sodipodi:docname="input_N.svg"
-   inkscape:export-filename="/home/demian/Desktop/drawing.png"
+   sodipodi:docname="output_N.svg"
+   inkscape:export-filename="/home/demian/Programming/tecnicas_workspace/tp-tecnicas/res/img/src/output_N.png"
    inkscape:export-xdpi="67.5"
    inkscape:export-ydpi="67.5">
   <defs
@@ -203,6 +203,50 @@
        inkscape:vp_y="0 : 1000 : 0"
        inkscape:vp_x="0 : 0.5 : 1"
        sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective5288"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3790-1"
+       id="linearGradient3788-5"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1,0,0,-1,1.767767,2005.4424)"
+       x1="50.000004"
+       y1="952.36237"
+       x2="50.000004"
+       y2="1052.3619" />
+    <linearGradient
+       id="linearGradient3790-1">
+      <stop
+         id="stop3792-3"
+         offset="0"
+         style="stop-color:#b5a23c;stop-opacity:1;" />
+      <stop
+         style="stop-color:#cfc06e;stop-opacity:1;"
+         offset="0.60960203"
+         id="stop3794-3" />
+      <stop
+         id="stop3796-9"
+         offset="1"
+         style="stop-color:#b5a23c;stop-opacity:1;" />
+    </linearGradient>
+    <filter
+       inkscape:collect="always"
+       id="filter5321"
+       x="-0.14284137"
+       width="1.2856827"
+       y="-0.12268821"
+       height="1.2453764">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="4.6423446"
+         id="feGaussianBlur5323" />
+    </filter>
   </defs>
   <sodipodi:namedview
      id="base"
@@ -212,7 +256,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="2.8284271"
-     inkscape:cx="-31.632596"
+     inkscape:cx="-67.993472"
      inkscape:cy="48.388402"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -245,7 +289,11 @@
      id="layer1"
      transform="translate(0,-952.36218)">
     <path
-       style="fill:url(#linearGradient3788);fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:2.00999998999999985;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:2.00999998999999985;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;filter:url(#filter5321)"
+       d="m 12.767767,1044.8927 0,-67.93753 5.53125,0 0,-22.875 66.9375,0 0,22.875 5.53125,0 0,67.93753 -78,0 z"
+       id="rect2816-2-4" />
+    <path
+       style="fill:url(#linearGradient3788);fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:2.00999999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        d="m 12.767767,1044.8927 0,-67.93753 5.53125,0 0,-22.875 66.9375,0 0,22.875 5.53125,0 0,67.93753 -78,0 z"
        id="rect2816-2" />
     <path
@@ -260,7 +308,7 @@
        sodipodi:cy="24.51635"
        sodipodi:rx="25.986174"
        sodipodi:ry="25.986174"
-       d="m -107.83379,24.51635 a 25.986174,25.986174 0 1 1 -51.97235,0 25.986174,25.986174 0 1 1 51.97235,0 z"
+       d="m -107.83379,24.51635 c 0,14.351767 -11.6344,25.986173 -25.98617,25.986173 -14.35177,0 -25.98618,-11.634406 -25.98618,-25.986173 0,-14.351768 11.63441,-25.9861738 25.98618,-25.9861738 14.35177,0 25.98617,11.6344058 25.98617,25.9861738 z"
        transform="translate(185.96909,984.53554)" />
     <path
        style="fill:none;stroke:#ad9a39;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
@@ -278,7 +326,7 @@
        sodipodi:cy="24.51635"
        sodipodi:rx="25.986174"
        sodipodi:ry="25.986174"
-       d="m -107.83379,24.51635 a 25.986174,25.986174 0 1 1 -51.97235,0 25.986174,25.986174 0 1 1 51.97235,0 z"
+       d="m -107.83379,24.51635 c 0,14.351767 -11.6344,25.986173 -25.98617,25.986173 -14.35177,0 -25.98618,-11.634406 -25.98618,-25.986173 0,-14.351768 11.63441,-25.9861738 25.98618,-25.9861738 14.35177,0 25.98617,11.6344058 25.98617,25.9861738 z"
        transform="matrix(0.61904761,0,0,0.61904761,134.99006,993.8751)" />
   </g>
 </svg>

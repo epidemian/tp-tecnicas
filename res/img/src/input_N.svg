@@ -189,6 +189,50 @@
        inkscape:vp_y="0 : 1000 : 0"
        inkscape:vp_x="0 : 0.5 : 1"
        sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective4094"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3790-2"
+       id="linearGradient3788-8"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1,0,0,-1,1.767767,2005.0888)"
+       x1="50.000004"
+       y1="952.36237"
+       x2="50.000004"
+       y2="1052.3619" />
+    <linearGradient
+       id="linearGradient3790-2">
+      <stop
+         id="stop3792-2"
+         offset="0"
+         style="stop-color:#b5a23c;stop-opacity:1;" />
+      <stop
+         style="stop-color:#cfc06e;stop-opacity:1;"
+         offset="0.60960203"
+         id="stop3794-0" />
+      <stop
+         id="stop3796-6"
+         offset="1"
+         style="stop-color:#b5a23c;stop-opacity:1;" />
+    </linearGradient>
+    <filter
+       inkscape:collect="always"
+       id="filter4637"
+       x="-0.14284133"
+       width="1.2856827"
+       y="-0.12268824"
+       height="1.2453765">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="4.6423432"
+         id="feGaussianBlur4639" />
+    </filter>
   </defs>
   <sodipodi:namedview
      id="base"
@@ -198,7 +242,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="2.8284271"
-     inkscape:cx="-31.632596"
+     inkscape:cx="23.248861"
      inkscape:cy="48.388402"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -221,7 +265,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -230,6 +274,10 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(0,-952.36218)">
+    <path
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:2.00999998999999985;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;filter:url(#filter4637)"
+       d="m 12.767767,1044.5391 0,-67.93748 5.53125,0 0,-22.875 66.9375,0 0,22.875 5.53125,0 0,67.93748 -78,0 z"
+       id="rect2816-2-3" />
     <path
        style="fill:url(#linearGradient3788);fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:2.00999999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        d="m 12.767767,1044.5391 0,-67.93748 5.53125,0 0,-22.875 66.9375,0 0,22.875 5.53125,0 0,67.93748 -78,0 z"
