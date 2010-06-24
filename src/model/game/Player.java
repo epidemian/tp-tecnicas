@@ -193,7 +193,7 @@ public class Player implements TickUpdatable{
 	public void updateTick() {
 		this.scheduler.updateTick();
 	
-		if (this.budget.getBalance() > this.WIN_VALUE)
+		if (this.budget.getBalance() >= this.WIN_VALUE)
 			this.gameState = GameState.WIN;
 		else if (this.budget.getBalance() < 0)
 			this.gameState = GameState.LOSE;

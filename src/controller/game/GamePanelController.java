@@ -72,7 +72,8 @@ public class GamePanelController {
 	private static Refreshable NULL_REFRESHABLE = new NullRefreshable();
 
 	private MainController mainController;
-
+	private Timer mainLoopTimer;
+	
 	public ContainerAdapter getGamePanelRemovedListener() {
 		return gamePanelRemovedListener;
 	}
@@ -105,7 +106,7 @@ public class GamePanelController {
 		initSellButton(player, mainController);
 		initPrices();
 
-		final Timer mainLoopTimer = new Timer(UPDATE_INTERVAL,
+		this.mainLoopTimer = new Timer(UPDATE_INTERVAL,
 				new ActionListener() {
 
 					@Override
@@ -114,7 +115,7 @@ public class GamePanelController {
 					}
 				});
 
-		mainLoopTimer.start();
+		this.mainLoopTimer.start();
 
 		initPlayButton();
 		initPauseButton();
@@ -269,6 +270,7 @@ public class GamePanelController {
 
 	private void disposeGamePanel() {
 		this.player.getBudget().deleteObservers();
+		this.mainLoopTimer.stop();
 	}
 
 	private void initValidProductionSequences(Player player) {
@@ -393,7 +395,7 @@ public class GamePanelController {
 		if (gameState.equals(GameState.WIN))
 			this.win();
 		else if (gameState.equals(GameState.LOSE))
-			this.loose();
+			this.lose();
 
 		repaintGroundPanel();
 	}
@@ -438,9 +440,9 @@ public class GamePanelController {
 		disposeGamePanel();
 	}
 
-	private void loose() {
-		JOptionPane.showMessageDialog(null, "We have a new looser!",
-				"Won the game", JOptionPane.ERROR_MESSAGE);
+	private void lose() {
+		JOptionPane.showMessageDialog(null, "We have a new loser!",
+				"Lost the game", JOptionPane.ERROR_MESSAGE);
 		this.mainController.setMainPanel();
 		disposeGamePanel();
 	}
