@@ -22,9 +22,7 @@ import view.game.TileElementImageRecognizer;
  */
 public class TileElementPainter extends TileElementImageRecognizer {
 
-	
-
-	private static final Color BROKEN_MACHINE_COLOR = new Color(1, 0, 0, 0.4F);
+	private static final String BROKEN_MACHINE_IMG = "./broken-machine.png";
 
 	private Graphics2D graphics;
 
@@ -69,12 +67,12 @@ public class TileElementPainter extends TileElementImageRecognizer {
 
 	private void drawMachineState(final Graphics2D graphics, Machine machine) {
 		if (machine.isBroken()) {
-			// TODO: draw image instead of ugly rectangle.
-			graphics.setColor(BROKEN_MACHINE_COLOR);
-			Position pos = machine.getPosition();
-			graphics.fillRect(pos.getCol(), pos.getRow(), machine.getWidth(),
-					machine.getHeight());
+			int offsetRow = machine.getHeight() - 1;
+			int offsetCol = machine.getWidth() - 1;
+			Position pos = machine.getPosition().add(
+					new Position(offsetRow, offsetCol));
+			BufferedImage image = ImageLoader.getImage(BROKEN_MACHINE_IMG);
+			drawImage(image, pos.getRow(), pos.getCol(), 1, 1);
 		}
 	}
-
 }
