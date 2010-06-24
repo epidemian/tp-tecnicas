@@ -45,14 +45,11 @@
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="buttonsExternalPanel" alignment="0" max="32767" attributes="2"/>
                           <Component id="lineElementTypeLabel" alignment="0" pref="203" max="32767" attributes="2"/>
                           <Component id="toolsLabel" alignment="1" pref="203" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="buttonsExternalPanel" min="-2" max="-2" attributes="2"/>
-                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -75,7 +72,7 @@
               <Component id="toolsLabel" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="buttonsExternalPanel" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="154" max="32767" attributes="0"/>
+              <EmptySpace pref="147" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -149,7 +146,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <EmptySpace min="-2" max="-2" attributes="0"/>
-                  <Component id="buttonsPanel" alignment="1" max="32767" attributes="0"/>
+                  <Component id="buttonsPanel" alignment="1" pref="179" max="32767" attributes="0"/>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -185,14 +182,6 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/smallMove.png"/>
                 </Property>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JButton" name="repairButton">
-              <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/smallRepair.png"/>
-                </Property>
-                <Property name="toolTipText" type="java.lang.String" value="Repair line element"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="cancelToolButton">

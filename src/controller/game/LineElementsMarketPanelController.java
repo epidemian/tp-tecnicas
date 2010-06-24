@@ -34,7 +34,6 @@ public class LineElementsMarketPanelController {
 	private Action deleteTool;
 
 	private JButton sellButton;
-	private JButton repairButton;
 	private JButton moveButton;
 	private JButton cancelButon;
 
@@ -63,7 +62,6 @@ public class LineElementsMarketPanelController {
 				.getValidQualityControlMachineTypes());
 
 		this.sellButton = marketPanel.getSellButton();
-		this.repairButton = marketPanel.getRepairButton();
 		this.moveButton = marketPanel.getMoveButton();
 		this.cancelButon = marketPanel.getCancelButton();
 		this.lineElements = marketPanel.getBuyCombo();
@@ -195,20 +193,6 @@ public class LineElementsMarketPanelController {
 			}
 		});
 
-		// Repair.
-		repairButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				enabledButtons(false);
-				enabledCombo(false);
-				repairButton.setEnabled(true);
-				cancelButon.setEnabled(true);
-
-				throw new UnsupportedOperationException("Not supported yet.");
-			}
-		});
-
 		// Cancel.
 		cancelButon.addActionListener(new ActionListener() {
 
@@ -227,7 +211,6 @@ public class LineElementsMarketPanelController {
 		moveButton.setEnabled(aFlag);
 		sellButton.setEnabled(aFlag);
 		cancelButon.setEnabled(aFlag);
-		repairButton.setEnabled(aFlag);
 	}
 
 	private void enabledCombo(boolean aFlag) {
@@ -259,7 +242,6 @@ public class LineElementsMarketPanelController {
 	public void setEnabled(boolean aFlag) {
 
 		this.sellButton.setEnabled(aFlag);
-		this.repairButton.setEnabled(aFlag);
 		this.moveButton.setEnabled(aFlag);
 		this.cancelButon.setEnabled(aFlag);
 		this.lineElements.setEnabled(aFlag);

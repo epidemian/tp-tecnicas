@@ -93,8 +93,8 @@ public class RawMaterialsMarketPanelController implements Refreshable {
 
 	private void initQuantitySpinner(final RawMaterialsMarketPanel marketPanel) {
 
-		int value = 0;
-		int minimum = 0;
+		int value = 1;
+		int minimum = 1;
 		int maximum = Integer.MAX_VALUE;
 		int step = 1;
 

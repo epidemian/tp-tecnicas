@@ -26,10 +26,6 @@ public class LineElementsMarketPanel extends javax.swing.JPanel {
         return this.sellButton;
     }
 
-    public JButton getRepairButton(){
-        return this.repairButton;
-    }
-
     public JButton getMoveButton(){
         return this.moveButton;
     }
@@ -57,7 +53,6 @@ public class LineElementsMarketPanel extends javax.swing.JPanel {
         buttonsPanel = new javax.swing.JPanel();
         sellButton = new javax.swing.JButton();
         moveButton = new javax.swing.JButton();
-        repairButton = new javax.swing.JButton();
         cancelToolButton = new javax.swing.JButton();
 
         setMaximumSize(new java.awt.Dimension(227, 539));
@@ -69,10 +64,10 @@ public class LineElementsMarketPanel extends javax.swing.JPanel {
         titleLabel.setText("Line Elements");
         titleLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        prodLineLabel.setFont(new java.awt.Font("Purisa", 0, 13)); // NOI18N
+        prodLineLabel.setFont(new java.awt.Font("Purisa", 0, 13));
         prodLineLabel.setText("Production line elements:");
 
-        lineElementBuyCombo.setFont(new java.awt.Font("Purisa", 0, 13)); // NOI18N
+        lineElementBuyCombo.setFont(new java.awt.Font("Purisa", 0, 13));
 
         javax.swing.GroupLayout lineElementPreviewLayout = new javax.swing.GroupLayout(lineElementPreview);
         lineElementPreview.setLayout(lineElementPreviewLayout);
@@ -85,11 +80,11 @@ public class LineElementsMarketPanel extends javax.swing.JPanel {
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
-        lineElementTypeLabel.setFont(new java.awt.Font("Purisa", 0, 13)); // NOI18N
+        lineElementTypeLabel.setFont(new java.awt.Font("Purisa", 0, 13));
         lineElementTypeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lineElementTypeLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        toolsLabel.setFont(new java.awt.Font("Purisa", 0, 13)); // NOI18N
+        toolsLabel.setFont(new java.awt.Font("Purisa", 0, 13));
         toolsLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         toolsLabel.setText("Tools:");
 
@@ -102,10 +97,6 @@ public class LineElementsMarketPanel extends javax.swing.JPanel {
         moveButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/smallMove.png"))); // NOI18N
         buttonsPanel.add(moveButton);
 
-        repairButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/smallRepair.png"))); // NOI18N
-        repairButton.setToolTipText("Repair line element");
-        buttonsPanel.add(repairButton);
-
         cancelToolButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/smallCancel.png"))); // NOI18N
         buttonsPanel.add(cancelToolButton);
 
@@ -115,7 +106,7 @@ public class LineElementsMarketPanel extends javax.swing.JPanel {
             buttonsExternalPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(buttonsExternalPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(buttonsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(buttonsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
                 .addContainerGap())
         );
         buttonsExternalPanelLayout.setVerticalGroup(
@@ -145,11 +136,9 @@ public class LineElementsMarketPanel extends javax.swing.JPanel {
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(buttonsExternalPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lineElementTypeLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
                             .addComponent(toolsLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE))
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(buttonsExternalPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())))
         );
         layout.setVerticalGroup(
@@ -169,7 +158,7 @@ public class LineElementsMarketPanel extends javax.swing.JPanel {
                 .addComponent(toolsLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(buttonsExternalPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(154, Short.MAX_VALUE))
+                .addContainerGap(147, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -182,7 +171,6 @@ public class LineElementsMarketPanel extends javax.swing.JPanel {
     private javax.swing.JLabel lineElementTypeLabel;
     private javax.swing.JButton moveButton;
     private javax.swing.JLabel prodLineLabel;
-    private javax.swing.JButton repairButton;
     private javax.swing.JButton sellButton;
     private javax.swing.JLabel titleLabel;
     private javax.swing.JLabel toolsLabel;

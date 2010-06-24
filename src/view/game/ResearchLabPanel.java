@@ -10,10 +10,6 @@ public class ResearchLabPanel extends javax.swing.JPanel {
         initComponents();
     }
 
-    public JButton getDailyFundingAcceptButton(){
-        return this.dailyFundingAcceptButton;
-    }
-
     public JSpinner getDailyFundingSpinner(){
         return this.dailyFundingSpinner;
     }
@@ -47,7 +43,6 @@ public class ResearchLabPanel extends javax.swing.JPanel {
         dailyFundingLabel = new javax.swing.JLabel();
         technologiesResearchLabel = new javax.swing.JLabel();
         technologyCombo = new javax.swing.JComboBox();
-        dailyFundingAcceptButton = new javax.swing.JButton();
         dailyFundingSpinner = new javax.swing.JSpinner();
         researchPanel = new javax.swing.JPanel();
         researchButton = new javax.swing.JButton();
@@ -73,9 +68,6 @@ public class ResearchLabPanel extends javax.swing.JPanel {
 
         technologyCombo.setFont(new java.awt.Font("Purisa", 0, 13));
         technologyCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " " }));
-
-        dailyFundingAcceptButton.setFont(new java.awt.Font("Purisa", 0, 13));
-        dailyFundingAcceptButton.setText("Accept");
 
         dailyFundingSpinner.setFont(new java.awt.Font("Purisa", 0, 13));
 
@@ -109,12 +101,6 @@ public class ResearchLabPanel extends javax.swing.JPanel {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(dailyFundingLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
                         .addGap(11, 11, 11))))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(dailyFundingSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
-                .addComponent(dailyFundingAcceptButton, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(11, 11, 11)
                 .addComponent(technologiesResearchLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
@@ -131,6 +117,10 @@ public class ResearchLabPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(researchPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(dailyFundingSpinner, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -140,9 +130,7 @@ public class ResearchLabPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(dailyFundingLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(dailyFundingSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(dailyFundingAcceptButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(dailyFundingSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(technologiesResearchLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -157,7 +145,6 @@ public class ResearchLabPanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton dailyFundingAcceptButton;
     private javax.swing.JLabel dailyFundingLabel;
     private javax.swing.JSpinner dailyFundingSpinner;
     private javax.swing.JButton researchButton;

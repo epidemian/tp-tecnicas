@@ -25,7 +25,6 @@ public class ResearchLabPanelController {
 
 	private ResearchLab lab;
 	private Technology technologyToBeResearched;
-	private int dailyFunding;
 
 	private ResearchLabPanel labPanel;
 
@@ -37,7 +36,6 @@ public class ResearchLabPanelController {
 		this.labPanel = labPanel;
 
 		initDailyFundingSpinner();
-		initDailyFundingAcceptButton();
 		initTechnologyCombo();
 		initTechnologyResearchButton();
 	}
@@ -58,21 +56,7 @@ public class ResearchLabPanelController {
 
 			@Override
 			public void stateChanged(ChangeEvent ce) {
-				dailyFunding = (Integer) (spinner.getValue());
-			}
-		});
-	}
-
-	// TODO: Me parece que no hace falta un botón para confirmar que se
-	// cambió el daily funding, tranquilamente el spinner lo puede ir seteando.
-	private void initDailyFundingAcceptButton() {
-
-		final JButton accept = this.labPanel.getDailyFundingAcceptButton();
-
-		accept.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent ae) {
+				int dailyFunding = (Integer) (spinner.getValue());
 				lab.setDailyFunding(dailyFunding);
 			}
 		});
