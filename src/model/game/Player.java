@@ -35,7 +35,7 @@ public class Player implements TickUpdatable, DailyUpdatable{
 	private Budget budget;
 	private String playerName;
 	private GameState gameState = GameState.INPROCESS;
-	private int winValue;
+	private int WIN_VALUE;
 	
 	private ValidProductionSequences validProductionSequences;
 	private List<MachineType> validProductionMachineTypes;
@@ -62,6 +62,7 @@ public class Player implements TickUpdatable, DailyUpdatable{
 		DAYS_PER_WEEK = config.getIntegerValue("DAYS_PER_WEEK");
 		TICKS_PER_DAY = config.getIntegerValue("TICKS_PER_DAY");
 		MAX_DAILY_LAB_FUNDING = config.getIntegerValue("MAX_DAILY_LAB_FUNDING");
+		WIN_VALUE = config.getIntegerValue("WIN_VALUE");
 
 		TechnologyTree technologyTree;
 		this.validProductionSequences = new ValidProductionSequences();
@@ -196,7 +197,7 @@ public class Player implements TickUpdatable, DailyUpdatable{
 
 	@Override
 	public void updateDay() {
-		if (this.budget.getBalance() > this.winValue)
+		if (this.budget.getBalance() > this.WIN_VALUE)
 			this.gameState = GameState.WIN;
 		else if (this.budget.getBalance() < 0)
 			this.gameState = GameState.LOOSE;
