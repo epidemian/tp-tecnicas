@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
 
-import view.game.ground.GroundPanelContainer;
 import view.game.ground.StaticGroundPanel;
 
 public class GroundSelectionPanel extends javax.swing.JPanel {

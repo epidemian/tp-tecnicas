@@ -80,7 +80,7 @@ public class GamePanelController {
 		initBudgetObserver(player, gamePanel);
 
 		GroundPanel groundPanel = new GroundPanel(player);
-		gamePanel.getGroundPanelContainer().setGroundPanel(groundPanel);
+		gamePanel.setGroundPanel(groundPanel);
 		this.groundPanelController = new GroundPanelController(player,
 				groundPanel);
 
@@ -330,7 +330,7 @@ public class GamePanelController {
 	}
 
 	private GroundPanel getGroundPanel() {
-		return this.gamePanel.getGroundPanelContainer().getGroundPanel();
+		return this.gamePanel.getGroundPanel();
 	}
 
 	private void pauseButtonPressed() {

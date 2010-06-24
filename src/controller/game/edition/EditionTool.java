@@ -35,7 +35,7 @@ public abstract class EditionTool implements Painter {
 	}
 
 	protected StaticGroundPanel getGroundPanel() {
-		return this.getGamePanel().getGroundPanelContainer().getGroundPanel();
+		return this.getGamePanel().getGroundPanel();
 	}
 
 	protected boolean isTileEmpty(Position position) {

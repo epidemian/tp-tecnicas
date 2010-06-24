@@ -13,7 +13,6 @@ import model.game.Player;
 import model.warehouse.Ground;
 import view.game.GroundSelectionPanel;
 import view.game.ground.StaticGroundPanel;
-import view.game.ground.GroundPanelContainer;
 import controller.MainController;
 
 public class GroundSelectionPanelController {
