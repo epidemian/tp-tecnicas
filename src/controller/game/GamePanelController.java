@@ -7,10 +7,12 @@ import java.awt.event.ContainerEvent;
 import java.util.Observable;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import javax.swing.Timer;
 
+import model.game.GameState;
 import model.game.Player;
 import model.production.elements.Conveyor;
 import model.production.elements.InputProductionLineElement;
@@ -67,6 +69,8 @@ public class GamePanelController {
 	private Refreshable refreshablePanelController = NULL_REFRESHABLE;
 	private static Refreshable NULL_REFRESHABLE = new NullRefreshable();
 
+	private MainController mainController;
+	
 	public ContainerAdapter getGamePanelRemovedListener() {
 		return gamePanelRemovedListener;
 	}
@@ -76,7 +80,8 @@ public class GamePanelController {
 
 		this.gamePanel = gamePanel;
 		this.player = player;
-
+		this.mainController = mainController;
+		
 		final EditionActions editionActions = new EditionActions(this, player);
 		KeyInputActionMapper mapper = new KeyInputActionMapper(editionActions);
 		mapper.mapActions(gamePanel.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW),
@@ -161,7 +166,7 @@ public class GamePanelController {
 					refreshablePanelController = NULL_REFRESHABLE;
 				}
 			}
-			
+
 			@Override
 			public void visitOutputProductionLineElement(
 					OutputProductionLineElement outputLineElement) {
@@ -364,6 +369,13 @@ public class GamePanelController {
 			}
 		}
 		this.refreshablePanelController.refresh();
+		
+		GameState gameState = this.player.getGameState();
+		if (gameState.equals(GameState.WIN))
+			this.win();
+		else if (gameState.equals(GameState.LOOSE))
+			this.loose();
+		
 		repaintGroundPanel();
 	}
 
@@ -400,6 +412,20 @@ public class GamePanelController {
 		updatePlayPauseButtons();
 	}
 
+	private void win() {
+		JOptionPane.showMessageDialog(null, "We have a new winner!",
+				"Won the game", JOptionPane.WARNING_MESSAGE);
+		this.mainController.setGroundSelectionPanel(player);
+		disposeGamePanel();
+	}
+
+	private void loose() {
+		JOptionPane.showMessageDialog(null, "We have a new looser!",
+				"Won the game", JOptionPane.ERROR_MESSAGE);
+		this.mainController.setMainPanel();
+		disposeGamePanel();
+	}
+	
 	private void updatePlayPauseButtons() {
 		this.pauseButton.setSelected(pausePressed);
 		this.playButton.setSelected(!pausePressed);

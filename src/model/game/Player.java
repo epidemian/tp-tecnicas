@@ -6,6 +6,7 @@ import static model.utils.ArgumentUtils.checkArgCondition;
 import java.util.List;
 
 import model.exception.BusinessLogicException;
+import model.game.time.DailyUpdatable;
 import model.game.time.TickUpdatable;
 import model.game.time.UpdateScheduler;
 import model.game.time.WeeklyUpdatable;
@@ -24,7 +25,7 @@ import model.warehouse.Position;
 import model.warehouse.Warehouse;
 import controller.game.MarketPricesUpdater;
 
-public class Player implements TickUpdatable {
+public class Player implements TickUpdatable, DailyUpdatable{
 
 	private static int DAYS_PER_MONTH;
 	private static int DAYS_PER_WEEK;
@@ -33,7 +34,9 @@ public class Player implements TickUpdatable {
 
 	private Budget budget;
 	private String playerName;
-
+	private GameState gameState = GameState.INPROCESS;
+	private int winValue;
+	
 	private ValidProductionSequences validProductionSequences;
 	private List<MachineType> validProductionMachineTypes;
 	private List<MachineType> validQualityControlMachineTypes;
@@ -191,6 +194,24 @@ public class Player implements TickUpdatable {
 		this.scheduler.updateTick();
 	}
 
+	@Override
+	public void updateDay() {
+		if (this.budget.getBalance() > this.winValue)
+			this.gameState = GameState.WIN;
+		else if (this.budget.getBalance() < 0)
+			this.gameState = GameState.LOOSE;
+		else
+			this.gameState = GameState.INPROCESS;
+	}
+
+	public GameState getGameState(){
+		return this.gameState;
+	}
+
+	public String getPlayerName(){
+		return this.playerName;
+	}
+	
 	private void subscribeWarehouse() {
 		this.scheduler.subscribeTickUpdatable(this.warehouse);
 		this.scheduler.subscribeDailyUpdatable(this.warehouse);
