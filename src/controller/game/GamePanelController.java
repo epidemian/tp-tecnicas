@@ -27,7 +27,6 @@ import view.game.RawMaterialsMarketPanel;
 import view.game.ResearchLabPanel;
 import view.game.ToolBarPanel;
 import view.game.ground.GroundPanel;
-import view.game.ground.StaticGroundPanel;
 import controller.MainController;
 import controller.game.edition.EditionActions;
 import controller.game.edition.KeyInputActionMapper;
@@ -256,14 +255,14 @@ public class GamePanelController {
 
 	private void initLab(final Player player, final GamePanel gamePanel) {
 		this.labPanel = new ResearchLabPanel();
-		new ResearchLabPanelController(player, labPanel);
+		final ResearchLabPanelController labController = new ResearchLabPanelController(player, labPanel);
 
 		JButton researchLabButton = toolBar.getLabButton();
 		researchLabButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent ae) {
-
+				refreshablePanelController = labController;
 				gamePanel.setToolPanel(labPanel);
 			}
 		});
