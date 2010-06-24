@@ -1,9 +1,9 @@
 <MachineList>				
 			
-			<MachineType id="Oven" width="2" height="2" price="1000" damageChance="0.10" breakChance="0.005">
+			<MachineType id="Oven" width="2" height="3" price="1000" damageChance="0.10" breakChance="0.005">
 			</MachineType>
 			
-			<MachineType id="Forge" width="2" height="3" price="1500" breakChance="0.005">
+			<MachineType id="Forge" width="2" height="2" price="1500" breakChance="0.005">
 					
 			</MachineType>
 			
