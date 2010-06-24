@@ -89,7 +89,7 @@
 		
 		\begin{figure}[H]
 		\centering
-		\includegraphics[scale=0.3]{diagramas/productionClassDiagram.jpg}
+		\includegraphics[scale=0.5]{diagramas/productionClassDiagram.jpg}
 		\caption{Diagrama de Clases de la lógica de producción}
 		\end{figure}		
 		
@@ -99,7 +99,7 @@
 	
 		\begin{figure}[H]
 		\centering
-		\includegraphics[scale=0.3]{diagramas/productionSequenceDiagramBis.jpg}
+		\includegraphics[scale=0.5]{diagramas/productionSequenceDiagramBis.jpg}
 		\caption{Diagrama de Secuencia de la lógica de producción}
 		\end{figure}		
 
@@ -118,7 +118,7 @@ A su vez, la cantidad de d\'ias por semana y d\'ias por mes tamb\'ien se encuent
 		
 		\begin{figure}[H]
 		\centering
-		\includegraphics[scale=0.3]{diagramas/TechnologyClassDiagram.jpg}
+		\includegraphics[scale=0.4]{diagramas/TechnologyClassDiagram.jpg}
 		\caption{Diagrama de Clases de la lógica del desarrollo de Tecnologías}
 		\end{figure}	
 		
@@ -132,7 +132,19 @@ A su vez, la cantidad de d\'ias por semana y d\'ias por mes tamb\'ien se encuent
 		
 		La arquitectura sigue al patr\'on de arquitectura, \emph{MVC}. El modelo no depende de nada m\'as que si mismo, Los controladores utilizan al modelo y a la vista y la vista necesita del modelo. La capa de persistencia tambi\'en esta desacoplada completamente del modelo.
 		
-	
+	\subsection{Persistencia}
+		
+		\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.7]{diagramas/SequenceDiagramPersistence.jpg}
+		\caption{Diagrama de Secuencia de la recuperaci\'on de archivos XML}
+		\end{figure}	
+		
+		\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.7]{diagramas/persistenceCD.jpg}
+		\caption{Diagrama de Clases general de la persistencia}
+		\end{figure}	
 
 \clearpage
 \section{Vista de Desarrollo}
@@ -152,17 +164,27 @@ A su vez, la cantidad de d\'ias por semana y d\'ias por mes tamb\'ien se encuent
 \clearpage
 \section{Vista de Procesos}
 
-	El programa tiene un \'unico proceso. Por lo tanto, no existe ninguna comunicaci\'on entre procesos. 
-		
+	La aplicaci\'on corre en una computadora, sobre una Java Virtual Machine. Dentro de esta maquina virtual corre un \'unico proceso. No existe comunicaci\'on alguna de este proceso con otros procesos.
+	
+	\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{diagramas/processDiagram.jpg}
+	\caption{Diagrama de Procesos }
+	\end{figure}
+	
+	En una aplicaci\'on como la desarrollada, la complejidad de la vista de procesos es muy simple en comparaci\'on al de la vista l\'ogica o de desarrollo
+	
 \clearpage
 \section{Vista Física}
 	\begin{figure}[H]
 	\centering
-	\includegraphics[scale=0.5]{diagramas/deployment.jpg}
+	\includegraphics[scale=0.5]{diagramas/deployment24.jpg}
 	\caption{Diagrama de Despliegue }
 	\end{figure}
 	
 	El diagrama de \emph{deployment} es muy simple ya que la aplicaci\'on no es una aplicaci\'on que este desplegada en m\'as de un sistema. Por lo tanto, todos los componentes existentes estan contenidos en el \'unico nodo del sistema.
+	
+	Adem\'as, se puede observar que el jar de la aplicaci\'on contiene dentro de si a los jars de los otros componentes necesarios para el uso del programa. Esto simplifica la instalaci\'on del programa ya que no tendra que lidiar con problemas de dependencias. Tiene como desventaja que el usuario puede llegar a tener que tener estas librerias m\'as de una vez en su computadora.
 	
 \clearpage
 \section{Escenarios}
@@ -208,12 +230,18 @@ A su vez, la cantidad de d\'ias por semana y d\'ias por mes tamb\'ien se encuent
 			\item{\emph{ Change Technology Daily Funding:}} El jugador establece cuanta plata invertir\'a en el desarrollo de nuevas tecnolog\'ias.
 		
 		\end{enumerate}
+
+\clearpage	
+\section{Posibles Mejoras y Extensiones}
+	Una funcionalidad que nos hubiera gustado poder implementar es el hecho de que el jugador pueda solicitar prestamos para que no pierda apen\'as se queda sin plata.
 	
+	
+		
 \clearpage	
 \section{Conclusi\'on}	
-	La primer conclusi\'on a la que llegamos fue que en reiteradas ocasiones tomamos decisiones que aumentaban la complejidad del sistema sin hacer un an\'alisis completo de si pod\'iamos llegar a implementarlas a tiempo.
+	La primer conclusi\'on a la que llegamos fue que en reiteradas ocasiones tomamos decisiones que aumentaban la complejidad del sistema sin hacer un an\'alisis completo de si pod\'iamos llegar a implementarlas a tiempo. As\'i fue que durante las \'ultimas semanas de desarrollo nos encontramos muy apretados por el tiempo incluso habiendo aprovechado todas las semanas que nos hab\'ian provisto para el desarrollo del mismo.
 	
-	Una segunda conclusi\'on es que es preferible tomarse el tiempo necesario para dise\~narlo bien el sistema antes de empezar a escribir el c\'odigo. No hacerlo puede resultar en perder mucho tiempo en caso de que como consecuencia de un requisito que no se hab\'ia contemplado o una idea que no se hab\'ia terminado de cerrar, sea necesario replantearse el problema. 
+	Una segunda conclusi\'on es que es preferible tomarse el tiempo necesario para dise\~narlo bien el sistema antes de empezar a escribir c\'odigo. No hacerlo puede resultar en perder mucho tiempo en caso de que como consecuencia de un requisito que no se hab\'ia contemplado o una idea que no se hab\'ia terminado de cerrar, sea necesario replantearse el problema. 
 	
 \clearpage
 \begin{thebibliography}{9}
