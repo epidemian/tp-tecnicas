@@ -207,5 +207,6 @@ public class RawMaterialsMarketPanelController implements Refreshable {
 	@Override
 	public void refresh() {
 		this.updateTableData();
+		
 	}
 }

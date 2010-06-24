@@ -26,6 +26,10 @@ public class ToolBarPanel extends javax.swing.JPanel {
         return this.lab;
     }
 
+    public JButton getPricesButton(){
+        return this.pricesButton;
+    }
+
     public JButton getWarehouseInformationButton(){
         return this.info;
     }
@@ -60,6 +64,7 @@ public class ToolBarPanel extends javax.swing.JPanel {
         lineElementsMarket = new javax.swing.JButton();
         rawMaterialsMarket = new javax.swing.JButton();
         validProductionLines = new javax.swing.JButton();
+        pricesButton = new javax.swing.JButton();
         sell = new javax.swing.JButton();
         lab = new javax.swing.JButton();
         play = new javax.swing.JToggleButton();
@@ -95,6 +100,13 @@ public class ToolBarPanel extends javax.swing.JPanel {
         validProductionLines.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         validProductionLines.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(validProductionLines);
+
+        pricesButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/prices.png"))); // NOI18N
+        pricesButton.setToolTipText("Market Prices");
+        pricesButton.setFocusable(false);
+        pricesButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        pricesButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(pricesButton);
 
         sell.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cart.png"))); // NOI18N
         sell.setToolTipText("Sell warehouse");
@@ -150,6 +162,7 @@ public class ToolBarPanel extends javax.swing.JPanel {
     private javax.swing.JButton lineElementsMarket;
     private javax.swing.JToggleButton pause;
     private javax.swing.JToggleButton play;
+    private javax.swing.JButton pricesButton;
     private javax.swing.JButton rawMaterialsMarket;
     private javax.swing.JButton sell;
     private javax.swing.JButton validProductionLines;

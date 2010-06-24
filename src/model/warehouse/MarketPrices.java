@@ -1,5 +1,6 @@
 package model.warehouse;
 
+import java.util.Collections;
 import static model.utils.ArgumentUtils.checkNotNull;
 
 import java.util.HashMap;
@@ -33,7 +34,11 @@ public class MarketPrices {
 			throw new BusinessLogicException("Product " + name + " does not exist");
 		}
 	}
-	
+
+        public Map<String,Integer> getMap(){
+            return Collections.unmodifiableMap(map);
+        }
+
 	public void setMap(Map<String,Integer> map){
 		checkNotNull(map, "price map");
 		this.map=map;

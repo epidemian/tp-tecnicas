@@ -32,6 +32,7 @@ import controller.MainController;
 import controller.game.edition.EditionActions;
 import controller.game.edition.KeyInputActionMapper;
 import java.util.Observer;
+import view.game.PricesPanel;
 
 public class GamePanelController {
 
@@ -92,6 +93,7 @@ public class GamePanelController {
 		initLab(player, gamePanel);
 		initExitButton();
 		initSellButton(player, mainController);
+                initPrices();
 
 		final Timer mainLoopTimer = new Timer(UPDATE_INTERVAL,
 				new ActionListener() {
@@ -302,6 +304,23 @@ public class GamePanelController {
 			}
 		});
 	}
+
+        private void initPrices() {
+
+            final PricesPanel pricesPanel = new PricesPanel();
+            final PricesPanelController pricesController =
+                    new PricesPanelController(pricesPanel, player);
+
+            JButton pricesButton = this.toolBar.getPricesButton();
+            pricesButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                    refreshablePanelController = pricesController;
+                    gamePanel.setToolPanel(pricesPanel);
+            }
+            });
+        }
 
 	private void updateTimeView() {
 		String dateString = this.player.getDate();
