@@ -14,7 +14,7 @@ import org.dom4j.io.SAXReader;
 
 import persistence.exceptions.InvalidTagException;
 
-public class XMLConfig implements Config {
+public class XMLConfig extends Config {
 
 	static String TAG_NAME = "Config";
 	static String TAG_INNER = "Item";
@@ -49,6 +49,11 @@ public class XMLConfig implements Config {
 	public void loadConfig() throws InvalidTagException {
 		Element element = document.getRootElement();
 		this.map = XMLConfig.buildFromXML(element);
+	}
+
+	@Override
+	public String toString() {
+		return this.map.toString();
 	}
 
 	@SuppressWarnings("unchecked")

@@ -44,6 +44,7 @@
 	<Item id="PATH_RAW_MATERIALS" value="xml/ValidRawMaterialTypeList.xml"/>
 	<Item id="PATH_PRICES_BASIC" value="xml/prices/prices"/>
 	<Item id="PATH_PRICES_EXT" value=".xml"/>
+	<Item id="QUANTITY_PRICES_FILES" value="4"/>
 	
 	<!-- borrar de warehouse a RENT -->
 </Config>

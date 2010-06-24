@@ -16,12 +16,12 @@ public class DamagedMachineState extends MachineState {
 
 	public DamagedMachineState(Config config) {
 		super(config);
-		DAMAGED_SALE_PRICE_COEF = Float.valueOf(config
-				.getValue("DAMAGED_SALE_PRICE_COEF"));
-		DAMAGED_DEFECTIVE_PRODUCT_CHANCE = Float.valueOf(config
-				.getValue("DAMAGED_DEFECTIVE_PRODUCT_CHANCE"));
-		DAMAGED_PRICE_REPAIR_COEF = Float.valueOf(config
-				.getValue("DAMAGED_PRICE_REPAIR_COEF"));
+		DAMAGED_SALE_PRICE_COEF = config
+				.getFloatValue("DAMAGED_SALE_PRICE_COEF");
+		DAMAGED_DEFECTIVE_PRODUCT_CHANCE = config
+				.getFloatValue("DAMAGED_DEFECTIVE_PRODUCT_CHANCE");
+		DAMAGED_PRICE_REPAIR_COEF = config
+				.getFloatValue("DAMAGED_PRICE_REPAIR_COEF");
 
 	}
 

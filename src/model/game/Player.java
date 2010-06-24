@@ -52,13 +52,12 @@ public class Player implements TickUpdatable {
 		this.playerName = playerName;
 		this.budget = new Budget(initialBudget);
 
-		this.config=config;
-		
-		DAYS_PER_MONTH = Integer.valueOf(config.getValue("DAYS_PER_MONTH"));
-		DAYS_PER_WEEK = Integer.valueOf(config.getValue("DAYS_PER_WEEK"));
-		TICKS_PER_DAY = Integer.valueOf(config.getValue("TICKS_PER_DAY"));
-		MAX_DAILY_LAB_FUNDING = Integer.valueOf(config
-				.getValue("MAX_DAILY_LAB_FUNDING"));
+		this.config = config;
+
+		DAYS_PER_MONTH = config.getIntegerValue("DAYS_PER_MONTH");
+		DAYS_PER_WEEK = config.getIntegerValue("DAYS_PER_WEEK");
+		TICKS_PER_DAY = config.getIntegerValue("TICKS_PER_DAY");
+		MAX_DAILY_LAB_FUNDING = config.getIntegerValue("MAX_DAILY_LAB_FUNDING");
 
 		TechnologyTree technologyTree;
 		this.validProductionSequences = new ValidProductionSequences();

@@ -11,12 +11,12 @@ import model.utils.Config;
  */
 public class BrokenMachineState extends MachineState {
 
-	public static float BROKEN_PRICE_REPAIR_COEF = 0.3f;
+	public static float BROKEN_PRICE_REPAIR_COEF;
 
 	public BrokenMachineState(Config config) {
 		super(config);
-		BROKEN_PRICE_REPAIR_COEF = Float.valueOf(config
-				.getValue("BROKEN_PRICE_REPAIR_COEF"));
+		BROKEN_PRICE_REPAIR_COEF = config
+				.getFloatValue("BROKEN_PRICE_REPAIR_COEF");
 	}
 
 	@Override

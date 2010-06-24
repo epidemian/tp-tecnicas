@@ -18,9 +18,8 @@ public class InputProductionLineElement extends ProductionLineElement {
 		super(1, 1);
 		this.outputConnectionDirection = direction;
 
-		INPUT_SALE_PRICE = Integer.valueOf(config.getValue("INPUT_SALE_PRICE"));
-		INPUT_PURCHASE_PRICE = Integer.valueOf(config
-				.getValue("INPUT_PURCHASE_PRICE"));
+		INPUT_SALE_PRICE = config.getIntegerValue("INPUT_SALE_PRICE");
+		INPUT_PURCHASE_PRICE = config.getIntegerValue("INPUT_PURCHASE_PRICE");
 	}
 
 	public InputProductionLineElement(Config config) {

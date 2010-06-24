@@ -15,8 +15,8 @@ public class HealthyMachineState extends MachineState {
 
 	public HealthyMachineState(Config config) {
 		super(config);
-		HEALTHY_DEFECTIVE_PRODUCT_CHANCE=Float.valueOf(config.getValue("HEALTHY_DEFECTIVE_PRODUCT_CHANCE"));
-		HEALTHY_SALE_PRICE_COEF=Float.valueOf(config.getValue("HEALTHY_SALE_PRICE_COEF"));
+		HEALTHY_DEFECTIVE_PRODUCT_CHANCE=config.getFloatValue("HEALTHY_DEFECTIVE_PRODUCT_CHANCE");
+		HEALTHY_SALE_PRICE_COEF=config.getFloatValue("HEALTHY_SALE_PRICE_COEF");
 	}
 
 	@Override

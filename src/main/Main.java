@@ -12,12 +12,13 @@ import controller.MainController;
 
 public class Main {
 
-	public static void main(String[] args) throws InterruptedException {
+	public static void main(String[] args) throws Exception {
 
 		setOSLookAndFeel();
 
 		MainFrame mainFrame = new MainFrame();
 		Config config = new XMLConfig();
+		config.loadConfig();
 		InputFactory factory = new XMLFactory(config);
 		new MainController(mainFrame, factory, config);
 	}

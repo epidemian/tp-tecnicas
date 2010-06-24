@@ -22,11 +22,7 @@ import persistence.ground.GroundListPersistent;
 import persistence.price.PriceMapPersistent;
 
 public class XMLFactory extends InputFactory {
-
-	private static final int WEEKS = 3;
-	private static final String PRICES_PATH = "xml/prices/prices";
-	private static final String XML_EXTENSION = ".xml";
-
+	
 	// Reader from the XML file
 	protected SAXReader reader;
 
@@ -35,15 +31,32 @@ public class XMLFactory extends InputFactory {
 
 	private Config config;
 
-	private String groundsPath = "xml/ValidGroundList.xml";
-	private String technologiesPath = "xml/ValidProductionSequencesTechnologyList.xml";
-	private String productionMachinesPath = "xml/ValidProductionMachineList.xml";
-	private String qualityControlMachinesPath = "xml/ValidQualityControlMachineList.xml";
-	private String rawMaterialsPath = "xml/ValidRawMaterialTypeList.xml";
+	private String PATH_GROUNDS;
+	private String PATH_TECHNOLOGIES;
+	private String PATH_PRODUCTION_MACHINES;
+	private String PATH_QUALITY_CONTROL_MACHINES;
+	private String PATH_RAW_MATERIALS;
 
+	private String PATH_PRICES_BASIC;
+	private String PATH_PRICES_EXT;
+	
+	private int QUANTITY_PRICES_FILES;
+		
 	public XMLFactory(Config config) {
 		reader = new SAXReader();
 		this.config = config;
+		
+		PATH_GROUNDS=config.getValue("PATH_GROUNDS");
+		PATH_TECHNOLOGIES=config.getValue("PATH_TECHNOLOGIES");
+		PATH_PRODUCTION_MACHINES=config.getValue("PATH_PRODUCTION_MACHINES");
+		PATH_QUALITY_CONTROL_MACHINES=config.getValue("PATH_QUALITY_CONTROL_MACHINES");
+		PATH_RAW_MATERIALS=config.getValue("PATH_RAW_MATERIALS");
+		
+		PATH_PRICES_BASIC=config.getValue("PATH_PRICES_BASIC");
+		PATH_PRICES_EXT=config.getValue("PATH_PRICES_EXT");
+		QUANTITY_PRICES_FILES = config.getIntegerValue("QUANTITY_PRICES_FILES");
+		//QUANTITY_PRICES_FILES = Integer.valueOf(config.getValue("QUANTITY_PRICES_FILES"));
+		
 	}
 
 	@Override
@@ -54,7 +67,7 @@ public class XMLFactory extends InputFactory {
 			ClassNotFoundException, NoSuchMethodException,
 			NoProductTypeDefinedInSequenceException {
 
-		document = reader.read(this.technologiesPath);
+		document = reader.read(this.PATH_TECHNOLOGIES);
 		Element element = document.getRootElement();
 
 		return ProductionSequenceTechnologyListPersistent.buildFromXML(element,
@@ -65,7 +78,7 @@ public class XMLFactory extends InputFactory {
 	public List<Ground> loadGrounds() throws InvalidTagException,
 			DocumentException {
 
-		document = reader.read(this.groundsPath);
+		document = reader.read(this.PATH_GROUNDS);
 		Element element = document.getRootElement();
 
 		return GroundListPersistent.buildFromXML(element,config);
@@ -75,8 +88,8 @@ public class XMLFactory extends InputFactory {
 	@Override
 	public Map<String, Integer> loadPrices(int weekNumber)
 			throws InvalidTagException, DocumentException {
-		int number = weekNumber % WEEKS;
-		String path = PRICES_PATH + number + XML_EXTENSION;
+		int number = weekNumber % QUANTITY_PRICES_FILES;
+		String path = PATH_PRICES_BASIC + number + PATH_PRICES_EXT;
 		document = reader.read(path);
 		Element element = document.getRootElement();
 
@@ -86,13 +99,13 @@ public class XMLFactory extends InputFactory {
 	@Override
 	public List<MachineType> loadProductionMachines() throws DocumentException,
 			InvalidTagException {
-		return this.loadMachines(this.productionMachinesPath);
+		return this.loadMachines(this.PATH_PRODUCTION_MACHINES);
 	}
 
 	@Override
 	public List<RawMaterialType> loadRawMaterialTypes() throws Exception {
 
-		document = reader.read(this.rawMaterialsPath);
+		document = reader.read(this.PATH_RAW_MATERIALS);
 		Element element = document.getRootElement();
 
 		List<RawMaterialType> list = RawMaterialTypeListPersistent
@@ -103,7 +116,7 @@ public class XMLFactory extends InputFactory {
 
 	@Override
 	public List<MachineType> loadQualityControlMachines() throws Exception {
-		return this.loadMachines(this.qualityControlMachinesPath);
+		return this.loadMachines(this.PATH_QUALITY_CONTROL_MACHINES);
 	}
 
 	private List<MachineType> loadMachines(String availableMachines)

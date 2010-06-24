@@ -7,7 +7,7 @@ import model.exception.BusinessLogicException;
 
 
 
-public class ConfigMock implements Config {
+public class ConfigMock extends Config {
 
 	private Map<String,String> map;
 	
