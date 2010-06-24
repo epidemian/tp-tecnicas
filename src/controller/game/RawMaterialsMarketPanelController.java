@@ -47,6 +47,7 @@ public class RawMaterialsMarketPanelController implements Refreshable {
 	private JSpinner quantitySpinner;
 	private JComboBox buyCombo;
 	private JTable table;
+	private RawMaterialsMarketPanel marketPanel;
 
 	public RawMaterialsMarketPanelController(Player game,
 			final RawMaterialsMarketPanel marketPanel, GamePanel gamePanel) {
@@ -59,6 +60,7 @@ public class RawMaterialsMarketPanelController implements Refreshable {
 		this.rawMaterialTypes = game.getValidRawMaterialTypes();
 		this.rawMaterialPrices = game.getMarketPrices();
 		this.budget = game.getBudget();
+		this.marketPanel = marketPanel;
 
 		this.budget.addObserver(new Observer() {
 
@@ -207,6 +209,6 @@ public class RawMaterialsMarketPanelController implements Refreshable {
 	@Override
 	public void refresh() {
 		this.updateTableData();
-		
+		this.buyComboAction(marketPanel);		
 	}
 }
