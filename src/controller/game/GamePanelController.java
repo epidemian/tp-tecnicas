@@ -27,6 +27,7 @@ import view.game.RawMaterialsMarketPanel;
 import view.game.ResearchLabPanel;
 import view.game.ToolBarPanel;
 import view.game.ground.GroundPanel;
+import view.game.ground.StaticGroundPanel;
 import controller.MainController;
 import controller.game.edition.EditionActions;
 import controller.game.edition.KeyInputActionMapper;
@@ -78,7 +79,7 @@ public class GamePanelController {
 
 		initBudgetObserver(player, gamePanel);
 
-		GroundPanel groundPanel = new GroundPanel(player.getGround());
+		GroundPanel groundPanel = new GroundPanel(player);
 		gamePanel.getGroundPanelContainer().setGroundPanel(groundPanel);
 		this.groundPanelController = new GroundPanelController(player,
 				groundPanel);
@@ -317,8 +318,10 @@ public class GamePanelController {
 
 	private void repaintGroundPanel() {
 		double elapsedTickTime = (double) this.timeCount / TICK_INTERVAL;
-		getGroundPanel().setElapsedTickTime(elapsedTickTime);
-		getGroundPanel().repaint();
+		GroundPanel groundPanel = getGroundPanel();
+		groundPanel.setPaused(this.isPaused);
+		groundPanel.setElapsedTickTime(elapsedTickTime);
+		groundPanel.repaint();
 	}
 
 	private GroundPanel getGroundPanel() {

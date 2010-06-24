@@ -9,25 +9,26 @@ import javax.imageio.ImageIO;
 
 public class ImageLoader {
 
-    private static Map<String, BufferedImage> images = new HashMap<String, BufferedImage>();
+	private static final Map<String, BufferedImage> IMAGES = new HashMap<String, BufferedImage>();
+	private static final String IMG_DIR = ""; // "res/img/";
 
-    private static BufferedImage loadImage(String path) {
-    	System.out.println("LOAD IMAGE "+ path);
+	private static BufferedImage loadImage(String path) {
+		System.out.println("LOAD IMAGE " + path);
 		BufferedImage image = null;
 		try {
-			URL url = ImageLoader.class.getClassLoader()
-					.getResource(path);
+			URL url = ImageLoader.class.getClassLoader().getResource(path);
 			image = ImageIO.read(url);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return image;
-    }
+	}
 
-    public static BufferedImage getImage(String imgName){
+	public static BufferedImage getImage(String imgName) {
 
-        if (!images.containsKey(imgName))
-			images.put(imgName, loadImage(imgName));
-		return images.get(imgName);
-    }
+		String path = IMG_DIR + imgName;
+		if (!IMAGES.containsKey(path))
+			IMAGES.put(path, loadImage(path));
+		return IMAGES.get(path);
+	}
 }

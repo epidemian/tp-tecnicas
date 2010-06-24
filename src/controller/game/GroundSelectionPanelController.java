@@ -12,39 +12,42 @@ import model.exception.BusinessLogicException;
 import model.game.Player;
 import model.warehouse.Ground;
 import view.game.GroundSelectionPanel;
-import view.game.ground.GroundPanel;
+import view.game.ground.StaticGroundPanel;
 import view.game.ground.GroundPanelContainer;
 import controller.MainController;
 
 public class GroundSelectionPanelController {
 
 	private static final String GROUND_PREFIX = "Ground ";
+	private static final int TILE_SIZE = 20;
+
+	private GroundSelectionPanel selectionPanel;
+	private Player player;
+	private List<Ground> grounds;
 
 	public GroundSelectionPanelController(GroundSelectionPanel selectionPanel,
 			Player player, MainController mainController) {
 
-		List<Ground> grounds = null;
+		this.selectionPanel = selectionPanel;
+		this.player = player;
 
 		try {
-			grounds = mainController.getInputFactory().loadGrounds();
+			this.grounds = mainController.getInputFactory().loadGrounds();
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 
-		if (grounds.isEmpty())
+		if (this.grounds.isEmpty())
 			throw new BusinessLogicException("Empty grounds list");
 
-		this.initBuyComboFromGroundSelectionPanel(grounds, selectionPanel);
-		this.initGroundSelectionPanelButtons(selectionPanel, player,
-				mainController);
+		this.initBuyComboFromGroundSelectionPanel();
+		this.initGroundSelectionPanelButtons(mainController);
 
 		int balance = player.getBudget().getBalance();
 		selectionPanel.getBudgetPanel().setMoneyBalance(balance);
 	}
 
-	private void initBuyComboFromGroundSelectionPanel(
-			final List<Ground> grounds,
-			final GroundSelectionPanel selectionPanel) {
+	private void initBuyComboFromGroundSelectionPanel() {
 
 		final JComboBox buyCombo = selectionPanel.getGroundCombo();
 		buyCombo.removeAllItems();
@@ -74,17 +77,14 @@ public class GroundSelectionPanelController {
 		Ground ground = grounds.get(comboIndex);
 
 		// Set ground in ground panel container and show prices.
-		GroundPanel groundPanel = new GroundPanel(ground);
-		GroundPanelContainer groundPanelContainer = new GroundPanelContainer(
-				groundPanel);
+		StaticGroundPanel groundPanel = new StaticGroundPanel(ground, TILE_SIZE);
 
-		selectionPanel.setGroundPanelContainer(groundPanelContainer);
+		selectionPanel.setGroundPanel(groundPanel);
 		selectionPanel.setPurchasePrice(ground.getPurchasePrice());
 		selectionPanel.setRentPrice(ground.getRentPrice());
 	}
 
 	private void initGroundSelectionPanelButtons(
-			final GroundSelectionPanel selectionPanel, final Player player,
 			final MainController mainControler) {
 
 		selectionPanel.addBuyButtonActionListener(new ActionListener() {
@@ -92,8 +92,7 @@ public class GroundSelectionPanelController {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
 
-				Ground ground = selectionPanel.getGroundPanelContainer()
-						.getGroundPanel().getGround();
+				Ground ground = selectionPanel.getGroundPanel().getGround();
 				player.purchaseWarehouse(ground);
 				mainControler.setGamePanel(player);
 			}
@@ -104,8 +103,7 @@ public class GroundSelectionPanelController {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
 
-				Ground ground = selectionPanel.getGroundPanelContainer()
-						.getGroundPanel().getGround();
+				Ground ground = selectionPanel.getGroundPanel().getGround();
 				player.rentWarehouse(ground);
 				mainControler.setGamePanel(player);
 			}

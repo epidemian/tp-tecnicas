@@ -17,11 +17,9 @@ import model.production.line.ProductionLine;
 public class ProductionLinesCreator {
 
 	private StorageArea storageArea;
-	private Warehouse warehouse;
 
-	public ProductionLinesCreator(Warehouse warehouse) {
-		this.warehouse = warehouse;
-		this.storageArea = warehouse.getStorageArea();
+	public ProductionLinesCreator(StorageArea storageArea) {
+		this.storageArea = storageArea;
 	}
 
 	public List<ProductionLine> createFromGround(Ground ground) {
@@ -119,7 +117,6 @@ public class ProductionLinesCreator {
 				line = createDisfunctionalProductionLine(firstElement);
 			}
 		}
-		warehouse.getProductionLines().add(line);
 		return line;
 	}
 

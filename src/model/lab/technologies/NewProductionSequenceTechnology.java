@@ -79,5 +79,4 @@ public class NewProductionSequenceTechnology extends Technology {
 		return true;
 	}
 
-
 }

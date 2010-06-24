@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 import model.game.Player;
 import model.warehouse.Position;
 import view.game.ground.GroundPanel;
+import view.game.ground.StaticGroundPanel;
 import controller.game.edition.EditionTool;
 
 public class GroundPanelController {

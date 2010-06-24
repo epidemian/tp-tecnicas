@@ -4,6 +4,7 @@ import static model.utils.ArgumentUtils.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 
 import model.game.Budget;
 import model.game.time.DailyUpdatable;
@@ -62,12 +63,25 @@ public class Warehouse implements MonthlyUpdatable, DailyUpdatable,
 				.getRentPrice());
 	}
 
+	/**
+	 * Creates the production lines corresponding to the elements connected on
+	 * the ground.
+	 */
 	public void createProductionLines() {
 
-		ProductionLinesCreator creator = new ProductionLinesCreator(this);
+		ProductionLinesCreator creator = new ProductionLinesCreator(
+				getStorageArea());
 		this.productionLines = creator.createFromGround(this.ground);
 		System.out.println("PRODUCTION LINES!\n"
 				+ StringUtils.join(this.productionLines, "\n"));
+	}
+
+	/**
+	 * Erases all logical production lines (but production line elements are not
+	 * removed from ground).
+	 */
+	public void clearProductionLines() {
+		this.productionLines.clear();
 	}
 
 	public void sell() {
@@ -90,16 +104,17 @@ public class Warehouse implements MonthlyUpdatable, DailyUpdatable,
 	private void sellProducts() {
 		double partial = 0;
 		double quality = 1 - this.getDefectivePercentage();
-		
+
 		for (Product prod : this.storageArea.getProductsProduced()) {
 			int productPrice = this.marketPrices.getPrice(prod);
 			partial += quality * quality * productPrice;
 		}
 
-		System.out.println("Sell products, partial: " + (int) Math.round(partial));
-		
+		System.out.println("Sell products, partial: "
+				+ (int) Math.round(partial));
+
 		this.budget.increment((int) Math.round(partial));
-		
+
 		this.storageArea.clearProductsProduced();
 	}
 
@@ -113,7 +128,7 @@ public class Warehouse implements MonthlyUpdatable, DailyUpdatable,
 	public void updateDay() {
 		for (ProductionLine line : this.productionLines)
 			line.updateDay();
-		
+
 		sellProducts();
 
 		setTotalDefectiveProductsMade(this.totalDefectiveProductsMade
@@ -131,7 +146,7 @@ public class Warehouse implements MonthlyUpdatable, DailyUpdatable,
 	}
 
 	public Collection<ProductionLine> getProductionLines() {
-		return productionLines;
+		return Collections.unmodifiableCollection(productionLines);
 	}
 
 	public int getTotalProductsMade() {

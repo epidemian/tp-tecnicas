@@ -5,7 +5,7 @@ import model.warehouse.Ground;
 import model.warehouse.Position;
 import view.Painter;
 import view.game.GamePanel;
-import view.game.ground.GroundPanel;
+import view.game.ground.StaticGroundPanel;
 import controller.game.GamePanelController;
 
 public abstract class EditionTool implements Painter {
@@ -34,7 +34,7 @@ public abstract class EditionTool implements Painter {
 		return this.getGame().getGround();
 	}
 
-	protected GroundPanel getGroundPanel() {
+	protected StaticGroundPanel getGroundPanel() {
 		return this.getGamePanel().getGroundPanelContainer().getGroundPanel();
 	}
 

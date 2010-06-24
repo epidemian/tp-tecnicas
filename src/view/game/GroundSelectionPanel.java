@@ -5,22 +5,18 @@ import static model.utils.ArgumentUtils.checkNotNull;
 import java.awt.event.ActionListener;
 
 import javax.swing.JComboBox;
+import javax.swing.JScrollPane;
 
 import view.game.ground.GroundPanelContainer;
+import view.game.ground.StaticGroundPanel;
 
 public class GroundSelectionPanel extends javax.swing.JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private GroundPanelContainer groundPanelContainer;
+	private StaticGroundPanel groundPanel2;
 
-    public GroundSelectionPanel(){
-    	initComponents();
-    }
-    
-    public GroundSelectionPanel(GroundPanelContainer groundPanelContainer) {
+    public GroundSelectionPanel() {
         initComponents();
-        checkNotNull(groundPanelContainer, "groundPanelContainer");
-        this.setGroundPanelContainer(groundPanelContainer);
     }
     
     public JComboBox getGroundCombo(){
@@ -31,17 +27,23 @@ public class GroundSelectionPanel extends javax.swing.JPanel {
         return this.budgetPanel;
     }
 
-    public GroundPanelContainer getGroundPanelContainer(){
-        return this.groundPanelContainer;
+    public StaticGroundPanel getGroundPanel(){
+        return this.groundPanel2;
     }
     
-    public void setGroundPanelContainer(GroundPanelContainer gamePanel){
-    	this.groundPanelContainer = gamePanel;
-        this.groundPanel.removeAll();
-        this.groundScrollPane = this.groundPanelContainer;
-        this.groundPanel.add(this.groundScrollPane);
-        this.groundPanel.revalidate();
-    }
+	public void setGroundPanel(StaticGroundPanel groundPanel) {
+		checkNotNull(groundPanel, "ground panel");
+		this.groundPanel2 = groundPanel;
+
+		this.groundScrollPane = new JScrollPane(
+				JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+				JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		this.groundScrollPane.setViewportView(this.groundPanel2);
+
+		this.groundPanel.removeAll();
+		this.groundPanel.add(this.groundScrollPane);
+		this.groundPanel.revalidate();
+	}
 
     public void addRentButtonActionListener(ActionListener al){
         this.rentButton.addActionListener(al);
