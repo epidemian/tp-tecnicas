@@ -17,6 +17,8 @@ public class GroundPanel extends StaticGroundPanel {
 	private double elapsedTickTime = 0;
 	private boolean isPaused = true;
 	private Painter painter;
+	private UnpausedProductPainter unpausedProductPainter;
+	private PausedProductPainter pausedProductPainter;
 
 	public GroundPanel(Player player) {
 		this(player, DEFAULT_TILE_SIZE);
@@ -25,6 +27,9 @@ public class GroundPanel extends StaticGroundPanel {
 	public GroundPanel(Player player, int tileSize) {
 		super(player.getGround(), tileSize);
 		this.player = player;
+		
+		pausedProductPainter = new PausedProductPainter(getGround());
+		unpausedProductPainter = new UnpausedProductPainter(player.getWarehouse());
 
 		this.setPainter(new Painter() {
 			@Override
@@ -38,7 +43,11 @@ public class GroundPanel extends StaticGroundPanel {
 		Graphics2D g2d = (Graphics2D) g;
 		super.paintComponent(g2d);
 
-		getGround().visitElements(new ProductPainter(g2d, elapsedTickTime));
+		
+		if (this.isPaused)
+			pausedProductPainter.paintProducts(g2d, elapsedTickTime);
+		else
+			unpausedProductPainter.paintProducts(g2d, elapsedTickTime);
 
 		this.painter.paint(g2d);
 	}
