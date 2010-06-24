@@ -3,10 +3,7 @@ package persistence;
 import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-import model.warehouse.Ground;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -15,7 +12,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import persistence.exceptions.InvalidTagException;
-import persistence.ground.GroundListPersistent;
 
 public class ConfigTest extends XMLPersistentTest{
 

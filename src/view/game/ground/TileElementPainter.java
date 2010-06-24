@@ -1,18 +1,14 @@
 package view.game.ground;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 
-import model.production.Product;
 import model.production.elements.ProductionLineElement;
 import model.production.elements.machine.Machine;
 import model.production.elements.machine.ProductionMachine;
 import model.production.elements.machine.QualityControlMachine;
 import model.warehouse.Position;
-import model.warehouse.TileElement;
 import model.warehouse.Wall;
 import view.ImageLoader;
 import view.game.TileElementImageRecognizer;

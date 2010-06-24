@@ -1,6 +1,5 @@
 package model.production;
 
-import static model.production.elements.ProductionLineElement.connectLineElements;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
@@ -16,7 +15,6 @@ import model.production.elements.machine.ProductionMachine;
 import model.production.elements.machine.MachineType.Builder;
 import model.production.elements.machine.states.BrokenMachineState;
 import model.production.line.ProductionLine;
-import model.utils.Config;
 import model.utils.ConfigMock;
 
 import org.junit.Before;

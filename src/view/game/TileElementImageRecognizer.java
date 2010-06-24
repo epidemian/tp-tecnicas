@@ -1,6 +1,5 @@
 package view.game;
 
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 
 import view.ImageLoader;
@@ -12,7 +11,6 @@ import model.production.elements.ProductionLineElement;
 import model.production.elements.machine.MachineType;
 import model.production.elements.machine.ProductionMachine;
 import model.production.elements.machine.QualityControlMachine;
-import model.warehouse.TileElement;
 import model.warehouse.TileElementVisitor;
 import model.warehouse.Wall;
 

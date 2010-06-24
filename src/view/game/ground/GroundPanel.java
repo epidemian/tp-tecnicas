@@ -2,18 +2,17 @@ package view.game.ground;
 
 import static model.utils.ArgumentUtils.*;
 
-import java.awt.BasicStroke;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
 import view.Painter;
 
 import model.game.Player;
-import model.warehouse.Ground;
 
 public class GroundPanel extends StaticGroundPanel {
 
-	private Player player;
+	private static final long serialVersionUID = 1L;
+
 	private double elapsedTickTime = 0;
 	private boolean isPaused = true;
 	private Painter painter;
@@ -26,7 +25,6 @@ public class GroundPanel extends StaticGroundPanel {
 
 	public GroundPanel(Player player, int tileSize) {
 		super(player.getGround(), tileSize);
-		this.player = player;
 		
 		pausedProductPainter = new PausedProductPainter(getGround());
 		unpausedProductPainter = new UnpausedProductPainter(player.getWarehouse());

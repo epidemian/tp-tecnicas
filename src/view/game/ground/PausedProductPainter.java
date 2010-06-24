@@ -1,19 +1,14 @@
 package view.game.ground;
 
 import static view.game.ground.ProductPaintingUtils.drawMovingProduct;
-import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.geom.Ellipse2D;
 
-import model.production.Product;
 import model.production.elements.Conveyor;
 import model.production.elements.InputProductionLineElement;
 import model.production.elements.OutputProductionLineElement;
-import model.production.elements.ProductionLineElement;
 import model.production.elements.machine.ProductionMachine;
 import model.production.elements.machine.QualityControlMachine;
 import model.warehouse.Ground;
-import model.warehouse.Position;
 import model.warehouse.TileElementVisitor;
 
 public class PausedProductPainter {

@@ -1,7 +1,5 @@
 package view.game.ground;
 
-import static model.utils.ArgumentUtils.checkNotNull;
-
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -28,7 +26,6 @@ import model.warehouse.Position;
 import model.warehouse.TileElement;
 import model.warehouse.TileElementVisitor;
 import model.warehouse.Wall;
-import view.Painter;
 
 public class StaticGroundPanel extends JPanel {
 

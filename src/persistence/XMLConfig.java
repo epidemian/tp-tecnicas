@@ -1,7 +1,6 @@
 package persistence;
 
 import static persistence.utils.DocumentLoader.loadDocuemnt;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -12,7 +11,6 @@ import model.utils.Config;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
-import org.dom4j.io.SAXReader;
 
 import persistence.exceptions.InvalidTagException;
 
