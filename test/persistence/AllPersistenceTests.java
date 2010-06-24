@@ -12,8 +12,6 @@ import org.junit.runners.Suite.SuiteClasses;
         GroundPersistentTest.class,
         MachineTypeListPersistentTest.class,
         MachineTypePersistentTest.class,
-        ProductionSequenceTechnologyListPersistentTest.class,
-        ProductionSequenceTechnologyPersistentTest.class,
         ProductTypePersistentTest.class,
         RawMaterialsPersistentTest.class,
         PriceMapPersistentTest.class
