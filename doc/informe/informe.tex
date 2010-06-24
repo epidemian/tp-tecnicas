@@ -134,16 +134,23 @@ A su vez, la cantidad de d\'ias por semana y d\'ias por mes tamb\'ien se encuent
 		
 	\subsection{Persistencia}
 		
-		\begin{figure}[H]
-		\centering
-		\includegraphics[scale=0.7]{diagramas/SequenceDiagramPersistence.jpg}
-		\caption{Diagrama de Secuencia de la recuperaci\'on de archivos XML}
-		\end{figure}	
+		Como ya se explico anteriormente, la persistencia quedo desacoplada del modelo. Esto se puede observar en el diagrama de clases, donde se ve como existe una interfaz que es necesario implementar para la recuperaci\'on de datos que son indispensables para el modelo.
+		
+		Esta interfaz, es implementada por una clase concreta ,\emph{XMLFactory} ,que se encuentra dentro del paquete de persistencia. Aca es donde se encuentra el hecho de que la recuperaci\'on es sobre XMLS y no por ejemplo, sobre una base de datos. F\'acilmente se podr\'ia intercambiar el \emph{input} del sistema por otro que venga en una base de datos.
+		
 		
 		\begin{figure}[H]
 		\centering
 		\includegraphics[scale=0.7]{diagramas/persistenceCD.jpg}
 		\caption{Diagrama de Clases general de la persistencia}
+		\end{figure}	
+		
+		En el diagrama de secuencia se puede observar como se realiza la recuperaci\'on de un archivos. Existen distintas clases utilitarias que se utilizan para ir realizando la recuperaci\'on manteniendo una jerarquia simil a la del modelo.
+		
+		\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.7]{diagramas/SequenceDiagramPersistence.jpg}
+		\caption{Diagrama de Secuencia de la recuperaci\'on de archivos XML}
 		\end{figure}	
 
 \clearpage
@@ -172,7 +179,7 @@ A su vez, la cantidad de d\'ias por semana y d\'ias por mes tamb\'ien se encuent
 	\caption{Diagrama de Procesos }
 	\end{figure}
 	
-	En una aplicaci\'on como la desarrollada, la complejidad de la vista de procesos es muy simple en comparaci\'on al de la vista l\'ogica o de desarrollo
+	En una aplicaci\'on como la desarrollada, la complejidad de la vista de procesos es muy simple en comparaci\'on al de la vista l\'ogica o de desarrollo.
 	
 \clearpage
 \section{Vista Física}
