@@ -227,7 +227,8 @@ public class GamePanelController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (Dialog.showDialog("Sell", "Are you sure?")) {
+				if (Dialog.showDialog("Sell",
+						"Wanna' sell the warehouse?")) {
 					player.sellWarehouse();
 					mainController.setGroundSelectionPanel(player);
 					disposeGamePanel();

@@ -4,6 +4,7 @@
 	<PriceItem id="Sword" price="110"/>
 	<PriceItem id="Axe" price="300"/>
 	<PriceItem id="Flail" price="700"/>
+	<PriceItem id="Stone" price="100"/>
 </PriceMap>
 	
 			

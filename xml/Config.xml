@@ -36,6 +36,14 @@
 	<Item id="GROUND_SALE_PRICE_COEF" value="0.8"/>
 	<Item id="GROUND_RENT_PRICE_COEF" value="0.01"/>	
 	
+	<!-- MainController -->	
+	<Item id="WIN_VALUE" value="10000"/>
+	
+	<!-- MainPanelController -->
+	<Item id="DIFFICULTY_LEVEL_EASY" value="10000"/>
+	<Item id="DIFFICULTY_LEVEL_NORMAL" value="5000"/>
+	<Item id="DIFFICULTY_LEVEL_HARD" value="2000"/>	
+	
 	<!-- XMLFactory -->	
 	<Item id="PATH_GROUNDS" value="xml/ValidGroundList.xml"/>
 	<Item id="PATH_TECHNOLOGIES" value="xml/ValidProductionSequencesTechnologyList.xml"/>

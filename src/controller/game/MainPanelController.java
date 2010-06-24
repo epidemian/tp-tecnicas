@@ -18,13 +18,19 @@ public class MainPanelController {
 
     private static final String[] DIFFICULTY_LEVELS = { "Easy", "Normal",
 			"Hard" };
-    private static final int[] INITIAL_MONEY = { 10000, 5000, 2000 };
+    private int[] INITIAL_MONEY;
 
     public MainPanelController(MainPanel mainPanel, MainController mainControler, Config config){
         checkNotNull(mainPanel, "mainPanel");
 
         initDifficultyCombo(mainPanel);
         initActionListeners(mainPanel, mainControler, config);
+        
+        INITIAL_MONEY =new int[3];
+        INITIAL_MONEY [0]=config.getIntegerValue("DIFFICULTY_LEVEL_EASY");
+        INITIAL_MONEY [1]=config.getIntegerValue("DIFFICULTY_LEVEL_NORMAL");
+        INITIAL_MONEY [2]=config.getIntegerValue("DIFFICULTY_LEVEL_HARD");
+       
     }
 
     private void initDifficultyCombo(MainPanel mainPanel) {
