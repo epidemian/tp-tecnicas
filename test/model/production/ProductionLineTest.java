@@ -46,7 +46,9 @@ public class ProductionLineTest {
 		Builder builder = new MachineType.Builder("Licuado", 1, 1)
 				.price(MACHINE_PRICE);
 
-		InputProductionLineElement inputElement = new InputProductionLineElement(new ConfigMock());
+		InputProductionLineElement inputElement = new InputProductionLineElement(
+				new ConfigMock());
+
 		Machine machine1 = new MachineThatNeverBreaks(builder.build());
 		Machine machine2 = new MachineThatNeverBreaks(builder.name("Haz")
 				.build());
@@ -63,11 +65,29 @@ public class ProductionLineTest {
 		this.machines.add(machine2);
 		this.machines.add(machine3);
 
+		ValidProductionSequences validSequencesMock = new ValidProductionSequences() {
+
+			@Override
+			public ProductType identifyProductType(
+					ProductionSequence productionSequence) {
+				return new ProductType("Product");
+			}
+
+		};
+
+		StorageArea storageArea = new StorageArea(validSequencesMock) {
+
+			@Override
+			public Product createProduct(RawMaterials inputRawMaterials) {
+				return new Product(new RawMaterials());
+			}
+
+		};
+
 		this.productionLine = ProductionLine.createFunctionalProductionLine(
-				new StorageArea(new ValidProductionSequences()), inputElement,
-				outputElement);
+				storageArea, inputElement, outputElement);
 	}
-	
+
 	private static void connectLineElements(ProductionLineElement previous,
 			ProductionLineElement next) {
 		ProductionLineElement.connectLineElements(previous, next,
@@ -89,16 +109,16 @@ public class ProductionLineTest {
 
 		int expectedProduction = ticksInADay
 				- this.productionLine.productionLineSize();
-		
+
 		assertEquals(expectedProduction, dailyProduction);
 
 		this.productionLine.updateDay();
 
-		List<Integer> dailyProductionList = this.productionLine
+		List<Integer> productionHistory = this.productionLine
 				.getProductionHistory();
 
-		assertEquals(expectedProduction, dailyProductionList.get(
-				dailyProductionList.size() - 1).intValue());
+		assertEquals(expectedProduction, productionHistory.get(
+				productionHistory.size() - 1).intValue());
 
 		assertEquals(0, this.productionLine.getDailyProduction());
 	}
@@ -194,7 +214,7 @@ public class ProductionLineTest {
 class MachineThatNeverBreaks extends ProductionMachine {
 
 	public MachineThatNeverBreaks(MachineType machineType) {
-		super(machineType,new ConfigMock());
+		super(machineType, new ConfigMock());
 	}
 
 	@Override
