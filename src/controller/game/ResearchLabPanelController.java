@@ -21,7 +21,7 @@ import model.lab.ResearchLab;
 import model.lab.Technology;
 import view.game.ResearchLabPanel;
 
-public class ResearchLabPanelController implements Refreshable{
+public class ResearchLabPanelController implements Refreshable {
 
 	private ResearchLab lab;
 	private Technology technologyToBeResearched;
@@ -35,13 +35,44 @@ public class ResearchLabPanelController implements Refreshable{
 		this.lab = player.getLab();
 		this.labPanel = labPanel;
 
-        this.labPanel.setMaxDailyFunding(this.lab.getMaxDailyFunding());
+		this.labPanel.setMaxDailyFunding(this.lab.getMaxDailyFunding());
 
 		initDailyFundingSpinner();
 		initTechnologyCombo();
 		initTechnologyResearchButton();
-		
-		
+
+		setLabels();
+	}
+
+	private void setLabels() {
+		setCurrentResearchTechnologyLabel();
+		setResearchProgress();
+		setObjectiveTechnologyLabel();
+	}
+
+	private void setObjectiveTechnologyLabel() {
+		Technology objectiveTech = this.lab.getObjectiveTechnology();
+		String objectiveTechStr;
+		if (objectiveTech != null)
+			objectiveTechStr = objectiveTech.getName();
+		else
+			objectiveTechStr = "Research cheapest";
+		this.labPanel.setTargetTechnology(objectiveTechStr);
+	}
+
+	private void setResearchProgress() {
+		double progress = this.lab.getCurrentReasearchTechnologyProgress();
+		this.labPanel.setResearchProgress((int) (progress * 100));
+	}
+
+	private void setCurrentResearchTechnologyLabel() {
+		Technology currentTech = this.lab.getCurrentResearchTechnology();
+		String currentTechStr;
+		if (currentTech != null)
+			currentTechStr = currentTech.getName();
+		else
+			currentTechStr = "All researched";
+		this.labPanel.setResearchingTechnology(currentTechStr);
 	}
 
 	private void initDailyFundingSpinner() {
@@ -61,7 +92,7 @@ public class ResearchLabPanelController implements Refreshable{
 			@Override
 			public void stateChanged(ChangeEvent ce) {
 				int dailyFunding = (Integer) (spinner.getValue());
-                                lab.setDailyFunding(dailyFunding);
+				lab.setDailyFunding(dailyFunding);
 			}
 		});
 	}
@@ -91,12 +122,13 @@ public class ResearchLabPanelController implements Refreshable{
 
 		TechnologyComboEntry technologyEntry = (TechnologyComboEntry) technologyCombo
 				.getSelectedItem();
-		Technology technology = technologyEntry.getTechnology();
+		this.technologyToBeResearched = technologyEntry.getTechnology();
 		Set<Technology> dependencies = lab
-				.getUnresearchedDependencies(technology);
+				.getUnresearchedDependencies(this.technologyToBeResearched);
 
 		// Set techonology price.
-		this.labPanel.setTechnologyPrice(technology.getResearchCost());
+		this.labPanel.setTechnologyPrice(this.technologyToBeResearched
+				.getResearchCost());
 		// Set description.
 		String description = "";
 		if (!dependencies.isEmpty()) {
@@ -104,19 +136,20 @@ public class ResearchLabPanelController implements Refreshable{
 			for (Technology dependency : dependencies)
 				description += "\t " + dependency.getName() + "\n";
 		}
-		description += "Description: \n" + "\t " + technology.getDescription()
-				+ "\n";
+		description += "Description: \n" + "\t "
+				+ this.technologyToBeResearched.getDescription() + "\n";
 
-		if (technology.isResearched()) {
+		if (this.technologyToBeResearched.isResearched()) {
 			description += "Already researched!\n";
 		} else {
 			description += "Research cost: "
-					+ getMoneyString(technology.getResearchCost()) + "\n";
+					+ getMoneyString(this.technologyToBeResearched
+							.getResearchCost()) + "\n";
 		}
 		this.labPanel.setTechnologyInfo(description);
 
-		this.labPanel.getResearchButton()
-				.setEnabled(!technology.isResearched());
+		this.labPanel.getResearchButton().setEnabled(
+				!this.technologyToBeResearched.isResearched());
 	}
 
 	private void initTechnologyResearchButton() {
@@ -127,6 +160,7 @@ public class ResearchLabPanelController implements Refreshable{
 			@Override
 			public void actionPerformed(ActionEvent ae) {
 				lab.startResearching(technologyToBeResearched);
+				refresh();
 			}
 		});
 	}
@@ -154,6 +188,6 @@ public class ResearchLabPanelController implements Refreshable{
 	@Override
 	public void refresh() {
 		this.technologyComboAction(labPanel.geTechnologyCombo());
-		
+		setLabels();
 	}
 }

@@ -125,11 +125,23 @@ public class ResearchLab implements DailyUpdatable {
 	 * 
 	 * @return
 	 */
-	public Technology getObjectiveTechTechnology() {
+	public Technology getObjectiveTechnology() {
 		return objectiveTech;
 	}
-	
-	
+
+	/**
+	 * Retrieves a number between 0 and 1 representing the research progress of
+	 * the current research technology (0 in case getCurrentResearchTechnology
+	 * == null)
+	 * 
+	 * @return
+	 */
+	public double getCurrentReasearchTechnologyProgress() {
+		if (currentResearchTech == null)
+			return 0;
+		return (double) accumulatedFunds
+				/ currentResearchTech.getResearchCost();
+	}
 
 	private boolean canResearchCurrentTechnology() {
 		return this.currentResearchTech != null

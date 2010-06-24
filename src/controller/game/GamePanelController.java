@@ -92,7 +92,7 @@ public class GamePanelController {
 		initLab(player, gamePanel);
 		initExitButton();
 		initSellButton(player, mainController);
-                initPrices();
+		initPrices();
 
 		final Timer mainLoopTimer = new Timer(UPDATE_INTERVAL,
 				new ActionListener() {
@@ -255,7 +255,8 @@ public class GamePanelController {
 
 	private void initLab(final Player player, final GamePanel gamePanel) {
 		this.labPanel = new ResearchLabPanel();
-		final ResearchLabPanelController labController = new ResearchLabPanelController(player, labPanel);
+		final ResearchLabPanelController labController = new ResearchLabPanelController(
+				player, labPanel);
 
 		JButton researchLabButton = toolBar.getLabButton();
 		researchLabButton.addActionListener(new ActionListener() {
@@ -290,7 +291,8 @@ public class GamePanelController {
 			final GamePanel gamePanel, final EditionActions editionActions) {
 		this.lineElementsMarketPanel = new LineElementsMarketPanel();
 		this.lineElementsMarketPanelController = new LineElementsMarketPanelController(
-				player, lineElementsMarketPanel, editionActions,player.getConfig());
+				player, lineElementsMarketPanel, editionActions, player
+						.getConfig());
 
 		JButton lineElementsMarketButton = this.toolBar
 				.getLineElementsMarketButton();
@@ -304,22 +306,22 @@ public class GamePanelController {
 		});
 	}
 
-        private void initPrices() {
+	private void initPrices() {
 
-            final PricesPanel pricesPanel = new PricesPanel();
-            final PricesPanelController pricesController =
-                    new PricesPanelController(pricesPanel, player);
+		final PricesPanel pricesPanel = new PricesPanel();
+		final PricesPanelController pricesController = new PricesPanelController(
+				pricesPanel, player);
 
-            JButton pricesButton = this.toolBar.getPricesButton();
-            pricesButton.addActionListener(new ActionListener() {
+		JButton pricesButton = this.toolBar.getPricesButton();
+		pricesButton.addActionListener(new ActionListener() {
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                    refreshablePanelController = pricesController;
-                    gamePanel.setToolPanel(pricesPanel);
-            }
-            });
-        }
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				refreshablePanelController = pricesController;
+				gamePanel.setToolPanel(pricesPanel);
+			}
+		});
+	}
 
 	private void updateTimeView() {
 		String dateString = this.player.getDate();
@@ -346,7 +348,7 @@ public class GamePanelController {
 		this.isPaused = pause;
 		if (this.isPaused)
 			this.player.getWarehouse().clearProductionLines();
-		else 
+		else
 			this.player.getWarehouse().createProductionLines();
 	}
 
