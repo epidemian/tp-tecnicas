@@ -27,7 +27,7 @@ import view.game.GamePanel;
 import view.game.RawMaterialsMarketPanel;
 import view.game.ViewUtils;
 
-public class RawMaterialsMarketPanelController {
+public class RawMaterialsMarketPanelController implements Refreshable {
 
 	private Budget budget;
 	private StorageArea storageArea;
@@ -175,5 +175,10 @@ public class RawMaterialsMarketPanelController {
 		public String toString() {
 			return rawMaterialType.getName();
 		}
+	}
+
+	@Override
+	public void refresh() {
+		this.updateTableData();
 	}
 }

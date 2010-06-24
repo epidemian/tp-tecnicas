@@ -253,4 +253,13 @@ public class LineElementsMarketPanelController {
 			return this.message;
 		}
 	}
+	
+	public void setEnabled(boolean aFlag){
+
+		this.sellButton.setEnabled(aFlag);
+		this.repairButton.setEnabled(aFlag);
+		this.moveButton.setEnabled(aFlag);
+		this.cancelButon.setEnabled(aFlag);
+		this.lineElements.setEnabled(aFlag);		
+	}
 }
