@@ -142,7 +142,11 @@ public class RawMaterialsMarketPanelController implements Refreshable {
 		this.rawMaterialType = entry.getRawMaterialType();
 		this.rawMaterialPrice = this.rawMaterialPrices
 				.getPriceByName(this.rawMaterialType.getName());
-		marketPanel.setRawMaterialPrice(this.rawMaterialPrice);
+
+		int price = (Integer) rawMaterialQuantityModel.getValue()
+				* rawMaterialPrice;
+
+		marketPanel.setRawMaterialPrice(price);
 	}
 
 	private void initBuyButtonActionListener(
@@ -209,6 +213,6 @@ public class RawMaterialsMarketPanelController implements Refreshable {
 	@Override
 	public void refresh() {
 		this.updateTableData();
-		this.buyComboAction(marketPanel);		
+		this.buyComboAction(marketPanel);
 	}
 }
