@@ -3,6 +3,7 @@ package model.warehouse;
 import static org.junit.Assert.assertEquals;
 import model.game.Budget;
 import model.production.ValidProductionSequences;
+import model.utils.ConfigMock;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -22,7 +23,7 @@ public class WarehouseTest {
 	@Before
 	public void setUp() throws Exception {
 
-		this.ground = new Ground(GROUND_PURCHASE_PRICE, 10, 10);
+		this.ground = new Ground(GROUND_PURCHASE_PRICE, 10, 10,new ConfigMock());
 		this.marketPrices = new MarketPrices();
 		this.sequences = new ValidProductionSequences();
 		this.budget = new Budget(INITIAL_BALANCE);

@@ -1,4 +1,49 @@
-<Config>	
+<Config>
+
+	<!-- BrokenMachineState -->	
+	<!-- Done -->
 	<Item id="BROKEN_PRICE_REPAIR_COEF" value="0.03"/>
-	<Item id="DAMAGED_PRICE_REPAIR_COEF" value="0.03"/>
+	
+	<!-- DamageMachineState -->	
+	<!-- Done -->
+	<Item id="DAMAGED_PRICE_REPAIR_COEF" value="0.02"/>
+	<Item id="DAMAGED_SALE_PRICE_COEF" value="0.5"/>
+	<Item id="DAMAGED_DEFECTIVE_PRODUCT_CHANCE" value="0.15"/>
+	
+	<!-- HealthMachineState -->	
+	<!-- Done -->
+	<Item id="HEALTHY_SALE_PRICE_COEF" value="0.5"/>
+	<Item id="HEALTHY_DEFECTIVE_PRODUCT_CHANCE" value="0.05"/>
+	
+	<!-- Conveyor -->	
+	<!-- Done -->
+	<Item id="CONVEYOR_SALE_PRICE" value="0"/>
+	<Item id="CONVEYOR_PURCHASE_PRICE" value="10"/>
+	
+	<!-- InputProductionLineELement -->	
+	<!-- Done -->
+	<Item id="INPUT_SALE_PRICE" value="0"/>
+	<Item id="INPUT_PURCHASE_PRICE" value="0"/>
+		
+	<!-- Player -->	
+	<!-- Done -->
+	<Item id="DAYS_PER_MONTH" value="10"/>
+	<Item id="DAYS_PER_WEEK" value="3"/>
+	<Item id="TICKS_PER_DAY" value="12"/>
+	<Item id="MAX_DAILY_FUND_RAISING" value="500"/>
+	
+	<!-- Ground -->	
+	<Item id="GROUND_SALE_PRICE_COEF" value="0.8"/>
+	<Item id="GROUND_RENT_PRICE_COEF" value="0.01"/>	
+	
+	<!-- XMLFactory -->	
+	<Item id="PATH_GROUNDS" value="xml/ValidGroundList.xml"/>
+	<Item id="PATH_TECHNOLOGIES" value="xml/ValidProductionSequencesTechnologyList.xml"/>
+	<Item id="PATH_PRODUCTION_MACHINES" value="xml/ValidProductionMachineList.xml"/>
+	<Item id="PATH_QUALITY_CONTROL_MACHINES" value="xml/ValidQualityControlMachineList.xml"/>
+	<Item id="PATH_RAW_MATERIALS" value="xml/ValidRawMaterialTypeList.xml"/>
+	<Item id="PATH_PRICES_BASIC" value="xml/prices/prices"/>
+	<Item id="PATH_PRICES_EXT" value=".xml"/>
+	
+	<!-- borrar de warehouse a RENT -->
 </Config>

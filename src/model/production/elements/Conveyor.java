@@ -3,25 +3,26 @@ package model.production.elements;
 import static model.utils.ArgumentUtils.checkNotNull;
 import model.exception.BusinessLogicException;
 import model.production.Direction;
+import model.utils.Config;
 import model.warehouse.Position;
 import model.warehouse.TileElementVisitor;
 
 public class Conveyor extends ProductionLineElement {
 
-	public static final int PURCHASE_PRICE = 10;
-	public static final int SALE_PRICE = 0;
+	public static int CONVEYOR_PURCHASE_PRICE = 10;
+	public static int CONVEYOR_SALE_PRICE = 0;
 	public static final int WIDTH = 1;
 	public static final int HEIGHT = 1;
-
+	
 	private final Direction inputConnectionDirection;
 	private final Direction outputConnectionDirection;
 
-	public Conveyor() {
-		this(Direction.WEST, Direction.EAST);
+	public Conveyor(Config config) {
+		this(Direction.WEST, Direction.EAST,config);
 	}
 
 	public Conveyor(Direction inputConnectionDirection,
-			Direction outputConnectionDirection) {
+			Direction outputConnectionDirection, Config config) {
 		super(1, 1);
 
 		checkNotNull(inputConnectionDirection, "input connection direction");
@@ -32,6 +33,11 @@ public class Conveyor extends ProductionLineElement {
 
 		this.inputConnectionDirection = inputConnectionDirection;
 		this.outputConnectionDirection = outputConnectionDirection;
+		
+		CONVEYOR_SALE_PRICE = Integer.valueOf(config
+				.getValue("CONVEYOR_SALE_PRICE"));
+		CONVEYOR_PURCHASE_PRICE = Integer.valueOf(config
+				.getValue("CONVEYOR_PURCHASE_PRICE"));
 	}
 
 	@Override
@@ -66,12 +72,12 @@ public class Conveyor extends ProductionLineElement {
 
 	@Override
 	public int getPurchasePrice() {
-		return PURCHASE_PRICE;
+		return CONVEYOR_PURCHASE_PRICE;
 	}
 
 	@Override
 	public int getSalePrice() {
-		return SALE_PRICE;
+		return CONVEYOR_SALE_PRICE;
 	}
 
 }

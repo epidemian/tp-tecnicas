@@ -4,6 +4,7 @@ import static model.production.TestUtils.createMachineType;
 import static org.junit.Assert.*;
 import model.production.elements.machine.Machine;
 import model.production.elements.machine.ProductionMachine;
+import model.utils.ConfigMock;
 
 import org.junit.Ignore;
 import org.junit.Test;
@@ -17,7 +18,7 @@ public class ProductionMachineTest {
 		Product product1 = new Product(new RawMaterials());
 		Product product2 = new Product(new RawMaterials());
 
-		Machine machine = new ProductionMachine(createMachineType("m1",1,1));
+		Machine machine = new ProductionMachine(createMachineType("m1",1,1),new ConfigMock());
 
 		Product productProcessed1 = machine.process(product1);
 		assertNull(productProcessed1);

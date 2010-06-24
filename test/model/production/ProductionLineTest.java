@@ -16,6 +16,8 @@ import model.production.elements.machine.ProductionMachine;
 import model.production.elements.machine.MachineType.Builder;
 import model.production.elements.machine.states.BrokenMachineState;
 import model.production.line.ProductionLine;
+import model.utils.Config;
+import model.utils.ConfigMock;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -46,7 +48,7 @@ public class ProductionLineTest {
 		Builder builder = new MachineType.Builder("Licuado", 1, 1)
 				.price(MACHINE_PRICE);
 
-		InputProductionLineElement inputElement = new InputProductionLineElement();
+		InputProductionLineElement inputElement = new InputProductionLineElement(new ConfigMock());
 		Machine machine1 = new MachineThatNeverBreaks(builder.build());
 		Machine machine2 = new MachineThatNeverBreaks(builder.name("Haz")
 				.build());
@@ -157,7 +159,7 @@ public class ProductionLineTest {
 
 		int expectedBalance = INITIAL_BUDGET
 				- Math.round(machines.get(0).getPurchasePrice()
-						* BrokenMachineState.PRICE_REPAIR_COEF);
+						* BrokenMachineState.BROKEN_PRICE_REPAIR_COEF);
 
 		assertEquals(expectedBalance, this.budget.getBalance());
 	}
@@ -194,7 +196,7 @@ public class ProductionLineTest {
 class MachineThatNeverBreaks extends ProductionMachine {
 
 	public MachineThatNeverBreaks(MachineType machineType) {
-		super(machineType);
+		super(machineType,new ConfigMock());
 	}
 
 	@Override

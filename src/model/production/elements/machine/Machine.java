@@ -9,6 +9,7 @@ import model.production.Product;
 import model.production.elements.ProductionLineElement;
 import model.production.elements.machine.states.HealthyMachineState;
 import model.production.elements.machine.states.MachineState;
+import model.utils.Config;
 import model.warehouse.Position;
 
 public abstract class Machine extends ProductionLineElement {
@@ -16,10 +17,10 @@ public abstract class Machine extends ProductionLineElement {
 	private MachineState machineState;
 	private MachineType machineType;
 
-	public Machine(MachineType machineType) {
+	public Machine(MachineType machineType, Config config) {
 		super(machineType.getWidth(), machineType.getHeight());
 		this.setMachineType(machineType);
-		this.setMachineState(new HealthyMachineState());
+		this.setMachineState(new HealthyMachineState(config));
 	}
 
 	public MachineType getMachineType() {

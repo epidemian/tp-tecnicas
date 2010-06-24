@@ -3,26 +3,29 @@ package model.production.elements;
 import model.exception.BusinessLogicException;
 import model.production.Direction;
 import model.production.RawMaterials;
+import model.utils.Config;
 import model.warehouse.Position;
 import model.warehouse.TileElementVisitor;
 
 public class InputProductionLineElement extends ProductionLineElement {
 
-	public static final int PURCHASE_PRICE = 0;
-	private static final int SALE_PRICE = 0;
+	public static int INPUT_PURCHASE_PRICE;
+	private static int INPUT_SALE_PRICE;
 	private final Direction outputConnectionDirection;
 	private RawMaterials configuration = new RawMaterials();
 
-	public InputProductionLineElement(Direction direction) {
+	public InputProductionLineElement(Direction direction, Config config) {
 		super(1, 1);
 		this.outputConnectionDirection = direction;
+
+		INPUT_SALE_PRICE = Integer.valueOf(config.getValue("INPUT_SALE_PRICE"));
+		INPUT_PURCHASE_PRICE = Integer.valueOf(config
+				.getValue("INPUT_PURCHASE_PRICE"));
 	}
 
-	public InputProductionLineElement() {
-		this(Direction.EAST);
+	public InputProductionLineElement(Config config) {
+		this(Direction.EAST, config);
 	}
-	
-	
 
 	@Override
 	public boolean canHavePreviousLineElement() {
@@ -51,12 +54,12 @@ public class InputProductionLineElement extends ProductionLineElement {
 
 	@Override
 	public int getPurchasePrice() {
-		return PURCHASE_PRICE;
+		return INPUT_PURCHASE_PRICE;
 	}
 
 	@Override
 	public int getSalePrice() {
-		return SALE_PRICE;
+		return INPUT_SALE_PRICE;
 	}
 
 	@Override
@@ -65,7 +68,7 @@ public class InputProductionLineElement extends ProductionLineElement {
 	}
 
 	public RawMaterials getRawMaterialsConfiguration() {
-		return this.configuration ;
+		return this.configuration;
 	}
 
 }

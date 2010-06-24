@@ -17,7 +17,7 @@ public class AddInputLineElementTool extends AbstractAddLineElementTool {
 
 	@Override
 	protected ProductionLineElement createLineElement() {
-		return new InputProductionLineElement(OUTPUT_DIR);
+		return new InputProductionLineElement(OUTPUT_DIR,getPlayer().getConfig());
 	}
 
 }

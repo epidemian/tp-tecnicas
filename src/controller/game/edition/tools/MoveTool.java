@@ -66,7 +66,7 @@ public class MoveTool extends EditionTool {
 		disconnectLineElement(element);
 
 		this.addTool = new AddOneElementTool(getGamePanelController(),
-				getGame(), element);
+				getPlayer(), element);
 	}
 
 	private class StartMoveVisitor extends EditableElementVisitor {

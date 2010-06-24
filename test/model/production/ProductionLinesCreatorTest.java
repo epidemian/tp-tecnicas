@@ -11,6 +11,8 @@ import model.production.elements.Conveyor;
 import model.production.elements.ProductionLineElement;
 import model.production.elements.machine.ProductionMachine;
 import model.production.line.ProductionLine;
+import model.utils.Config;
+import model.utils.ConfigMock;
 import model.warehouse.Ground;
 import model.warehouse.Position;
 import model.warehouse.ProductionLinesCreator;
@@ -23,11 +25,15 @@ public class ProductionLinesCreatorTest {
 	private ProductionLinesCreator linesCreator;
 	private Ground ground;
 
+	private Config config;
+
 	@Before
 	public void setUp() {
-		this.ground = new Ground(1000, 10, 10);
+		config = new ConfigMock();
+		this.ground = new Ground(1000, 10, 10, config);
 
-		StorageArea storageArea = new StorageArea(new ValidProductionSequences());
+		StorageArea storageArea = new StorageArea(
+				new ValidProductionSequences());
 		this.linesCreator = new ProductionLinesCreator(storageArea);
 
 	}
@@ -41,9 +47,9 @@ public class ProductionLinesCreatorTest {
 		 * Creates the first line.
 		 */
 		ProductionLineElement prodLineElement1 = createProductionMachine("Licuado");
-		ProductionLineElement prodLineElement2 = new Conveyor();
+		ProductionLineElement prodLineElement2 = new Conveyor(config);
 		ProductionLineElement prodLineElement3 = createProductionMachine("Haz");
-		ProductionLineElement prodLineElement4 = new Conveyor();
+		ProductionLineElement prodLineElement4 = new Conveyor(config);
 		ProductionLineElement prodLineElement5 = createProductionMachine("Horno");
 
 		connectLineElements(prodLineElement1, prodLineElement2);
@@ -57,7 +63,7 @@ public class ProductionLinesCreatorTest {
 		 * Creates the second line.
 		 */
 		ProductionLineElement prodLine2Element1 = createProductionMachine("Procesador");
-		ProductionLineElement prodLine2Element2 = new Conveyor();
+		ProductionLineElement prodLine2Element2 = new Conveyor(config);
 		ProductionLineElement prodLine2Element3 = createProductionMachine("Super-Machine");
 
 		connectLineElements(prodLine2Element1, prodLine2Element2);
@@ -105,7 +111,7 @@ public class ProductionLinesCreatorTest {
 	}
 
 	private ProductionLineElement createProductionMachine(String typeName) {
-		return new ProductionMachine(createMachineType(typeName, 1, 1));
+		return new ProductionMachine(createMachineType(typeName, 1, 1),config);
 	}
 
 	@Test

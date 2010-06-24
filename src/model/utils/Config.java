@@ -1,8 +1,4 @@
-package persistence;
-
-import java.util.Map;
-
-import persistence.exceptions.InvalidTagException;
+package model.utils;
 
 public interface Config {
 

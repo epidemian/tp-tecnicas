@@ -73,7 +73,7 @@ public abstract class AbstractAddLineElementTool extends EditionTool {
 	}
 
 	protected void putLineElementAt(Position position, ProductionLineElement element) {
-		getGame().buyAndAddProductionLineElement(element, position);
+		getPlayer().buyAndAddProductionLineElement(element, position);
 	}
 
 	protected abstract ProductionLineElement createLineElement();
@@ -243,7 +243,7 @@ public abstract class AbstractAddLineElementTool extends EditionTool {
 	}
 
 	protected boolean haveEnoughMoney() {
-		return this.getGame().canAfford(this.lineElement.getPurchasePrice());
+		return this.getPlayer().canAfford(this.lineElement.getPurchasePrice());
 	}
 
 }

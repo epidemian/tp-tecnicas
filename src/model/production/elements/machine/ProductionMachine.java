@@ -3,6 +3,7 @@ package model.production.elements.machine;
 import static model.utils.ArgumentUtils.checkNotNull;
 import static model.utils.RandomUtils.randomBoolean;
 import model.production.Product;
+import model.utils.Config;
 import model.warehouse.TileElementVisitor;
 
 public class ProductionMachine extends Machine {
@@ -11,8 +12,8 @@ public class ProductionMachine extends Machine {
 	 * public ProductionMachine(MachineType machineType, int width, int height)
 	 * { super(machineType, width, height); this.productsProcess = 0; }
 	 */
-	public ProductionMachine(MachineType machineType) {
-		super(machineType);
+	public ProductionMachine(MachineType machineType,Config config) {
+		super(machineType, config);
 		// this.productsProcess = 0;
 	}
 

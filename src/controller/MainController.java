@@ -8,7 +8,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import model.game.Player;
-import persistence.InputFactory;
+import model.utils.Config;
+import model.utils.InputFactory;
 import view.MainFrame;
 import view.game.GamePanel;
 import view.game.GroundSelectionPanel;
@@ -23,15 +24,19 @@ public class MainController {
 
 	private InputFactory inputFactory;
 
+	private Config config;
+
 	private static final Dimension MAIN_PANEL_SIZE = new Dimension(640, 480);
 	private static final Dimension GROUND_SELECTION_PANEL_SIZE = new Dimension(
 			320, 670);
 	protected static final float WIN_VALUE = 50000;
 
-	public MainController(final MainFrame mainFrame, InputFactory inputFactory) {
+	public MainController(final MainFrame mainFrame, InputFactory inputFactory,
+			Config config) {
 		this.mainFrame = mainFrame;
 		this.inputFactory = inputFactory;
 
+		this.config = config;
 		setMainPanel();
 
 		mainFrame.setVisible(true);
@@ -47,51 +52,51 @@ public class MainController {
 		});
 	}
 
-        public InputFactory getInputFactory(){
-            return this.inputFactory;
-        }
+	public InputFactory getInputFactory() {
+		return this.inputFactory;
+	}
 
-        public JFrame getMainFrame(){
-            return this.mainFrame;
-        }
+	public JFrame getMainFrame() {
+		return this.mainFrame;
+	}
 
 	public void setGamePanel(Player game) {
 
-            final GamePanel gamePanel = new GamePanel();
+		final GamePanel gamePanel = new GamePanel();
 
-            this.mainFrame.setResizable(true);
-            this.mainFrame.maximize();
-            this.setMainFramePanel(gamePanel);
+		this.mainFrame.setResizable(true);
+		this.mainFrame.maximize();
+		this.setMainFramePanel(gamePanel);
 
-            GamePanelController gamePanelController = new GamePanelController(game,
-                            gamePanel, this);
+		GamePanelController gamePanelController = new GamePanelController(game,
+				gamePanel, this);
 
-            this.mainFrame.addContainerListener(gamePanelController
-                            .getGamePanelRemovedListener());
+		this.mainFrame.addContainerListener(gamePanelController
+				.getGamePanelRemovedListener());
 	}
 
 	public void setMainPanel() {
 
-             MainPanel mainPanel = new MainPanel();
-             new MainPanelController(mainPanel,this);
+		MainPanel mainPanel = new MainPanel();
+		new MainPanelController(mainPanel, this,config);
 
-            this.mainFrame.setResizable(false);
-            this.mainFrame.setSize(MAIN_PANEL_SIZE);
-            this.mainFrame.setLocationRelativeTo(null);
-            this.setMainFramePanel(mainPanel);
+		this.mainFrame.setResizable(false);
+		this.mainFrame.setSize(MAIN_PANEL_SIZE);
+		this.mainFrame.setLocationRelativeTo(null);
+		this.setMainFramePanel(mainPanel);
 	}
 
 	public void setGroundSelectionPanel(Player player) {
 
-            GroundSelectionPanel selectionPanel = new GroundSelectionPanel();
-            new GroundSelectionPanelController(selectionPanel, player, this);
+		GroundSelectionPanel selectionPanel = new GroundSelectionPanel();
+		new GroundSelectionPanelController(selectionPanel, player, this);
 
-            // Frame configuration.
-            this.mainFrame.setResizable(true);
-            this.mainFrame.setSize(GROUND_SELECTION_PANEL_SIZE);
-            this.mainFrame.setLocationRelativeTo(null);
-            this.setMainFramePanel(selectionPanel);
-        }
+		// Frame configuration.
+		this.mainFrame.setResizable(true);
+		this.mainFrame.setSize(GROUND_SELECTION_PANEL_SIZE);
+		this.mainFrame.setLocationRelativeTo(null);
+		this.setMainFramePanel(selectionPanel);
+	}
 
 	private void setMainFramePanel(JPanel panel) {
 		panel.setOpaque(true);

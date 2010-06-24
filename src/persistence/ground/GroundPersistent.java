@@ -3,6 +3,7 @@ package persistence.ground;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.utils.Config;
 import model.warehouse.Ground;
 
 import org.dom4j.Element;
@@ -19,7 +20,7 @@ public class GroundPersistent{
 	static String TAG_CHILD_OUTPUTS="Outputs";
 		
 	@SuppressWarnings("unchecked")
-	public static Ground buildFromXML(Element element) 
+	public static Ground buildFromXML(Element element,Config config) 
 		throws InvalidTagException{
 		
 		if (!element.getName().equals(GroundPersistent.TAG_NAME))
@@ -29,7 +30,7 @@ public class GroundPersistent{
 		int rows=Integer.valueOf(element.attributeValue(TAG_ATR_ROWS));
 		int cols=Integer.valueOf(element.attributeValue(TAG_ATR_COLS));
 		
-		Ground ground=new Ground(price,rows,cols);
+		Ground ground=new Ground(price,rows,cols,config);
 		
 		List<WallItem> walls = (element.element(TAG_CHILD_WALLS)!=null ?
 				WallsPersistent.buildFromXML

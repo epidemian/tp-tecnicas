@@ -17,7 +17,7 @@ public class AddQualityControlMachineTool extends AddMachineTool {
 
 	@Override
 	protected ProductionLineElement createLineElement() {
-		return new QualityControlMachine(getMachineType());
+		return new QualityControlMachine(getMachineType(),getPlayer().getConfig());
 	}
 
 }

@@ -288,7 +288,7 @@ public class GamePanelController {
 			final GamePanel gamePanel, final EditionActions editionActions) {
 		this.lineElementsMarketPanel = new LineElementsMarketPanel();
 		this.lineElementsMarketPanelController = new LineElementsMarketPanelController(
-				player, lineElementsMarketPanel, editionActions);
+				player, lineElementsMarketPanel, editionActions,player.getConfig());
 
 		JButton lineElementsMarketButton = this.toolBar
 				.getLineElementsMarketButton();

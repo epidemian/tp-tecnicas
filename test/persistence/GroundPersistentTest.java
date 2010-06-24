@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 import model.production.Direction;
 import model.production.elements.OutputProductionLineElement;
+import model.utils.ConfigMock;
 import model.warehouse.Ground;
 import model.warehouse.Position;
 import model.warehouse.TileElement;
@@ -25,7 +26,7 @@ public class GroundPersistentTest extends XMLPersistentTest {
 	@Before
 	public void setUp() {
 		super.setUp();
-		ground = new Ground(1000, 15, 20);
+		ground = new Ground(1000, 15, 20,new ConfigMock());
 	}
 
 	@Test
@@ -37,7 +38,7 @@ public class GroundPersistentTest extends XMLPersistentTest {
 
 		Element element = doc.getRootElement();
 
-		Ground recovered = GroundPersistent.buildFromXML(element);
+		Ground recovered = GroundPersistent.buildFromXML(element,new ConfigMock());
 
 		assertEquals(recovered, ground);
 
@@ -58,7 +59,7 @@ public class GroundPersistentTest extends XMLPersistentTest {
 
 		Element element = doc.getRootElement();
 
-		Ground recovered = GroundPersistent.buildFromXML(element);
+		Ground recovered = GroundPersistent.buildFromXML(element,new ConfigMock());
 
 		assertEquals(recovered, ground);
 		for (int col = 0; col < recovered.getCols(); col++) {
@@ -96,7 +97,7 @@ public class GroundPersistentTest extends XMLPersistentTest {
 
 		Element element = doc.getRootElement();
 
-		Ground recovered = GroundPersistent.buildFromXML(element);
+		Ground recovered = GroundPersistent.buildFromXML(element,new ConfigMock());
 
 		assertEquals(recovered, ground);
 		for (int col = 0; col < recovered.getCols(); col++) {

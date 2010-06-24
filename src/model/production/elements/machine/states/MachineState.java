@@ -2,9 +2,16 @@ package model.production.elements.machine.states;
 
 import model.game.Budget;
 import model.production.elements.machine.Machine;
+import model.utils.Config;
 
 public abstract class MachineState {
+	
+	protected Config config;
 
+	public MachineState(Config config) {
+		super();
+		this.config = config;
+	}
 
 	public abstract void repair(Machine machine, Budget budget);
 

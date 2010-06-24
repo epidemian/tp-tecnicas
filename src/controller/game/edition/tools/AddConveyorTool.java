@@ -38,8 +38,8 @@ public class AddConveyorTool extends EditionTool {
 	EdgeType initialEdgeType = null;
 	ProductionLineElement initialElement = null;
 
-	public AddConveyorTool(GamePanelController gamePanelController, Player game) {
-		super(gamePanelController, game);
+	public AddConveyorTool(GamePanelController gamePanelController, Player plsyer) {
+		super(gamePanelController, plsyer);
 	}
 
 	@Override
@@ -101,12 +101,12 @@ public class AddConveyorTool extends EditionTool {
 	}
 
 	private void updateBudgetView() {
-		int balance = this.getGame().getBudget().getBalance();
+		int balance = this.getPlayer().getBudget().getBalance();
 		this.getGamePanel().getBudgetPanel().setMoneyBalance(balance);
 	}
 
 	private void buyAndAddConveyor(Conveyor conveyor, Position position) {
-		this.getGame().buyAndAddProductionLineElement(conveyor, position);
+		this.getPlayer().buyAndAddProductionLineElement(conveyor, position);
 	}
 
 	private Conveyor createConveyor(Position currPos, Position prevPos,
@@ -115,7 +115,7 @@ public class AddConveyorTool extends EditionTool {
 		Position nextDiff = nextPos.subtract(currPos);
 		Direction inputDir = Direction.getDirectionByPosition(prevDiff);
 		Direction outputDir = Direction.getDirectionByPosition(nextDiff);
-		return new Conveyor(inputDir, outputDir);
+		return new Conveyor(inputDir, outputDir, getPlayer().getConfig());
 	}
 
 	private Position getPreviousPositionThanOutput(
@@ -296,7 +296,7 @@ public class AddConveyorTool extends EditionTool {
 		boolean enoughMoney = true;
 		for (Position pos : newPositions) {
 			priceAccum += getPriceByQuantity(1);
-			enoughMoney = getGame().canAfford(priceAccum);
+			enoughMoney = getPlayer().canAfford(priceAccum);
 			boolean canAddConveyor = canAddConveyorPosition(pos);
 
 			boolean ok = canAddConveyor && enoughMoney
@@ -367,12 +367,12 @@ public class AddConveyorTool extends EditionTool {
 	}
 
 	private int getPriceByQuantity(int nConveyors) {
-		return nConveyors * Conveyor.PURCHASE_PRICE;
+		return nConveyors * Conveyor.CONVEYOR_PURCHASE_PRICE;
 	}
 
 	private boolean canAfford(int size) {
 		int price = getPriceByQuantity(size);
-		return getGame().canAfford(price);
+		return getPlayer().canAfford(price);
 	}
 
 	private ProductionLineElement getLineElementAt(Position mousePosition) {

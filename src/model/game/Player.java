@@ -15,19 +15,20 @@ import model.production.StorageArea;
 import model.production.ValidProductionSequences;
 import model.production.elements.ProductionLineElement;
 import model.production.elements.machine.MachineType;
+import model.utils.Config;
+import model.utils.InputFactory;
 import model.warehouse.Ground;
 import model.warehouse.MarketPrices;
 import model.warehouse.Position;
 import model.warehouse.Warehouse;
-import persistence.InputFactory;
 import controller.game.MarketPricesUpdater;
 
 public class Player implements TickUpdatable {
 
-	private static final int DAYS_PER_MONTH = 10;
-	private static final int DAYS_PER_WEEK = 3;
-	private static final int TICKS_PER_DAY = 12;
-	private static final int MAX_DAILY_LAB_FUNDING = 500;
+	private static int DAYS_PER_MONTH;
+	private static int DAYS_PER_WEEK;
+	private static int TICKS_PER_DAY;
+	private static int MAX_DAILY_LAB_FUNDING;
 
 	private Budget budget;
 	private String playerName;
@@ -43,12 +44,21 @@ public class Player implements TickUpdatable {
 
 	private UpdateScheduler scheduler;
 	private MarketPrices marketPrices;
+	private Config config;
 
 	public Player(String playerName, int initialBudget,
-			InputFactory inputFactory) {
+			InputFactory inputFactory, Config config) {
 		super();
 		this.playerName = playerName;
 		this.budget = new Budget(initialBudget);
+
+		this.config=config;
+		
+		DAYS_PER_MONTH = Integer.valueOf(config.getValue("DAYS_PER_MONTH"));
+		DAYS_PER_WEEK = Integer.valueOf(config.getValue("DAYS_PER_WEEK"));
+		TICKS_PER_DAY = Integer.valueOf(config.getValue("TICKS_PER_DAY"));
+		MAX_DAILY_LAB_FUNDING = Integer.valueOf(config
+				.getValue("MAX_DAILY_LAB_FUNDING"));
 
 		TechnologyTree technologyTree;
 		this.validProductionSequences = new ValidProductionSequences();
@@ -81,6 +91,7 @@ public class Player implements TickUpdatable {
 		// this.scheduller.subscribeDailyUpdatable(this.warehouse);
 		// this.scheduller.subscribeWeeklyUpdatable(this.warehouse);
 		// this.scheduller.subscribeMonthlyUpdatable(this.warehouse);
+
 	}
 
 	public Ground getGround() {
@@ -147,7 +158,7 @@ public class Player implements TickUpdatable {
 	public void purchaseWarehouse(Ground ground) {
 		if (this.warehouse != null)
 			throw new BusinessLogicException("Already have a warehouse");
-		
+
 		this.warehouse = Warehouse.purchaseWarehouse(ground, getBudget(),
 				getMarketPrices(), getValidProductionSequences());
 		subscribeWarehouse();
@@ -156,7 +167,7 @@ public class Player implements TickUpdatable {
 	public void rentWarehouse(Ground ground) {
 		if (this.warehouse != null)
 			throw new BusinessLogicException("Already have a warehouse");
-		
+
 		this.warehouse = Warehouse.rentWarehouse(ground, getBudget(),
 				getMarketPrices(), getValidProductionSequences());
 		subscribeWarehouse();
@@ -176,15 +187,19 @@ public class Player implements TickUpdatable {
 	public void updateTick() {
 		this.scheduler.updateTick();
 	}
-	
+
 	private void subscribeWarehouse() {
 		this.scheduler.subscribeTickUpdatable(this.warehouse);
 		this.scheduler.subscribeDailyUpdatable(this.warehouse);
 		this.scheduler.subscribeMonthlyUpdatable(this.warehouse);
 	}
-	
+
 	private void unsubscribeWarehouse() {
 		this.scheduler.unsubscribeDailyUpdatable(this.warehouse);
 		this.scheduler.unsubscribeMonthlyUpdatable(this.warehouse);
+	}
+
+	public Config getConfig() {
+		return this.config;
 	}
 }

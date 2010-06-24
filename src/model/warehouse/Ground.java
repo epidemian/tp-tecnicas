@@ -6,16 +6,22 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import model.utils.Config;
+
 public class Ground {
 	
-	private static final double RENT_PRICE_PERCENTAGE = 0.01;
-	private static final double SALE_PRICE_PERCENTAGE = 0.8;
+	private static double GROUND_RENT_PRICE_COEF;
+	private static double GROUND_SALE_PRICE_COEF;
 	
 	private int price;
 	private TileElement tileElements[][];
 	private EmptyTileElement emptyElement;
 
-	public Ground(int price, int rows, int cols) {
+	public Ground(int price, int rows, int cols, Config config) {
+		
+		GROUND_RENT_PRICE_COEF = Double.valueOf(config.getValue("GROUND_RENT_PRICE_COEF"));
+		GROUND_SALE_PRICE_COEF = Double.valueOf(config.getValue("GROUND_SALE_PRICE_COEF"));
+		
 		this.price = price;
 		checkGreaterEqual(cols, 1, "cols");
 		checkGreaterEqual(rows, 1, "rows");
@@ -171,10 +177,10 @@ public class Ground {
 	}
 
 	public int getSalePrice() {
-		return (int) (getPurchasePrice() * SALE_PRICE_PERCENTAGE);
+		return (int) (getPurchasePrice() * GROUND_SALE_PRICE_COEF);
 	}
 
 	public int getRentPrice() {
-		return (int) (getPurchasePrice() * RENT_PRICE_PERCENTAGE);
+		return (int) (getPurchasePrice() * GROUND_RENT_PRICE_COEF);
 	}
 }

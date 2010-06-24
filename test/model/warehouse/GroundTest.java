@@ -6,6 +6,7 @@ import model.exception.BusinessLogicException;
 import model.production.elements.ProductionLineElement;
 import model.production.elements.machine.MachineType;
 import model.production.elements.machine.ProductionMachine;
+import model.utils.ConfigMock;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -18,7 +19,7 @@ public class GroundTest {
 
 	@Before
 	public void setUp() {
-		ground = new Ground(1000, HEIGHT, WIDTH);
+		ground = new Ground(1000, HEIGHT, WIDTH,new ConfigMock());
 	}
 
 	@Test
@@ -40,7 +41,7 @@ public class GroundTest {
 
 	private ProductionLineElement createProdLineElement2x2() {
 		MachineType type = createMachineType("testingMachine", 2, 2);
-		return new ProductionMachine(type);
+		return new ProductionMachine(type,new ConfigMock());
 	}
 
 	@Test

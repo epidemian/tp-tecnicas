@@ -16,7 +16,7 @@ public class AddProductionMachineTool extends AddMachineTool {
 
 	@Override
 	protected ProductionLineElement createLineElement() {
-		return new ProductionMachine(getMachineType());
+		return new ProductionMachine(getMachineType(),getPlayer().getConfig());
 	}
 
 }

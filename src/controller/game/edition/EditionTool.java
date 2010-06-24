@@ -10,12 +10,12 @@ import controller.game.GamePanelController;
 
 public abstract class EditionTool implements Painter {
 
-	private Player game;
+	private Player player;
 	private GamePanelController gamePanelController;
 
 	public EditionTool(GamePanelController gamePanelController, Player game) {
 		this.gamePanelController = gamePanelController;
-		this.game = game;
+		this.player = game;
 	}
 
 	protected GamePanel getGamePanel() {
@@ -26,12 +26,12 @@ public abstract class EditionTool implements Painter {
 		return this.gamePanelController;
 	}
 
-	protected Player getGame() {
-		return game;
+	protected Player getPlayer() {
+		return player;
 	}
 
 	protected Ground getGround() {
-		return this.getGame().getGround();
+		return this.getPlayer().getGround();
 	}
 
 	protected StaticGroundPanel getGroundPanel() {

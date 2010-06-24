@@ -2,11 +2,13 @@ package main;
 
 import javax.swing.UIManager;
 
-import persistence.InputFactory;
+import model.utils.Config;
+import model.utils.InputFactory;
+
+import persistence.XMLConfig;
 import persistence.XMLFactory;
 import view.MainFrame;
 import controller.MainController;
-
 
 public class Main {
 
@@ -15,9 +17,9 @@ public class Main {
 		setOSLookAndFeel();
 
 		MainFrame mainFrame = new MainFrame();
-		
-		InputFactory factory = new XMLFactory();
-		new MainController(mainFrame, factory);
+		Config config = new XMLConfig();
+		InputFactory factory = new XMLFactory(config);
+		new MainController(mainFrame, factory, config);
 	}
 
 	private static void setOSLookAndFeel() {

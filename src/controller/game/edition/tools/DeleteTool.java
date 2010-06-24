@@ -50,7 +50,7 @@ public class DeleteTool extends EditionTool {
 	}
 
 	private void deleteLineElement(ProductionLineElement element) {
-		Budget budget = this.getGame().getBudget();
+		Budget budget = this.getPlayer().getBudget();
 		element.sell(budget);
 		getGround().removeTileElement(element);
 		disconnectLineElement(element);

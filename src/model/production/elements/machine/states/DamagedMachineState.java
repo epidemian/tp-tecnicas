@@ -2,6 +2,7 @@ package model.production.elements.machine.states;
 
 import model.game.Budget;
 import model.production.elements.machine.Machine;
+import model.utils.Config;
 
 /**
  * Represents the state of a machine which has a higher rate of defective
@@ -9,30 +10,42 @@ import model.production.elements.machine.Machine;
  */
 public class DamagedMachineState extends MachineState {
 
-	private static final float SALE_PRICE_COEF = 0.5f;
-	private static final float DEFECTIVE_PRODUCT_CHANCE = 0.15f;
-	private static final float PRICE_REPAIR_COEF = 0.2f;
+	private static float DAMAGED_SALE_PRICE_COEF = 0.5f;
+	private static float DAMAGED_DEFECTIVE_PRODUCT_CHANCE = 0.15f;
+	private static float DAMAGED_PRICE_REPAIR_COEF = 0.2f;
+
+	public DamagedMachineState(Config config) {
+		super(config);
+		DAMAGED_SALE_PRICE_COEF = Float.valueOf(config
+				.getValue("DAMAGED_SALE_PRICE_COEF"));
+		DAMAGED_DEFECTIVE_PRODUCT_CHANCE = Float.valueOf(config
+				.getValue("DAMAGED_DEFECTIVE_PRODUCT_CHANCE"));
+		DAMAGED_PRICE_REPAIR_COEF = Float.valueOf(config
+				.getValue("DAMAGED_PRICE_REPAIR_COEF"));
+
+	}
 
 	@Override
 	public void repair(Machine machine, Budget budget) {
 		budget.decrement(Math.round(machine.getPurchasePrice()
-				* PRICE_REPAIR_COEF));
-		machine.setMachineState(new HealthyMachineState());
+				* DAMAGED_PRICE_REPAIR_COEF));
+		machine.setMachineState(new HealthyMachineState(this.config));
 	}
 
 	@Override
 	public void breakUp(Machine machine) {
-		machine.setMachineState(new BrokenMachineState());
+		machine.setMachineState(new BrokenMachineState(this.config));
 	}
 
 	@Override
 	public int getSalePrice(Machine machine) {
-		return (int) (Math.round(machine.getPurchasePrice() * SALE_PRICE_COEF));
+		return (int) (Math.round(machine.getPurchasePrice()
+				* DAMAGED_SALE_PRICE_COEF));
 	}
 
 	@Override
 	public double getFailProductProcessChance(Machine machine) {
-		return DEFECTIVE_PRODUCT_CHANCE;
+		return DAMAGED_DEFECTIVE_PRODUCT_CHANCE;
 	}
 
 	@Override

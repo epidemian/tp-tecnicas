@@ -21,6 +21,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import model.production.elements.Conveyor;
 import model.production.elements.InputProductionLineElement;
+import model.utils.Config;
 import view.game.BackGroundPanel;
 
 public class LineElementsMarketPanelController {
@@ -40,7 +41,8 @@ public class LineElementsMarketPanelController {
 	private JComboBox lineElements;
 
 	public LineElementsMarketPanelController(Player game,
-			LineElementsMarketPanel marketPanel, EditionActions editionActions) {
+			LineElementsMarketPanel marketPanel, EditionActions editionActions,
+			Config config) {
 
 		checkNotNull(game, "game");
 		checkNotNull(marketPanel, "marketPanel");
@@ -53,8 +55,8 @@ public class LineElementsMarketPanelController {
 		this.images = new ArrayList<BufferedImage>();
 		this.messages = new ArrayList<String>();
 
-		this.initConveyor(editionActions);
-		this.initInput(editionActions);
+		this.initConveyor(editionActions, config);
+		this.initInput(editionActions, config);
 		this.initProductionMachines(editionActions, game
 				.getValidProductionMachineTypes());
 		this.initQualityMachines(editionActions, game
@@ -70,9 +72,9 @@ public class LineElementsMarketPanelController {
 		this.initToolButtons();
 	}
 
-	private void initConveyor(EditionActions editionActions) {
+	private void initConveyor(EditionActions editionActions, Config config) {
 		BufferedImage image = TileElementImageRecognizer
-				.getConveyorImage(new Conveyor());
+				.getConveyorImage(new Conveyor(config));
 		Action action = editionActions.getActionToSetConveyorTool();
 
 		this.images.add(image);
@@ -80,9 +82,9 @@ public class LineElementsMarketPanelController {
 		this.messages.add("Conveyor");
 	}
 
-	private void initInput(EditionActions editionActions) {
+	private void initInput(EditionActions editionActions,Config config) {
 		BufferedImage image = TileElementImageRecognizer
-				.getInputElementImage(new InputProductionLineElement());
+				.getInputElementImage(new InputProductionLineElement(config));
 		Action action = editionActions.getActionToSetInputLineElementTool();
 
 		this.images.add(image);
@@ -253,13 +255,13 @@ public class LineElementsMarketPanelController {
 			return this.message;
 		}
 	}
-	
-	public void setEnabled(boolean aFlag){
+
+	public void setEnabled(boolean aFlag) {
 
 		this.sellButton.setEnabled(aFlag);
 		this.repairButton.setEnabled(aFlag);
 		this.moveButton.setEnabled(aFlag);
 		this.cancelButon.setEnabled(aFlag);
-		this.lineElements.setEnabled(aFlag);		
+		this.lineElements.setEnabled(aFlag);
 	}
 }

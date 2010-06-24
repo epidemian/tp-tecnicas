@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import model.exception.BusinessLogicException;
+import model.utils.Config;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;

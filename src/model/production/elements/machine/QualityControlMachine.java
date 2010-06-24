@@ -3,12 +3,13 @@ package model.production.elements.machine;
 import static model.utils.ArgumentUtils.checkNotNull;
 import static model.utils.RandomUtils.randomBoolean;
 import model.production.Product;
+import model.utils.Config;
 import model.warehouse.TileElementVisitor;
 
 public class QualityControlMachine extends Machine {
 
-	public QualityControlMachine(MachineType machineType) {
-		super(machineType);
+	public QualityControlMachine(MachineType machineType, Config config) {
+		super(machineType,config);
 	}
 
 	/*

@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import model.game.Player;
+import model.utils.Config;
 import view.game.MainPanel;
 import controller.MainController;
 
@@ -19,11 +20,11 @@ public class MainPanelController {
 			"Hard" };
     private static final int[] INITIAL_MONEY = { 1000000, 1500000, 2000000 };
 
-    public MainPanelController(MainPanel mainPanel, MainController mainControler){
+    public MainPanelController(MainPanel mainPanel, MainController mainControler, Config config){
         checkNotNull(mainPanel, "mainPanel");
 
         initDifficultyCombo(mainPanel);
-        initActionListeners(mainPanel, mainControler);
+        initActionListeners(mainPanel, mainControler, config);
     }
 
     private void initDifficultyCombo(MainPanel mainPanel) {
@@ -37,7 +38,7 @@ public class MainPanelController {
     }
 
     private void initActionListeners(MainPanel mainPanel,
-        final MainController mainControler) {
+        final MainController mainControler, final Config config) {
 
         final JTextField nameField = mainPanel.getPlayerNameTextArea();
         final JComboBox difficultyCombo = mainPanel.getDifficultyCombo();
@@ -51,7 +52,7 @@ public class MainPanelController {
                     String name = nameField.getText();
 
                     if (!name.isEmpty()) {
-                            Player player = new Player(name, money, mainControler.getInputFactory());
+                            Player player = new Player(name, money, mainControler.getInputFactory(),config);
                             mainControler.setGroundSelectionPanel(player);
                     } else
                             JOptionPane.showMessageDialog(

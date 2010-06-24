@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.utils.ConfigMock;
 import model.warehouse.Ground;
 
 import org.dom4j.Document;
@@ -23,9 +24,9 @@ public class GroundListPersistentTest  extends XMLPersistentTest {
 	public void setUp(){
 		super.setUp();
 		list=new ArrayList<Ground>();
-		list.add(new Ground(1000,10,30));
-		list.add(new Ground(3000,50,30));
-		list.add(new Ground(2000,30,30));
+		list.add(new Ground(1000,10,30,new ConfigMock()));
+		list.add(new Ground(3000,50,30,new ConfigMock()));
+		list.add(new Ground(2000,30,30,new ConfigMock()));
 	}
 	
 	@Test
@@ -37,7 +38,7 @@ public class GroundListPersistentTest  extends XMLPersistentTest {
 		Element element=doc.getRootElement();
 		
 		List<Ground> recovered=
-			GroundListPersistent.buildFromXML(element);
+			GroundListPersistent.buildFromXML(element,new ConfigMock());
 		
 		assertEquals(recovered,list);
 		
