@@ -1,5 +1,9 @@
 package model.production.elements;
 
+import java.util.ArrayList;
+
+import java.util.List;
+
 import model.exception.BusinessLogicException;
 import model.production.Direction;
 import model.production.Product;
@@ -10,6 +14,7 @@ public class OutputProductionLineElement extends ProductionLineElement {
 
 	private final Direction inputConnectionDirection;
 
+	private List<Integer> dailyProductionHistory;
 	private int dailyProduction = 0;
 	
 	public OutputProductionLineElement() {
@@ -18,18 +23,22 @@ public class OutputProductionLineElement extends ProductionLineElement {
 
 	public OutputProductionLineElement(Direction direction) {
 		super(1, 1);
-		inputConnectionDirection = direction;
+		this.inputConnectionDirection = direction;
+		this.dailyProductionHistory = new ArrayList<Integer>();
 	}
 	
 	public int getDailyProduction() {
 		return dailyProduction;
 	}
 	
-	public void resetDailyProduction() {
-		this.dailyProduction = 0;
+	public List<Integer> getDailyProductionHistory(){
+		return this.dailyProductionHistory;
 	}
 	
-	
+	public void resetDailyProduction() {
+		this.dailyProductionHistory.add(this.dailyProduction);
+		this.dailyProduction = 0;
+	}
 
 	@Override
 	public boolean canHaveNextLineElement() {
@@ -78,7 +87,4 @@ public class OutputProductionLineElement extends ProductionLineElement {
 			this.dailyProduction++;
 		return output;
 	}
-	
-	
-
 }

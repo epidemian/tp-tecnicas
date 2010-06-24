@@ -12,17 +12,21 @@ import javax.swing.JToggleButton;
 import javax.swing.Timer;
 
 import model.game.Player;
+import model.production.elements.Conveyor;
 import model.production.elements.InputProductionLineElement;
+import model.production.elements.OutputProductionLineElement;
 import model.production.elements.machine.ProductionMachine;
 import model.production.elements.machine.QualityControlMachine;
 import model.warehouse.EmptyTileElement;
 import model.warehouse.TileElement;
 import model.warehouse.TileElementVisitor;
+import model.warehouse.Wall;
 import view.game.Dialog;
 import view.game.GamePanel;
 import view.game.InputSelectionPanel;
 import view.game.LineElementsMarketPanel;
 import view.game.MachineSelectionPanel;
+import view.game.OutputSelectionPanel;
 import view.game.RawMaterialsMarketPanel;
 import view.game.ResearchLabPanel;
 import view.game.ToolBarPanel;
@@ -157,6 +161,26 @@ public class GamePanelController {
 					refreshablePanelController = NULL_REFRESHABLE;
 				}
 			}
+			
+			@Override
+			public void visitOutputProductionLineElement(
+					OutputProductionLineElement outputLineElement) {
+
+				OutputSelectionPanel outputPanel = new OutputSelectionPanel();
+				refreshablePanelController = new OutputSelectionPanelController(
+						outputLineElement, outputPanel, player);
+				getGamePanel().setToolPanel(outputPanel);
+			}
+
+			@Override
+			public void visitConveyor(Conveyor conveyor) {
+				this.visitEmptyElement(null);
+			}
+
+			@Override
+			public void visitWall(Wall wall) {
+				this.visitEmptyElement(null);
+			}
 		});
 	}
 
@@ -227,8 +251,7 @@ public class GamePanelController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (Dialog.showDialog("Sell",
-						"Wanna' sell the warehouse?")) {
+				if (Dialog.showDialog("Sell", "Wanna' sell the warehouse?")) {
 					player.sellWarehouse();
 					mainController.setGroundSelectionPanel(player);
 					disposeGamePanel();
@@ -301,7 +324,6 @@ public class GamePanelController {
 
 			@Override
 			public void actionPerformed(ActionEvent ae) {
-
 				gamePanel.setToolPanel(lineElementsMarketPanel);
 			}
 		});
@@ -340,8 +362,8 @@ public class GamePanelController {
 				if (this.pausePressed)
 					setPaused(true);
 			}
-			this.refreshablePanelController.refresh();
 		}
+		this.refreshablePanelController.refresh();
 		repaintGroundPanel();
 	}
 
