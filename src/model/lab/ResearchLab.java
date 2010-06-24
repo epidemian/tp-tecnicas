@@ -108,6 +108,29 @@ public class ResearchLab implements DailyUpdatable {
 		return getUnresearchedTechnologies(deps);
 	}
 
+	/**
+	 * Retrieves the technology that is currently being researched in the lab.
+	 * Might be null in case everything has been researched.
+	 * 
+	 * @return
+	 */
+	public Technology getCurrentResearchTechnology() {
+		return currentResearchTech;
+	}
+
+	/**
+	 * Retrieves the current objective technology, i.e: the technology that was
+	 * set by {@link ResearchLab#startResearching(Technology)} if it has not
+	 * been researched yet, or, otherwise, null.
+	 * 
+	 * @return
+	 */
+	public Technology getObjectiveTechTechnology() {
+		return objectiveTech;
+	}
+	
+	
+
 	private boolean canResearchCurrentTechnology() {
 		return this.currentResearchTech != null
 				&& this.accumulatedFunds >= this.currentResearchTech
