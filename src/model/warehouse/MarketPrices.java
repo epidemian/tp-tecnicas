@@ -1,8 +1,8 @@
 package model.warehouse;
 
-import java.util.Collections;
 import static model.utils.ArgumentUtils.checkNotNull;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,36 +11,41 @@ import model.production.Product;
 
 public class MarketPrices {
 
-	Map<String,Integer> map;
-	
-	public MarketPrices(){
-		this.map=new HashMap<String, Integer>();
+	Map<String, Integer> map;
+
+	public MarketPrices() {
+		this.map = new HashMap<String, Integer>();
 	}
-	
-	public MarketPrices(Map<String,Integer> map){
-		this.map=map;
+
+	public MarketPrices(Map<String, Integer> map) {
+		this.map = map;
 	}
-	
+
 	public int getPrice(Product prod) {
 		String name = prod.getProductType().getName();
 		return getPriceByName(name);
 	}
-	
+
 	public int getPriceByName(String name) {
-		if(map.containsKey(name)){
+		if (map.containsKey(name)) {
 			return map.get(name).intValue();
-		}
-		else{
-			throw new BusinessLogicException("Product " + name + " does not exist");
+		} else {
+			throw new BusinessLogicException("Product " + name
+					+ " does not exist");
 		}
 	}
 
-        public Map<String,Integer> getMap(){
-            return Collections.unmodifiableMap(map);
-        }
-
-	public void setMap(Map<String,Integer> map){
+	public void setMap(Map<String, Integer> map) {
 		checkNotNull(map, "price map");
-		this.map=map;
+		this.map = map;
+	}
+	
+	public Map<String,Integer> getMap(){
+        return Collections.unmodifiableMap(map);
+    }
+
+	@Override
+	public String toString() {
+		return "MarketPrices [map=" + map + "]";
 	}
 }

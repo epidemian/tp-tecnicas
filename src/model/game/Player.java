@@ -1,5 +1,6 @@
 package model.game;
 
+import static model.production.elements.ProductionLineElement.disconnectLineElement;
 import static model.utils.ArgumentUtils.checkArgCondition;
 
 import java.util.List;
@@ -124,6 +125,12 @@ public class Player implements TickUpdatable {
 
 		getBudget().decrement(price);
 		getGround().addTileElement(element, position);
+	}
+	
+	public void sellProductionLineElement(ProductionLineElement element) {
+		element.sell(getBudget());
+		getGround().removeTileElement(element);
+		disconnectLineElement(element);
 	}
 
 	public void setInitialMoney(int money) {

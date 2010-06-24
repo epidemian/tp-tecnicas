@@ -50,10 +50,7 @@ public class DeleteTool extends EditionTool {
 	}
 
 	private void deleteLineElement(ProductionLineElement element) {
-		Budget budget = this.getPlayer().getBudget();
-		element.sell(budget);
-		getGround().removeTileElement(element);
-		disconnectLineElement(element);
+		this.getPlayer().sellProductionLineElement(element);
 	}
 
 	private class DeleteVisitor extends EditableElementVisitor {

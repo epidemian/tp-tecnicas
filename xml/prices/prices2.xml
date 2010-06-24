@@ -1,5 +1,6 @@
 <PriceMap>
 	<PriceItem id="Gold" price="300"/>
+	<PriceItem id="Wood" price="12"/>
 	<PriceItem id="Sword" price="410"/>
 	<PriceItem id="Axe" price="340"/>
 	<PriceItem id="Flail" price="500"/>

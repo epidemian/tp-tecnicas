@@ -28,7 +28,7 @@ public class Ground {
 		this.tileElements = new TileElement[rows][cols];
 		this.emptyElement = new EmptyTileElement(cols, rows);
 		this.emptyElement.setPosition(Position.ZERO);
-		fillAreaWithEmptySpace(Position.ZERO, rows, cols);
+		fillAreaWithEmptySpace(Position.ZERO, cols, rows);
 	}
 
 	public int getPurchasePrice() {
@@ -133,7 +133,7 @@ public class Ground {
 	}
 
 	private void fillAreaWithEmptySpace(Position from, int width, int height) {
-		fillAreaWithElement(this.emptyElement, from, height, width);
+		fillAreaWithElement(this.emptyElement, from, width, height);
 	}
 
 	private void fillAreaWithElement(TileElement element, Position position,

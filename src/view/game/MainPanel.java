@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 
+import view.ImageLoader;
+
 public class MainPanel extends javax.swing.JPanel {
 
     private static final String BACK_GROUND = "mainPanelBackGround.png";

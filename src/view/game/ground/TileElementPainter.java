@@ -14,7 +14,7 @@ import model.production.elements.machine.QualityControlMachine;
 import model.warehouse.Position;
 import model.warehouse.TileElement;
 import model.warehouse.Wall;
-import view.game.ImageLoader;
+import view.ImageLoader;
 import view.game.TileElementImageRecognizer;
 
 /**

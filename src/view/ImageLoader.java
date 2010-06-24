@@ -1,4 +1,4 @@
-package view.game;
+package view;
 
 import java.awt.image.BufferedImage;
 import java.net.URL;
@@ -13,12 +13,12 @@ public class ImageLoader {
 	private static final String IMG_DIR = ""; // "res/img/";
 
 	private static BufferedImage loadImage(String path) {
-		System.out.println("LOAD IMAGE " + path);
 		BufferedImage image = null;
 		try {
 			URL url = ImageLoader.class.getClassLoader().getResource(path);
 			image = ImageIO.read(url);
 		} catch (Exception e) {
+			System.err.println("Could not load image " + path);
 			e.printStackTrace();
 		}
 		return image;

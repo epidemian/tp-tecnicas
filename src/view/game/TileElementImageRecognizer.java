@@ -3,6 +3,8 @@ package view.game;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 
+import view.ImageLoader;
+
 import model.production.elements.Conveyor;
 import model.production.elements.InputProductionLineElement;
 import model.production.elements.OutputProductionLineElement;

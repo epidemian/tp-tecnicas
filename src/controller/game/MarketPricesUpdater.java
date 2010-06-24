@@ -33,6 +33,7 @@ public class MarketPricesUpdater implements WeeklyUpdatable {
 	public void updateWeek() {
 		this.weekNumber++;
 		this.changeWeeklyPrices();
+		System.out.println("Update week! " + this.marketPrices);
 	}
 
 	private void changeWeeklyPrices() {

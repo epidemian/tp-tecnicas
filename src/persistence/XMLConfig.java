@@ -41,8 +41,10 @@ public class XMLConfig extends Config {
 	}
 
 	@Override
-	public String getValue(String st) {
-		return map.get(st);
+	public String getValue(String key) {
+		if (map.get(key) == null)
+			throw new BusinessLogicException("Key " + key + " not found");
+		return map.get(key);
 	}
 
 	@Override
