@@ -42,12 +42,24 @@ public class GamePanelController {
 	private boolean isPaused = true;
 	private int timeCount = 0;
 
+	private ToolBarPanel toolBar;
+
 	private ContainerAdapter gamePanelRemovedListener;
 	private JToggleButton playButton;
 	private JToggleButton pauseButton;
 	private GamePanel gamePanel;
 	private Player player;
 	private GroundPanelController groundPanelController;
+
+	// Panels controllers.
+	private RawMaterialsMarketPanelController rawMaterialPanelController;
+	private LineElementsMarketPanelController lineElementsMarketPanelController;
+	private ResearchLabPanelController labPanelController;
+
+	// Panels.
+	private LineElementsMarketPanel lineElementsMarketPanel;
+	private RawMaterialsMarketPanel rawMaterialsMarketPanel;
+	private ResearchLabPanel labPanel;
 
 	public ContainerAdapter getGamePanelRemovedListener() {
 		return gamePanelRemovedListener;
@@ -58,11 +70,77 @@ public class GamePanelController {
 
 		this.gamePanel = gamePanel;
 		this.player = player;
+		
 		final EditionActions editionActions = new EditionActions(this, player);
 		KeyInputActionMapper mapper = new KeyInputActionMapper(editionActions);
 		mapper.mapActions(gamePanel.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW),
 				gamePanel.getActionMap());
 
+		initBudgetObserver(player, gamePanel);
+
+		GroundPanel groundPanel = new GroundPanel(player.getGround());
+		gamePanel.getGroundPanelContainer().setGroundPanel(groundPanel);
+		groundPanelController = new GroundPanelController(player, groundPanel);
+
+		this.toolBar = gamePanel.getToolBarPanel();
+
+		initLineElementsMarket(player, gamePanel, editionActions);
+		initRawMaterialMarket(player, gamePanel);
+		initLab(player, gamePanel);
+		initExitButton();
+		initSellButton(player, mainController);
+
+		final Timer mainLoopTimer = new Timer(UPDATE_INTERVAL,
+				new ActionListener() {
+
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						mainLoop();
+					}
+				});
+		
+		mainLoopTimer.start();
+
+		initPlayButton();
+		initPauseButton();
+
+		gamePanelRemovedListener = new GamePanelRemovedListener(mainLoopTimer);
+
+		updateTimeView();
+	}
+
+	private void initPauseButton() {
+		pauseButton = toolBar.getPauseButton();
+		pauseButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				pauseButtonPressed();
+				// Enable the construction buttons and it's panel.
+				lineElementsMarketPanelController.setEnabled(true);
+				toolBar.getLineElementsMarketButton().setEnabled(true);
+			}
+		});
+	}
+
+	private void initPlayButton() {
+		playButton = toolBar.getPlayButton();
+		playButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				playButtonPressed();
+				// Disable the construction buttons and it's panel.
+				toolBar.getLineElementsMarketButton().setEnabled(false);
+				lineElementsMarketPanelController.setEnabled(false);
+			}
+		});
+	}
+
+	private void initBudgetObserver(final Player player,
+			final GamePanel gamePanel) {
 		/**
 		 * The budget panel is updated by the observer pattern.
 		 */
@@ -74,64 +152,10 @@ public class GamePanelController {
 				gamePanel.getBudgetPanel().setMoneyBalance(balance);
 			}
 		});
+	}
 
-		GroundPanel groundPanel = new GroundPanel(player.getGround());
-		gamePanel.getGroundPanelContainer().setGroundPanel(groundPanel);
-		groundPanelController = new GroundPanelController(player, groundPanel);
-
-		ToolBarPanel toolBar = gamePanel.getToolBarPanel();
-
-		JButton lineElementsMarketButton = toolBar
-				.getLineElementsMarketButton();
-		lineElementsMarketButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent ae) {
-
-				LineElementsMarketPanel lineElementsMarketPanel = new LineElementsMarketPanel();
-				new LineElementsMarketPanelController(player,
-						lineElementsMarketPanel, editionActions);
-				gamePanel.setToolPanel(lineElementsMarketPanel);
-			}
-		});
-
-		JButton rawMaterialsMarketButton = toolBar
-				.getRawMaterialsMarketButton();
-		rawMaterialsMarketButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent ae) {
-
-				RawMaterialsMarketPanel rawMaterialsMarketPanel = new RawMaterialsMarketPanel();
-				new RawMaterialsMarketPanelController(player,
-						rawMaterialsMarketPanel, gamePanel);
-				gamePanel.setToolPanel(rawMaterialsMarketPanel);
-			}
-		});
-
-		JButton researchLabButton = toolBar.getLabButton();
-		researchLabButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent ae) {
-
-				ResearchLabPanel labPanel = new ResearchLabPanel();
-				new ResearchLabPanelController(player, labPanel);
-				gamePanel.setToolPanel(labPanel);
-			}
-		});
-
-		JButton exitButton = toolBar.getExitButton();
-		exitButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				if (Dialog.showDialog("Exit", "Are you sure?"))
-					System.exit(0);
-			}
-		});
-
+	private void initSellButton(final Player player,
+			final MainController mainController) {
 		JButton sellButton = toolBar.getSellButton();
 		sellButton.addActionListener(new ActionListener() {
 
@@ -143,38 +167,71 @@ public class GamePanelController {
 				}
 			}
 		});
+	}
 
-		final Timer mainLoopTimer = new Timer(UPDATE_INTERVAL,
-				new ActionListener() {
-
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						mainLoop();
-					}
-				});
-		mainLoopTimer.start();
-
-		playButton = toolBar.getPlayButton();
-		playButton.addActionListener(new ActionListener() {
+	private void initExitButton() {
+		JButton exitButton = toolBar.getExitButton();
+		exitButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				playButtonPressed();
+
+				if (Dialog.showDialog("Exit", "Are you sure?"))
+					System.exit(0);
 			}
 		});
+	}
 
-		pauseButton = toolBar.getPauseButton();
-		pauseButton.addActionListener(new ActionListener() {
+	private void initLab(final Player player, final GamePanel gamePanel) {
+		this.labPanel = new ResearchLabPanel();
+		this.labPanelController = new ResearchLabPanelController(player,
+				labPanel);
+
+		JButton researchLabButton = toolBar.getLabButton();
+		researchLabButton.addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				pauseButtonPressed();
+			public void actionPerformed(ActionEvent ae) {
+
+				gamePanel.setToolPanel(labPanel);
 			}
 		});
+	}
 
-		gamePanelRemovedListener = new GamePanelRemovedListener(mainLoopTimer);
+	private void initRawMaterialMarket(final Player player,
+			final GamePanel gamePanel) {
+		this.rawMaterialsMarketPanel = new RawMaterialsMarketPanel();
+		this.rawMaterialPanelController = new RawMaterialsMarketPanelController(
+				player, this.rawMaterialsMarketPanel, gamePanel);
 
-		updateTimeView();
+		JButton rawMaterialsMarketButton = this.toolBar
+				.getRawMaterialsMarketButton();
+		rawMaterialsMarketButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent ae) {
+
+				gamePanel.setToolPanel(rawMaterialsMarketPanel);
+			}
+		});
+	}
+
+	private void initLineElementsMarket(final Player player,
+			final GamePanel gamePanel, final EditionActions editionActions) {
+		this.lineElementsMarketPanel = new LineElementsMarketPanel();
+		this.lineElementsMarketPanelController = new LineElementsMarketPanelController(
+				player, lineElementsMarketPanel, editionActions);
+
+		JButton lineElementsMarketButton = this.toolBar
+				.getLineElementsMarketButton();
+		lineElementsMarketButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent ae) {
+
+				gamePanel.setToolPanel(lineElementsMarketPanel);
+			}
+		});
 	}
 
 	public GroundPanelController getGroundPanelController() {
@@ -195,6 +252,7 @@ public class GamePanelController {
 				this.player.updateTick();
 				updateTimeView();
 			}
+			// this.rawMaterialPanelController.refresh();
 		}
 		repaintGroundPanel();
 	}
