@@ -2,8 +2,6 @@ package model.warehouse;
 
 import static model.utils.ArgumentUtils.*;
 
-import org.hamcrest.core.IsNot;
-
 import model.exception.BusinessLogicException;
 
 abstract public class TileElement {
