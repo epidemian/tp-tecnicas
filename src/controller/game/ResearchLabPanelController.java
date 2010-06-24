@@ -35,6 +35,8 @@ public class ResearchLabPanelController {
 		this.lab = player.getLab();
 		this.labPanel = labPanel;
 
+                this.labPanel.setMaxDailyFunding(this.lab.getMaxDailyFunding());
+
 		initDailyFundingSpinner();
 		initTechnologyCombo();
 		initTechnologyResearchButton();
@@ -57,7 +59,7 @@ public class ResearchLabPanelController {
 			@Override
 			public void stateChanged(ChangeEvent ce) {
 				int dailyFunding = (Integer) (spinner.getValue());
-				lab.setDailyFunding(dailyFunding);
+                                lab.setDailyFunding(dailyFunding);
 			}
 		});
 	}
