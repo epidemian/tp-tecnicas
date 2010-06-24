@@ -123,22 +123,6 @@
             <Property name="rows" type="int" value="1"/>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JButton" name="sellButton">
-              <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/smallSell.png"/>
-                </Property>
-                <Property name="toolTipText" type="java.lang.String" value="Sell machine"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JButton" name="moveButton">
-              <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/smallMove.png"/>
-                </Property>
-                <Property name="toolTipText" type="java.lang.String" value="Move machine"/>
-              </Properties>
-            </Component>
             <Component class="javax.swing.JButton" name="repairButton">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">

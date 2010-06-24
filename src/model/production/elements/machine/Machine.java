@@ -2,6 +2,7 @@ package model.production.elements.machine;
 
 import static model.utils.ArgumentUtils.checkNotNull;
 import static model.utils.RandomUtils.randomBoolean;
+
 import model.game.Budget;
 import model.production.Direction;
 import model.production.Product;
@@ -12,19 +13,8 @@ import model.warehouse.Position;
 
 public abstract class Machine extends ProductionLineElement {
 
-	// Represent the chance of the machine of breaking or damaging after
-	// processing
-	// private static final float BREAK_CHANCE = 0.05f;
-	// private static final float DAMAGE_CHANCE = 0.15f;
-
 	private MachineState machineState;
 	private MachineType machineType;
-
-	/*
-	 * public Machine(MachineType machineType, int width, int height) {
-	 * super(width, height); this.setMachineType(machineType);
-	 * this.setMachineState(new HealthyMachineState()); }
-	 */
 
 	public Machine(MachineType machineType) {
 		super(machineType.getWidth(), machineType.getHeight());
@@ -45,11 +35,8 @@ public abstract class Machine extends ProductionLineElement {
 	}
 
 	/**
-	 * Template method to treat the product. The ProductionMachine can
-	 * setDefective a product, and a QualityControlMachine can discard it.
-	 * 
-	 * @param input
-	 * @return TODO
+	 * Method to treat the product. The ProductionMachine can setDefective a
+	 * product, and a QualityControlMachine can discard it.
 	 */
 	protected abstract Product treatProduct(Product input);
 

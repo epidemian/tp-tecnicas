@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ContainerAdapter;
 import java.awt.event.ContainerEvent;
-import java.awt.image.BufferedImage;
 import java.util.Observable;
 
 import javax.swing.JButton;
@@ -14,9 +13,9 @@ import javax.swing.Timer;
 
 import model.game.Player;
 import model.production.elements.InputProductionLineElement;
-import model.production.elements.machine.Machine;
 import model.production.elements.machine.ProductionMachine;
 import model.production.elements.machine.QualityControlMachine;
+import model.warehouse.EmptyTileElement;
 import model.warehouse.TileElement;
 import model.warehouse.TileElementVisitor;
 import view.game.Dialog;
@@ -26,7 +25,6 @@ import view.game.LineElementsMarketPanel;
 import view.game.MachineSelectionPanel;
 import view.game.RawMaterialsMarketPanel;
 import view.game.ResearchLabPanel;
-import view.game.TileElementImageRecognizer;
 import view.game.ToolBarPanel;
 import view.game.ground.GroundPanel;
 import controller.MainController;
@@ -52,14 +50,16 @@ public class GamePanelController {
 	private GroundPanelController groundPanelController;
 
 	// Panels controllers.
-	private RawMaterialsMarketPanelController rawMaterialPanelController;
 	private LineElementsMarketPanelController lineElementsMarketPanelController;
-	private ResearchLabPanelController labPanelController;
+	private RawMaterialsMarketPanelController rawMaterialMarketPanelController;
 
 	// Panels.
 	private LineElementsMarketPanel lineElementsMarketPanel;
 	private RawMaterialsMarketPanel rawMaterialsMarketPanel;
 	private ResearchLabPanel labPanel;
+
+	private Refreshable refreshablePanelController = NULL_REFRESHABLE;
+	private static Refreshable NULL_REFRESHABLE = new NullRefreshable();
 
 	public ContainerAdapter getGamePanelRemovedListener() {
 		return gamePanelRemovedListener;
@@ -70,7 +70,7 @@ public class GamePanelController {
 
 		this.gamePanel = gamePanel;
 		this.player = player;
-		
+
 		final EditionActions editionActions = new EditionActions(this, player);
 		KeyInputActionMapper mapper = new KeyInputActionMapper(editionActions);
 		mapper.mapActions(gamePanel.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW),
@@ -80,7 +80,8 @@ public class GamePanelController {
 
 		GroundPanel groundPanel = new GroundPanel(player.getGround());
 		gamePanel.getGroundPanelContainer().setGroundPanel(groundPanel);
-		groundPanelController = new GroundPanelController(player, groundPanel);
+		this.groundPanelController = new GroundPanelController(player,
+				groundPanel);
 
 		this.toolBar = gamePanel.getToolBarPanel();
 
@@ -98,7 +99,7 @@ public class GamePanelController {
 						mainLoop();
 					}
 				});
-		
+
 		mainLoopTimer.start();
 
 		initPlayButton();
@@ -109,9 +110,61 @@ public class GamePanelController {
 		updateTimeView();
 	}
 
+	public void setToolPanelFromSelectionTool(TileElement selectedTileElement) {
+
+		selectedTileElement.accept(new TileElementVisitor() {
+
+			@Override
+			public void visitProductionMachine(ProductionMachine machine) {
+
+				MachineSelectionPanel machinePanel = new MachineSelectionPanel();
+				refreshablePanelController = new SelectionMachinePanelController(
+						player, machinePanel, machine, getGamePanel());
+				machinePanel.setProductionMachineLabels();
+
+				getGamePanel().setToolPanel(machinePanel);
+			}
+
+			@Override
+			public void visitQualityControlMachine(QualityControlMachine machine) {
+
+				MachineSelectionPanel machinePanel = new MachineSelectionPanel();
+				refreshablePanelController = new SelectionMachinePanelController(
+						player, machinePanel, machine, getGamePanel());
+				machinePanel.setQualityControlMachineLabels();
+
+				getGamePanel().setToolPanel(machinePanel);
+			}
+
+			@Override
+			public void visitInputProductionLineElement(
+					InputProductionLineElement inputLineElement) {
+
+				InputSelectionPanel inputPanel = new InputSelectionPanel();
+				refreshablePanelController = new InputSelectionPanelController(
+						inputLineElement, inputPanel, player);
+				getGamePanel().setToolPanel(inputPanel);
+			}
+
+			@Override
+			public void visitEmptyElement(EmptyTileElement emptyTileElement) {
+				// If there is an element selected.
+				if (refreshablePanelController != NULL_REFRESHABLE) {
+					getGamePanel().setToolPanel(null);
+					refreshablePanelController = NULL_REFRESHABLE;
+				}
+			}
+		});
+	}
+
+	public GroundPanelController getGroundPanelController() {
+		return groundPanelController;
+	}
+
 	private void initPauseButton() {
-		pauseButton = toolBar.getPauseButton();
-		pauseButton.addActionListener(new ActionListener() {
+		this.pauseButton = this.toolBar.getPauseButton();
+		this.pauseButton.setEnabled(false);
+		this.pauseButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -120,13 +173,15 @@ public class GamePanelController {
 				// Enable the construction buttons and it's panel.
 				lineElementsMarketPanelController.setEnabled(true);
 				toolBar.getLineElementsMarketButton().setEnabled(true);
+				playButton.setEnabled(true);
+				pauseButton.setEnabled(false);
 			}
 		});
 	}
 
 	private void initPlayButton() {
-		playButton = toolBar.getPlayButton();
-		playButton.addActionListener(new ActionListener() {
+		this.playButton = this.toolBar.getPlayButton();
+		this.playButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -135,12 +190,16 @@ public class GamePanelController {
 				// Disable the construction buttons and it's panel.
 				toolBar.getLineElementsMarketButton().setEnabled(false);
 				lineElementsMarketPanelController.setEnabled(false);
+				playButton.setEnabled(false);
+				pauseButton.setEnabled(true);
 			}
 		});
 	}
 
 	private void initBudgetObserver(final Player player,
 			final GamePanel gamePanel) {
+		refreshBudgetPanel();
+
 		/**
 		 * The budget panel is updated by the observer pattern.
 		 */
@@ -148,10 +207,14 @@ public class GamePanelController {
 
 			@Override
 			public void update(Observable o, Object arg) {
-				int balance = player.getBudget().getBalance();
-				gamePanel.getBudgetPanel().setMoneyBalance(balance);
+				refreshBudgetPanel();
 			}
 		});
+	}
+
+	private void refreshBudgetPanel() {
+		int balance = this.player.getBudget().getBalance();
+		this.gamePanel.getBudgetPanel().setMoneyBalance(balance);
 	}
 
 	private void initSellButton(final Player player,
@@ -184,8 +247,7 @@ public class GamePanelController {
 
 	private void initLab(final Player player, final GamePanel gamePanel) {
 		this.labPanel = new ResearchLabPanel();
-		this.labPanelController = new ResearchLabPanelController(player,
-				labPanel);
+		new ResearchLabPanelController(player, labPanel);
 
 		JButton researchLabButton = toolBar.getLabButton();
 		researchLabButton.addActionListener(new ActionListener() {
@@ -201,7 +263,7 @@ public class GamePanelController {
 	private void initRawMaterialMarket(final Player player,
 			final GamePanel gamePanel) {
 		this.rawMaterialsMarketPanel = new RawMaterialsMarketPanel();
-		this.rawMaterialPanelController = new RawMaterialsMarketPanelController(
+		this.rawMaterialMarketPanelController = new RawMaterialsMarketPanelController(
 				player, this.rawMaterialsMarketPanel, gamePanel);
 
 		JButton rawMaterialsMarketButton = this.toolBar
@@ -210,7 +272,7 @@ public class GamePanelController {
 
 			@Override
 			public void actionPerformed(ActionEvent ae) {
-
+				refreshablePanelController = rawMaterialMarketPanelController;
 				gamePanel.setToolPanel(rawMaterialsMarketPanel);
 			}
 		});
@@ -234,10 +296,6 @@ public class GamePanelController {
 		});
 	}
 
-	public GroundPanelController getGroundPanelController() {
-		return groundPanelController;
-	}
-
 	private void updateTimeView() {
 		String dateString = this.player.getDate();
 		this.gamePanel.setTimeLabel(dateString);
@@ -252,7 +310,7 @@ public class GamePanelController {
 				this.player.updateTick();
 				updateTimeView();
 			}
-			// this.rawMaterialPanelController.refresh();
+			this.refreshablePanelController.refresh();
 		}
 		repaintGroundPanel();
 	}
@@ -288,61 +346,6 @@ public class GamePanelController {
 	public GamePanel getGamePanel() {
 		return this.gamePanel;
 	}
-
-	public void setToolPanelFromSelectionTool(TileElement selectedTileElement) {
-
-		selectedTileElement.accept(new TileElementVisitor() {
-
-			// TODO hacer un controller para esto!
-			private MachineSelectionPanel visitMachine(Machine machine) {
-				MachineSelectionPanel machinePanel = new MachineSelectionPanel();
-
-				int price = machine.getSalePrice();
-				BufferedImage image = TileElementImageRecognizer
-						.getMachineImage(machine.getMachineType());
-				String machineType = machine.getMachineType().getName();
-				double fail = machine.getFailProductProcessChance();
-				String state = machine.getMachineState().toString();
-
-				machinePanel.setMachinePrice(price);
-				machinePanel.setMachineImage(image);
-				machinePanel.setMachineType(machineType);
-				machinePanel.setFailProductProcessChance(fail);
-				machinePanel.setMachineState(state);
-
-				return machinePanel;
-			}
-
-			@Override
-			public void visitProductionMachine(ProductionMachine machine) {
-				// Creates machine panel.
-				MachineSelectionPanel machinePanel = this.visitMachine(machine);
-				machinePanel.setProductionMachineLabels();
-				// Sets panel.
-				getGamePanel().setToolPanel(machinePanel);
-			}
-
-			@Override
-			public void visitQualityControlMachine(QualityControlMachine machine) {
-				// Creates machine panel.
-				MachineSelectionPanel machinePanel = this.visitMachine(machine);
-				machinePanel.setQualityControlMachineLabels();
-				// Sets panel.
-				getGamePanel().setToolPanel(machinePanel);
-			}
-
-			@Override
-			public void visitInputProductionLineElement(
-					InputProductionLineElement inputLineElement) {
-
-				InputSelectionPanel inputPanel = new InputSelectionPanel();
-				new InputSelectionPanelController(inputLineElement, inputPanel,
-						player);
-				getGamePanel().setToolPanel(inputPanel);
-			}
-		});
-	}
-
 }
 
 final class GamePanelRemovedListener extends ContainerAdapter {

@@ -26,7 +26,7 @@ import model.production.elements.InputProductionLineElement;
 import view.game.InputSelectionPanel;
 import view.game.ViewUtils;
 
-public class InputSelectionPanelController {
+public class InputSelectionPanelController implements Refreshable {
 
 	private static final String[] columnNames = { "Type", "Quantity" };
 
@@ -35,7 +35,7 @@ public class InputSelectionPanelController {
 	private int rawMaterialQuantity;
 
 	public InputSelectionPanelController(InputProductionLineElement input,
-			InputSelectionPanel inputPanel, Player player) {
+			InputSelectionPanel inputPanel, Player player){
 
 		checkNotNull(input, "input");
 		checkNotNull(inputPanel, "inputPanel");
@@ -185,5 +185,10 @@ public class InputSelectionPanelController {
 		public String toString() {
 			return rawMaterialType.getName();
 		}
+	}
+
+	@Override
+	public void refresh() {
+		
 	}
 }

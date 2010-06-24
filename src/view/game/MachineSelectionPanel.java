@@ -38,14 +38,6 @@ public class MachineSelectionPanel extends javax.swing.JPanel {
         this.machineTypeLabel.setText(type);
     }
 
-    public JButton getSellButton(){
-        return this.sellButton;
-    }
-
-    public JButton getMoveButton(){
-        return this.moveButton;
-    }
-
     public JButton getRepairButton(){
         return this.repairButton;
     }
@@ -63,8 +55,6 @@ public class MachineSelectionPanel extends javax.swing.JPanel {
         machineImage = new view.game.BackGroundPanel();
         buttonsExternalPanel = new javax.swing.JPanel();
         buttonsPanel = new javax.swing.JPanel();
-        sellButton = new javax.swing.JButton();
-        moveButton = new javax.swing.JButton();
         repairButton = new javax.swing.JButton();
         infoPanel = new javax.swing.JPanel();
         failLabel = new javax.swing.JLabel();
@@ -97,14 +87,6 @@ public class MachineSelectionPanel extends javax.swing.JPanel {
 
         buttonsPanel.setLayout(new java.awt.GridLayout(1, 3));
 
-        sellButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/smallSell.png"))); // NOI18N
-        sellButton.setToolTipText("Sell machine");
-        buttonsPanel.add(sellButton);
-
-        moveButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/smallMove.png"))); // NOI18N
-        moveButton.setToolTipText("Move machine");
-        buttonsPanel.add(moveButton);
-
         repairButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/smallRepair.png"))); // NOI18N
         repairButton.setToolTipText("Repair machine");
         buttonsPanel.add(repairButton);
@@ -126,7 +108,7 @@ public class MachineSelectionPanel extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
-        failLabel.setFont(new java.awt.Font("Purisa", 0, 13)); // NOI18N
+        failLabel.setFont(new java.awt.Font("Purisa", 0, 13));
         failLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         failLabel.setText("Fail Process Chance:");
 
@@ -249,10 +231,8 @@ public class MachineSelectionPanel extends javax.swing.JPanel {
     private javax.swing.JLabel machinePriceLabel;
     private javax.swing.JLabel machineStateLabel;
     private javax.swing.JLabel machineTypeLabel;
-    private javax.swing.JButton moveButton;
     private javax.swing.JLabel priceLabel;
     private javax.swing.JButton repairButton;
-    private javax.swing.JButton sellButton;
     private javax.swing.JLabel stateLabel;
     private javax.swing.JLabel tittleLabel;
     private javax.swing.JLabel typeLabel;

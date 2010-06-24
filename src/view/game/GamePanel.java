@@ -5,14 +5,14 @@ import javax.swing.JPanel;
 import view.game.ground.GroundPanelContainer;
 
 public class GamePanel extends javax.swing.JPanel {
-    
+
+    private static JPanel NULL_PANEL = new NullToolBarPanel();
+
     /** Creates new form GamePanel */
     public GamePanel() {
         this.groundPanelContainer = new GroundPanelContainer();
         initComponents();
-
-        this.toolBarPanel.setMaximumSize(this.toolBarPanel.getPreferredSize()); // prevent growth
-        this.toolBarPanel.setMinimumSize(this.toolBarPanel.getPreferredSize()); // prevent shrink
+        this.setToolPanel(null);
     }
 	
     /** This method is called from within the constructor to
@@ -101,9 +101,15 @@ public class GamePanel extends javax.swing.JPanel {
     }
 
     public void setToolPanel(JPanel panel){
-        this.toolPanel.removeAll();
-        this.toolPanel.add(panel);
-        this.toolPanel.revalidate();
+    	
+    	this.toolPanel.removeAll();
+    	
+    	if (panel != null)
+    	    this.toolPanel.add(panel);
+        else
+            this.toolPanel.add(NULL_PANEL);
+    
+    	this.toolPanel.revalidate();
         this.toolPanel.repaint();
     }
 
