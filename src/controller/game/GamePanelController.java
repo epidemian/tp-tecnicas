@@ -39,6 +39,7 @@ public class GamePanelController {
 	private static final int TICK_INTERVAL = 500;
 
 	private boolean isPaused = true;
+	private boolean pausePressed = true;
 	private int timeCount = 0;
 
 	private ToolBarPanel toolBar;
@@ -234,10 +235,10 @@ public class GamePanelController {
 		});
 	}
 
-	private void disposeGamePanel(){
+	private void disposeGamePanel() {
 		this.player.getBudget().deleteObservers();
 	}
-	
+
 	private void initExitButton() {
 		JButton exitButton = toolBar.getExitButton();
 		exitButton.addActionListener(new ActionListener() {
@@ -311,21 +312,31 @@ public class GamePanelController {
 
 		if (!this.isPaused) {
 			this.timeCount += UPDATE_INTERVAL;
-			while (this.timeCount >= TICK_INTERVAL) {
+			if (this.timeCount >= TICK_INTERVAL) {
 				this.timeCount -= TICK_INTERVAL;
 				this.player.updateTick();
 				updateTimeView();
+				if (this.pausePressed)
+					setPaused(true);
 			}
 			this.refreshablePanelController.refresh();
 		}
 		repaintGroundPanel();
 	}
 
+	private void setPaused(boolean pause) {
+		this.isPaused = pause;
+		if (this.isPaused)
+			this.player.getWarehouse().clearProductionLines();
+		else 
+			this.player.getWarehouse().createProductionLines();
+	}
+
 	private void repaintGroundPanel() {
 		double elapsedTickTime = (double) this.timeCount / TICK_INTERVAL;
 		GroundPanel groundPanel = getGroundPanel();
-		groundPanel.setPaused(this.isPaused);
 		groundPanel.setElapsedTickTime(elapsedTickTime);
+		groundPanel.setPaused(this.isPaused);
 		groundPanel.repaint();
 	}
 
@@ -334,21 +345,21 @@ public class GamePanelController {
 	}
 
 	private void pauseButtonPressed() {
-		this.isPaused = true;
+		this.pausePressed = true;
 		updatePlayPauseButtons();
 	}
 
 	private void playButtonPressed() {
-		if (isPaused) {
-			this.isPaused = false;
-			this.player.getWarehouse().createProductionLines();
+		if (this.isPaused) {
+			setPaused(false);
 		}
+		this.pausePressed = false;
 		updatePlayPauseButtons();
 	}
 
 	private void updatePlayPauseButtons() {
-		this.pauseButton.setSelected(isPaused);
-		this.playButton.setSelected(!isPaused);
+		this.pauseButton.setSelected(pausePressed);
+		this.playButton.setSelected(!pausePressed);
 	}
 
 	public GamePanel getGamePanel() {
