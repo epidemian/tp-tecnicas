@@ -466,7 +466,6 @@ final class GamePanelRemovedListener extends ContainerAdapter {
 
 	@Override
 	public void componentRemoved(ContainerEvent e) {
-		System.out.println("TIMER STOP!");
 		mainLoopTimer.stop();
 	}
 }

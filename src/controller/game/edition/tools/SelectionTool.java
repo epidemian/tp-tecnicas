@@ -27,9 +27,7 @@ public class SelectionTool extends EditionTool {
 	public void mouseClicked(Position position) {
 		this.selectedTileElement = this.getGroundPanel().getGround()
 				.getTileElementAt(position);
-		System.out.println("Clicked on " + position + " and selected "
-				+ selectedTileElement);
-
+		
 		this.getGamePanelController().setToolPanelFromSelectionTool(
 				this.selectedTileElement);
 	}

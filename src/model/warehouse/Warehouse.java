@@ -70,8 +70,6 @@ public class Warehouse implements MonthlyUpdatable, DailyUpdatable,
 		ProductionLinesCreator creator = new ProductionLinesCreator(
 				getStorageArea());
 		this.productionLines = creator.createFromGround(this.ground);
-		System.out.println("PRODUCTION LINES!\n"
-				+ StringUtils.join(this.productionLines, "\n"));
 	}
 
 	/**
@@ -107,12 +105,8 @@ public class Warehouse implements MonthlyUpdatable, DailyUpdatable,
 			int productPrice = this.marketPrices.getPrice(prod);
 			partial += quality * quality * productPrice;
 		}
-
-		System.out.println("Sell products, partial: "
-				+ (int) Math.round(partial));
-
+	
 		this.budget.increment((int) Math.round(partial));
-
 		this.storageArea.clearProductsProduced();
 	}
 

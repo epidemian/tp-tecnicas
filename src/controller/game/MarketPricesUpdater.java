@@ -20,19 +20,10 @@ public class MarketPricesUpdater implements WeeklyUpdatable {
 		changeWeeklyPrices();
 	}
 
-	/*
-	 * @Override public Map<String, Integer> getWeeklyPrices() {
-	 * 
-	 * int number = weekNumber % this.pricesPaths.length; try { return
-	 * inputFactory.loadPrices(pricesPaths[number]); } catch (Exception e) {
-	 * throw new BusinessLogicException("Price File doesn't exist"); } }
-	 */
-
 	@Override
 	public void updateWeek() {
 		this.weekNumber++;
 		this.changeWeeklyPrices();
-		System.out.println("Update week! " + this.marketPrices);
 	}
 
 	private void changeWeeklyPrices() {
