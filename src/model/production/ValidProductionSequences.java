@@ -2,6 +2,7 @@ package model.production;
 
 import static model.utils.ArgumentUtils.*;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,6 +42,10 @@ public class ValidProductionSequences {
 	
 	public void clear(){
 		this.products.clear();
+	}
+	
+	public Map<ProductionSequence,ProductType> getValidProductionSequencesMap(){
+		return Collections.unmodifiableMap(this.products);
 	}
 	
 	@Override

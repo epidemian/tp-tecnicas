@@ -6,7 +6,6 @@ import static model.utils.ArgumentUtils.checkArgCondition;
 import java.util.List;
 
 import model.exception.BusinessLogicException;
-import model.game.time.DailyUpdatable;
 import model.game.time.TickUpdatable;
 import model.game.time.UpdateScheduler;
 import model.game.time.WeeklyUpdatable;
@@ -25,7 +24,7 @@ import model.warehouse.Position;
 import model.warehouse.Warehouse;
 import controller.game.MarketPricesUpdater;
 
-public class Player implements TickUpdatable, DailyUpdatable{
+public class Player implements TickUpdatable{
 
 	private static int DAYS_PER_MONTH;
 	private static int DAYS_PER_WEEK;
@@ -90,7 +89,7 @@ public class Player implements TickUpdatable, DailyUpdatable{
 		this.lab = new ResearchLab(technologyTree, MAX_DAILY_LAB_FUNDING,
 				getBudget());
 		this.scheduler.subscribeDailyUpdatable(this.lab);
-
+		
 		this.warehouse = null;
 
 	}
@@ -193,14 +192,11 @@ public class Player implements TickUpdatable, DailyUpdatable{
 	@Override
 	public void updateTick() {
 		this.scheduler.updateTick();
-	}
-
-	@Override
-	public void updateDay() {
+	
 		if (this.budget.getBalance() > this.WIN_VALUE)
 			this.gameState = GameState.WIN;
 		else if (this.budget.getBalance() < 0)
-			this.gameState = GameState.LOOSE;
+			this.gameState = GameState.LOSE;
 		else
 			this.gameState = GameState.INPROCESS;
 	}

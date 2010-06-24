@@ -32,6 +32,7 @@ import view.game.OutputSelectionPanel;
 import view.game.RawMaterialsMarketPanel;
 import view.game.ResearchLabPanel;
 import view.game.ToolBarPanel;
+import view.game.ValidSequencesPanel;
 import view.game.ground.GroundPanel;
 import controller.MainController;
 import controller.game.edition.EditionActions;
@@ -65,7 +66,8 @@ public class GamePanelController {
 	private LineElementsMarketPanel lineElementsMarketPanel;
 	private RawMaterialsMarketPanel rawMaterialsMarketPanel;
 	private ResearchLabPanel labPanel;
-
+	private ValidSequencesPanel validSequencesPanel;
+	
 	private Refreshable refreshablePanelController = NULL_REFRESHABLE;
 	private static Refreshable NULL_REFRESHABLE = new NullRefreshable();
 
@@ -98,6 +100,7 @@ public class GamePanelController {
 		initLineElementsMarket(player, gamePanel, editionActions);
 		initRawMaterialMarket(player, gamePanel);
 		initLab(player, gamePanel);
+		initValidProductionSequences(player);
 		initExitButton();
 		initSellButton(player, mainController);
 		initPrices();
@@ -268,6 +271,23 @@ public class GamePanelController {
 		this.player.getBudget().deleteObservers();
 	}
 
+	private void initValidProductionSequences(Player player) {
+		this.validSequencesPanel = new ValidSequencesPanel();
+		final ValidSequencesPanelController validController = new ValidSequencesPanelController(
+				player, validSequencesPanel);
+
+		JButton researchLabButton = toolBar.getValidProductionLinesButton();
+		researchLabButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent ae) {
+				validController.refresh();
+				gamePanel.setToolPanel(validSequencesPanel);
+			}
+		});
+		
+	}
+
 	private void initExitButton() {
 		JButton exitButton = toolBar.getExitButton();
 		exitButton.addActionListener(new ActionListener() {
@@ -372,7 +392,7 @@ public class GamePanelController {
 		GameState gameState = this.player.getGameState();
 		if (gameState.equals(GameState.WIN))
 			this.win();
-		else if (gameState.equals(GameState.LOOSE))
+		else if (gameState.equals(GameState.LOSE))
 			this.loose();
 
 		repaintGroundPanel();
