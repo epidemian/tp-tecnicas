@@ -18,7 +18,7 @@ public class MainPanelController {
 
     private static final String[] DIFFICULTY_LEVELS = { "Easy", "Normal",
 			"Hard" };
-    private static final int[] INITIAL_MONEY = { 1000000, 1500000, 2000000 };
+    private static final int[] INITIAL_MONEY = { 10000, 5000, 2000 };
 
     public MainPanelController(MainPanel mainPanel, MainController mainControler, Config config){
         checkNotNull(mainPanel, "mainPanel");

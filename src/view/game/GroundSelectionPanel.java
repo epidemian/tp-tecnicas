@@ -56,6 +56,14 @@ public class GroundSelectionPanel extends javax.swing.JPanel {
         this.backButton.addActionListener(al);
     }
 
+    public void setRentButtonEnabled(boolean aFlag){
+        this.rentButton.setEnabled(aFlag);
+    }
+
+    public void setBuyButtonEnabled(boolean aFlag){
+        this.buyButton.setEnabled(aFlag);
+    }
+
     public void setRentPrice(int price){
         this.rentPriceLabel.setText(MoneyConstants.getMoneyString(price));
     }

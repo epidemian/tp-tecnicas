@@ -52,9 +52,9 @@ public class GroundSelectionPanelController {
 		buyCombo.removeAllItems();
 
 		// Adds grounds names to the combo.
-		for (int i = 0; i < grounds.size(); i++)
-			buyCombo.addItem(GROUND_PREFIX + i + 1);
-
+		for (int i = 1; i < grounds.size() + 1; i++)
+			buyCombo.addItem(GROUND_PREFIX + i);
+				
 		this.buyComboGroundSelectionAction(buyCombo, grounds, selectionPanel);
 
 		// Buy buttons action listener.
@@ -81,6 +81,12 @@ public class GroundSelectionPanelController {
 		selectionPanel.setGroundPanel(groundPanel);
 		selectionPanel.setPurchasePrice(ground.getPurchasePrice());
 		selectionPanel.setRentPrice(ground.getRentPrice());
+		
+		// Enable-Disable buy-rent buttons.
+		int balance = this.player.getBudget().getBalance();
+		
+		selectionPanel.setBuyButtonEnabled(ground.getPurchasePrice() < balance);
+		selectionPanel.setRentButtonEnabled(ground.getRentPrice() < balance);
 	}
 
 	private void initGroundSelectionPanelButtons(
