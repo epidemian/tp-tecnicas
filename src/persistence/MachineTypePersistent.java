@@ -40,11 +40,11 @@ public class MachineTypePersistent {
 			builder.breakChance(Float.valueOf(element
 					.attributeValue(TAG_ATR_BREAK_CHANCE)));
 
-		if (element.attributeValue(TAG_CHILD_INPUT) != null)
+		if (element.element(TAG_CHILD_INPUT) != null)
 			builder.inputRelativePosition(PositionPersistent
 					.buildFromXML(element.element(TAG_CHILD_INPUT)));
 
-		if (element.attributeValue(TAG_CHILD_OUTPUT) != null)
+		if (element.element(TAG_CHILD_OUTPUT) != null)
 			builder.outputRelativePosition(PositionPersistent
 					.buildFromXML(element.element(TAG_CHILD_OUTPUT)));
 
