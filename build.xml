@@ -7,13 +7,16 @@
 	<property name="test_dir" value="test"></property>
 	<property name="juint_lib" value="./lib/junit4/junit-4.8.2.jar"></property>
 	<property name="dom4j_lib" value="./lib/dom4j/dom4j-1.6.1.jar"></property>
-	<property name="main_class" value="view.warehouse.MainFrame"></property>
+	<property name="main_class" value="main.Main"></property>
+	<property name="img_dir" value="res/img"></property>
+	<property name="xml_dir" value="xml"></property>
 	
 	<!-- classpath -->
 	<path id="class_path">
 		<pathelement path="${build_dir}"/>
 		<pathelement path="${juint_lib}"/>
 		<pathelement path="${dom4j_lib}"/>
+		<pathelement path="${img_dir}"/>
 	</path>
 	
 	
@@ -37,6 +40,8 @@
                 <attribute name="Class-Path" value="."/>
             </manifest>
             <fileset dir="${build_dir}"/>
+        	<fileset dir="${img_dir}"></fileset>
+        	<fileset dir="." includes="xml/**"></fileset>
             <zipfileset excludes="META-INF/*.SF" src="${juint_lib}"/>
         	<zipfileset excludes="META-INF/*.SF" src="${dom4j_lib}"/>
         </jar>
@@ -45,15 +50,6 @@
 	<!-- Whole project -->
     <target name="dist" depends="jar" description="Build the hole project">
     </target>
-	
-	<target name="runtests2" depends="jar" description="Run unit tests">
-		<java fork="yes" classname="org.junit.runner.JUnitCore" taskname="junit" failonerror="true">
-			<arg value="test.AllTests"/>
-			<classpath>
-				<pathelement path="${jar_file}"/>
-			</classpath>
-		</java>
-	</target>
 	
 	<target name="runtests" depends="jar">
 	  <junit fork="yes" haltonfailure="yes">

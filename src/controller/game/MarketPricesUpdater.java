@@ -37,12 +37,11 @@ public class MarketPricesUpdater implements WeeklyUpdatable {
 	}
 
 	private void changeWeeklyPrices() {
-		try { 
-			 this.marketPrices.setMap(this.inputFactory.loadPrices(weekNumber));
-		} 
-		catch (Exception e) {			
-			throw new BusinessLogicException("Price File doesn't exist"); 
-		} 
+			 try {
+				this.marketPrices.setMap(this.inputFactory.loadPrices(weekNumber));
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
 	}
 	
 	

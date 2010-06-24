@@ -1,5 +1,7 @@
 package persistence;
 
+import static persistence.utils.DocumentLoader.loadDocuemnt;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -22,8 +24,6 @@ public class XMLConfig extends Config {
 	static String TAG_CHILD_VALUE = "value";
 	static final String CONFIG_PATH = "xml/Config.xml";
 
-	// Reader from the XML file
-	protected SAXReader reader;
 
 	// Document where is placed what is read from the file
 	private Document document;
@@ -31,10 +31,8 @@ public class XMLConfig extends Config {
 	private Map<String, String> map;
 
 	public XMLConfig() {
-		map = new HashMap<String, String>();
-		reader = new SAXReader();
 		try {
-			document = reader.read(CONFIG_PATH);
+			document = loadDocuemnt(CONFIG_PATH);
 		} catch (DocumentException e) {
 			throw new BusinessLogicException("Config file not present");
 		}

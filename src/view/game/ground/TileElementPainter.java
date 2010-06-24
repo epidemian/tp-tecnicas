@@ -22,7 +22,7 @@ import view.game.TileElementImageRecognizer;
  */
 public class TileElementPainter extends TileElementImageRecognizer {
 
-	private static final String BROKEN_MACHINE_IMG = "./broken-machine.png";
+	private static final String BROKEN_MACHINE_IMG = "broken-machine.png";
 
 	private Graphics2D graphics;
 

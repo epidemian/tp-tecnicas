@@ -20,11 +20,11 @@ public abstract class TileElementImageRecognizer extends TileElementVisitor {
 
 	protected static final String IMG_WALL = "Wall.png";
 
-	private static final String CONVEYOR_IMG_PREFIX = "./conveyor_";
+	private static final String CONVEYOR_IMG_PREFIX = "conveyor_";
 	private static final String IMG_EXTENSION = ".png";
 
-	private static final String INPUT_ELEMENT_PREFIX = "./input_";
-	private static final String OUTPUT_ELEMENT_PREFIX = "./output_";
+	private static final String INPUT_ELEMENT_PREFIX = "input_";
+	private static final String OUTPUT_ELEMENT_PREFIX = "output_";
 
 	protected abstract void onLineElmentVisited(ProductionLineElement element,
 			BufferedImage image);
