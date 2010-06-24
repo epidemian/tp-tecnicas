@@ -28,7 +28,7 @@ public abstract class AbstractAddLineElementTool extends EditionTool {
 			Player game) {
 		this(gamePanelController, game, null);
 	}
-	
+
 	public AbstractAddLineElementTool(GamePanelController gamePanelController,
 			Player game, ProductionLineElement startElement) {
 		super(gamePanelController, game);
@@ -72,7 +72,8 @@ public abstract class AbstractAddLineElementTool extends EditionTool {
 		}
 	}
 
-	protected void putLineElementAt(Position position, ProductionLineElement element) {
+	protected void putLineElementAt(Position position,
+			ProductionLineElement element) {
 		getPlayer().buyAndAddProductionLineElement(element, position);
 	}
 
@@ -206,8 +207,8 @@ public abstract class AbstractAddLineElementTool extends EditionTool {
 		ProductionLineElement inputElement = recognizeLineElement(tileElement);
 		boolean canConnectByRule = canConnectLineElements(inputElement,
 				this.lineElement);
-		if (inputElement == null || inputElement.hasNextLineElement()
-				|| !canConnectByRule) {
+		if (inputElement == null || !inputElement.canHaveNextLineElement()
+				|| inputElement.hasNextLineElement() || !canConnectByRule) {
 			inputElement = null;
 		} else {
 			Position expectedOutputPos = inputPos.subtract(inputDir
@@ -228,8 +229,9 @@ public abstract class AbstractAddLineElementTool extends EditionTool {
 		ProductionLineElement outputElement = recognizeLineElement(tileElement);
 		boolean canConnectByRule = canConnectLineElements(this.lineElement,
 				outputElement);
-		if (outputElement == null || outputElement.hasPreviousLineElement()
-				|| !canConnectByRule) {
+		if (outputElement == null
+				|| !outputElement.canHavePreviousLineElement()
+				|| outputElement.hasPreviousLineElement() || !canConnectByRule) {
 			outputElement = null;
 		} else {
 			Position expectedInputPos = outputPos.subtract(outputDir
