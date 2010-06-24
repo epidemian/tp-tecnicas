@@ -21,7 +21,7 @@ import model.lab.ResearchLab;
 import model.lab.Technology;
 import view.game.ResearchLabPanel;
 
-public class ResearchLabPanelController {
+public class ResearchLabPanelController implements Refreshable{
 
 	private ResearchLab lab;
 	private Technology technologyToBeResearched;
@@ -35,11 +35,13 @@ public class ResearchLabPanelController {
 		this.lab = player.getLab();
 		this.labPanel = labPanel;
 
-                this.labPanel.setMaxDailyFunding(this.lab.getMaxDailyFunding());
+        this.labPanel.setMaxDailyFunding(this.lab.getMaxDailyFunding());
 
 		initDailyFundingSpinner();
 		initTechnologyCombo();
 		initTechnologyResearchButton();
+		
+		
 	}
 
 	private void initDailyFundingSpinner() {
@@ -147,5 +149,11 @@ public class ResearchLabPanelController {
 			return this.technology.getName() + " - "
 					+ this.technology.getResearchCost();
 		}
+	}
+
+	@Override
+	public void refresh() {
+		this.technologyComboAction(labPanel.geTechnologyCombo());
+		
 	}
 }
