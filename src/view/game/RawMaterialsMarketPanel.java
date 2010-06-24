@@ -3,6 +3,7 @@ package view.game;
 import static view.game.MoneyConstants.MONEY_SYMBOL;
 
 import java.awt.event.ActionListener;
+import javax.swing.JButton;
 
 import javax.swing.JComboBox;
 import javax.swing.JSpinner;
@@ -33,6 +34,10 @@ public class RawMaterialsMarketPanel extends javax.swing.JPanel {
 
     public void setBuyButtonActionListener(ActionListener al){
         this.buyButton.addActionListener(al);
+    }
+
+    public JButton getBuyButton(){
+        return this.buyButton;
     }
 
     /** This method is called from within the constructor to

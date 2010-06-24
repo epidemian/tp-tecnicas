@@ -228,11 +228,16 @@ public class GamePanelController {
 				if (Dialog.showDialog("Sell", "Are you sure?")) {
 					player.sellWarehouse();
 					mainController.setGroundSelectionPanel(player);
+					disposeGamePanel();
 				}
 			}
 		});
 	}
 
+	private void disposeGamePanel(){
+		this.player.getBudget().deleteObservers();
+	}
+	
 	private void initExitButton() {
 		JButton exitButton = toolBar.getExitButton();
 		exitButton.addActionListener(new ActionListener() {

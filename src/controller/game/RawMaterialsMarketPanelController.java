@@ -8,8 +8,11 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.List;
 import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Map.Entry;
 
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
@@ -46,7 +49,7 @@ public class RawMaterialsMarketPanelController implements Refreshable {
 	private JTable table;
 
 	public RawMaterialsMarketPanelController(Player game,
-			RawMaterialsMarketPanel marketPanel, GamePanel gamePanel) {
+			final RawMaterialsMarketPanel marketPanel, GamePanel gamePanel) {
 
 		checkNotNull(game, "game");
 		checkNotNull(marketPanel, "marketPanel");
@@ -57,6 +60,19 @@ public class RawMaterialsMarketPanelController implements Refreshable {
 		this.rawMaterialPrices = game.getMarketPrices();
 		this.budget = game.getBudget();
 
+		this.budget.addObserver(new Observer() {
+
+			@Override
+			public void update(Observable o, Object arg) {
+
+				int price = (Integer) rawMaterialQuantityModel.getValue()
+						* rawMaterialPrice;
+
+				JButton buyButton = marketPanel.getBuyButton();
+				buyButton.setEnabled(budget.canPurchase(price));
+			}
+		});
+
 		this.quantitySpinner = marketPanel.getQuantitySpinner();
 		this.buyCombo = marketPanel.getBuyCombo();
 		this.table = marketPanel.getStockTable();
@@ -65,6 +81,14 @@ public class RawMaterialsMarketPanelController implements Refreshable {
 		initQuantitySpinner(marketPanel);
 		initBuyCombo(marketPanel);
 		updateTableData();
+	}
+
+	private void setBuyButtonEnabled(final RawMaterialsMarketPanel marketPanel) {
+		int price = (Integer) rawMaterialQuantityModel.getValue()
+				* rawMaterialPrice;
+
+		JButton buyButton = marketPanel.getBuyButton();
+		buyButton.setEnabled(budget.canPurchase(price));
 	}
 
 	private void initQuantitySpinner(final RawMaterialsMarketPanel marketPanel) {
@@ -85,6 +109,7 @@ public class RawMaterialsMarketPanelController implements Refreshable {
 				int price = (Integer) rawMaterialQuantityModel.getValue()
 						* rawMaterialPrice;
 				marketPanel.setRawMaterialPrice(price);
+				setBuyButtonEnabled(marketPanel);
 			}
 		});
 	}
@@ -126,10 +151,12 @@ public class RawMaterialsMarketPanelController implements Refreshable {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
 
-				if (budget.canPurchase(rawMaterialPrice)) {
+				int price = (Integer) rawMaterialQuantityModel.getValue()
+						* rawMaterialPrice;
 
-					budget.decrement(rawMaterialPrice);
+				if (budget.canPurchase(price)) {
 
+					budget.decrement(price);
 					storageArea.getRawMaterials().store(rawMaterialType,
 							getRawMaterialQuantity());
 					updateTableData();
