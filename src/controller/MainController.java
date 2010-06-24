@@ -29,7 +29,7 @@ public class MainController {
 	private static final Dimension MAIN_PANEL_SIZE = new Dimension(640, 480);
 	private static final Dimension GROUND_SELECTION_PANEL_SIZE = new Dimension(
 			320, 670);
-	protected static final float WIN_VALUE = 50000;
+	protected static final float WIN_VALU = 50000;
 
 	public MainController(final MainFrame mainFrame, InputFactory inputFactory,
 			Config config) {

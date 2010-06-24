@@ -59,9 +59,6 @@ public class ProductionSequenceTechnologyListPersistent {
 	
 	for (TechnologyPersistent technology : list){
 		for(Integer id :technology.getDependencies()){			
-			//System.out.println(technology);
-			//System.out.println(technology.getTechnology());
-			//System.out.println(mapTechs.get(id));
 			tree.addDependency(technology.getTechnology(), mapTechs.get(id));
 		}
 	}

@@ -54,23 +54,6 @@ public class MachineType extends AbstractType {
 				"Invalid output position " + wAndH);
 	}
 
-	/*
-	 * public static MachineType
-	 * createMachineTypeWithPriceAndInputOutputPositions (String name, int
-	 * height, int width, int price, Position inputRelativePosition, Position
-	 * outputRelativePosition){ MachineType type = new
-	 * MachineType(name,height,width,price,inputRelativePosition,
-	 * outputRelativePosition); return type;
-	 * 
-	 * }
-	 * 
-	 * public static MachineType createMachineTypeInputOutputPositions (String
-	 * name, int height, int width, Position inputRelativePosition, Position
-	 * outputRelativePosition){ MachineType type = new
-	 * MachineType(name,height,width,0,inputRelativePosition,
-	 * outputRelativePosition); return type; }
-	 */
-
 	/**
 	 * Returns true if position is in the "surroundings" of the machine area.
 	 * Graphically, position P can be:

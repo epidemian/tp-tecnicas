@@ -1,7 +1,8 @@
 <Sequences>	
 	<ProductionSequence id="1" cost="5000" desc="Weapon mastered by the French (?)" researched="false">
 		<RawMaterials>
-			<rawMaterial id="Gold" quantity="1"/>
+			<rawMaterial id="Iron" quantity="1"/>
+			<rawMaterial id="Wood" quantity="1"/>
 		</RawMaterials>
 		<MachineList>
 			<MachineType id="Oven" width="2" height="2"/>
@@ -12,7 +13,7 @@
 	
 	<ProductionSequence id="2" cost="0" desc="Powerful as the excaliburg" researched="true">
 		<RawMaterials>
-			<rawMaterial id="Gold" quantity="1"/>			
+			<rawMaterial id="Iron" quantity="1"/>			
 		</RawMaterials>
 		<MachineList>
 			<MachineType id="Forge" width="3" height="3"/>
@@ -22,7 +23,7 @@
 	
 	<ProductionSequence id="3" cost="10000" desc="Flail" researched="false" dependencies="1,2">
 		<RawMaterials>
-			<rawMaterial id="Gold" quantity="1"/>
+			<rawMaterial id="Iron" quantity="1"/>
 		</RawMaterials>
 		<MachineList>
 			<MachineType id="Oven" width="2" height="2"/>

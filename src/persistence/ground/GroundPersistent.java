@@ -19,7 +19,6 @@ public class GroundPersistent{
 	static String TAG_CHILD_WALLS="Walls";
 	static String TAG_CHILD_OUTPUTS="Outputs";
 		
-	@SuppressWarnings("unchecked")
 	public static Ground buildFromXML(Element element,Config config) 
 		throws InvalidTagException{
 		

@@ -21,8 +21,6 @@ import model.utils.StringUtils;
 public class Warehouse implements MonthlyUpdatable, DailyUpdatable,
 		TickUpdatable {
 
-	private static final double RENT = 0.01f;
-
 	private Budget budget;
 	private Ground ground;
 	private StorageArea storageArea;

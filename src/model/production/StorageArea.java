@@ -18,7 +18,7 @@ public class StorageArea {
 	private ValidProductionSequences validProductionSequences;
 
 	/**
-	 * Contains all the raw materials of the AssemblyPlant
+	 * Contains all the raw materials of the Warehouse
 	 */
 	private RawMaterials rawMaterials;
 

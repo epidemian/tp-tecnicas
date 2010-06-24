@@ -88,9 +88,6 @@ public class Player implements TickUpdatable {
 		this.scheduler.subscribeDailyUpdatable(this.lab);
 
 		this.warehouse = null;
-		// this.scheduller.subscribeDailyUpdatable(this.warehouse);
-		// this.scheduller.subscribeWeeklyUpdatable(this.warehouse);
-		// this.scheduller.subscribeMonthlyUpdatable(this.warehouse);
 
 	}
 
