@@ -15,19 +15,6 @@ public class NewProductionSequenceTechnology extends Technology {
 	private ProductType productType;
 	private ValidProductionSequences validSequences;
 
-	/**
-	 * TODO: As description could well be derived from the product type and the
-	 * production sequence, like:
-	 * <p>
-	 * description = "Develop " + productType.getName() + " with materials: " +
-	 * sequence.getRawMaterials().toPrettyString() + " and machines: "
-	 * sequence.getLineMachinesPrettyString()
-	 * <p>
-	 * It might be useful to create an entity that takes care of that. I assume
-	 * that it wouldn't be cool to put that logic here because the presentation
-	 * words "develop", "with", "machines", etc, would be hard-coded into this
-	 * model class.
-	 */
 	public NewProductionSequenceTechnology(ProductionSequence sequence,
 			ProductType productType, ValidProductionSequences validSequences,
 			String description, int researchCost) {

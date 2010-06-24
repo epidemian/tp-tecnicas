@@ -43,13 +43,5 @@ public class MarketPricesUpdater implements WeeklyUpdatable {
 				throw new RuntimeException(e);
 			}
 	}
-	
-	
-
-	/*
-	 * @Override public void nextWeek() { // TODO Auto-generated method stub
-	 * 
-	 * }
-	 */
 
 }

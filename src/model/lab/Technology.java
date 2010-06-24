@@ -52,7 +52,6 @@ public abstract class Technology {
 	 * Called by {@link Technology#research()}.
 	 * Should be implemented by {@link Technology} subclasses.  
 	 */
-	// TODO Maybe a better name would be apply() ?
 	protected abstract void onResearch();
 
 	private void setName(String name) {
